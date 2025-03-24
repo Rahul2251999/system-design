@@ -31,10 +31,10 @@
 - [ ] Include interactive elements
 
 ## Real-World Examples
-- [ ] Research and select examples
-- [ ] Create case study pages
-- [ ] Add architectural diagrams
-- [ ] Explain design decisions
+- [x] Research and select examples
+- [x] Create case study pages
+- [x] Add architectural diagrams
+- [x] Explain design decisions
 
 ## Implementation Details
 - [ ] Add code examples
