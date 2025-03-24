@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-World Example: Instagram System Design | System Design A-Z</title>
+    <meta name="description" content="Learn about the system design behind Instagram's photo-sharing platform, including architecture, scalability, and technical challenges">
+    <link rel="stylesheet" href="../../css/normalize.css">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/examples.css">
+    <link rel="stylesheet" href="../../css/content-page.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="logo">
+                <a href="../../index.html">
+                    <span class="logo-text">System Design <span class="highlight">A-Z</span></span>
+                </a>
+            </div>
+            <nav class="main-nav">
+                <button class="menu-toggle" aria-label="Toggle menu">
+                    <span class="hamburger"></span>
+                </button>
+                <ul class="nav-links">
+                    <li><a href="../../index.html">Home</a></li>
+                    <li><a href="../fundamentals/index.html">Fundamentals</a></li>
+                    <li><a href="../examples/index.html" class="active">Real-World Examples</a></li>
+                    <li><a href="../implementation/index.html">Implementation</a></li>
+                    <li><a href="../../index.html#about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="content-page">
+        <div class="container">
+            <div class="content-wrapper">
+                <aside class="sidebar">
+                    <div class="sidebar-content">
+                        <h3>Real-World Examples</h3>
+                        <ul class="sidebar-nav">
+                            <li><a href="netflix.html">Netflix</a></li>
+                            <li><a href="uber.html">Uber</a></li>
+                            <li><a href="twitter.html">Twitter</a></li>
+                            <li><a href="instagram.html" class="active">Instagram</a></li>
+                            <li><a href="amazon.html">Amazon</a></li>
+                            <li><a href="google-search.html">Google Search</a></li>
+                            <li><a href="payment-system.html">Payment System</a></li>
+                            <li><a href="url-shortener.html">URL Shortener</a></li>
+                            <li><a href="chat-application.html">Chat Application</a></li>
+                            <li><a href="e-commerce.html">E-Commerce Platform</a></li>
+                        </ul>
+                        <div class="sidebar-cta">
+                            <h4>Ready to implement?</h4>
+                            <p>Check out our implementation guides</p>
+                            <a href="../implementation/index.html" class="btn btn-sm">Implementation Guides</a>
+                        </div>
+                    </div>
+                </aside>
+
+                <article class="main-content">
+                    <div class="content-header">
+                        <h1>Instagram System Design</h1>
+                        <div class="content-meta">
+                            <span class="difficulty advanced">Advanced</span>
+                            <span class="reading-time">20 min read</span>
+                        </div>
+                    </div>
+
+                    <div class="content-body">
+                        <section class="content-section">
+                            <h2>Introduction to Instagram</h2>
+                            <p>Instagram is a popular photo and video sharing social networking service that allows users to upload media, which can be edited with filters and organized with tags and location information. Users can browse content by tags and locations, and view trending content. Instagram was launched in October 2010, acquired by Facebook (now Meta) in 2012, and has grown to over a billion monthly active users.</p>
+                            
+                            <p>From a system design perspective, Instagram presents fascinating challenges due to its massive scale, media-heavy nature, and social networking features. The platform must efficiently store and serve billions of photos and videos while maintaining low latency and high availability for users worldwide.</p>
+                            
+                            <div class="image-container">
+                                <div class="placeholder-image">
+                                    <p>Instagram High-Level Architecture Diagram</p>
+                                </div>
+                                <div class="image-caption">Figure 1: High-level architecture of Instagram's platform.</div>
+                            </div>
+                        </section>
+
+                        <section class="content-section">
+                            <h2>System Requirements</h2>
+                            
+                            <h3>Functional Requirements</h3>
+                            <ul>
+                                <li><strong>Media Upload</strong>: Users should be able to upload photos and videos.</li>
+                                <li><strong>Media Processing</strong>: The system should process uploaded media (resize, filter, compress).</li>
+                                <li><strong>Feed Generation</strong>: Users should see posts from accounts they follow in their feed.</li>
+                                <li><strong>Follow/Unfollow</strong>: Users should be able to follow or unfollow other users.</li>
+                                <li><strong>Search</strong>: Users should be able to search for content by users, hashtags, or locations.</li>
+                                <li><strong>Interactions</strong>: Users should be able to like, comment on, and share posts.</li>
+                                <li><strong>Notifications</strong>: Users should receive notifications for relevant activities.</li>
+                                <li><strong>User Profiles</strong>: Users should have profiles displaying their information and posts.</li>
+                                <li><strong>Stories</strong>: Users should be able to post ephemeral content that disappears after 24 hours.</li>
+                                <li><strong>Direct Messaging</strong>: Users should be able to send private messages to each other.</li>
+                            </ul>
+                            
+                            <h3>Non-Functional Requirements</h3>
+                            <ul>
+                                <li><strong>Scalability</strong>: The system must handle billions of users and media files.</li>
+                                <li><strong>Availability</strong>: High availability is critical for a social media platform (target of 99.99% uptime).</li>
+                                <li><strong>Low Latency</strong>: Media loading and feed generation should have minimal delay.</li>
+                                <li><strong>Reliability</strong>: The system should be resilient to failures and able to recover quickly.</li>
+                                <li><strong>Consistency</strong>: Users should see consistent data across different devices and sessions.</li>
+                                <li><strong>Security</strong>: Protect user data and media from unauthorized access.</li>
+                                <li><strong>Global Distribution</strong>: Support for users across different geographical regions with varying network infrastructures.</li>
+                            </ul>
+                        </section>
+
+                        <section class="content-section">
+                            <h2>High-Level Architecture</h2>
+                            <p>Instagram's architecture has evolved significantly since its inception. At a high level, it can be divided into several key components:</p>
+                            
+                            <h3>Client Applications</h3>
+                            <p>Instagram is accessible through various client applications:</p>
+                            <ul>
+                                <li><strong>Mobile Apps</strong>: Native applications for iOS and Android.</li>
+                                <li><strong>Web Application</strong>: Browser-based interface.</li>
+                                <li><strong>Progressive Web App</strong>: For platforms without native app support.</li>
+                            </ul>
+                            
+                            <h3>API Gateway</h3>
+                            <p>The API Gateway serves as the entry point for all client requests, handling:</p>
+                            <ul>
+                                <li>Authentication and authorization</li>
+                                <li>Rate limiting and throttling</li>
+                                <li>Request routing to appropriate services</li>
+                                <li>API versioning</li>
+                            </ul>
+                            
+                            <h3>Core Services</h3>
+                            <p>These services handle the primary business logic:</p>
+                            <ul>
+                                <li><strong>User Service</strong>: Manages user accounts, profiles, and relationships.</li>
+                                <li><strong>Post Service</strong>: Handles post creation, retrieval, and interactions.</li>
+                                <li><strong>Feed Service</strong>: Generates and manages user feeds.</li>
+                                <li><strong>Media Service</strong>: Processes and stores photos and videos.</li>
+                                <li><strong>Search Service</strong>: Enables searching for users, hashtags, and locations.</li>
+                                <li><strong>Notification Service</strong>: Manages and delivers user notifications.</li>
+                                <li><strong>Story Service</strong>: Handles ephemeral content (stories).</li>
+                                <li><strong>Direct Messaging Service</strong>: Manages private messages between users.</li>
+                            </ul>
+                            
+                            <h3>Data Storage</h3>
+                            <p>Instagram uses a combination of storage systems to handle different types of data:</p>
+                            <ul>
+                                <li><strong>User Data</strong>: Stores user profiles, relationships, and settings.</li>
+                                <li><strong>Post Metadata</strong>: Stores information about posts (captions, timestamps, location, etc.).</li>
+                                <li><strong>Media Storage</strong>: Stores the actual photos and videos.</li>
+                                <li><strong>Graph Storage</strong>: Stores the social graph (who follows whom).</li>
+                                <li><strong>Feed Cache</strong>: Stores pre-computed feeds for users.</li>
+                                <li><strong>Search Index</strong>: Indexes content for efficient searching.</li>
+                            </ul>
+                            
+                            <h3>Infrastructure Services</h3>
+                            <p>These services support the overall platform:</p>
+                            <ul>
+                                <li><strong>Load Balancers</strong>: Distribute traffic across service instances.</li>
+                                <li><strong>CDN</strong>: Delivers media content from edge locations.</li>
+                                <li><strong>Monitoring and Logging</strong>: Tracks system health and performance.</li>
+                                <li><strong>Analytics</strong>: Processes data for business intelligence and feature improvements.</li>
+                            </ul>
+                        </section>
+
+                        <section class="content-section">
+                            <h2>Key Components Deep Dive</h2>
+                            
+                            <h3>Media Processing and Storage</h3>
+                            <p>Media processing and storage is one of the most critical components of Instagram's architecture. The system must efficiently handle billions of photos and videos while providing fast access to users worldwide.</p>
+                            
+                            <div class="image-container">
+                                <div class="placeholder-image">
+                                    <p>Instagram Media Processing Pipeline</p>
+                                </div>
+                                <div class="image-caption">Figure 2: Instagram's media processing pipeline.</div>
+                            </div>
+                            
+                            <p><strong>Media upload and processing flow:</strong></p>
+                            <ol>
+                                <li><strong>Upload</strong>: User uploads a photo or video from the client application.</li>
+                                <li><strong>Initial Storage</strong>: The media is temporarily stored in a staging area.</li>
+                                <li><strong>Validation</strong>: The system validates the media format, size, and content.</li>
+                                <li><strong>Processing</strong>: The media is processed in several ways:
+                                    <ul>
+                                        <li>Resizing: Multiple resolutions are generated for different devices and contexts.</li>
+                                        <li>Filtering: If the user applied filters, these are processed.</li>
+                                        <li>Compression: The media is compressed to reduce storage and bandwidth requirements.</li>
+                                        <li>Metadata Extraction: Information like EXIF data is extracted.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Persistent Storage</strong>: The processed media is stored in a distributed object storage system.</li>
+                                <li><strong>CDN Distribution</strong>: The media is distributed to CDN edge locations for fast access.</li>
+                                <li><strong>Metadata Storage</strong>: Information about the media (user ID, timestamp, caption, location, etc.) is stored in a database.</li>
+                            </ol>
+                            
+                            <p><strong>Key aspects of the media storage system:</strong></p>
+                            <ul>
+                                <li><strong>Object Storage</strong>: Instagram likely uses distributed object storage systems like Amazon S3 or custom solutions built on top of it.</li>
+                                <li><strong>Content-Addressable Storage</strong>: Media files might be stored using content-based addressing, where the file's hash serves as its identifier.</li>
+                                <li><strong>Replication</strong>: Media is replicated across multiple storage nodes for durability and availability.</li>
+                                <li><strong>Tiered Storage</strong>: Different storage tiers might be used based on access patterns (e.g., hot storage for recent/popular media, cold storage for older content).</li>
+                                <li><strong>CDN Integration</strong>: Media is served through CDNs to reduce latency for users worldwide.</li>
+                            </ul>
+                            
+                            <h3>Feed Generation</h3>
+                            <p>Instagram's feed generation system is responsible for creating the personalized feed that users see when they open the app. This is a complex system that must balance performance, relevance, and freshness.</p>
+                            
+                            <p><strong>Feed generation approaches:</strong></p>
+                            <ul>
+                                <li><strong>Push-based Model</strong>: When a user posts content, it's "pushed" to the feeds of all their followers. This approach provides fast feed retrieval but can be resource-intensive for accounts with many followers.</li>
+                                <li><strong>Pull-based Model</strong>: When a user requests their feed, the system "pulls" recent posts from all accounts they follow. This approach is more resource-efficient but can be slower for users following many accounts.</li>
+                                <li><strong>Hybrid Model</strong>: Instagram likely uses a hybrid approach, where posts from regular users are pushed to follower feeds, while posts from high-follower accounts (celebrities, brands) are pulled at feed generation time.</li>
+                            </ul>
+                            
+                            <p><strong>Feed ranking and personalization:</strong></p>
+                            <p>Instagram's feed is no longer strictly chronological. It uses machine learning algorithms to rank posts based on various factors:</p>
+                            <ul>
+                                <li><strong>Interest</strong>: How likely the user is to be interested in the content based on past behavior.</li>
+                                <li><strong>Recency</strong>: More recent posts are generally ranked higher.</li>
+                                <li><strong>Relationship</strong>: Posts from accounts the user interacts with frequently are prioritized.</li>
+                                <li><strong>Engagement</strong>: Posts with high engagement (likes, comments) may be ranked higher.</li>
+                                <li><strong>Profile Visits</strong>: Content from accounts whose profiles the user visits frequently might be prioritized.</li>
+                                <li><strong>Session Time</strong>: The algorithm might consider how long the user typically spends on Instagram.</li>
+                            </ul>
+                            
+                            <h3>Social Graph</h3>
+                            <p>The social graph represents the relationships between users (who follows whom). This is a critical component that affects many aspects of the platform, including feed generation, recommendations, and privacy controls.</p>
+                            
+                            <p><strong>Key aspects of the social graph system:</strong></p>
+                            <ul>
+                                <li><strong>Graph Storage</strong>: The social graph is typically stored in a graph database or a specialized data structure optimized for relationship queries.</li>
+                                <li><strong>Bidirectional Indexing</strong>: The system maintains both "following" and "followers" indexes to efficiently answer queries like "Who does User A follow?" and "Who follows User A?"</li>
+                                <li><strong>Caching</strong>: Frequently accessed portions of the graph are cached to reduce database load.</li>
+                                <li><strong>Sharding</strong>: The graph is sharded (partitioned) across multiple servers to handle the massive scale.</li>
+                                <li><strong>Privacy Controls</strong>: The graph system must respect privacy settings (e.g., private accounts, blocked users).</li>
+                            </ul>
+                        </section>
+
+                        <section class="content-section">
+                            <h2>Scalability and Performance Optimizations</h2>
+                            
+                            <h3>Content Delivery Network (CDN)</h3>
+                            <p>Instagram heavily relies on CDNs to deliver media content efficiently to users worldwide:</p>
+                            <ul>
+                                <li><strong>Edge Caching</strong>: Media files are cached at edge locations close to users.</li>
+                                <li><strong>Dynamic Routing</strong>: Users are directed to the nearest edge location.</li>
+                                <li><strong>Content Prefetching</strong>: Popular content might be proactively distributed to edge locations.</li>
+                                <li><strong>Adaptive Bitrate Delivery</strong>: Video content is delivered at appropriate quality based on network conditions.</li>
+                            </ul>
+                            
+                            <h3>Database Sharding</h3>
+                            <p>To handle the massive scale of data, Instagram shards (horizontally partitions) its databases:</p>
+                            <ul>
+                                <li><strong>User Sharding</strong>: Users are distributed across database shards based on user ID.</li>
+                                <li><strong>Post Sharding</strong>: Posts are sharded based on post ID or user ID.</li>
+                                <li><strong>Graph Sharding</strong>: The social graph is sharded to distribute the load.</li>
+                            </ul>
+                            <p>Sharding allows Instagram to distribute the load across multiple database servers and scale horizontally as the platform grows.</p>
+                            
+                            <h3>Caching Strategy</h3>
+                            <p>Caching is extensively used throughout Instagram's architecture to reduce database load and improve response times:</p>
+                            <ul>
+                                <li><strong>Feed Cache</strong>: Stores pre-computed feeds for users.</li>
+                                <li><strong>User Cache</strong>: Caches user profile information.</li>
+                                <li><strong>Post Cache</strong>: Caches frequently accessed posts and their metadata.</li>
+                                <li><strong>Social Graph Cache</strong>: Caches portions of the social graph.</li>
+                                <li><strong>Media Metadata Cache</strong>: Caches information about media files.</li>
+                            </ul>
+                            <p>Instagram likely uses in-memory caching systems like Redis or Memcached, with custom modifications to handle their specific requirements.</p>
+                            
+                            <h3>Asynchronous Processing</h3>
+                            <p>Not all operations need to be processed synchronously. Instagram uses asynchronous processing for many tasks:</p>
+                            <ul>
+                                <li><strong>Media Processing</strong>: After initial validation, media processing happens asynchronously.</li>
+                                <li><strong>Feed Updates</strong>: When a user posts content, feed updates for followers happen asynchronously.</li>
+                                <li><strong>Notifications</strong>: Notifications are generated and delivered asynchronously.</li>
+                                <li><strong>Analytics</strong>: Engagement metrics are updated asynchronously.</li>
+                            </ul>
+                            <p>Instagram uses message queues and event-driven architectures to implement asynchronous processing, which helps improve system responsiveness and throughput.</p>
+                        </section>
+
+                        <section class="content-section">
+                            <h2>Fault Tolerance and Reliability</h2>
+                            
+                            <h3>Data Replication</h3>
+                            <p>To ensure data durability and availability, Instagram replicates data across multiple servers and data centers:</p>
+                            <ul>
+                                <li><strong>Database Replication</strong>: Data is replicated across multiple database servers.</li>
+                                <li><strong>Media Replication</strong>: Media files are replicated across multiple storage nodes.</li>
+                                <li><strong>Cross-datacenter Replication</strong>: Critical data is replicated across multiple data centers.</li>
+                            </ul>
+                            
+                            <h3>Service Redundancy</h3>
+                            <p>Instagram ensures high availability through service redundancy:</p>
+                            <ul>
+                                <li><strong>Multiple Service Instances</strong>: Each service runs multiple instances across different servers.</li>
+                                <li><strong>Load Balancing</strong>: Requests are distributed across service instances.</li>
+                                <li><strong>Auto-scaling</strong>: The number of service instances is automatically adjusted based on load.</li>
+                                <li><strong>Health Checking</strong>: Unhealthy service instances are detected and removed from rotation.</li>
+                            </ul>
+                            
+                            <h3>Graceful Degradation</h3>
+                            <p>In case of partial system failures, Instagram's architecture is designed to degrade gracefully:</p>
+                            <ul>
+                                <li><strong>Feature Disabling</strong>: Non-critical features can be disabled during high load or partial failures.</li>
+                                <li><strong>Fallback Mechanisms</strong>: Alternative, simpler implementations are used when primary systems are unavailable.</li>
+                                <li><strong>Circuit Breakers</strong>: Prevent cascading failures by stopping requests to failing components.</li>
+                            </ul>
+                            <p>For example, if the feed ranking service is experiencing issues, Instagram might fall back to showing a chronological feed or temporarily disable certain feed features.</p>
+                            
+                            <h3>Disaster Recovery</h3>
+                            <p>Instagram has comprehensive disaster recovery plans to handle major outages:</p>
+                            <ul>
+                                <li><strong>Multi-datacenter Architecture</strong>: Services are deployed across multiple data centers.</li>
+                                <li><strong>Datacenter Failover</strong>: Traffic can be redirected to different data centers if one experiences issues.</li>
+                                <li><strong>Regular Testing</strong>: Disaster recovery procedures are regularly tested to ensure they work as expected.</li>
+                            </ul>
+                        </section>
+
+                        <section class="content-section">
+                            <h2>Security Considerations</h2>
+                            
+                            <h3>Authentication and Authorization</h3>
+                            <p>Securing user accounts and controlling access to resources:</p>
+                            <ul>
+                                <li><strong>User Authentication</strong>: Secure login mechanisms with options for two-factor authentication.</li>
+                                <li><strong>OAuth</strong>: Used for third-party application authorization.</li>
+                                <li><strong>Session Management</strong>: Secure handling of user sessions across devices.</li>
+                                <li><strong>Access Control</strong>: Fine-grained permissions for different types of operations.</li>
+                            </ul>
+                            
+                            <h3>Data Protection</h3>
+                            <p>Protecting user data and content:</p>
+                            <ul>
+                                <li><strong>Encryption</strong>: Data is encrypted both in transit (using TLS) and at rest.</li>
+                                <li><strong>Privacy Controls</strong>: Users can control who can see their content (public vs. private accounts).</li>
+                                <li><strong>Data Access Logging</strong>: Access to sensitive user data is logged and monitored.</li>
+                                <li><strong>Content Security</strong>: Measures to prevent unauthorized access to media files.</li>
+                            </ul>
+                            
+                            <h3>Abuse Prevention</h3>
+                            <p>Preventing spam, abuse, and other malicious activities:</p>
+                            <ul>
+                                <li><strong>Rate Limiting</strong>: Limits on the number of actions a user can perform in a given time period.</li>
+                                <li><strong>CAPTCHA</strong>: Used to prevent automated account creation and abuse.</li>
+                                <li><strong>Content Filtering</strong>: Automated systems to detect and filter spam, abuse, and inappropriate content.</li>
+                                <li><strong>Account Verification</strong>: Verification of high-profile accounts to prevent impersonation.</li>
+                                <li><strong>Reporting Mechanisms</strong>: Tools for users to report abusive content and accounts.</li>
+                            </ul>
+                            
+                            <h3>Media Security</h3>
+                            <p>Protecting media content from unauthorized access and distribution:</p>
+                            <ul>
+                                <li><strong>Signed URLs</strong>: Media URLs might include signatures to prevent unauthorized access.</li>
+                                <li><strong>Expiring Links</strong>: Media URLs might expire after a certain time to prevent persistent access.</li>
+                                <li><strong>Watermarking</strong>: Invisible watermarks might be applied to media to track unauthorized distribution.</li>
+                                <li><strong>Content ID</strong>: Systems to detect and manage copyright-protected content.</li>
+                            </ul>
+                        </section>
+
+                        <section class="content-section">
+                            <h2>Evolution and Lessons Learned</h2>
+                            
+                            <h3>From Monolith to Microservices</h3>
+                            <p>Instagram started as a relatively simple application but has evolved significantly over time:</p>
+                            <ul>
+                                <li><strong>2010-2012</strong>: Instagram began as a monolithic Python (Django) application with a PostgreSQL database.</li>
+                                <li><strong>2012-2014</strong>: After acquisition by Facebook, Instagram began adopting some of Facebook's infrastructure and practices.</li>
+                                <li><strong>2014-2016</strong>: Started breaking the monolith into services, introduced more caching and sharding.</li>
+                                <li><strong>2016-present</strong>: Continued evolution towards a microservices architecture, with a focus on scalability and new features.</li>
+                            </ul>
+                            
+                            <h3>Scaling Challenges</h3>
+                            <p>Instagram has faced numerous scaling challenges as it grew from a small startup to a platform with over a billion users:</p>
+                            <ul>
+                                <li><strong>Database Scaling</strong>: The initial PostgreSQL database couldn't handle the growing load, leading to the adoption of sharding and eventually custom database solutions.</li>
+                                <li><strong>Media Storage</strong>: Storing and serving billions of photos and videos required specialized storage solutions and CDN integration.</li>
+                                <li><strong>Feed Generation</strong>: The original chronological feed model couldn't scale, leading to the development of more sophisticated feed generation and ranking systems.</li>
+                                <li><strong>Global Expansion</strong>: Supporting users worldwide introduced challenges with latency, regulations, and localization.</li>
+                            </ul>
+                            
+                            <h3>Key Lessons</h3>
+                            <p>Instagram's journey offers several valuable lessons for system designers:</p>
+                            <ul>
+                                <li><strong>Start Simple, Evolve as Needed</strong>: Instagram began with a simple architecture and evolved it as requirements and scale demanded.</li>
+                                <li><strong>Focus on Core Features</strong>: Instagram initially focused on doing one thing well (photo sharing) before expanding to other features.</li>
+                                <li><strong>Leverage Existing Technologies</strong>: Instagram used proven technologies and frameworks rather than reinventing everything.</li>
+                                <li><strong>Optimize for Mobile</strong>: Instagram was designed with mobile users in mind from the beginning.</li>
+                                <li><strong>Caching is Critical</strong>: Effective caching strategies are essential for handling read-heavy workloads.</li>
+                                <li><strong>CDN Integration</strong>: For media-heavy applications, CDN integration is crucial for performance.</li>
+                            </ul>
+                        </section>
+
+                        <section class="content-section">
+                            <h2>Conclusion</h2>
+                            <p>Instagram's system design represents a fascinating case study in building large-scale, media-heavy social platforms. Their architecture has evolved to meet the challenges of handling billions of photos and videos while serving hundreds of millions of users worldwide, with a focus on performance, reliability, and user experience.</p>
+                            
+                            <p>Key takeaways from Instagram's architecture include:</p>
+                            <ul>
+                                <li>The importance of efficient media processing and delivery for photo/video sharing platforms</li>
+                                <li>The evolution of feed generation from simple chronological lists to sophisticated personalized rankings</li>
+                                <li>The critical role of CDNs in delivering media content globally</li>
+                                <li>The benefits of starting simple and evolving the architecture as needed</li>
+                                <li>The necessity of designing for fault tolerance and graceful degradation</li>
+                            </ul>
+                            
+                            <p>By studying Instagram's approach to system design, engineers can gain insights applicable to a wide range of distributed systems, particularly those involving media sharing, social networking, and content delivery.</p>
+                        </section>
+
+                        <div class="next-steps">
+                            <h3>Next Steps</h3>
+                            <div class="next-links">
+                                <a href="amazon.html" class="next-link">
+                                    <span class="next-text">Next Example</span>
+                                    <span class="next-title">Amazon System Design</span>
+                                    <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <span class="logo-text">System Design <span class="highlight">A-Z</span></span>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-nav">
+                        <h4>Navigation</h4>
+                        <ul>
+                            <li><a href="../../index.html">Home</a></li>
+                            <li><a href="../fundamentals/index.html">Fundamentals</a></li>
+                            <li><a href="../examples/index.html">Real-World Examples</a></li>
+                            <li><a href="../implementation/index.html">Implementation</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-resources">
+                        <h4>Resources</h4>
+                        <ul>
+                            <li><a href="#">Glossary</a></li>
+                            <li><a href="#">Recommended Books</a></li>
+                            <li><a href="#">Tools & Resources</a></li>
+                            <li><a href="#">FAQ</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 System Design A-Z. All images used are copyright-free.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../js/main.js"></script>
+</body>
+</html>
