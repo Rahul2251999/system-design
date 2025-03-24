@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-World Example: Google Search System Design | System Design A-Z</title>
+    <meta name="description" content="Learn about the system design behind Google Search, including architecture, scalability, and technical challenges">
+    <link rel="stylesheet" href="../../css/normalize.css">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/examples.css">
+    <link rel="stylesheet" href="../../css/content-page.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="logo">
+                <a href="../../index.html">
+                    <span class="logo-text">System Design <span class="highlight">A-Z</span></span>
+                </a>
+            </div>
+            <nav class="main-nav">
+                <button class="menu-toggle" aria-label="Toggle menu">
+                    <span class="hamburger"></span>
+                </button>
+                <ul class="nav-links">
+                    <li><a href="../../index.html">Home</a></li>
+                    <li><a href="../fundamentals/index.html">Fundamentals</a></li>
+                    <li><a href="../examples/index.html" class="active">Real-World Examples</a></li>
+                    <li><a href="../implementation/index.html">Implementation</a></li>
+                    <li><a href="../../index.html#about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="content-page">
+        <div class="container">
+            <div class="content-wrapper">
+                <aside class="sidebar">
+                    <div class="sidebar-content">
+                        <h3>Real-World Examples</h3>
+                        <ul class="sidebar-nav">
+                            <li><a href="netflix.html">Netflix</a></li>
+                            <li><a href="uber.html">Uber</a></li>
+                            <li><a href="twitter.html">Twitter</a></li>
+                            <li><a href="instagram.html">Instagram</a></li>
+                            <li><a href="amazon.html">Amazon</a></li>
+                            <li><a href="google-search.html" class="active">Google Search</a></li>
+                            <li><a href="payment-system.html">Payment System</a></li>
+                            <li><a href="url-shortener.html">URL Shortener</a></li>
+                            <li><a href="chat-application.html">Chat Application</a></li>
+                            <li><a href="e-commerce.html">E-Commerce Platform</a></li>
+                        </ul>
+                        <div class="sidebar-cta">
+                            <h4>Ready to implement?</h4>
+                            <p>Check out our implementation guides</p>
+                            <a href="../implementation/index.html" class="btn btn-sm">Implementation Guides</a>
+                        </div>
+                    </div>
+                </aside>
+
+                <article class="main-content">
+                    <div class="content-header">
+                        <h1>Google Search System Design</h1>
+                        <div class="content-meta">
+                            <span class="difficulty advanced">Advanced</span>
+                            <span class="reading-time">25 min read</span>
+                        </div>
+                    </div>
+
+                    <div class="content-body">
+                        <section class="content-section">
+                            <h2>Introduction to Google Search</h2>
+                            <p>Google Search is the world's most widely used search engine, processing billions of search queries daily across more than 150 languages. Since its launch in 1997, Google Search has evolved from a simple text-based search engine to a sophisticated system that understands context, semantics, and user intent while delivering results in milliseconds.</p>
+                            
+                            <p>From a system design perspective, Google Search represents one of the most complex and impressive distributed systems ever built. It must efficiently crawl, index, and search trillions of web pages while providing relevant results with extremely low latency to users worldwide.</p>
+                            
+                            <div class="image-container">
+                                <div class="placeholder-image">
+                                    <p>Google Search High-Level Architecture Diagram</p>
+                                </div>
+                                <div class="image-caption">Figure 1: High-level architecture of Google Search.</div>
+                            </div>
+                        </section>
+
+                        <section class="content-section">
+                            <h2>System Requirements</h2>
+                            
+                            <h3>Functional Requirements</h3>
+                            <ul>
+                                <li><strong>Web Crawling</strong>: Discover and fetch web pages from across the internet.</li>
+                                <li><strong>Indexing</strong>: Process and store web content in a format optimized for search.</li>
+                                <li><strong>Query Processing</strong>: Parse and understand user search queries.</li>
+                                <li><strong>Search</strong>: Find relevant documents matching user queries.</li>
+                                <li><strong>Ranking</strong>: Order search results by relevance and quality.</li>
+                                <li><strong>Result Presentation</strong>: Display search results with snippets, links, and additional information.</li>
+                                <li><strong>Special Features</strong>: Support for special search types (images, videos, news, etc.).</li>
+                                <li><strong>Personalization</strong>: Tailor results based on user preferences and history.</li>
+                                <li><strong>Spelling Correction</strong>: Suggest corrections for misspelled queries.</li>
+                                <li><strong>Autocomplete</strong>: Suggest query completions as users type.</li>
+                            </ul>
+                            
+                            <h3>Non-Functional Requirements</h3>
+                            <ul>
+                                <li><strong>Scalability</strong>: Handle billions of queries per day and index trillions of web pages.</li>
+                                <li><strong>Low Latency</strong>: Return search results in milliseconds (typically under 200ms).</li>
+                                <li><strong>High Availability</strong>: Maintain 99.999% uptime (less than 5 minutes of downtime per year).</li>
+                                <li><strong>Freshness</strong>: Keep the index updated with new and changed content.</li>
+                                <li><strong>Relevance</strong>: Provide highly relevant results for user queries.</li>
+                                <li><strong>Global Distribution</strong>: Serve users worldwide with consistent performance.</li>
+                                <li><strong>Fault Tolerance</strong>: Continue operating despite hardware or network failures.</li>
+                                <li><strong>Security</strong>: Protect user data and prevent abuse of the search system.</li>
+                            </ul>
+                        </section>
+
+                        <section class="content-section">
+                            <h2>High-Level Architecture</h2>
+                            <p>Google Search's architecture can be divided into three main components: Crawling, Indexing, and Query Processing. Each of these components is itself a complex distributed system.</p>
+                            
+                            <h3>Crawling System</h3>
+                            <p>The crawling system, known as Googlebot, discovers and fetches web pages from across the internet:</p>
+                            <ul>
+                                <li><strong>URL Frontier</strong>: Manages the list of URLs to be crawled.</li>
+                                <li><strong>Fetcher</strong>: Downloads web pages from the internet.</li>
+                                <li><strong>DNS Resolver</strong>: Resolves domain names to IP addresses.</li>
+                                <li><strong>Robots.txt Parser</strong>: Respects website crawling policies.</li>
+                                <li><strong>URL Extractor</strong>: Identifies new URLs from crawled pages.</li>
+                                <li><strong>Content Store</strong>: Temporarily stores crawled content for processing.</li>
+                                <li><strong>Duplicate Detector</strong>: Identifies and filters duplicate content.</li>
+                                <li><strong>Scheduler</strong>: Determines when and how often to recrawl pages.</li>
+                            </ul>
+                            
+                            <h3>Indexing System</h3>
+                            <p>The indexing system processes crawled content and builds the search index:</p>
+                            <ul>
+                                <li><strong>Document Processor</strong>: Parses and analyzes web page content.</li>
+                                <li><strong>Language Detector</strong>: Identifies the language of the content.</li>
+                                <li><strong>Content Analyzer</strong>: Extracts text, links, metadata, and structured data.</li>
+                                <li><strong>PageRank Calculator</strong>: Computes the importance of pages based on link structure.</li>
+                                <li><strong>Index Builder</strong>: Creates and updates the search index.</li>
+                                <li><strong>Index Servers</strong>: Store and serve the search index.</li>
+                                <li><strong>Document Servers</strong>: Store additional information about documents.</li>
+                            </ul>
+                            
+                            <h3>Query Processing System</h3>
+                            <p>The query processing system handles user search queries and returns results:</p>
+                            <ul>
+                                <li><strong>Query Parser</strong>: Parses and understands user queries.</li>
+                                <li><strong>Spell Checker</strong>: Corrects misspelled queries.</li>
+                                <li><strong>Query Expander</strong>: Adds synonyms and related terms to the query.</li>
+                                <li><strong>Query Router</strong>: Routes queries to appropriate index shards.</li>
+                                <li><strong>Index Searcher</strong>: Searches the index for matching documents.</li>
+                                <li><strong>Ranker</strong>: Orders search results by relevance.</li>
+                                <li><strong>Snippet Generator</strong>: Creates snippets of text from matching documents.</li>
+                                <li><strong>Result Assembler</strong>: Combines results from different sources.</li>
+                                <li><strong>Cache</strong>: Stores frequently requested search results.</li>
+                            </ul>
+                            
+                            <h3>Infrastructure</h3>
+                            <p>Google Search runs on Google's global infrastructure:</p>
+                            <ul>
+                                <li><strong>Data Centers</strong>: Distributed across the world for global coverage.</li>
+                                <li><strong>Load Balancers</strong>: Distribute queries across servers.</li>
+                                <li><strong>Caching Layers</strong>: Multiple levels of caching for performance.</li>
+                                <li><strong>Monitoring and Logging</strong>: Track system health and performance.</li>
+                                <li><strong>Deployment Systems</strong>: Manage software updates and rollouts.</li>
+                            </ul>
+                        </section>
+
+                        <section class="content-section">
+                            <h2>Key Components Deep Dive</h2>
+                            
+                            <h3>Web Crawler (Googlebot)</h3>
+                            <p>Google's web crawler, Googlebot, is responsible for discovering and fetching web pages from across the internet. This is a massive distributed system that must efficiently crawl billions of web pages while respecting website policies and managing resources.</p>
+                            
+                            <div class="image-container">
+                                <div class="placeholder-image">
+                                    <p>Google Web Crawler Architecture</p>
+                                </div>
+                                <div class="image-caption">Figure 2: Architecture of Google's web crawler system.</div>
+                            </div>
+                            
+                            <p><strong>Key aspects of the crawling system:</strong></p>
+                            <ul>
+                                <li><strong>URL Frontier</strong>: The URL frontier is a prioritized queue of URLs to be crawled. It manages billions of URLs and must prioritize them based on various factors:
+                                    <ul>
+                                        <li>Page importance (estimated by PageRank and other signals)</li>
+                                        <li>Update frequency (how often the page changes)</li>
+                                        <li>Crawl frequency (how often the page has been crawled)</li>
+                                        <li>Site-specific policies (from robots.txt)</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Politeness Policy</strong>: The crawler must avoid overloading websites by:
+                                    <ul>
+                                        <li>Respecting robots.txt directives</li>
+                                        <li>Implementing per-host rate limiting</li>
+                                        <li>Using exponential backoff for overloaded servers</li>
+                                        <li>Crawling during off-peak hours for some sites</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Distributed Crawling</strong>: The crawling workload is distributed across thousands of machines:
+                                    <ul>
+                                        <li>URL space is partitioned by host or domain</li>
+                                        <li>Each crawler instance is responsible for a subset of URLs</li>
+                                        <li>Coordination ensures no duplicate crawling</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Freshness and Recrawling</strong>: The system must decide when to recrawl pages:
+                                    <ul>
+                                        <li>Important pages are crawled more frequently</li>
+                                        <li>Change frequency is monitored and used to adjust crawl schedules</li>
+                                        <li>News sites might be crawled every few minutes</li>
+                                        <li>Static pages might be crawled every few weeks or months</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            
+                            <h3>Indexing System</h3>
+                            <p>The indexing system processes crawled web pages and builds the search index, which is the data structure that enables fast search.</p>
+                            
+                            <p><strong>Key components of the indexing system:</strong></p>
+                            <ul>
+                                <li><strong>Document Processing Pipeline</strong>: Crawled pages go through a series of processing steps:
+                                    <ul>
+                                        <li>HTML parsing and cleaning</li>
+                                        <li>Text extraction and tokenization</li>
+                                        <li>Language detection</li>
+                                        <li>Entity recognition (identifying people, places, things)</li>
+                                        <li>Duplicate detection and content clustering</li>
+                                        <li>Link analysis</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Inverted Index</strong>: The primary data structure for search:
+                                    <ul>
+                                        <li>Maps terms to the documents containing them</li>
+                                        <li>Includes position information for phrase queries</li>
+                                        <li>Stores additional metadata like term frequency</li>
+                                        <li>Optimized for fast retrieval</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Document Index</strong>: Stores information about documents:
+                                    <ul>
+                                        <li>URL and metadata</li>
+                                        <li>Title and description</li>
+                                        <li>PageRank and other quality signals</li>
+                                        <li>Cached version of the page</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Index Sharding</strong>: The index is too large to fit on a single machine, so it's sharded:
+                                    <ul>
+                                        <li>Document-based sharding: Each shard contains a subset of documents</li>
+                                        <li>Term-based sharding: Each shard contains a subset of terms</li>
+                                        <li>Google likely uses a combination of both approaches</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            
+                            <h3>PageRank Algorithm</h3>
+                            <p>PageRank is one of Google's original innovations for ranking web pages based on the link structure of the web. While it's now just one of many ranking factors, it remains an important component.</p>
+                            
+                            <p><strong>Key aspects of PageRank:</strong></p>
+                            <ul>
+                                <li><strong>Basic Concept</strong>: A page is important if important pages link to it.</li>
+                                <li><strong>Mathematical Model</strong>: Models a random surfer clicking links, with occasional random jumps.</li>
+                                <li><strong>Computation</strong>: Requires iterative computation over the entire web graph.</li>
+                                <li><strong>Distributed Implementation</strong>: Computed using distributed systems like MapReduce.</li>
+                                <li><strong>Enhancements</strong>: Modern PageRank includes many refinements:
+                                    <ul>
+                                        <li>Topic-sensitive PageRank</li>
+                                        <li>Personalized PageRank</li>
+                                        <li>Link quality assessment</li>
+                                        <li>Spam detection and filtering</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            
+                            <h3>Query Processing</h3>
+                            <p>Query processing is the component that handles user search queries and returns relevant results. This system must operate with extremely low latency while providing highly relevant results.</p>
+                            
+                            <p><strong>Query processing flow:</strong></p>
+                            <ol>
+                                <li><strong>Query Parsing</strong>: The query is parsed and analyzed:
+                                    <ul>
+                                        <li>Tokenization and normalization</li>
+                                        <li>Spell checking and correction</li>
+                                        <li>Query classification (informational, navigational, transactional)</li>
+                                        <li>Entity recognition</li>
+                                        <li>Intent understanding</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Query Expansion</strong>: The query is expanded with:
+                                    <ul>
+                                        <li>Synonyms and related terms</li>
+                                        <li>Stemming and lemmatization</li>
+                                        <li>Query reformulations</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Index Lookup</strong>: The expanded query is used to retrieve matching documents:
+                                    <ul>
+                                        <li>Queries are sent to multiple index shards in parallel</li>
+                                        <li>Each shard returns matching documents</li>
+                                        <li>Results from shards are merged</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Ranking</strong>: Retrieved documents are ranked based on hundreds of signals:
+                                    <ul>
+                                        <li>Query-document relevance (TF-IDF, BM25, etc.)</li>
+                                        <li>PageRank and link analysis</li>
+                                        <li>Document quality and freshness</li>
+                                        <li>User context and personalization</li>
+                                        <li>Machine learning models (RankBrain, BERT, etc.)</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Result Assembly</strong>: The final search results page is assembled:
+                                    <ul>
+                                        <li>Snippet generation for each result</li>
+                                        <li>Integration of special results (knowledge graph, news, images, etc.)</li>
+                                        <li>Ads selection and placement</li>
+                                        <li>Related searches and suggestions</li>
+                                    </ul>
+                                </li>
+                            </ol>
+                        </section>
+
+                        <section class="content-section">
+                            <h2>Scalability and Performance Optimizations</h2>
+                            
+                            <h3>Distributed Architecture</h3>
+                            <p>Google Search operates at an enormous scale, requiring a highly distributed architecture:</p>
+                            <ul>
+                                <li><strong>Horizontal Scaling</strong>: All components are designed to scale horizontally by adding more machines.</li>
+                                <li><strong>Data Partitioning</strong>: Data is partitioned across thousands of machines:
+                                    <ul>
+                                        <li>The web index is partitioned into shards</li>
+                                        <li>Each shard is replicated for redundancy and load distribution</li>
+                                        <li>Different partitioning strategies are used for different data types</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Parallel Processing</strong>: Queries are processed in parallel across many machines:
+                                    <ul>
+                                        <li>Query is sent to all relevant index shards simultaneously</li>
+                                        <li>Each shard processes the query independently</li>
+                                        <li>Results are merged and ranked</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Load Balancing</strong>: Sophisticated load balancing ensures even distribution of work:
+                                    <ul>
+                                        <li>Geographic routing to nearby data centers</li>
+                                        <li>Load-aware request distribution</li>
+                                        <li>Capacity-based routing</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            
+                            <h3>Caching Strategy</h3>
+                            <p>Caching is extensively used throughout Google Search to improve performance:</p>
+                            <ul>
+                                <li><strong>Query Result Cache</strong>: Caches results for frequent queries:
+                                    <ul>
+                                        <li>Popular queries might be served entirely from cache</li>
+                                        <li>Different cache TTLs based on query type and freshness requirements</li>
+                                        <li>Personalized results may have limited caching</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Document Cache</strong>: Caches document metadata and snippets.</li>
+                                <li><strong>Index Cache</strong>: Caches frequently accessed portions of the index.</li>
+                                <li><strong>Posting List Cache</strong>: Caches posting lists for common terms.</li>
+                                <li><strong>Multi-level Caching</strong>: Caching at different levels:
+                                    <ul>
+                                        <li>L1: In-memory cache on the local machine</li>
+                                        <li>L2: Distributed cache within a data center</li>
+                                        <li>L3: Global cache across data centers</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            
+                            <h3>Index Optimizations</h3>
+                            <p>The search index is optimized for fast retrieval:</p>
+                            <ul>
+                                <li><strong>Compression</strong>: Index data is heavily compressed:
+                                    <ul>
+                                        <li>Dictionary encoding for terms</li>
+                                        <li>Delta encoding for document IDs</li>
+                                        <li>Variable-length encoding for frequencies</li>
+                                        <li>Block-based compression for posting lists</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Tiered Indexes</strong>: Multiple index tiers with different characteristics:
+                                    <ul>
+                                        <li>Fresh tier: Recent content, updated frequently</li>
+                                        <li>Main tier: Most of the web, updated periodically</li>
+                                        <li>Archive tier: Older content, updated infrequently</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Early Termination</strong>: Techniques to avoid processing all matching documents:
+                                    <ul>
+                                        <li>Document-at-a-time processing with early stopping</li>
+                                        <li>Impact-sorted indexes for efficient top-k retrieval</li>
+                                        <li>Two-phase ranking: cheap filters followed by expensive scoring</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            
+                            <h3>Query Optimization</h3>
+                            <p>Query processing is optimized for low latency:</p>
+                            <ul>
+                                <li><strong>Query Planning</strong>: Selecting the most efficient execution plan:
+                                    <ul>
+                                        <li>Term ordering based on selectivity</li>
+                                        <li>Skip lists for efficient boolean operations</li>
+                                        <li>Cost-based optimization for complex queries</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Parallel Execution</strong>: Executing query components in parallel.</li>
+                                <li><strong>Predictive Fetching</strong>: Prefetching likely-to-be-needed data.</li>
+                                <li><strong>Approximation</strong>: Using approximation algorithms when exact results aren't required.</li>
+                                <li><strong>Timeout Mechanisms</strong>: Setting time budgets for query components.</li>
+                            </ul>
+                        </section>
+
+                        <section class="content-section">
+                            <h2>Fault Tolerance and Reliability</h2>
+                            
+                            <h3>Data Replication</h3>
+                            <p>Google Search ensures data durability and availability through replication:</p>
+                            <ul>
+                                <li><strong>Index Replication</strong>: Each index shard is replicated across multiple machines.</li>
+                                <li><strong>Document Replication</strong>: Document data is replicated for redundancy.</li>
+                                <li><strong>Cross-datacenter Replication</strong>: Critical data is replicated across data centers.</li>
+                                <li><strong>Replication Strategies</strong>: Different replication strategies based on data importance:
+                                    <ul>
+                                        <li>Synchronous replication for critical data</li>
+                                        <li>Asynchronous replication for less critical data</li>
+                                        <li>Quorum-based replication for consistency</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            
+                            <h3>Failure Detection and Recovery</h3>
+                            <p>Google Search has sophisticated mechanisms for detecting and recovering from failures:</p>
+                            <ul>
+                                <li><strong>Health Checking</strong>: Continuous monitoring of system components:
+                                    <ul>
+                                        <li>Heartbeat mechanisms</li>
+                                        <li>Performance monitoring</li>
+                                        <li>Error rate tracking</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Automatic Failover</strong>: When a component fails:
+                                    <ul>
+                                        <li>Traffic is redirected to healthy replicas</li>
+                                        <li>Failed components are taken out of rotation</li>
+                                        <li>Recovery processes are initiated</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Self-healing Systems</strong>: Automated recovery procedures:
+                                    <ul>
+                                        <li>Automatic restart of failed processes</li>
+                                        <li>Data reconstruction from replicas</li>
+                                        <li>Gradual traffic restoration</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            
+                            <h3>Graceful Degradation</h3>
+                            <p>In case of partial system failures, Google Search degrades gracefully:</p>
+                            <ul>
+                                <li><strong>Tiered Results</strong>: Return results from available index shards, even if some are unavailable.</li>
+                                <li><strong>Feature Disabling</strong>: Disable non-critical features during high load or partial failures.</li>
+                                <li><strong>Simplified Ranking</strong>: Fall back to simpler ranking algorithms when advanced ones are unavailable.</li>
+                                <li><strong>Stale Results</strong>: Serve slightly outdated results when fresh ones can't be computed in time.</li>
+                                <li><strong>Circuit Breakers</strong>: Prevent cascading failures by stopping requests to failing components.</li>
+                            </ul>
+                            
+                            <h3>Disaster Recovery</h3>
+                            <p>Google has comprehensive disaster recovery plans for major outages:</p>
+                            <ul>
+                                <li><strong>Multi-datacenter Architecture</strong>: Services are deployed across multiple data centers.</li>
+                                <li><strong>Geographic Distribution</strong>: Data centers are distributed globally to mitigate regional disasters.</li>
+                                <li><strong>Datacenter Failover</strong>: Traffic can be redirected to different data centers if one experiences issues.</li>
+                                <li><strong>Regular Testing</strong>: Disaster recovery procedures are regularly tested.</li>
+                            </ul>
+                        </section>
+
+                        <section class="content-section">
+                            <h2>Freshness and Consistency</h2>
+                            
+                            <h3>Index Freshness</h3>
+                            <p>Keeping the search index up-to-date with the web is a significant challenge:</p>
+                            <ul>
+                                <li><strong>Incremental Updates</strong>: The index is updated incrementally rather than rebuilt from scratch:
+                                    <ul>
+                                        <li>New and changed pages are processed and added to the index</li>
+                                        <li>Deleted pages are removed from the index</li>
+                                        <li>Updates are propagated to all index replicas</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Freshness Tiers</strong>: Different parts of the index are updated at different frequencies:
+                                    <ul>
+                                        <li>News and trending content: Minutes to hours</li>
+                                        <li>Popular websites: Hours to days</li>
+                                        <li>Less popular content: Days to weeks</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Change Detection</strong>: Detecting when web pages have changed:
+                                    <ul>
+                                        <li>Monitoring of update patterns</li>
+                                        <li>Checking HTTP headers (Last-Modified, ETag)</li>
+                                        <li>Content fingerprinting to detect changes</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Real-time Indexing</strong>: Special mechanisms for time-sensitive content:
+                                    <ul>
+                                        <li>Push-based updates from news publishers</li>
+                                        <li>Rapid crawling of trending topics</li>
+                                        <li>Social media monitoring for breaking news</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            
+                            <h3>Consistency Challenges</h3>
+                            <p>Maintaining consistency in a distributed search system is challenging:</p>
+                            <ul>
+                                <li><strong>Index Consistency</strong>: Ensuring all index replicas have the same view:
+                                    <ul>
+                                        <li>Version tracking for index updates</li>
+                                        <li>Atomic updates to prevent partial views</li>
+                                        <li>Consistency protocols for distributed updates</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Query Consistency</strong>: Ensuring consistent results for the same query:
+                                    <ul>
+                                        <li>Routing related queries to the same index replicas</li>
+                                        <li>Versioned indexes to prevent mixed results</li>
+                                        <li>Consistent hashing for query distribution</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Eventual Consistency</strong>: In many cases, eventual consistency is acceptable:
+                                    <ul>
+                                        <li>Search results don't need to be 100% consistent across all users</li>
+                                        <li>Small variations in results are tolerable</li>
+                                        <li>Freshness is often prioritized over perfect consistency</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </section>
+
+                        <section class="content-section">
+                            <h2>Security and Privacy</h2>
+                            
+                            <h3>Query Privacy</h3>
+                            <p>Protecting user search queries is a critical privacy concern:</p>
+                            <ul>
+                                <li><strong>Encryption</strong>: All search queries are encrypted using HTTPS.</li>
+                                <li><strong>Data Retention Policies</strong>: Limiting how long query data is stored.</li>
+                                <li><strong>Anonymization</strong>: Removing identifying information from query logs.</li>
+                                <li><strong>Access Controls</strong>: Strict controls on who can access query data.</li>
+                                <li><strong>User Controls</strong>: Providing users with options to manage their search history.</li>
+                            </ul>
+                            
+                            <h3>Spam and Abuse Prevention</h3>
+                            <p>Google Search must defend against attempts to manipulate search results:</p>
+                            <ul>
+                                <li><strong>Link Spam Detection</strong>: Identifying and penalizing artificial link schemes.</li>
+                                <li><strong>Content Spam Detection</strong>: Detecting keyword stuffing, cloaking, and other content manipulation.</li>
+                                <li><strong>Query Spam Protection</strong>: Preventing automated query flooding and scraping.</li>
+                                <li><strong>Manual Actions</strong>: Human reviewers can take action against sites violating guidelines.</li>
+                                <li><strong>Algorithm Updates</strong>: Regular updates to search algorithms to counter new spam techniques.</li>
+                            </ul>
+                            
+                            <h3>Safe Search</h3>
+                            <p>Google provides options to filter explicit content:</p>
+                            <ul>
+                                <li><strong>Content Classification</strong>: Automated systems to identify adult content.</li>
+                                <li><strong>User Settings</strong>: Users can enable SafeSearch filtering.</li>
+                                <li><strong>Image Recognition</strong>: Computer vision techniques to identify explicit images.</li>
+                                <li><strong>Text Analysis</strong>: Natural language processing to identify explicit text.</li>
+                            </ul>
+                            
+                            <h3>Infrastructure Security</h3>
+                            <p>Protecting the search infrastructure from attacks:</p>
+                            <ul>
+                                <li><strong>DDoS Protection</strong>: Systems to detect and mitigate distributed denial-of-service attacks.</li>
+                                <li><strong>Access Controls</strong>: Strict controls on who can access and modify search systems.</li>
+                                <li><strong>Vulnerability Management</strong>: Regular security assessments and prompt patching.</li>
+                                <li><strong>Intrusion Detection</strong>: Systems to detect unauthorized access attempts.</li>
+                                <li><strong>Secure Development</strong>: Security-focused development practices and code reviews.</li>
+                            </ul>
+                        </section>
+
+                        <section class="content-section">
+                            <h2>Evolution and Lessons Learned</h2>
+                            
+                            <h3>Algorithmic Evolution</h3>
+                            <p>Google Search's algorithms have evolved significantly over time:</p>
+                            <ul>
+                                <li><strong>PageRank (1998)</strong>: The original algorithm based on link analysis.</li>
+                                <li><strong>Florida Update (2003)</strong>: Major update targeting link farms and other spam techniques.</li>
+                                <li><strong>Universal Search (2007)</strong>: Integration of different content types (images, videos, news) into main results.</li>
+                                <li><strong>Caffeine (2010)</strong>: New indexing system for fresher results.</li>
+                                <li><strong>Panda (2011)</strong>: Focus on content quality and reducing low-quality sites.</li>
+                                <li><strong>Penguin (2012)</strong>: Targeting link spam and manipulative link building.</li>
+                                <li><strong>Hummingbird (2013)</strong>: Complete rewrite of the core algorithm with focus on semantic search.</li>
+                                <li><strong>RankBrain (2015)</strong>: Machine learning system to help process and understand queries.</li>
+                                <li><strong>BERT (2019)</strong>: Natural language processing model for better understanding of search queries.</li>
+                                <li><strong>MUM (2021)</strong>: Multimodal understanding across text and images.</li>
+                            </ul>
+                            
+                            <h3>Infrastructure Evolution</h3>
+                            <p>Google's search infrastructure has evolved to handle growing scale and complexity:</p>
+                            <ul>
+                                <li><strong>Early Days (1998-2000)</strong>: Small cluster of servers in a colocation facility.</li>
+                                <li><strong>First Data Centers (2000-2005)</strong>: Purpose-built data centers with custom servers.</li>
+                                <li><strong>Global Expansion (2005-2010)</strong>: Building data centers worldwide for global coverage.</li>
+                                <li><strong>Custom Hardware (2010-2015)</strong>: Designing custom hardware for search workloads.</li>
+                                <li><strong>Software-Defined Networking (2015-present)</strong>: Advanced networking for efficient data movement.</li>
+                                <li><strong>AI Acceleration (2015-present)</strong>: Specialized hardware for machine learning workloads.</li>
+                            </ul>
+                            
+                            <h3>Key Lessons</h3>
+                            <p>Google Search's evolution offers several valuable lessons for system designers:</p>
+                            <ul>
+                                <li><strong>Focus on User Experience</strong>: Google prioritizes user satisfaction over technical elegance.</li>
+                                <li><strong>Measure Everything</strong>: Comprehensive metrics and A/B testing guide development.</li>
+                                <li><strong>Embrace Complexity Gradually</strong>: Google started simple and added complexity as needed.</li>
+                                <li><strong>Design for Scale from the Beginning</strong>: Core architecture anticipated massive growth.</li>
+                                <li><strong>Invest in Infrastructure</strong>: Custom infrastructure provides competitive advantages.</li>
+                                <li><strong>Balance Freshness and Comprehensiveness</strong>: Different update frequencies for different content.</li>
+                                <li><strong>Continuous Improvement</strong>: Regular updates and refinements rather than infrequent overhauls.</li>
+                                <li><strong>Defense in Depth</strong>: Multiple layers of protection against spam and manipulation.</li>
+                            </ul>
+                        </section>
+
+                        <section class="content-section">
+                            <h2>Conclusion</h2>
+                            <p>Google Search represents one of the most impressive feats of distributed systems engineering. It efficiently crawls, indexes, and searches trillions of web pages while providing relevant results with extremely low latency to users worldwide.</p>
+                            
+                            <p>Key takeaways from Google Search's architecture include:</p>
+                            <ul>
+                                <li>The importance of distributed systems design for web-scale applications</li>
+                                <li>The value of sophisticated caching and optimization techniques for low latency</li>
+                                <li>The necessity of fault tolerance and graceful degradation for high availability</li>
+                                <li>The balance between freshness, consistency, and performance</li>
+                                <li>The evolution from simple link-based ranking to sophisticated machine learning models</li>
+                            </ul>
+                            
+                            <p>By studying Google Search's approach to system design, engineers can gain insights applicable to a wide range of distributed systems, particularly those involving information retrieval, content indexing, and large-scale data processing.</p>
+                        </section>
+
+                        <div class="next-steps">
+                            <h3>Next Steps</h3>
+                            <div class="next-links">
+                                <a href="payment-system.html" class="next-link">
+                                    <span class="next-text">Next Example</span>
+                                    <span class="next-title">Payment System Design</span>
+                                    <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <span class="logo-text">System Design <span class="highlight">A-Z</span></span>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-nav">
+                        <h4>Navigation</h4>
+                        <ul>
+                            <li><a href="../../index.html">Home</a></li>
+                            <li><a href="../fundamentals/index.html">Fundamentals</a></li>
+                            <li><a href="../examples/index.html">Real-World Examples</a></li>
+                            <li><a href="../implementation/index.html">Implementation</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-resources">
+                        <h4>Resources</h4>
+                        <ul>
+                            <li><a href="#">Glossary</a></li>
+                            <li><a href="#">Recommended Books</a></li>
+                            <li><a href="#">Tools & Resources</a></li>
+                            <li><a href="#">FAQ</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 System Design A-Z. All images used are copyright-free.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../js/main.js"></script>
+</body>
+</html>
