@@ -1,0 +1,2159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Implementation: Caching Strategies | System Design A-Z</title>
+    <meta name="description" content="Practical implementation guide for caching strategies with code examples and best practices">
+    <link rel="stylesheet" href="../../css/normalize.css">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/implementation.css">
+    <link rel="stylesheet" href="../../css/content-page.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="logo">
+                <a href="../../index.html">
+                    <span class="logo-text">System Design <span class="highlight">A-Z</span></span>
+                </a>
+            </div>
+            <nav class="main-nav">
+                <button class="menu-toggle" aria-label="Toggle menu">
+                    <span class="hamburger"></span>
+                </button>
+                <ul class="nav-links">
+                    <li><a href="../../index.html">Home</a></li>
+                    <li><a href="../fundamentals/index.html">Fundamentals</a></li>
+                    <li><a href="../examples/index.html">Real-World Examples</a></li>
+                    <li><a href="../implementation/index.html" class="active">Implementation</a></li>
+                    <li><a href="../../index.html#about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="content-page">
+        <div class="container">
+            <div class="content-wrapper">
+                <aside class="sidebar">
+                    <div class="sidebar-content">
+                        <h3>Implementation Guides</h3>
+                        <ul class="sidebar-nav">
+                            <li><a href="microservices.html">Microservices Architecture</a></li>
+                            <li><a href="load-balancing.html">Load Balancing</a></li>
+                            <li><a href="caching-strategies.html" class="active">Caching Strategies</a></li>
+                            <li><a href="database-sharding.html">Database Sharding</a></li>
+                            <li><a href="api-gateway.html">API Gateway</a></li>
+                            <li><a href="message-queues.html">Message Queues</a></li>
+                            <li><a href="service-discovery.html">Service Discovery</a></li>
+                            <li><a href="authentication.html">Authentication & Authorization</a></li>
+                            <li><a href="monitoring.html">Monitoring & Logging</a></li>
+                            <li><a href="ci-cd.html">CI/CD Pipeline</a></li>
+                        </ul>
+                        <div class="sidebar-cta">
+                            <h4>See it in action</h4>
+                            <p>Check out real-world examples</p>
+                            <a href="../examples/index.html" class="btn btn-sm">View Examples</a>
+                        </div>
+                    </div>
+                </aside>
+
+                <article class="main-content">
+                    <div class="content-header">
+                        <h1>Implementing Caching Strategies</h1>
+                        <div class="content-meta">
+                            <span class="difficulty intermediate">Intermediate</span>
+                            <span class="reading-time">20 min read</span>
+                        </div>
+                    </div>
+
+                    <div class="content-body">
+                        <section class="content-section">
+                            <h2>Introduction to Caching</h2>
+                            <p>Caching is a technique that stores copies of frequently accessed data in a temporary storage location, allowing future requests for that data to be served faster. Effective caching strategies can dramatically improve application performance, reduce latency, decrease server load, and lower costs associated with data retrieval and computation.</p>
+                            
+                            <p>In this implementation guide, we'll explore various caching strategies and implement them using different technologies. We'll cover everything from simple in-memory caches to distributed caching systems, with practical code examples and best practices.</p>
+                            
+                            <div class="image-container">
+                                <div class="placeholder-image">
+                                    <p>Caching Architecture Diagram</p>
+                                </div>
+                                <div class="image-caption">Figure 1: High-level architecture of a system with caching.</div>
+                            </div>
+                        </section>
+
+                        <section class="content-section">
+                            <h2>Caching Strategies and Patterns</h2>
+                            
+                            <p>Before diving into implementation, let's understand the common caching strategies and patterns:</p>
+                            
+                            <div class="strategy-cards">
+                                <div class="strategy-card">
+                                    <h3>Cache-Aside (Lazy Loading)</h3>
+                                    <p>The application first checks the cache for data. If not found (cache miss), it retrieves from the database, then stores in the cache for future use.</p>
+                                    <div class="code-snippet">
+                                        <pre><code>function getData(key):
+    data = cache.get(key)
+    if data is null:
+        data = database.get(key)
+        cache.set(key, data)
+    return data</code></pre>
+                                    </div>
+                                </div>
+                                
+                                <div class="strategy-card">
+                                    <h3>Write-Through</h3>
+                                    <p>Data is written to both the cache and the database in the same operation. Ensures cache consistency but adds write latency.</p>
+                                    <div class="code-snippet">
+                                        <pre><code>function setData(key, value):
+    database.set(key, value)
+    cache.set(key, value)
+    return success</code></pre>
+                                    </div>
+                                </div>
+                                
+                                <div class="strategy-card">
+                                    <h3>Write-Behind (Write-Back)</h3>
+                                    <p>Data is written to the cache first, then asynchronously written to the database. Improves write performance but risks data loss.</p>
+                                    <div class="code-snippet">
+                                        <pre><code>function setData(key, value):
+    cache.set(key, value)
+    queue.add(writeOperation(key, value))
+    return success
+
+// Background process
+function processWriteQueue():
+    while queue not empty:
+        op = queue.take()
+        database.set(op.key, op.value)</code></pre>
+                                    </div>
+                                </div>
+                                
+                                <div class="strategy-card">
+                                    <h3>Read-Through</h3>
+                                    <p>The cache itself is responsible for loading data from the database when a cache miss occurs.</p>
+                                    <div class="code-snippet">
+                                        <pre><code>// Configure cache with loader
+cache = new Cache(
+    loadFunction: (key) => database.get(key)
+)
+
+// Application code
+function getData(key):
+    return cache.get(key) // Cache handles miss</code></pre>
+                                    </div>
+                                </div>
+                                
+                                <div class="strategy-card">
+                                    <h3>Refresh-Ahead</h3>
+                                    <p>The cache automatically refreshes entries before they expire, reducing cache misses.</p>
+                                    <div class="code-snippet">
+                                        <pre><code>// Configure cache with refresh
+cache = new Cache(
+    refreshAheadFactor: 0.75,
+    loadFunction: (key) => database.get(key)
+)
+
+// When item reaches 75% of TTL, 
+// cache will refresh it asynchronously</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <h3>Cache Eviction Policies</h3>
+                            <p>Cache eviction policies determine which items to remove when the cache reaches capacity:</p>
+                            
+                            <div class="policy-list">
+                                <div class="policy-item">
+                                    <h4>Least Recently Used (LRU)</h4>
+                                    <p>Removes the least recently accessed items first.</p>
+                                </div>
+                                
+                                <div class="policy-item">
+                                    <h4>Least Frequently Used (LFU)</h4>
+                                    <p>Removes the least frequently accessed items first.</p>
+                                </div>
+                                
+                                <div class="policy-item">
+                                    <h4>First In, First Out (FIFO)</h4>
+                                    <p>Removes the oldest items first, regardless of usage.</p>
+                                </div>
+                                
+                                <div class="policy-item">
+                                    <h4>Time To Live (TTL)</h4>
+                                    <p>Removes items that have been in the cache longer than a specified time.</p>
+                                </div>
+                                
+                                <div class="policy-item">
+                                    <h4>Random Replacement</h4>
+                                    <p>Randomly selects items to remove.</p>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="content-section">
+                            <h2>Step 1: Implementing In-Memory Caching in Node.js</h2>
+                            
+                            <p>Let's start with a simple in-memory cache implementation in Node.js:</p>
+                            
+                            <h3>Basic In-Memory Cache</h3>
+                            
+                            <div class="code-block-container">
+                                <pre class="code-block javascript">
+// simple-cache.js
+class SimpleCache {
+  constructor(options = {}) {
+    this.cache = new Map();
+    this.ttl = options.ttl || 60 * 1000; // Default TTL: 60 seconds
+    this.maxSize = options.maxSize || 100; // Default max size: 100 items
+    this.policy = options.policy || 'lru'; // Default policy: LRU
+    this.hits = 0;
+    this.misses = 0;
+    
+    // For LRU/LFU tracking
+    this.accessCount = new Map();
+    this.accessTime = new Map();
+  }
+  
+  get(key) {
+    const item = this.cache.get(key);
+    
+    if (!item) {
+      this.misses++;
+      return null;
+    }
+    
+    // Check if item has expired
+    if (item.expiry && item.expiry < Date.now()) {
+      this.cache.delete(key);
+      this.accessCount.delete(key);
+      this.accessTime.delete(key);
+      this.misses++;
+      return null;
+    }
+    
+    // Update access statistics
+    this.hits++;
+    this.accessCount.set(key, (this.accessCount.get(key) || 0) + 1);
+    this.accessTime.set(key, Date.now());
+    
+    return item.value;
+  }
+  
+  set(key, value, ttl = this.ttl) {
+    // Check if we need to evict items
+    if (this.cache.size >= this.maxSize && !this.cache.has(key)) {
+      this.evict();
+    }
+    
+    const expiry = ttl ? Date.now() + ttl : null;
+    
+    this.cache.set(key, { value, expiry });
+    this.accessCount.set(key, 1);
+    this.accessTime.set(key, Date.now());
+    
+    return true;
+  }
+  
+  delete(key) {
+    const deleted = this.cache.delete(key);
+    if (deleted) {
+      this.accessCount.delete(key);
+      this.accessTime.delete(key);
+    }
+    return deleted;
+  }
+  
+  clear() {
+    this.cache.clear();
+    this.accessCount.clear();
+    this.accessTime.clear();
+    return true;
+  }
+  
+  has(key) {
+    return this.cache.has(key) && 
+           (!this.cache.get(key).expiry || 
+            this.cache.get(key).expiry >= Date.now());
+  }
+  
+  size() {
+    return this.cache.size;
+  }
+  
+  stats() {
+    const total = this.hits + this.misses;
+    const hitRate = total ? (this.hits / total) * 100 : 0;
+    
+    return {
+      size: this.cache.size,
+      maxSize: this.maxSize,
+      hits: this.hits,
+      misses: this.misses,
+      hitRate: `${hitRate.toFixed(2)}%`
+    };
+  }
+  
+  evict() {
+    if (this.cache.size === 0) return false;
+    
+    let keyToEvict;
+    
+    switch (this.policy) {
+      case 'lru':
+        // Find least recently used item
+        keyToEvict = [...this.accessTime.entries()]
+          .sort((a, b) => a[1] - b[1])[0][0];
+        break;
+        
+      case 'lfu':
+        // Find least frequently used item
+        keyToEvict = [...this.accessCount.entries()]
+          .sort((a, b) => a[1] - b[1])[0][0];
+        break;
+        
+      case 'fifo':
+        // Get the oldest inserted key (first key in Map)
+        keyToEvict = this.cache.keys().next().value;
+        break;
+        
+      case 'random':
+        // Get a random key
+        const keys = [...this.cache.keys()];
+        keyToEvict = keys[Math.floor(Math.random() * keys.length)];
+        break;
+        
+      default:
+        keyToEvict = this.cache.keys().next().value;
+    }
+    
+    return this.delete(keyToEvict);
+  }
+}
+
+module.exports = SimpleCache;
+</pre>
+                                <div class="copy-button" title="Copy to clipboard">
+                                    <i class="fas fa-copy"></i>
+                                </div>
+                            </div>
+                            
+                            <h3>Using the In-Memory Cache</h3>
+                            
+                            <div class="code-block-container">
+                                <pre class="code-block javascript">
+// cache-example.js
+const SimpleCache = require('./simple-cache');
+
+// Create a cache with custom options
+const cache = new SimpleCache({
+  ttl: 30 * 1000, // 30 seconds
+  maxSize: 5,
+  policy: 'lru'
+});
+
+// Simulate database operations
+function getDataFromDatabase(key) {
+  console.log(`Fetching ${key} from database...`);
+  // Simulate database latency
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve(`Data for ${key}`);
+    }, 500);
+  });
+}
+
+// Cache-aside implementation
+async function getData(key) {
+  // Try to get from cache first
+  let data = cache.get(key);
+  
+  if (data === null) {
+    console.log(`Cache miss for ${key}`);
+    // Not in cache, get from database
+    data = await getDataFromDatabase(key);
+    // Store in cache for future requests
+    cache.set(key, data);
+  } else {
+    console.log(`Cache hit for ${key}`);
+  }
+  
+  return data;
+}
+
+// Example usage
+async function runExample() {
+  console.log('First request for key1:');
+  await getData('key1');
+  
+  console.log('\nSecond request for key1:');
+  await getData('key1');
+  
+  console.log('\nFilling cache with more items:');
+  for (let i = 2; i <= 6; i++) {
+    await getData(`key${i}`);
+  }
+  
+  console.log('\nCache stats:');
+  console.log(cache.stats());
+  
+  console.log('\nAccessing key2 again:');
+  await getData('key2');
+  
+  console.log('\nTrying to access key1 (should be evicted due to LRU policy):');
+  await getData('key1');
+  
+  console.log('\nFinal cache stats:');
+  console.log(cache.stats());
+}
+
+runExample();
+</pre>
+                                <div class="copy-button" title="Copy to clipboard">
+                                    <i class="fas fa-copy"></i>
+                                </div>
+                            </div>
+                            
+                            <h3>Running the Example</h3>
+                            
+                            <div class="code-block-container">
+                                <pre class="code-block bash">
+node cache-example.js
+</pre>
+                                <div class="copy-button" title="Copy to clipboard">
+                                    <i class="fas fa-copy"></i>
+                                </div>
+                            </div>
+                            
+                            <div class="output-container">
+                                <pre class="output">
+First request for key1:
+Cache miss for key1
+Fetching key1 from database...
+
+Second request for key1:
+Cache hit for key1
+
+Filling cache with more items:
+Cache miss for key2
+Fetching key2 from database...
+Cache miss for key3
+Fetching key3 from database...
+Cache miss for key4
+Fetching key4 from database...
+Cache miss for key5
+Fetching key5 from database...
+Cache miss for key6
+Fetching key6 from database...
+
+Cache stats:
+{ size: 5, maxSize: 5, hits: 1, misses: 6, hitRate: '14.29%' }
+
+Accessing key2 again:
+Cache hit for key2
+
+Trying to access key1 (should be evicted due to LRU policy):
+Cache miss for key1
+Fetching key1 from database...
+
+Final cache stats:
+{ size: 5, maxSize: 5, hits: 2, misses: 7, hitRate: '22.22%' }
+</pre>
+                            </div>
+                        </section>
+
+                        <section class="content-section">
+                            <h2>Step 2: Implementing Redis Caching</h2>
+                            
+                            <p>Redis is a popular in-memory data structure store that can be used as a database, cache, and message broker. Let's implement caching with Redis:</p>
+                            
+                            <h3>Setting Up Redis</h3>
+                            
+                            <div class="code-block-container">
+                                <pre class="code-block bash">
+# Install Redis server
+sudo apt update
+sudo apt install -y redis-server
+
+# Configure Redis to start on boot
+sudo systemctl enable redis-server
+
+# Start Redis server
+sudo systemctl start redis-server
+
+# Check Redis status
+sudo systemctl status redis-server
+
+# Install Redis client for Node.js
+npm install redis
+</pre>
+                                <div class="copy-button" title="Copy to clipboard">
+                                    <i class="fas fa-copy"></i>
+                                </div>
+                            </div>
+                            
+                            <h3>Basic Redis Caching in Node.js</h3>
+                            
+                            <div class="code-block-container">
+                                <pre class="code-block javascript">
+// redis-cache.js
+const redis = require('redis');
+const { promisify } = require('util');
+
+class RedisCache {
+  constructor(options = {}) {
+    // Redis connection options
+    this.redisOptions = {
+      host: options.host || 'localhost',
+      port: options.port || 6379,
+      password: options.password || undefined,
+      db: options.db || 0,
+      ...options.redisOptions
+    };
+    
+    this.defaultTTL = options.ttl || 3600; // Default TTL: 1 hour (in seconds)
+    this.prefix = options.prefix || 'cache:';
+    
+    this.client = redis.createClient(this.redisOptions);
+    
+    // Promisify Redis commands
+    this.getAsync = promisify(this.client.get).bind(this.client);
+    this.setAsync = promisify(this.client.set).bind(this.client);
+    this.delAsync = promisify(this.client.del).bind(this.client);
+    this.existsAsync = promisify(this.client.exists).bind(this.client);
+    this.flushdbAsync = promisify(this.client.flushdb).bind(this.client);
+    this.incrAsync = promisify(this.client.incr).bind(this.client);
+    
+    // Error handling
+    this.client.on('error', (err) => {
+      console.error('Redis error:', err);
+    });
+  }
+  
+  // Generate key with prefix
+  _key(key) {
+    return `${this.prefix}${key}`;
+  }
+  
+  // Get value from cache
+  async get(key) {
+    try {
+      const value = await this.getAsync(this._key(key));
+      
+      if (value === null) {
+        await this.incrAsync(`${this.prefix}stats:misses`);
+        return null;
+      }
+      
+      await this.incrAsync(`${this.prefix}stats:hits`);
+      return JSON.parse(value);
+    } catch (err) {
+      console.error('Error getting from cache:', err);
+      return null;
+    }
+  }
+  
+  // Set value in cache
+  async set(key, value, ttl = this.defaultTTL) {
+    try {
+      const serializedValue = JSON.stringify(value);
+      
+      if (ttl) {
+        await this.setAsync(this._key(key), serializedValue, 'EX', ttl);
+      } else {
+        await this.setAsync(this._key(key), serializedValue);
+      }
+      
+      return true;
+    } catch (err) {
+      console.error('Error setting cache:', err);
+      return false;
+    }
+  }
+  
+  // Delete value from cache
+  async delete(key) {
+    try {
+      const result = await this.delAsync(this._key(key));
+      return result === 1;
+    } catch (err) {
+      console.error('Error deleting from cache:', err);
+      return false;
+    }
+  }
+  
+  // Check if key exists in cache
+  async has(key) {
+    try {
+      const result = await this.existsAsync(this._key(key));
+      return result === 1;
+    } catch (err) {
+      console.error('Error checking cache:', err);
+      return false;
+    }
+  }
+  
+  // Clear all cache entries
+  async clear() {
+    try {
+      await this.flushdbAsync();
+      return true;
+    } catch (err) {
+      console.error('Error clearing cache:', err);
+      return false;
+    }
+  }
+  
+  // Get cache statistics
+  async stats() {
+    try {
+      const hits = parseInt(await this.getAsync(`${this.prefix}stats:hits`) || '0');
+      const misses = parseInt(await this.getAsync(`${this.prefix}stats:misses`) || '0');
+      const total = hits + misses;
+      const hitRate = total ? (hits / total) * 100 : 0;
+      
+      return {
+        hits,
+        misses,
+        total,
+        hitRate: `${hitRate.toFixed(2)}%`
+      };
+    } catch (err) {
+      console.error('Error getting cache stats:', err);
+      return {
+        hits: 0,
+        misses: 0,
+        total: 0,
+        hitRate: '0.00%'
+      };
+    }
+  }
+  
+  // Close Redis connection
+  close() {
+    this.client.quit();
+  }
+}
+
+module.exports = RedisCache;
+</pre>
+                                <div class="copy-button" title="Copy to clipboard">
+                                    <i class="fas fa-copy"></i>
+                                </div>
+                            </div>
+                            
+                            <h3>Using Redis Cache with Express.js</h3>
+                            
+                            <div class="code-block-container">
+                                <pre class="code-block javascript">
+// app.js
+const express = require('express');
+const RedisCache = require('./redis-cache');
+
+const app = express();
+const port = 3000;
+
+// Create Redis cache instance
+const cache = new RedisCache({
+  ttl: 60, // 60 seconds
+  prefix: 'api:'
+});
+
+// Simulate database query with delay
+function getDataFromDatabase(id) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({
+        id,
+        name: `Item ${id}`,
+        description: `This is item ${id} from the database`,
+        timestamp: new Date().toISOString()
+      });
+    }, 500); // 500ms delay to simulate DB query
+  });
+}
+
+// Middleware for caching
+const cacheMiddleware = async (req, res, next) => {
+  const cacheKey = req.originalUrl;
+  
+  try {
+    // Try to get from cache
+    const cachedData = await cache.get(cacheKey);
+    
+    if (cachedData !== null) {
+      // Cache hit
+      console.log(`Cache hit for ${cacheKey}`);
+      return res.json({
+        fromCache: true,
+        data: cachedData
+      });
+    }
+    
+    // Cache miss, continue to route handler
+    console.log(`Cache miss for ${cacheKey}`);
+    res.locals.cacheKey = cacheKey;
+    next();
+  } catch (err) {
+    console.error('Cache middleware error:', err);
+    next();
+  }
+};
+
+// API route with caching
+app.get('/api/items/:id', cacheMiddleware, async (req, res) => {
+  try {
+    const id = req.params.id;
+    
+    // Get data from database
+    const data = await getDataFromDatabase(id);
+    
+    // Store in cache for future requests
+    const cacheKey = res.locals.cacheKey;
+    await cache.set(cacheKey, data);
+    
+    res.json({
+      fromCache: false,
+      data
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Cache stats endpoint
+app.get('/api/cache/stats', async (req, res) => {
+  try {
+    const stats = await cache.stats();
+    res.json(stats);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Clear cache endpoint
+app.post('/api/cache/clear', async (req, res) => {
+  try {
+    await cache.clear();
+    res.json({ message: 'Cache cleared successfully' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Start server
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
+});
+
+// Handle process termination
+process.on('SIGINT', () => {
+  cache.close();
+  process.exit();
+});
+</pre>
+                                <div class="copy-button" title="Copy to clipboard">
+                                    <i class="fas fa-copy"></i>
+                                </div>
+                            </div>
+                            
+                            <h3>Testing the Redis Cache</h3>
+                            
+                            <div class="code-block-container">
+                                <pre class="code-block bash">
+# Install dependencies
+npm install express redis
+
+# Start the server
+node app.js
+
+# In another terminal, test the API
+# First request (cache miss)
+curl http://localhost:3000/api/items/123
+
+# Second request (cache hit)
+curl http://localhost:3000/api/items/123
+
+# Check cache stats
+curl http://localhost:3000/api/cache/stats
+
+# Clear cache
+curl -X POST http://localhost:3000/api/cache/clear
+</pre>
+                                <div class="copy-button" title="Copy to clipboard">
+                                    <i class="fas fa-copy"></i>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="content-section">
+                            <h2>Step 3: Implementing Distributed Caching with Redis Cluster</h2>
+                            
+                            <p>For large-scale applications, a single Redis instance might not be sufficient. Redis Cluster provides a way to run a Redis installation where data is automatically sharded across multiple Redis nodes.</p>
+                            
+                            <h3>Setting Up Redis Cluster</h3>
+                            
+                            <div class="code-block-container">
+                                <pre class="code-block bash">
+# Create directories for each Redis node
+mkdir -p /tmp/redis-cluster/{7000,7001,7002,7003,7004,7005}
+
+# Create configuration for each node
+for port in 7000 7001 7002 7003 7004 7005; do
+cat > /tmp/redis-cluster/${port}/redis.conf << EOF
+port ${port}
+cluster-enabled yes
+cluster-config-file nodes-${port}.conf
+cluster-node-timeout 5000
+appendonly yes
+dir /tmp/redis-cluster/${port}
+bind 127.0.0.1
+daemonize yes
+EOF
+done
+
+# Start Redis instances
+for port in 7000 7001 7002 7003 7004 7005; do
+  redis-server /tmp/redis-cluster/${port}/redis.conf
+done
+
+# Create the cluster
+redis-cli --cluster create 127.0.0.1:7000 127.0.0.1:7001 127.0.0.1:7002 127.0.0.1:7003 127.0.0.1:7004 127.0.0.1:7005 --cluster-replicas 1
+
+# Check cluster status
+redis-cli -c -p 7000 cluster info
+</pre>
+                                <div class="copy-button" title="Copy to clipboard">
+                                    <i class="fas fa-copy"></i>
+                                </div>
+                            </div>
+                            
+                            <h3>Implementing Distributed Caching with Redis Cluster</h3>
+                            
+                            <div class="code-block-container">
+                                <pre class="code-block javascript">
+// redis-cluster-cache.js
+const Redis = require('ioredis');
+const cluster = require('cluster');
+const numCPUs = require('os').cpus().length;
+
+class RedisClusterCache {
+  constructor(options = {}) {
+    // Redis cluster options
+    this.clusterOptions = {
+      redisNodes: options.redisNodes || [
+        { host: '127.0.0.1', port: 7000 },
+        { host: '127.0.0.1', port: 7001 },
+        { host: '127.0.0.1', port: 7002 },
+        { host: '127.0.0.1', port: 7003 },
+        { host: '127.0.0.1', port: 7004 },
+        { host: '127.0.0.1', port: 7005 }
+      ],
+      options: options.clusterOptions || {
+        redisOptions: {
+          password: options.password || undefined
+        }
+      }
+    };
+    
+    this.defaultTTL = options.ttl || 3600; // Default TTL: 1 hour (in seconds)
+    this.prefix = options.prefix || 'cluster:';
+    
+    // Create Redis Cluster client
+    this.client = new Redis.Cluster(
+      this.clusterOptions.redisNodes,
+      this.clusterOptions.options
+    );
+    
+    // Error handling
+    this.client.on('error', (err) => {
+      console.error('Redis Cluster error:', err);
+    });
+    
+    this.client.on('connect', () => {
+      console.log('Connected to Redis Cluster');
+    });
+  }
+  
+  // Generate key with prefix
+  _key(key) {
+    return `${this.prefix}${key}`;
+  }
+  
+  // Get value from cache
+  async get(key) {
+    try {
+      const value = await this.client.get(this._key(key));
+      
+      if (value === null) {
+        await this.client.incr(`${this.prefix}stats:misses`);
+        return null;
+      }
+      
+      await this.client.incr(`${this.prefix}stats:hits`);
+      return JSON.parse(value);
+    } catch (err) {
+      console.error('Error getting from cache:', err);
+      return null;
+    }
+  }
+  
+  // Set value in cache
+  async set(key, value, ttl = this.defaultTTL) {
+    try {
+      const serializedValue = JSON.stringify(value);
+      
+      if (ttl) {
+        await this.client.set(this._key(key), serializedValue, 'EX', ttl);
+      } else {
+        await this.client.set(this._key(key), serializedValue);
+      }
+      
+      return true;
+    } catch (err) {
+      console.error('Error setting cache:', err);
+      return false;
+    }
+  }
+  
+  // Delete value from cache
+  async delete(key) {
+    try {
+      const result = await this.client.del(this._key(key));
+      return result === 1;
+    } catch (err) {
+      console.error('Error deleting from cache:', err);
+      return false;
+    }
+  }
+  
+  // Check if key exists in cache
+  async has(key) {
+    try {
+      const result = await this.client.exists(this._key(key));
+      return result === 1;
+    } catch (err) {
+      console.error('Error checking cache:', err);
+      return false;
+    }
+  }
+  
+  // Clear all cache entries (dangerous in production!)
+  async clear() {
+    try {
+      // This is a simplified approach - in production, you might want to use SCAN to delete keys with prefix
+      const keys = await this.client.keys(`${this.prefix}*`);
+      
+      if (keys.length > 0) {
+        await this.client.del(...keys);
+      }
+      
+      return true;
+    } catch (err) {
+      console.error('Error clearing cache:', err);
+      return false;
+    }
+  }
+  
+  // Get cache statistics
+  async stats() {
+    try {
+      const hits = parseInt(await this.client.get(`${this.prefix}stats:hits`) || '0');
+      const misses = parseInt(await this.client.get(`${this.prefix}stats:misses`) || '0');
+      const total = hits + misses;
+      const hitRate = total ? (hits / total) * 100 : 0;
+      
+      return {
+        hits,
+        misses,
+        total,
+        hitRate: `${hitRate.toFixed(2)}%`
+      };
+    } catch (err) {
+      console.error('Error getting cache stats:', err);
+      return {
+        hits: 0,
+        misses: 0,
+        total: 0,
+        hitRate: '0.00%'
+      };
+    }
+  }
+  
+  // Close Redis connection
+  close() {
+    this.client.quit();
+  }
+}
+
+// Create a clustered Express application with Redis Cluster caching
+if (cluster.isMaster) {
+  console.log(`Master ${process.pid} is running`);
+  
+  // Fork workers
+  for (let i = 0; i < numCPUs; i++) {
+    cluster.fork();
+  }
+  
+  cluster.on('exit', (worker, code, signal) => {
+    console.log(`Worker ${worker.process.pid} died`);
+    // Replace the dead worker
+    cluster.fork();
+  });
+} else {
+  const express = require('express');
+  const app = express();
+  const port = 3000;
+  
+  // Create Redis Cluster cache instance
+  const cache = new RedisClusterCache({
+    ttl: 60, // 60 seconds
+    prefix: 'api:'
+  });
+  
+  // Simulate database query with delay
+  function getDataFromDatabase(id) {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve({
+          id,
+          name: `Item ${id}`,
+          description: `This is item ${id} from the database`,
+          timestamp: new Date().toISOString(),
+          worker: process.pid
+        });
+      }, 500); // 500ms delay to simulate DB query
+    });
+  }
+  
+  // Middleware for caching
+  const cacheMiddleware = async (req, res, next) => {
+    const cacheKey = req.originalUrl;
+    
+    try {
+      // Try to get from cache
+      const cachedData = await cache.get(cacheKey);
+      
+      if (cachedData !== null) {
+        // Cache hit
+        console.log(`Worker ${process.pid}: Cache hit for ${cacheKey}`);
+        return res.json({
+          fromCache: true,
+          data: cachedData,
+          worker: process.pid
+        });
+      }
+      
+      // Cache miss, continue to route handler
+      console.log(`Worker ${process.pid}: Cache miss for ${cacheKey}`);
+      res.locals.cacheKey = cacheKey;
+      next();
+    } catch (err) {
+      console.error('Cache middleware error:', err);
+      next();
+    }
+  };
+  
+  // API route with caching
+  app.get('/api/items/:id', cacheMiddleware, async (req, res) => {
+    try {
+      const id = req.params.id;
+      
+      // Get data from database
+      const data = await getDataFromDatabase(id);
+      
+      // Store in cache for future requests
+      const cacheKey = res.locals.cacheKey;
+      await cache.set(cacheKey, data);
+      
+      res.json({
+        fromCache: false,
+        data,
+        worker: process.pid
+      });
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  });
+  
+  // Cache stats endpoint
+  app.get('/api/cache/stats', async (req, res) => {
+    try {
+      const stats = await cache.stats();
+      res.json({
+        ...stats,
+        worker: process.pid
+      });
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  });
+  
+  // Clear cache endpoint
+  app.post('/api/cache/clear', async (req, res) => {
+    try {
+      await cache.clear();
+      res.json({
+        message: 'Cache cleared successfully',
+        worker: process.pid
+      });
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  });
+  
+  // Start server
+  app.listen(port, () => {
+    console.log(`Worker ${process.pid}: Server running at http://localhost:${port}`);
+  });
+  
+  // Handle process termination
+  process.on('SIGINT', () => {
+    cache.close();
+    process.exit();
+  });
+}
+
+module.exports = RedisClusterCache;
+</pre>
+                                <div class="copy-button" title="Copy to clipboard">
+                                    <i class="fas fa-copy"></i>
+                                </div>
+                            </div>
+                            
+                            <h3>Running the Distributed Caching Example</h3>
+                            
+                            <div class="code-block-container">
+                                <pre class="code-block bash">
+# Install dependencies
+npm install express ioredis cluster
+
+# Start the clustered application
+node redis-cluster-cache.js
+
+# Test the API with multiple requests
+for i in {1..10}; do
+  curl http://localhost:3000/api/items/$i
+done
+
+# Check cache stats
+curl http://localhost:3000/api/cache/stats
+</pre>
+                                <div class="copy-button" title="Copy to clipboard">
+                                    <i class="fas fa-copy"></i>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="content-section">
+                            <h2>Step 4: Implementing Multi-Level Caching</h2>
+                            
+                            <p>Multi-level caching combines different caching layers to optimize for both speed and capacity. Let's implement a multi-level cache with in-memory and Redis layers:</p>
+                            
+                            <div class="code-block-container">
+                                <pre class="code-block javascript">
+// multi-level-cache.js
+const SimpleCache = require('./simple-cache');
+const RedisCache = require('./redis-cache');
+
+class MultiLevelCache {
+  constructor(options = {}) {
+    // Configure cache levels
+    this.levels = options.levels || [
+      {
+        name: 'memory',
+        cache: new SimpleCache({
+          ttl: options.memoryTTL || 30 * 1000, // 30 seconds
+          maxSize: options.memoryMaxSize || 100,
+          policy: options.memoryPolicy || 'lru'
+        })
+      },
+      {
+        name: 'redis',
+        cache: new RedisCache({
+          ttl: options.redisTTL || 300, // 5 minutes
+          prefix: options.redisPrefix || 'multilevel:'
+        })
+      }
+    ];
+    
+    this.writeStrategy = options.writeStrategy || 'write-through';
+    this.readStrategy = options.readStrategy || 'read-through';
+    
+    // Stats
+    this.stats = {
+      hits: {
+        memory: 0,
+        redis: 0,
+        total: 0
+      },
+      misses: {
+        memory: 0,
+        redis: 0,
+        total: 0
+      }
+    };
+  }
+  
+  // Get value from cache
+  async get(key) {
+    // Try each cache level in order
+    for (let i = 0; i < this.levels.length; i++) {
+      const level = this.levels[i];
+      const value = await level.cache.get(key);
+      
+      if (value !== null) {
+        // Cache hit at this level
+        this.stats.hits[level.name]++;
+        this.stats.hits.total++;
+        
+        // If hit on a non-first level, update previous levels
+        if (i > 0 && this.readStrategy === 'read-through') {
+          for (let j = 0; j < i; j++) {
+            await this.levels[j].cache.set(key, value);
+          }
+        }
+        
+        return value;
+      }
+      
+      // Cache miss at this level
+      this.stats.misses[level.name]++;
+    }
+    
+    // Miss at all levels
+    this.stats.misses.total++;
+    return null;
+  }
+  
+  // Set value in cache
+  async set(key, value, options = {}) {
+    const results = [];
+    
+    if (this.writeStrategy === 'write-through') {
+      // Write to all cache levels
+      for (const level of this.levels) {
+        const ttl = options[`${level.name}TTL`] || undefined;
+        const result = await level.cache.set(key, value, ttl);
+        results.push(result);
+      }
+    } else if (this.writeStrategy === 'write-behind') {
+      // Write to first level immediately
+      results.push(await this.levels[0].cache.set(key, value, options.memoryTTL));
+      
+      // Write to other levels asynchronously
+      setTimeout(async () => {
+        for (let i = 1; i < this.levels.length; i++) {
+          const level = this.levels[i];
+          const ttl = options[`${level.name}TTL`] || undefined;
+          await level.cache.set(key, value, ttl);
+        }
+      }, 0);
+    }
+    
+    return results.every(Boolean);
+  }
+  
+  // Delete value from all cache levels
+  async delete(key) {
+    const results = [];
+    
+    for (const level of this.levels) {
+      const result = await level.cache.delete(key);
+      results.push(result);
+    }
+    
+    return results.some(Boolean);
+  }
+  
+  // Check if key exists in any cache level
+  async has(key) {
+    for (const level of this.levels) {
+      if (await level.cache.has(key)) {
+        return true;
+      }
+    }
+    
+    return false;
+  }
+  
+  // Clear all cache levels
+  async clear() {
+    const results = [];
+    
+    for (const level of this.levels) {
+      const result = await level.cache.clear();
+      results.push(result);
+    }
+    
+    // Reset stats
+    this.stats = {
+      hits: {
+        memory: 0,
+        redis: 0,
+        total: 0
+      },
+      misses: {
+        memory: 0,
+        redis: 0,
+        total: 0
+      }
+    };
+    
+    return results.every(Boolean);
+  }
+  
+  // Get cache statistics
+  getStats() {
+    const total = this.stats.hits.total + this.stats.misses.total;
+    const hitRate = total ? (this.stats.hits.total / total) * 100 : 0;
+    
+    return {
+      hits: this.stats.hits,
+      misses: this.stats.misses,
+      total,
+      hitRate: `${hitRate.toFixed(2)}%`
+    };
+  }
+  
+  // Close connections
+  close() {
+    for (const level of this.levels) {
+      if (typeof level.cache.close === 'function') {
+        level.cache.close();
+      }
+    }
+  }
+}
+
+module.exports = MultiLevelCache;
+</pre>
+                                <div class="copy-button" title="Copy to clipboard">
+                                    <i class="fas fa-copy"></i>
+                                </div>
+                            </div>
+                            
+                            <h3>Using Multi-Level Cache in Express.js</h3>
+                            
+                            <div class="code-block-container">
+                                <pre class="code-block javascript">
+// multi-level-app.js
+const express = require('express');
+const MultiLevelCache = require('./multi-level-cache');
+
+const app = express();
+const port = 3000;
+
+// Create multi-level cache instance
+const cache = new MultiLevelCache({
+  memoryTTL: 30 * 1000, // 30 seconds
+  memoryMaxSize: 50,
+  redisTTL: 300, // 5 minutes
+  writeStrategy: 'write-through', // 'write-through' or 'write-behind'
+  readStrategy: 'read-through' // 'read-through' or 'none'
+});
+
+// Simulate database query with delay
+function getDataFromDatabase(id) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({
+        id,
+        name: `Item ${id}`,
+        description: `This is item ${id} from the database`,
+        timestamp: new Date().toISOString()
+      });
+    }, 500); // 500ms delay to simulate DB query
+  });
+}
+
+// Middleware for caching
+const cacheMiddleware = async (req, res, next) => {
+  const cacheKey = req.originalUrl;
+  
+  try {
+    // Try to get from cache
+    const cachedData = await cache.get(cacheKey);
+    
+    if (cachedData !== null) {
+      // Cache hit
+      console.log(`Cache hit for ${cacheKey}`);
+      return res.json({
+        fromCache: true,
+        data: cachedData
+      });
+    }
+    
+    // Cache miss, continue to route handler
+    console.log(`Cache miss for ${cacheKey}`);
+    res.locals.cacheKey = cacheKey;
+    next();
+  } catch (err) {
+    console.error('Cache middleware error:', err);
+    next();
+  }
+};
+
+// API route with caching
+app.get('/api/items/:id', cacheMiddleware, async (req, res) => {
+  try {
+    const id = req.params.id;
+    
+    // Get data from database
+    const data = await getDataFromDatabase(id);
+    
+    // Store in cache for future requests
+    const cacheKey = res.locals.cacheKey;
+    await cache.set(cacheKey, data);
+    
+    res.json({
+      fromCache: false,
+      data
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Cache stats endpoint
+app.get('/api/cache/stats', (req, res) => {
+  try {
+    const stats = cache.getStats();
+    res.json(stats);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Clear cache endpoint
+app.post('/api/cache/clear', async (req, res) => {
+  try {
+    await cache.clear();
+    res.json({ message: 'Cache cleared successfully' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Start server
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
+});
+
+// Handle process termination
+process.on('SIGINT', () => {
+  cache.close();
+  process.exit();
+});
+</pre>
+                                <div class="copy-button" title="Copy to clipboard">
+                                    <i class="fas fa-copy"></i>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="content-section">
+                            <h2>Step 5: Implementing Cache Invalidation Strategies</h2>
+                            
+                            <p>Cache invalidation is one of the hardest problems in computer science. Let's implement some common cache invalidation strategies:</p>
+                            
+                            <h3>Time-Based Invalidation</h3>
+                            <p>This is the simplest approach, where cache entries expire after a set time (TTL).</p>
+                            
+                            <h3>Event-Based Invalidation</h3>
+                            <p>Cache entries are invalidated when specific events occur, such as data updates.</p>
+                            
+                            <div class="code-block-container">
+                                <pre class="code-block javascript">
+// cache-invalidation.js
+const express = require('express');
+const RedisCache = require('./redis-cache');
+const bodyParser = require('body-parser');
+
+const app = express();
+const port = 3000;
+
+// Middleware
+app.use(bodyParser.json());
+
+// Create Redis cache instance
+const cache = new RedisCache({
+  ttl: 3600, // 1 hour
+  prefix: 'api:'
+});
+
+// Simulate database
+const database = {
+  items: {
+    '1': { id: '1', name: 'Item 1', value: 'Original value' },
+    '2': { id: '2', name: 'Item 2', value: 'Original value' },
+    '3': { id: '3', name: 'Item 3', value: 'Original value' }
+  },
+  
+  getItem(id) {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(this.items[id] || null);
+      }, 200);
+    });
+  },
+  
+  updateItem(id, data) {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        if (this.items[id]) {
+          this.items[id] = { ...this.items[id], ...data };
+          resolve(this.items[id]);
+        } else {
+          resolve(null);
+        }
+      }, 200);
+    });
+  },
+  
+  createItem(data) {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const id = Date.now().toString();
+        this.items[id] = { id, ...data };
+        resolve(this.items[id]);
+      }, 200);
+    });
+  },
+  
+  deleteItem(id) {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const item = this.items[id];
+        if (item) {
+          delete this.items[id];
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+      }, 200);
+    });
+  }
+};
+
+// Cache key patterns
+const cacheKeys = {
+  item: (id) => `item:${id}`,
+  itemList: () => 'items:list',
+  itemsByCategory: (category) => `items:category:${category}`
+};
+
+// Cache middleware for single item
+const cacheItemMiddleware = async (req, res, next) => {
+  const id = req.params.id;
+  const cacheKey = cacheKeys.item(id);
+  
+  try {
+    const cachedItem = await cache.get(cacheKey);
+    
+    if (cachedItem !== null) {
+      console.log(`Cache hit for item ${id}`);
+      return res.json({
+        fromCache: true,
+        data: cachedItem
+      });
+    }
+    
+    console.log(`Cache miss for item ${id}`);
+    res.locals.cacheKey = cacheKey;
+    next();
+  } catch (err) {
+    console.error('Cache middleware error:', err);
+    next();
+  }
+};
+
+// Cache middleware for item list
+const cacheListMiddleware = async (req, res, next) => {
+  const cacheKey = cacheKeys.itemList();
+  
+  try {
+    const cachedList = await cache.get(cacheKey);
+    
+    if (cachedList !== null) {
+      console.log('Cache hit for item list');
+      return res.json({
+        fromCache: true,
+        data: cachedList
+      });
+    }
+    
+    console.log('Cache miss for item list');
+    res.locals.cacheKey = cacheKey;
+    next();
+  } catch (err) {
+    console.error('Cache middleware error:', err);
+    next();
+  }
+};
+
+// Get single item
+app.get('/api/items/:id', cacheItemMiddleware, async (req, res) => {
+  try {
+    const id = req.params.id;
+    const item = await database.getItem(id);
+    
+    if (!item) {
+      return res.status(404).json({ error: 'Item not found' });
+    }
+    
+    // Cache the item
+    await cache.set(res.locals.cacheKey, item);
+    
+    res.json({
+      fromCache: false,
+      data: item
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Get all items
+app.get('/api/items', cacheListMiddleware, async (req, res) => {
+  try {
+    // Get all items from database
+    const items = Object.values(database.items);
+    
+    // Cache the item list
+    await cache.set(res.locals.cacheKey, items);
+    
+    res.json({
+      fromCache: false,
+      data: items
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Create new item
+app.post('/api/items', async (req, res) => {
+  try {
+    const newItem = await database.createItem(req.body);
+    
+    // Invalidate the item list cache
+    await cache.delete(cacheKeys.itemList());
+    
+    // If the item has a category, invalidate category cache
+    if (newItem.category) {
+      await cache.delete(cacheKeys.itemsByCategory(newItem.category));
+    }
+    
+    res.status(201).json({ data: newItem });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Update an item
+app.put('/api/items/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
+    const updatedItem = await database.updateItem(id, req.body);
+    
+    if (!updatedItem) {
+      return res.status(404).json({ error: 'Item not found' });
+    }
+    
+    // Invalidate specific item cache
+    await cache.delete(cacheKeys.item(id));
+    
+    // Invalidate the item list cache
+    await cache.delete(cacheKeys.itemList());
+    
+    // If the item has a category, invalidate category cache
+    if (updatedItem.category) {
+      await cache.delete(cacheKeys.itemsByCategory(updatedItem.category));
+    }
+    
+    res.json({ data: updatedItem });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Delete an item
+app.delete('/api/items/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
+    
+    // Get the item before deletion to check category
+    const item = await database.getItem(id);
+    
+    if (!item) {
+      return res.status(404).json({ error: 'Item not found' });
+    }
+    
+    const deleted = await database.deleteItem(id);
+    
+    if (deleted) {
+      // Invalidate specific item cache
+      await cache.delete(cacheKeys.item(id));
+      
+      // Invalidate the item list cache
+      await cache.delete(cacheKeys.itemList());
+      
+      // If the item has a category, invalidate category cache
+      if (item.category) {
+        await cache.delete(cacheKeys.itemsByCategory(item.category));
+      }
+      
+      res.json({ message: 'Item deleted successfully' });
+    } else {
+      res.status(404).json({ error: 'Item not found' });
+    }
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Cache stats endpoint
+app.get('/api/cache/stats', async (req, res) => {
+  try {
+    const stats = await cache.stats();
+    res.json(stats);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Start server
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
+});
+
+// Handle process termination
+process.on('SIGINT', () => {
+  cache.close();
+  process.exit();
+});
+</pre>
+                                <div class="copy-button" title="Copy to clipboard">
+                                    <i class="fas fa-copy"></i>
+                                </div>
+                            </div>
+                            
+                            <h3>Advanced: Implementing Cache Stampede Protection</h3>
+                            <p>Cache stampede occurs when many concurrent requests try to regenerate the same expired cache entry. Let's implement a solution:</p>
+                            
+                            <div class="code-block-container">
+                                <pre class="code-block javascript">
+// stampede-protection.js
+const RedisCache = require('./redis-cache');
+
+class StampedeProtectedCache {
+  constructor(options = {}) {
+    this.cache = new RedisCache(options);
+    this.lockTTL = options.lockTTL || 10; // Lock TTL in seconds
+    this.retryDelay = options.retryDelay || 50; // Retry delay in milliseconds
+    this.maxRetries = options.maxRetries || 10; // Maximum number of retries
+    this.refreshAheadFactor = options.refreshAheadFactor || 0.75; // Refresh when TTL is at 75%
+  }
+  
+  // Generate lock key
+  _lockKey(key) {
+    return `lock:${key}`;
+  }
+  
+  // Acquire lock
+  async _acquireLock(key) {
+    const lockKey = this._lockKey(key);
+    const lockValue = Date.now().toString();
+    
+    // Try to set the lock key with NX option (only if it doesn't exist)
+    const result = await this.cache.client.set(
+      lockKey,
+      lockValue,
+      'EX',
+      this.lockTTL,
+      'NX'
+    );
+    
+    return result === 'OK' ? lockValue : null;
+  }
+  
+  // Release lock
+  async _releaseLock(key, lockValue) {
+    const lockKey = this._lockKey(key);
+    
+    // Get the current lock value
+    const currentValue = await this.cache.client.get(lockKey);
+    
+    // Only release if we own the lock
+    if (currentValue === lockValue) {
+      await this.cache.client.del(lockKey);
+      return true;
+    }
+    
+    return false;
+  }
+  
+  // Wait for lock to be released
+  async _waitForLock(key, retries = 0) {
+    if (retries >= this.maxRetries) {
+      throw new Error('Maximum retries reached waiting for lock');
+    }
+    
+    const lockKey = this._lockKey(key);
+    const exists = await this.cache.client.exists(lockKey);
+    
+    if (exists === 0) {
+      return true;
+    }
+    
+    // Wait and retry
+    await new Promise(resolve => setTimeout(resolve, this.retryDelay));
+    return this._waitForLock(key, retries + 1);
+  }
+  
+  // Get value with stampede protection
+  async get(key, loadFn, ttl = this.cache.defaultTTL) {
+    // Try to get from cache first
+    const cachedValue = await this.cache.get(key);
+    
+    if (cachedValue !== null) {
+      // Check if we should refresh ahead
+      if (ttl) {
+        const remainingTTL = await this.cache.client.ttl(this.cache._key(key));
+        
+        if (remainingTTL > 0 && remainingTTL < ttl * this.refreshAheadFactor) {
+          // Refresh in the background
+          this._refreshInBackground(key, loadFn, ttl);
+        }
+      }
+      
+      return cachedValue;
+    }
+    
+    // Cache miss, try to acquire lock
+    const lockValue = await this._acquireLock(key);
+    
+    if (lockValue) {
+      try {
+        // We got the lock, load the value
+        const value = await loadFn();
+        
+        // Store in cache
+        await this.cache.set(key, value, ttl);
+        
+        return value;
+      } finally {
+        // Release the lock
+        await this._releaseLock(key, lockValue);
+      }
+    } else {
+      // Another process has the lock, wait for it
+      await this._waitForLock(key);
+      
+      // Try to get the value again
+      const value = await this.cache.get(key);
+      
+      if (value !== null) {
+        return value;
+      }
+      
+      // Still no value, load it ourselves
+      return this.get(key, loadFn, ttl);
+    }
+  }
+  
+  // Refresh cache in the background
+  async _refreshInBackground(key, loadFn, ttl) {
+    // Try to acquire lock for refresh
+    const lockValue = await this._acquireLock(`refresh:${key}`);
+    
+    if (lockValue) {
+      try {
+        // Load new value
+        const value = await loadFn();
+        
+        // Update cache
+        await this.cache.set(key, value, ttl);
+        
+        console.log(`Background refresh completed for ${key}`);
+      } catch (err) {
+        console.error(`Error refreshing cache for ${key}:`, err);
+      } finally {
+        // Release the lock
+        await this._releaseLock(`refresh:${key}`, lockValue);
+      }
+    }
+  }
+  
+  // Delegate other methods to the underlying cache
+  async set(key, value, ttl) {
+    return this.cache.set(key, value, ttl);
+  }
+  
+  async delete(key) {
+    return this.cache.delete(key);
+  }
+  
+  async has(key) {
+    return this.cache.has(key);
+  }
+  
+  async clear() {
+    return this.cache.clear();
+  }
+  
+  async stats() {
+    return this.cache.stats();
+  }
+  
+  close() {
+    this.cache.close();
+  }
+}
+
+module.exports = StampedeProtectedCache;
+</pre>
+                                <div class="copy-button" title="Copy to clipboard">
+                                    <i class="fas fa-copy"></i>
+                                </div>
+                            </div>
+                            
+                            <h3>Using Stampede Protected Cache</h3>
+                            
+                            <div class="code-block-container">
+                                <pre class="code-block javascript">
+// stampede-example.js
+const express = require('express');
+const StampedeProtectedCache = require('./stampede-protection');
+
+const app = express();
+const port = 3000;
+
+// Create stampede protected cache
+const cache = new StampedeProtectedCache({
+  ttl: 60, // 60 seconds
+  prefix: 'api:',
+  lockTTL: 10, // 10 seconds
+  refreshAheadFactor: 0.75 // Refresh when TTL is at 75%
+});
+
+// Simulate expensive database query
+async function getExpensiveData(id) {
+  console.log(`Running expensive query for ${id}...`);
+  
+  // Simulate variable processing time
+  const processingTime = Math.floor(Math.random() * 2000) + 1000;
+  
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({
+        id,
+        name: `Item ${id}`,
+        description: `This is item ${id} from the database`,
+        timestamp: new Date().toISOString(),
+        processingTime
+      });
+    }, processingTime);
+  });
+}
+
+// API route with stampede protection
+app.get('/api/expensive/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
+    const startTime = Date.now();
+    
+    // Get data with stampede protection
+    const data = await cache.get(
+      `expensive:${id}`,
+      () => getExpensiveData(id),
+      60 // 60 seconds TTL
+    );
+    
+    const responseTime = Date.now() - startTime;
+    
+    res.json({
+      data,
+      responseTime: `${responseTime}ms`
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Cache stats endpoint
+app.get('/api/cache/stats', async (req, res) => {
+  try {
+    const stats = await cache.stats();
+    res.json(stats);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Start server
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
+});
+
+// Handle process termination
+process.on('SIGINT', () => {
+  cache.close();
+  process.exit();
+});
+</pre>
+                                <div class="copy-button" title="Copy to clipboard">
+                                    <i class="fas fa-copy"></i>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="content-section">
+                            <h2>Best Practices for Caching</h2>
+                            
+                            <div class="best-practices">
+                                <div class="practice">
+                                    <h3>1. Choose the Right Caching Strategy</h3>
+                                    <p>Select the appropriate caching strategy based on your application's read/write patterns and consistency requirements.</p>
+                                </div>
+                                
+                                <div class="practice">
+                                    <h3>2. Set Appropriate TTLs</h3>
+                                    <p>Use shorter TTLs for frequently changing data and longer TTLs for static content.</p>
+                                </div>
+                                
+                                <div class="practice">
+                                    <h3>3. Implement Proper Cache Invalidation</h3>
+                                    <p>Ensure cache entries are invalidated when the underlying data changes to prevent stale data.</p>
+                                </div>
+                                
+                                <div class="practice">
+                                    <h3>4. Use Cache Keys Wisely</h3>
+                                    <p>Design cache keys to be unique, descriptive, and include version information if necessary.</p>
+                                </div>
+                                
+                                <div class="practice">
+                                    <h3>5. Monitor Cache Performance</h3>
+                                    <p>Track hit rates, miss rates, and response times to optimize your caching strategy.</p>
+                                </div>
+                                
+                                <div class="practice">
+                                    <h3>6. Implement Cache Stampede Protection</h3>
+                                    <p>Prevent multiple processes from simultaneously regenerating the same cache entry.</p>
+                                </div>
+                                
+                                <div class="practice">
+                                    <h3>7. Consider Multi-Level Caching</h3>
+                                    <p>Use different caching layers (memory, distributed cache, CDN) for different types of data.</p>
+                                </div>
+                                
+                                <div class="practice">
+                                    <h3>8. Cache at the Right Level</h3>
+                                    <p>Cache at the appropriate level in your application stack (HTTP, application, database).</p>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="content-section">
+                            <h2>Common Challenges and Solutions</h2>
+                            
+                            <div class="challenges">
+                                <div class="challenge">
+                                    <h3>Challenge: Cache Consistency</h3>
+                                    <p><strong>Problem:</strong> Keeping cached data consistent with the source of truth.</p>
+                                    <p><strong>Solution:</strong> Implement proper cache invalidation strategies, use event-based invalidation, or consider using shorter TTLs for frequently changing data.</p>
+                                </div>
+                                
+                                <div class="challenge">
+                                    <h3>Challenge: Cache Stampede</h3>
+                                    <p><strong>Problem:</strong> Multiple processes trying to regenerate the same cache entry simultaneously.</p>
+                                    <p><strong>Solution:</strong> Implement distributed locking, use the early expiration pattern, or employ background refresh strategies.</p>
+                                </div>
+                                
+                                <div class="challenge">
+                                    <h3>Challenge: Memory Pressure</h3>
+                                    <p><strong>Problem:</strong> Caching too much data can lead to memory issues.</p>
+                                    <p><strong>Solution:</strong> Set appropriate cache size limits, use efficient eviction policies, and consider using multi-level caching with different storage backends.</p>
+                                </div>
+                                
+                                <div class="challenge">
+                                    <h3>Challenge: Cold Cache</h3>
+                                    <p><strong>Problem:</strong> Poor performance after cache restarts or deployments.</p>
+                                    <p><strong>Solution:</strong> Implement cache warming strategies, use persistent cache storage, or employ graceful degradation patterns.</p>
+                                </div>
+                                
+                                <div class="challenge">
+                                    <h3>Challenge: Cache Key Design</h3>
+                                    <p><strong>Problem:</strong> Inefficient or conflicting cache keys.</p>
+                                    <p><strong>Solution:</strong> Use consistent key naming conventions, include version information in keys, and consider using composite keys for complex data.</p>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="content-section">
+                            <h2>Conclusion</h2>
+                            <p>Caching is a powerful technique for improving application performance, reducing latency, and decreasing server load. By implementing the right caching strategies and patterns, you can significantly enhance your system's efficiency and user experience.</p>
+                            
+                            <p>In this guide, we've explored various caching implementations, from simple in-memory caches to distributed caching systems. We've covered different caching strategies, eviction policies, and best practices for deploying caches in production environments.</p>
+                            
+                            <p>Remember that the choice of caching solution depends on your specific requirements, including data access patterns, consistency needs, and infrastructure constraints. Start with a simple solution and evolve as your needs grow.</p>
+                            
+                            <div class="next-steps">
+                                <h3>Next Steps</h3>
+                                <div class="next-links">
+                                    <a href="database-sharding.html" class="next-link">
+                                        <span class="next-text">Next Implementation</span>
+                                        <span class="next-title">Database Sharding</span>
+                                        <i class="fas fa-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <span class="logo-text">System Design <span class="highlight">A-Z</span></span>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-nav">
+                        <h4>Navigation</h4>
+                        <ul>
+                            <li><a href="../../index.html">Home</a></li>
+                            <li><a href="../fundamentals/index.html">Fundamentals</a></li>
+                            <li><a href="../examples/index.html">Real-World Examples</a></li>
+                            <li><a href="../implementation/index.html">Implementation</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-resources">
+                        <h4>Resources</h4>
+                        <ul>
+                            <li><a href="#">Glossary</a></li>
+                            <li><a href="#">Recommended Books</a></li>
+                            <li><a href="#">Tools & Resources</a></li>
+                            <li><a href="#">FAQ</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 System Design A-Z. All images used are copyright-free.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../js/main.js"></script>
+</body>
+</html>
