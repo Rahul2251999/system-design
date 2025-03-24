@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network Basics | System Design A-Z</title>
+    <meta name="description" content="Learn about network fundamentals, protocols, and architectures essential for system design">
+    <link rel="stylesheet" href="../../css/normalize.css">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/fundamentals.css">
+    <link rel="stylesheet" href="../../css/content-page.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="logo">
+                <a href="../../index.html">
+                    <span class="logo-text">System Design <span class="highlight">A-Z</span></span>
+                </a>
+            </div>
+            <nav class="main-nav">
+                <button class="menu-toggle" aria-label="Toggle menu">
+                    <span class="hamburger"></span>
+                </button>
+                <ul class="nav-links">
+                    <li><a href="../../index.html">Home</a></li>
+                    <li><a href="../fundamentals/index.html" class="active">Fundamentals</a></li>
+                    <li><a href="../examples/index.html">Real-World Examples</a></li>
+                    <li><a href="../implementation/index.html">Implementation</a></li>
+                    <li><a href="../../index.html#about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="content-page">
+        <div class="container">
+            <div class="content-wrapper">
+                <aside class="sidebar">
+                    <div class="sidebar-content">
+                        <h3>Fundamentals</h3>
+                        <ul class="sidebar-nav">
+                            <li><a href="introduction.html">Introduction to System Design</a></li>
+                            <li><a href="client-server-model.html">Client-Server Model</a></li>
+                            <li><a href="network-basics.html" class="active">Network Basics</a></li>
+                            <li><a href="storage-basics.html">Storage Basics</a></li>
+                            <li><a href="apis.html">APIs and Communication</a></li>
+                            <li><a href="scalability.html">Scalability Concepts</a></li>
+                            <li><a href="load-balancing.html">Load Balancing</a></li>
+                            <li><a href="caching.html">Caching Strategies</a></li>
+                            <li><a href="databases.html">Database Systems</a></li>
+                            <li><a href="consistency.html">Consistency Patterns</a></li>
+                            <li><a href="availability.html">Availability Patterns</a></li>
+                        </ul>
+                        <div class="sidebar-cta">
+                            <h4>Ready for more?</h4>
+                            <p>Explore advanced topics in system design</p>
+                            <a href="advanced-topics.html" class="btn btn-sm">Advanced Topics</a>
+                        </div>
+                    </div>
+                </aside>
+
+                <article class="main-content">
+                    <div class="content-header">
+                        <h1>Network Basics</h1>
+                        <div class="content-meta">
+                            <span class="difficulty beginner">Beginner</span>
+                            <span class="reading-time">15 min read</span>
+                        </div>
+                    </div>
+
+                    <div class="content-body">
+                        <section class="content-section">
+                            <h2>Introduction to Computer Networks</h2>
+                            <p>Computer networks are the backbone of modern distributed systems, enabling communication between different components and services. Understanding networking fundamentals is crucial for effective system design, as network characteristics significantly impact system performance, reliability, and scalability.</p>
+                            
+                            <p>A computer network is a collection of computing devices connected together to share resources and communicate with each other. These connections can be physical (wired) or wireless, and can span anything from a small local area to the entire globe.</p>
+                            
+                            <div class="image-container">
+                                <div class="placeholder-image">
+                                    <p>Basic Network Topology Diagram</p>
+                                </div>
+                                <div class="image-caption">Figure 1: Basic network topology showing different types of devices connected in a network.</div>
+                            </div>
+                        </section>
+
+                        <section class="content-section">
+                            <h2>The OSI Model</h2>
+                            <p>The Open Systems Interconnection (OSI) model is a conceptual framework that standardizes the functions of a telecommunication or computing system into seven abstraction layers. Understanding this model helps in grasping how different networking technologies interact and where specific protocols operate.</p>
+                            
+                            <div class="comparison-table">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Layer</th>
+                                            <th>Name</th>
+                                            <th>Function</th>
+                                            <th>Examples</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>7</td>
+                                            <td>Application</td>
+                                            <td>Provides network services directly to end-users or applications</td>
+                                            <td>HTTP, SMTP, FTP, DNS</td>
+                                        </tr>
+                                        <tr>
+                                            <td>6</td>
+                                            <td>Presentation</td>
+                                            <td>Translates data between the application layer and the network format</td>
+                                            <td>SSL/TLS, JPEG, MPEG</td>
+                                        </tr>
+                                        <tr>
+                                            <td>5</td>
+                                            <td>Session</td>
+                                            <td>Manages communication sessions between applications</td>
+                                            <td>NetBIOS, RPC</td>
+                                        </tr>
+                                        <tr>
+                                            <td>4</td>
+                                            <td>Transport</td>
+                                            <td>Provides reliable data transfer between end systems</td>
+                                            <td>TCP, UDP</td>
+                                        </tr>
+                                        <tr>
+                                            <td>3</td>
+                                            <td>Network</td>
+                                            <td>Routes data packets between different networks</td>
+                                            <td>IP, ICMP, OSPF</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>Data Link</td>
+                                            <td>Transfers data between adjacent network nodes</td>
+                                            <td>Ethernet, Wi-Fi, PPP</td>
+                                        </tr>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>Physical</td>
+                                            <td>Transmits raw bit stream over physical medium</td>
+                                            <td>Cables, switches, hubs</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <p>In system design, we primarily focus on the upper layers (especially Application, Transport, and Network), as these have the most direct impact on application behavior and performance.</p>
+                        </section>
+
+                        <section class="content-section">
+                            <h2>Key Networking Concepts</h2>
+                            
+                            <h3>IP Addressing</h3>
+                            <p>IP (Internet Protocol) addresses are unique identifiers assigned to devices on a network. They come in two main versions:</p>
+                            
+                            <div class="info-card">
+                                <div class="info-card-header">
+                                    <i class="fas fa-network-wired"></i>
+                                    <h3>IPv4</h3>
+                                </div>
+                                <p>The older standard using 32-bit addresses (e.g., 192.168.1.1). With only about 4.3 billion possible addresses, IPv4 addresses are becoming scarce.</p>
+                            </div>
+                            
+                            <div class="info-card">
+                                <div class="info-card-header">
+                                    <i class="fas fa-network-wired"></i>
+                                    <h3>IPv6</h3>
+                                </div>
+                                <p>The newer standard using 128-bit addresses (e.g., 2001:0db8:85a3:0000:0000:8a2e:0370:7334). IPv6 provides a vastly larger address space to accommodate the growing number of internet-connected devices.</p>
+                            </div>
+                            
+                            <p>IP addresses can be:</p>
+                            <ul>
+                                <li><strong>Public</strong>: Globally routable addresses visible on the internet</li>
+                                <li><strong>Private</strong>: Used within local networks and not directly accessible from the internet</li>
+                                <li><strong>Static</strong>: Permanently assigned to a device</li>
+                                <li><strong>Dynamic</strong>: Temporarily assigned by a DHCP server</li>
+                            </ul>
+                            
+                            <h3>Ports</h3>
+                            <p>While IP addresses identify devices on a network, ports identify specific applications or services running on those devices. Ports are 16-bit numbers (0-65535) that enable multiple network services to operate on a single device.</p>
+                            
+                            <p>Common port numbers include:</p>
+                            <ul>
+                                <li><strong>80</strong>: HTTP (web)</li>
+                                <li><strong>443</strong>: HTTPS (secure web)</li>
+                                <li><strong>22</strong>: SSH (secure shell)</li>
+                                <li><strong>25</strong>: SMTP (email sending)</li>
+                                <li><strong>3306</strong>: MySQL database</li>
+                                <li><strong>27017</strong>: MongoDB database</li>
+                            </ul>
+                            
+                            <h3>DNS (Domain Name System)</h3>
+                            <p>DNS translates human-readable domain names (like example.com) into IP addresses that computers use to identify each other. This hierarchical, distributed system is crucial for the usability of the internet and networked applications.</p>
+                            
+                            <div class="process-steps">
+                                <div class="process-step">
+                                    <div class="step-number">1</div>
+                                    <div class="step-content">
+                                        <h3>DNS Query</h3>
+                                        <p>A client requests the IP address for a domain name from a DNS resolver.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="process-step">
+                                    <div class="step-number">2</div>
+                                    <div class="step-content">
+                                        <h3>Recursive Resolution</h3>
+                                        <p>The resolver queries root servers, then TLD servers, then authoritative name servers.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="process-step">
+                                    <div class="step-number">3</div>
+                                    <div class="step-content">
+                                        <h3>Response</h3>
+                                        <p>The IP address is returned to the client, often with caching at various levels to improve performance.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <p>DNS is a critical component in system design, affecting everything from service discovery to load balancing strategies.</p>
+                        </section>
+
+                        <section class="content-section">
+                            <h2>Transport Protocols</h2>
+                            <p>Transport protocols operate at layer 4 of the OSI model and are responsible for end-to-end communication between devices. The two primary transport protocols are TCP and UDP, each with distinct characteristics that make them suitable for different use cases.</p>
+                            
+                            <h3>TCP (Transmission Control Protocol)</h3>
+                            <p>TCP is a connection-oriented protocol that provides reliable, ordered, and error-checked delivery of data. It establishes a connection before data transfer and ensures all data arrives correctly.</p>
+                            
+                            <div class="info-card">
+                                <div class="info-card-header">
+                                    <i class="fas fa-check-circle"></i>
+                                    <h3>TCP Characteristics</h3>
+                                </div>
+                                <ul>
+                                    <li><strong>Connection-oriented</strong>: Establishes a connection before data transfer</li>
+                                    <li><strong>Reliable</strong>: Guarantees delivery of data</li>
+                                    <li><strong>Ordered</strong>: Data arrives in the order it was sent</li>
+                                    <li><strong>Flow control</strong>: Prevents overwhelming receivers with too much data</li>
+                                    <li><strong>Congestion control</strong>: Adapts to network congestion</li>
+                                    <li><strong>Error detection</strong>: Identifies and retransmits lost or corrupted data</li>
+                                </ul>
+                            </div>
+                            
+                            <p><strong>Use cases</strong>: Web browsing (HTTP/HTTPS), email, file transfers, and any application requiring reliable data delivery.</p>
+                            
+                            <h3>UDP (User Datagram Protocol)</h3>
+                            <p>UDP is a connectionless protocol that provides a simple, unreliable datagram service. It sends data without establishing a connection and does not guarantee delivery or ordering.</p>
+                            
+                            <div class="info-card">
+                                <div class="info-card-header">
+                                    <i class="fas fa-bolt"></i>
+                                    <h3>UDP Characteristics</h3>
+                                </div>
+                                <ul>
+                                    <li><strong>Connectionless</strong>: No connection establishment</li>
+                                    <li><strong>Unreliable</strong>: No guarantee of delivery</li>
+                                    <li><strong>Unordered</strong>: Data may arrive in a different order than sent</li>
+                                    <li><strong>No flow control</strong>: Sends data regardless of receiver capacity</li>
+                                    <li><strong>No congestion control</strong>: Doesn't adapt to network conditions</li>
+                                    <li><strong>Lightweight</strong>: Lower overhead than TCP</li>
+                                </ul>
+                            </div>
+                            
+                            <p><strong>Use cases</strong>: Real-time applications like video streaming, VoIP, online gaming, and DNS lookups where speed is more important than reliability.</p>
+                            
+                            <div class="comparison-table">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Feature</th>
+                                            <th>TCP</th>
+                                            <th>UDP</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Connection</td>
+                                            <td>Connection-oriented</td>
+                                            <td>Connectionless</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Reliability</td>
+                                            <td>Reliable</td>
+                                            <td>Unreliable</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Ordering</td>
+                                            <td>Ordered delivery</td>
+                                            <td>No ordering</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Speed</td>
+                                            <td>Slower</td>
+                                            <td>Faster</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Overhead</td>
+                                            <td>Higher</td>
+                                            <td>Lower</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Use Cases</td>
+                                            <td>Web, email, file transfer</td>
+                                            <td>Streaming, gaming, VoIP</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </section>
+
+                        <section class="content-section">
+                            <h2>Application Layer Protocols</h2>
+                            <p>Application layer protocols operate at the highest level of the OSI model and provide specific services to applications. Here are some key protocols relevant to system design:</p>
+                            
+                            <h3>HTTP/HTTPS (Hypertext Transfer Protocol)</h3>
+                            <p>HTTP is the foundation of data communication on the World Wide Web. It defines how messages are formatted and transmitted, and how web servers and browsers should respond to various commands.</p>
+                            
+                            <div class="info-card">
+                                <div class="info-card-header">
+                                    <i class="fas fa-globe"></i>
+                                    <h3>HTTP Characteristics</h3>
+                                </div>
+                                <ul>
+                                    <li><strong>Request-response model</strong>: Client sends requests, server sends responses</li>
+                                    <li><strong>Stateless</strong>: Each request is independent</li>
+                                    <li><strong>Methods</strong>: GET, POST, PUT, DELETE, etc.</li>
+                                    <li><strong>Status codes</strong>: 200 (OK), 404 (Not Found), 500 (Server Error), etc.</li>
+                                    <li><strong>Headers</strong>: Metadata about the request or response</li>
+                                </ul>
+                            </div>
+                            
+                            <p>HTTPS is the secure version of HTTP, using TLS/SSL encryption to protect data in transit.</p>
+                            
+                            <h3>WebSocket</h3>
+                            <p>WebSocket provides full-duplex communication channels over a single TCP connection, enabling real-time, bidirectional communication between clients and servers.</p>
+                            
+                            <div class="info-card">
+                                <div class="info-card-header">
+                                    <i class="fas fa-exchange-alt"></i>
+                                    <h3>WebSocket Characteristics</h3>
+                                </div>
+                                <ul>
+                                    <li><strong>Persistent connection</strong>: Stays open until explicitly closed</li>
+                                    <li><strong>Bidirectional</strong>: Both client and server can send messages at any time</li>
+                                    <li><strong>Low latency</strong>: Ideal for real-time applications</li>
+                                    <li><strong>Efficient</strong>: Lower overhead than repeated HTTP requests</li>
+                                </ul>
+                            </div>
+                            
+                            <h3>gRPC</h3>
+                            <p>gRPC is a high-performance, open-source RPC (Remote Procedure Call) framework that can run in any environment. It uses Protocol Buffers as the interface definition language and supports multiple programming languages.</p>
+                            
+                            <div class="info-card">
+                                <div class="info-card-header">
+                                    <i class="fas fa-code"></i>
+                                    <h3>gRPC Characteristics</h3>
+                                </div>
+                                <ul>
+                                    <li><strong>Strongly typed</strong>: Uses Protocol Buffers for service definitions</li>
+                                    <li><strong>Efficient serialization</strong>: Binary format instead of text</li>
+                                    <li><strong>Multiple patterns</strong>: Supports unary, server streaming, client streaming, and bidirectional streaming</li>
+                                    <li><strong>Built on HTTP/2</strong>: Benefits from features like multiplexing and header compression</li>
+                                </ul>
+                            </div>
+                            
+                            <h3>MQTT (Message Queuing Telemetry Transport)</h3>
+                            <p>MQTT is a lightweight publish-subscribe messaging protocol designed for constrained devices and low-bandwidth, high-latency networks, making it ideal for IoT applications.</p>
+                            
+                            <div class="info-card">
+                                <div class="info-card-header">
+                                    <i class="fas fa-broadcast-tower"></i>
+                                    <h3>MQTT Characteristics</h3>
+                                </div>
+                                <ul>
+                                    <li><strong>Publish-subscribe</strong>: Publishers send messages to topics, subscribers receive messages from topics they're interested in</li>
+                                    <li><strong>Lightweight</strong>: Minimal packet overhead</li>
+                                    <li><strong>Quality of Service</strong>: Three levels (at most once, at least once, exactly once)</li>
+                                    <li><strong>Retained messages</strong>: Last message can be stored for new subscribers</li>
+                                </ul>
+                            </div>
+                        </section>
+
+                        <section class="content-section">
+                            <h2>Network Topologies</h2>
+                            <p>Network topology refers to the arrangement of elements in a network. Different topologies have different characteristics that affect reliability, scalability, and performance.</p>
+                            
+                            <h3>Common Network Topologies</h3>
+                            
+                            <div class="info-card">
+                                <div class="info-card-header">
+                                    <i class="fas fa-star"></i>
+                                    <h3>Star Topology</h3>
+                                </div>
+                                <p>All devices connect to a central hub or switch. Easy to set up and manage, but the central node is a single point of failure.</p>
+                            </div>
+                            
+                            <div class="info-card">
+                                <div class="info-card-header">
+                                    <i class="fas fa-ring"></i>
+                                    <h3>Ring Topology</h3>
+                                </div>
+                                <p>Devices connect to exactly two other devices, forming a ring. Data travels around the ring in one direction. Failure of one device can affect the entire network.</p>
+                            </div>
+                            
+                            <div class="info-card">
+                                <div class="info-card-header">
+                                    <i class="fas fa-project-diagram"></i>
+                                    <h3>Mesh Topology</h3>
+                                </div>
+                                <p>Devices connect to multiple other devices. Highly reliable due to redundant connections but complex and expensive to implement fully.</p>
+                            </div>
+                            
+                            <div class="info-card">
+                                <div class="info-card-header">
+                                    <i class="fas fa-sitemap"></i>
+                                    <h3>Tree Topology</h3>
+                                </div>
+                                <p>Hierarchical structure with a root node and branches. Scalable and manageable but dependent on higher-level nodes.</p>
+                            </div>
+                            
+                            <div class="info-card">
+                                <div class="info-card-header">
+                                    <i class="fas fa-network-wired"></i>
+                                    <h3>Bus Topology</h3>
+                                </div>
+                                <p>All devices connect to a single backbone cable. Simple and inexpensive but vulnerable to backbone failures.</p>
+                            </div>
+                            
+                            <p>In modern distributed systems, hybrid topologies combining elements of different basic topologies are common, especially in cloud environments where the physical topology is abstracted away from the application developer.</p>
+                        </section>
+
+                        <section class="content-section">
+                            <h2>Network Performance Metrics</h2>
+                            <p>Understanding network performance metrics is crucial for designing systems that meet performance requirements. Here are the key metrics to consider:</p>
+                            
+                            <h3>Bandwidth</h3>
+                            <p>Bandwidth refers to the maximum rate of data transfer across a network, typically measured in bits per second (bps), with common units being Mbps (megabits per second) or Gbps (gigabits per second).</p>
+                            
+                            <p>Higher bandwidth allows for more data to be transmitted simultaneously, which is important for data-intensive applications like video streaming or large file transfers.</p>
+                            
+                            <h3>Latency</h3>
+                            <p>Latency is the time it takes for data to travel from source to destination, typically measured in milliseconds (ms). It includes:</p>
+                            <ul>
+                                <li><strong>Propagation delay</strong>: Time for a signal to travel through the medium</li>
+                                <li><strong>Transmission delay</strong>: Time to push all the packet's bits into the link</li>
+                                <li><strong>Processing delay</strong>: Time for routers to process the packet header</li>
+                                <li><strong>Queuing delay</strong>: Time the packet spends waiting in router queues</li>
+                            </ul>
+                            
+                            <p>Low latency is critical for real-time applications like video conferencing, online gaming, and financial trading systems.</p>
+                            
+                            <h3>Throughput</h3>
+                            <p>Throughput is the actual rate of successful data transfer, which may be lower than the theoretical bandwidth due to various factors like protocol overhead, network congestion, and packet loss.</p>
+                            
+                            <h3>Packet Loss</h3>
+                            <p>Packet loss occurs when data packets fail to reach their destination. It's typically measured as a percentage of packets lost relative to packets sent.</p>
+                            
+                            <p>Causes of packet loss include network congestion, hardware failures, and signal degradation. TCP automatically retransmits lost packets, while UDP applications must handle packet loss at the application level.</p>
+                            
+                            <h3>Jitter</h3>
+                            <p>Jitter is the variation in latency over time. High jitter can cause problems for real-time applications, even if average latency is low.</p>
+                            
+                            <p>Applications like VoIP and video streaming often use jitter buffers to compensate for variable packet arrival times.</p>
+                        </section>
+
+                        <section class="content-section">
+                            <h2>Network Security Concepts</h2>
+                            <p>Network security is a critical aspect of system design, protecting data and services from unauthorized access and attacks.</p>
+                            
+                            <h3>Firewalls</h3>
+                            <p>Firewalls monitor and control incoming and outgoing network traffic based on predetermined security rules. They can be:</p>
+                            <ul>
+                                <li><strong>Network firewalls</strong>: Operate at the network level, filtering traffic based on IP addresses, ports, and protocols</li>
+                                <li><strong>Application firewalls</strong>: Operate at the application level, analyzing the content of traffic for specific applications</li>
+                                <li><strong>Next-generation firewalls</strong>: Combine traditional firewall capabilities with advanced features like intrusion prevention and deep packet inspection</li>
+                            </ul>
+                            
+                            <h3>VPN (Virtual Private Network)</h3>
+                            <p>VPNs extend private networks across public networks, enabling users to send and receive data as if their devices were directly connected to the private network. They provide:</p>
+                            <ul>
+                                <li><strong>Encryption</strong>: Protecting data in transit</li>
+                                <li><strong>Authentication</strong>: Ensuring only authorized users can access the network</li>
+                                <li><strong>Privacy</strong>: Hiding the user's IP address and location</li>
+                            </ul>
+                            
+                            <h3>TLS/SSL</h3>
+                            <p>Transport Layer Security (TLS) and its predecessor, Secure Sockets Layer (SSL), are cryptographic protocols that provide secure communication over a network. They ensure:</p>
+                            <ul>
+                                <li><strong>Privacy</strong>: Encrypting data to prevent eavesdropping</li>
+                                <li><strong>Integrity</strong>: Ensuring data hasn't been modified in transit</li>
+                                <li><strong>Authentication</strong>: Verifying the identity of communicating parties</li>
+                            </ul>
+                            
+                            <p>HTTPS is HTTP over TLS/SSL, providing secure communication for web applications.</p>
+                            
+                            <h3>DDoS Protection</h3>
+                            <p>Distributed Denial of Service (DDoS) attacks attempt to disrupt normal traffic to a service by overwhelming it with a flood of traffic from multiple sources. Protection strategies include:</p>
+                            <ul>
+                                <li><strong>Traffic filtering</strong>: Identifying and blocking malicious traffic</li>
+                                <li><strong>Rate limiting</strong>: Restricting the number of requests from a single source</li>
+                                <li><strong>Anycast network</strong>: Distributing traffic across multiple data centers</li>
+                                <li><strong>CDN</strong>: Using Content Delivery Networks to absorb traffic</li>
+                            </ul>
+                        </section>
+
+                        <section class="content-section">
+                            <h2>Network Considerations in System Design</h2>
+                            <p>When designing distributed systems, several network-related factors should be considered:</p>
+                            
+                            <h3>Geographical Distribution</h3>
+                            <p>The physical location of system components affects latency and availability. Options include:</p>
+                            <ul>
+                                <li><strong>Single region</strong>: Lower latency within the region but vulnerable to regional outages</li>
+                                <li><strong>Multi-region</strong>: Higher availability but increased complexity and potential consistency challenges</li>
+                                <li><strong>Edge computing</strong>: Placing computation closer to users to reduce latency</li>
+                            </ul>
+                            
+                            <h3>Network Partitioning</h3>
+                            <p>Network partitions occur when network failures prevent nodes from communicating with each other. Systems must be designed to handle these situations gracefully, often involving trade-offs between consistency and availability (as described by the CAP theorem).</p>
+                            
+                            <h3>Protocol Selection</h3>
+                            <p>Choosing appropriate protocols for different components of a system is crucial:</p>
+                            <ul>
+                                <li><strong>User-facing services</strong>: HTTP/HTTPS for broad compatibility</li>
+                                <li><strong>Internal services</strong>: gRPC for efficient service-to-service communication</li>
+                                <li><strong>Real-time features</strong>: WebSockets or Server-Sent Events</li>
+                                <li><strong>IoT devices</strong>: Lightweight protocols like MQTT</li>
+                            </ul>
+                            
+                            <h3>Network Optimization</h3>
+                            <p>Techniques to improve network performance include:</p>
+                            <ul>
+                                <li><strong>Content Delivery Networks (CDNs)</strong>: Distributing content closer to users</li>
+                                <li><strong>Connection pooling</strong>: Reusing connections to reduce overhead</li>
+                                <li><strong>Compression</strong>: Reducing the size of transmitted data</li>
+                                <li><strong>Batching</strong>: Combining multiple requests or responses</li>
+                                <li><strong>Asynchronous communication</strong>: Not waiting for responses before continuing processing</li>
+                            </ul>
+                        </section>
+
+                        <section class="content-section">
+                            <h2>Conclusion</h2>
+                            <p>Understanding network fundamentals is essential for effective system design. Networks form the foundation upon which distributed systems are built, and their characteristics significantly impact system behavior, performance, and reliability.</p>
+                            
+                            <p>Key takeaways from this article include:</p>
+                            <ul>
+                                <li>The OSI model provides a conceptual framework for understanding network layers and protocols</li>
+                                <li>TCP and UDP offer different trade-offs between reliability and performance</li>
+                                <li>Application layer protocols like HTTP, WebSocket, and gRPC serve different communication needs</li>
+                                <li>Network performance metrics (bandwidth, latency, throughput) affect user experience and system capabilities</li>
+                                <li>Network security is a critical consideration in system design</li>
+                                <li>Geographical distribution, protocol selection, and network optimization techniques can significantly impact system performance</li>
+                            </ul>
+                            
+                            <p>As you design systems, consider network characteristics early in the process, as they will influence many architectural decisions and ultimately determine whether your system can meet its performance and reliability requirements.</p>
+                        </section>
+
+                        <div class="next-steps">
+                            <h3>Next Steps</h3>
+                            <div class="next-links">
+                                <a href="storage-basics.html" class="next-link">
+                                    <span class="next-text">Next Article</span>
+                                    <span class="next-title">Storage Basics</span>
+                                    <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <span class="logo-text">System Design <span class="highlight">A-Z</span></span>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-nav">
+                        <h4>Navigation</h4>
+                        <ul>
+                            <li><a href="../../index.html">Home</a></li>
+                            <li><a href="../fundamentals/index.html">Fundamentals</a></li>
+                            <li><a href="../examples/index.html">Real-World Examples</a></li>
+                            <li><a href="../implementation/index.html">Implementation</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-resources">
+                        <h4>Resources</h4>
+                        <ul>
+                            <li><a href="#">Glossary</a></li>
+                            <li><a href="#">Recommended Books</a></li>
+                            <li><a href="#">Tools & Resources</a></li>
+                            <li><a href="#">FAQ</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 System Design A-Z. All images used are copyright-free.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../js/main.js"></script>
+</body>
+</html>

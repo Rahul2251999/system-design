@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fundamentals | System Design A-Z</title>
+    <meta name="description" content="Learn the core concepts and principles of system design from beginner to advanced levels">
+    <link rel="stylesheet" href="../../css/normalize.css">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/fundamentals.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="logo">
+                <a href="../../index.html">
+                    <span class="logo-text">System Design <span class="highlight">A-Z</span></span>
+                </a>
+            </div>
+            <nav class="main-nav">
+                <button class="menu-toggle" aria-label="Toggle menu">
+                    <span class="hamburger"></span>
+                </button>
+                <ul class="nav-links">
+                    <li><a href="../../index.html">Home</a></li>
+                    <li><a href="../fundamentals/index.html" class="active">Fundamentals</a></li>
+                    <li><a href="../examples/index.html">Real-World Examples</a></li>
+                    <li><a href="../implementation/index.html">Implementation</a></li>
+                    <li><a href="../../index.html#about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="fundamentals-hero">
+            <div class="container">
+                <h1>System Design <span class="highlight">Fundamentals</span></h1>
+                <p class="hero-subtitle">Master the core concepts and principles of system design from beginner to advanced levels</p>
+            </div>
+        </section>
+
+        <section class="learning-path">
+            <div class="container">
+                <h2 class="section-title">Your Learning Path</h2>
+                <div class="learning-levels">
+                    <div class="level">
+                        <div class="level-header">
+                            <div class="level-icon beginner">
+                                <i class="fas fa-seedling"></i>
+                            </div>
+                            <h3>Beginner</h3>
+                        </div>
+                        <div class="level-content">
+                            <p>Start with the basic concepts and terminology of system design</p>
+                            <ul class="topic-list">
+                                <li><a href="introduction.html">Introduction to System Design</a></li>
+                                <li><a href="client-server-model.html">Client-Server Model</a></li>
+                                <li><a href="network-basics.html">Network Basics</a></li>
+                                <li><a href="storage-basics.html">Storage Basics</a></li>
+                                <li><a href="apis.html">APIs and Communication</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="level">
+                        <div class="level-header">
+                            <div class="level-icon intermediate">
+                                <i class="fas fa-tree"></i>
+                            </div>
+                            <h3>Intermediate</h3>
+                        </div>
+                        <div class="level-content">
+                            <p>Explore more complex concepts and components of distributed systems</p>
+                            <ul class="topic-list">
+                                <li><a href="scalability.html">Scalability Concepts</a></li>
+                                <li><a href="load-balancing.html">Load Balancing</a></li>
+                                <li><a href="caching.html">Caching Strategies</a></li>
+                                <li><a href="databases.html">Database Systems</a></li>
+                                <li><a href="consistency.html">Consistency Patterns</a></li>
+                                <li><a href="availability.html">Availability Patterns</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="level">
+                        <div class="level-header">
+                            <div class="level-icon advanced">
+                                <i class="fas fa-mountain"></i>
+                            </div>
+                            <h3>Advanced</h3>
+                        </div>
+                        <div class="level-content">
+                            <p>Master advanced techniques and patterns for large-scale systems</p>
+                            <ul class="topic-list">
+                                <li><a href="microservices.html">Microservices Architecture</a></li>
+                                <li><a href="data-partitioning.html">Data Partitioning</a></li>
+                                <li><a href="distributed-systems.html">Distributed Systems</a></li>
+                                <li><a href="cap-theorem.html">CAP Theorem</a></li>
+                                <li><a href="message-queues.html">Message Queues</a></li>
+                                <li><a href="rate-limiting.html">Rate Limiting</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="level">
+                        <div class="level-header">
+                            <div class="level-icon expert">
+                                <i class="fas fa-rocket"></i>
+                            </div>
+                            <h3>Expert</h3>
+                        </div>
+                        <div class="level-content">
+                            <p>Dive into specialized topics and cutting-edge techniques</p>
+                            <ul class="topic-list">
+                                <li><a href="system-design-interview.html">System Design Interview</a></li>
+                                <li><a href="distributed-consensus.html">Distributed Consensus</a></li>
+                                <li><a href="data-intensive.html">Data-Intensive Applications</a></li>
+                                <li><a href="streaming-processing.html">Streaming Processing</a></li>
+                                <li><a href="ml-systems.html">ML Systems Design</a></li>
+                                <li><a href="blockchain-systems.html">Blockchain Systems</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="featured-topics">
+            <div class="container">
+                <h2 class="section-title">Featured Topics</h2>
+                <div class="topics-grid">
+                    <div class="topic-card">
+                        <div class="topic-icon">
+                            <i class="fas fa-server"></i>
+                        </div>
+                        <h3>Scalability</h3>
+                        <p>Learn how to design systems that can handle growth from thousands to millions of users</p>
+                        <a href="scalability.html" class="btn btn-sm">Learn More</a>
+                    </div>
+                    <div class="topic-card">
+                        <div class="topic-icon">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <h3>Database Systems</h3>
+                        <p>Understand different database types and how to choose the right one for your needs</p>
+                        <a href="databases.html" class="btn btn-sm">Learn More</a>
+                    </div>
+                    <div class="topic-card">
+                        <div class="topic-icon">
+                            <i class="fas fa-network-wired"></i>
+                        </div>
+                        <h3>Distributed Systems</h3>
+                        <p>Master the complexities of building reliable distributed systems</p>
+                        <a href="distributed-systems.html" class="btn btn-sm">Learn More</a>
+                    </div>
+                    <div class="topic-card">
+                        <div class="topic-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3>System Security</h3>
+                        <p>Learn essential security patterns and practices for robust system design</p>
+                        <a href="security.html" class="btn btn-sm">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="concept-map">
+            <div class="container">
+                <h2 class="section-title">System Design Concept Map</h2>
+                <div class="map-container">
+                    <!-- Placeholder for interactive concept map -->
+                    <div class="placeholder-image">
+                        <p>Interactive concept map showing relationships between system design concepts</p>
+                    </div>
+                </div>
+                <div class="map-description">
+                    <p>This concept map illustrates how different system design concepts relate to each other. Understanding these relationships is key to mastering system design.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="resources">
+            <div class="container">
+                <h2 class="section-title">Additional Resources</h2>
+                <div class="resources-grid">
+                    <div class="resource-card">
+                        <div class="resource-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <h3>Recommended Books</h3>
+                        <ul>
+                            <li>Designing Data-Intensive Applications</li>
+                            <li>System Design Interview</li>
+                            <li>Building Microservices</li>
+                            <li>Clean Architecture</li>
+                        </ul>
+                    </div>
+                    <div class="resource-card">
+                        <div class="resource-icon">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <h3>Video Courses</h3>
+                        <ul>
+                            <li>MIT 6.824: Distributed Systems</li>
+                            <li>Grokking the System Design Interview</li>
+                            <li>System Design Fundamentals</li>
+                            <li>Microservices Architecture</li>
+                        </ul>
+                    </div>
+                    <div class="resource-card">
+                        <div class="resource-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <h3>Websites & Blogs</h3>
+                        <ul>
+                            <li>High Scalability</li>
+                            <li>System Design Primer</li>
+                            <li>Martin Fowler's Blog</li>
+                            <li>AWS Architecture Center</li>
+                        </ul>
+                    </div>
+                    <div class="resource-card">
+                        <div class="resource-icon">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <h3>Tools & Software</h3>
+                        <ul>
+                            <li>Draw.io for Diagrams</li>
+                            <li>Prometheus for Monitoring</li>
+                            <li>Docker & Kubernetes</li>
+                            <li>Postman for API Testing</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <span class="logo-text">System Design <span class="highlight">A-Z</span></span>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-nav">
+                        <h4>Navigation</h4>
+                        <ul>
+                            <li><a href="../../index.html">Home</a></li>
+                            <li><a href="../fundamentals/index.html">Fundamentals</a></li>
+                            <li><a href="../examples/index.html">Real-World Examples</a></li>
+                            <li><a href="../implementation/index.html">Implementation</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-resources">
+                        <h4>Resources</h4>
+                        <ul>
+                            <li><a href="#">Glossary</a></li>
+                            <li><a href="#">Recommended Books</a></li>
+                            <li><a href="#">Tools & Resources</a></li>
+                            <li><a href="#">FAQ</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 System Design A-Z. All images used are copyright-free.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../js/main.js"></script>
+</body>
+</html>

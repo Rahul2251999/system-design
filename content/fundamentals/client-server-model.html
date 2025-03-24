@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client-Server Model | System Design A-Z</title>
+    <meta name="description" content="Learn about the client-server model, its architecture, components, and role in modern system design">
+    <link rel="stylesheet" href="../../css/normalize.css">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/fundamentals.css">
+    <link rel="stylesheet" href="../../css/content-page.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="logo">
+                <a href="../../index.html">
+                    <span class="logo-text">System Design <span class="highlight">A-Z</span></span>
+                </a>
+            </div>
+            <nav class="main-nav">
+                <button class="menu-toggle" aria-label="Toggle menu">
+                    <span class="hamburger"></span>
+                </button>
+                <ul class="nav-links">
+                    <li><a href="../../index.html">Home</a></li>
+                    <li><a href="../fundamentals/index.html" class="active">Fundamentals</a></li>
+                    <li><a href="../examples/index.html">Real-World Examples</a></li>
+                    <li><a href="../implementation/index.html">Implementation</a></li>
+                    <li><a href="../../index.html#about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="content-page">
+        <div class="container">
+            <div class="content-wrapper">
+                <aside class="sidebar">
+                    <div class="sidebar-content">
+                        <h3>Fundamentals</h3>
+                        <ul class="sidebar-nav">
+                            <li><a href="introduction.html">Introduction to System Design</a></li>
+                            <li><a href="client-server-model.html" class="active">Client-Server Model</a></li>
+                            <li><a href="network-basics.html">Network Basics</a></li>
+                            <li><a href="storage-basics.html">Storage Basics</a></li>
+                            <li><a href="apis.html">APIs and Communication</a></li>
+                            <li><a href="scalability.html">Scalability Concepts</a></li>
+                            <li><a href="load-balancing.html">Load Balancing</a></li>
+                            <li><a href="caching.html">Caching Strategies</a></li>
+                            <li><a href="databases.html">Database Systems</a></li>
+                            <li><a href="consistency.html">Consistency Patterns</a></li>
+                            <li><a href="availability.html">Availability Patterns</a></li>
+                        </ul>
+                        <div class="sidebar-cta">
+                            <h4>Ready for more?</h4>
+                            <p>Explore advanced topics in system design</p>
+                            <a href="advanced-topics.html" class="btn btn-sm">Advanced Topics</a>
+                        </div>
+                    </div>
+                </aside>
+
+                <article class="main-content">
+                    <div class="content-header">
+                        <h1>Client-Server Model</h1>
+                        <div class="content-meta">
+                            <span class="difficulty beginner">Beginner</span>
+                            <span class="reading-time">12 min read</span>
+                        </div>
+                    </div>
+
+                    <div class="content-body">
+                        <section class="content-section">
+                            <h2>What is the Client-Server Model?</h2>
+                            <p>The client-server model is a distributed application structure that partitions tasks or workloads between the providers of a resource or service, called servers, and service requesters, called clients. It is one of the most fundamental architectures in modern computing and forms the backbone of most internet-based applications.</p>
+                            
+                            <div class="image-container">
+                                <div class="placeholder-image">
+                                    <p>Basic Client-Server Architecture Diagram</p>
+                                </div>
+                                <div class="image-caption">Figure 1: Basic client-server architecture showing multiple clients connecting to a server.</div>
+                            </div>
+                            
+                            <p>In this model:</p>
+                            <ul>
+                                <li><strong>Clients</strong> are the devices or applications that request services or resources.</li>
+                                <li><strong>Servers</strong> are the devices or applications that provide services or resources in response to client requests.</li>
+                                <li><strong>Network</strong> is the communication medium that enables clients and servers to exchange information.</li>
+                            </ul>
+                            
+                            <p>The client-server model is a contrast to peer-to-peer (P2P) networking, where each participant can be both a client and a server. In the client-server model, roles are clearly defined and separated.</p>
+                        </section>
+
+                        <section class="content-section">
+                            <h2>Key Components</h2>
+                            
+                            <h3>Client Components</h3>
+                            <p>Clients are typically user-facing applications or devices that initiate communication with servers. Key components of clients include:</p>
+                            
+                            <div class="info-card">
+                                <div class="info-card-header">
+                                    <i class="fas fa-desktop"></i>
+                                    <h3>User Interface</h3>
+                                </div>
+                                <p>The part of the application that users interact with, such as a web browser, mobile app, or desktop application.</p>
+                            </div>
+                            
+                            <div class="info-card">
+                                <div class="info-card-header">
+                                    <i class="fas fa-exchange-alt"></i>
+                                    <h3>Client-Side Logic</h3>
+                                </div>
+                                <p>Code that runs on the client device to handle user interactions, validate input, and manage the presentation of data.</p>
+                            </div>
+                            
+                            <div class="info-card">
+                                <div class="info-card-header">
+                                    <i class="fas fa-network-wired"></i>
+                                    <h3>Network Interface</h3>
+                                </div>
+                                <p>Components that handle communication with servers, including forming requests and processing responses.</p>
+                            </div>
+                            
+                            <h3>Server Components</h3>
+                            <p>Servers are systems that respond to client requests and provide services or resources. Key components of servers include:</p>
+                            
+                            <div class="info-card">
+                                <div class="info-card-header">
+                                    <i class="fas fa-server"></i>
+                                    <h3>Server Hardware</h3>
+                                </div>
+                                <p>Physical or virtual machines with computing resources (CPU, memory, storage) to handle client requests.</p>
+                            </div>
+                            
+                            <div class="info-card">
+                                <div class="info-card-header">
+                                    <i class="fas fa-cogs"></i>
+                                    <h3>Server Software</h3>
+                                </div>
+                                <p>Programs that listen for client requests, process them, and return appropriate responses (e.g., web servers, database servers).</p>
+                            </div>
+                            
+                            <div class="info-card">
+                                <div class="info-card-header">
+                                    <i class="fas fa-database"></i>
+                                    <h3>Data Storage</h3>
+                                </div>
+                                <p>Systems for storing and retrieving data, such as databases, file systems, or caches.</p>
+                            </div>
+                            
+                            <div class="info-card">
+                                <div class="info-card-header">
+                                    <i class="fas fa-shield-alt"></i>
+                                    <h3>Security Components</h3>
+                                </div>
+                                <p>Systems for authentication, authorization, and protecting server resources from unauthorized access or attacks.</p>
+                            </div>
+                        </section>
+
+                        <section class="content-section">
+                            <h2>How the Client-Server Model Works</h2>
+                            
+                            <h3>Basic Request-Response Cycle</h3>
+                            <p>The fundamental interaction in the client-server model is the request-response cycle:</p>
+                            
+                            <div class="process-steps">
+                                <div class="process-step">
+                                    <div class="step-number">1</div>
+                                    <div class="step-content">
+                                        <h3>Client Request</h3>
+                                        <p>The client formulates a request for a specific service or resource and sends it to the server over the network.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="process-step">
+                                    <div class="step-number">2</div>
+                                    <div class="step-content">
+                                        <h3>Server Processing</h3>
+                                        <p>The server receives the request, processes it according to its business logic, and prepares a response.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="process-step">
+                                    <div class="step-number">3</div>
+                                    <div class="step-content">
+                                        <h3>Server Response</h3>
+                                        <p>The server sends the response back to the client over the network.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="process-step">
+                                    <div class="step-number">4</div>
+                                    <div class="step-content">
+                                        <h3>Client Processing</h3>
+                                        <p>The client receives the response, processes it, and updates its state or display accordingly.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <p>This cycle can be repeated many times during a single client session, with each request-response pair representing a discrete interaction.</p>
+                            
+                            <h3>Communication Protocols</h3>
+                            <p>Client-server communication is governed by protocols, which are standardized rules for formatting and processing data. Common protocols include:</p>
+                            
+                            <ul>
+                                <li><strong>HTTP/HTTPS</strong>: The foundation of web communication, used for transferring web pages, APIs, and more.</li>
+                                <li><strong>FTP</strong>: Used for file transfers between clients and servers.</li>
+                                <li><strong>SMTP/POP3/IMAP</strong>: Used for email communication.</li>
+                                <li><strong>WebSocket</strong>: Enables real-time, bidirectional communication between clients and servers.</li>
+                                <li><strong>gRPC</strong>: A high-performance RPC (Remote Procedure Call) framework for service-to-service communication.</li>
+                            </ul>
+                            
+                            <p>These protocols define how data is formatted, transmitted, and processed, ensuring that clients and servers can understand each other despite potentially running on different platforms or being written in different programming languages.</p>
+                        </section>
+
+                        <section class="content-section">
+                            <h2>Types of Client-Server Architectures</h2>
+                            
+                            <h3>Two-Tier Architecture</h3>
+                            <p>The simplest form of client-server architecture, where the client communicates directly with the server without intermediaries.</p>
+                            
+                            <div class="image-container">
+                                <div class="placeholder-image">
+                                    <p>Two-Tier Architecture Diagram</p>
+                                </div>
+                                <div class="image-caption">Figure 2: Two-tier architecture showing direct client-server communication.</div>
+                            </div>
+                            
+                            <p><strong>Example:</strong> A desktop application that connects directly to a database server.</p>
+                            
+                            <h3>Three-Tier Architecture</h3>
+                            <p>Adds a middle tier (application server) between the client and the data server, separating the presentation, business logic, and data storage layers.</p>
+                            
+                            <div class="image-container">
+                                <div class="placeholder-image">
+                                    <p>Three-Tier Architecture Diagram</p>
+                                </div>
+                                <div class="image-caption">Figure 3: Three-tier architecture showing presentation, application, and data tiers.</div>
+                            </div>
+                            
+                            <p><strong>Example:</strong> A web application where the browser (client) communicates with a web server (application tier), which in turn communicates with a database server (data tier).</p>
+                            
+                            <h3>N-Tier Architecture</h3>
+                            <p>Extends the three-tier model with additional specialized tiers for functions like caching, load balancing, or service integration.</p>
+                            
+                            <div class="image-container">
+                                <div class="placeholder-image">
+                                    <p>N-Tier Architecture Diagram</p>
+                                </div>
+                                <div class="image-caption">Figure 4: N-tier architecture showing multiple specialized tiers.</div>
+                            </div>
+                            
+                            <p><strong>Example:</strong> A complex enterprise application with separate tiers for presentation, business logic, integration services, and multiple data sources.</p>
+                            
+                            <h3>Microservices Architecture</h3>
+                            <p>A variant of n-tier architecture where the application is composed of small, independent services that communicate over a network.</p>
+                            
+                            <div class="image-container">
+                                <div class="placeholder-image">
+                                    <p>Microservices Architecture Diagram</p>
+                                </div>
+                                <div class="image-caption">Figure 5: Microservices architecture showing multiple specialized services.</div>
+                            </div>
+                            
+                            <p><strong>Example:</strong> An e-commerce platform where separate services handle user accounts, product catalog, shopping cart, payment processing, and order fulfillment.</p>
+                        </section>
+
+                        <section class="content-section">
+                            <h2>Advantages of the Client-Server Model</h2>
+                            
+                            <div class="comparison-table">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Advantage</th>
+                                            <th>Description</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Centralized Control</td>
+                                            <td>Resources and data are managed centrally on servers, making them easier to control, update, and secure.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Scalability</td>
+                                            <td>Servers can be scaled independently of clients to handle increased load, and multiple servers can work together to distribute the workload.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Resource Sharing</td>
+                                            <td>Multiple clients can access the same resources on a server, reducing duplication and ensuring consistency.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Separation of Concerns</td>
+                                            <td>Clear separation between client and server responsibilities allows for specialized optimization and independent development.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Thin Clients</td>
+                                            <td>Clients can be lightweight since most of the processing and storage happens on the server, enabling access from less powerful devices.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Security</td>
+                                            <td>Sensitive data and business logic can be kept on secure servers rather than distributed to potentially vulnerable clients.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </section>
+
+                        <section class="content-section">
+                            <h2>Challenges and Limitations</h2>
+                            
+                            <div class="comparison-table">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Challenge</th>
+                                            <th>Description</th>
+                                            <th>Mitigation</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Single Point of Failure</td>
+                                            <td>If a server fails, all clients depending on it lose access to its services.</td>
+                                            <td>Implement redundancy, failover mechanisms, and load balancing across multiple servers.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Network Dependency</td>
+                                            <td>Clients require network connectivity to access server resources.</td>
+                                            <td>Implement offline capabilities, local caching, and graceful degradation when connectivity is limited.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Scalability Limits</td>
+                                            <td>Servers may become bottlenecks as the number of clients increases.</td>
+                                            <td>Use horizontal scaling, caching, and efficient resource management to handle increased load.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Complexity</td>
+                                            <td>Distributed systems are inherently more complex than monolithic applications.</td>
+                                            <td>Use well-defined interfaces, standard protocols, and robust error handling to manage complexity.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Latency</td>
+                                            <td>Network communication introduces delays compared to local processing.</td>
+                                            <td>Optimize network protocols, use caching, and implement asynchronous processing where appropriate.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </section>
+
+                        <section class="content-section">
+                            <h2>Modern Trends in Client-Server Computing</h2>
+                            
+                            <h3>Cloud Computing</h3>
+                            <p>Cloud platforms have transformed the client-server model by providing scalable, on-demand server resources without the need for physical hardware. This has made it easier and more cost-effective to deploy and scale server-side applications.</p>
+                            
+                            <h3>Serverless Architecture</h3>
+                            <p>Serverless computing abstracts server management even further, allowing developers to focus on writing code that responds to events rather than managing server infrastructure. Functions as a Service (FaaS) platforms like AWS Lambda, Azure Functions, and Google Cloud Functions are examples of this approach.</p>
+                            
+                            <h3>Edge Computing</h3>
+                            <p>Edge computing moves some server functionality closer to clients by deploying servers at the "edge" of the network (closer to users). This reduces latency and bandwidth usage, improving performance for latency-sensitive applications.</p>
+                            
+                            <h3>Progressive Web Apps (PWAs)</h3>
+                            <p>PWAs blur the line between web and native applications, offering offline capabilities and app-like experiences while still following the client-server model. They use service workers to cache resources locally and synchronize with servers when connectivity is available.</p>
+                            
+                            <h3>API-First Development</h3>
+                            <p>Modern client-server applications often adopt an API-first approach, where the server exposes well-defined APIs that can be consumed by various client applications. This promotes reusability and enables the development of multiple client interfaces (web, mobile, IoT) that interact with the same server-side logic.</p>
+                        </section>
+
+                        <section class="content-section">
+                            <h2>Real-World Examples</h2>
+                            
+                            <h3>Web Applications</h3>
+                            <p>The most common example of the client-server model is web applications, where web browsers (clients) request pages and resources from web servers. This follows the HTTP request-response pattern and typically involves multiple tiers, including web servers, application servers, and database servers.</p>
+                            
+                            <h3>Email Systems</h3>
+                            <p>Email clients (like Outlook or Gmail) communicate with email servers using protocols like SMTP, POP3, and IMAP. The servers handle message storage, routing, and delivery, while clients focus on the user interface and local message management.</p>
+                            
+                            <h3>Database Applications</h3>
+                            <p>Many business applications use a client-server model where the client provides the user interface and the server hosts the database. The client sends SQL queries to the server, which processes them and returns the results.</p>
+                            
+                            <h3>Mobile Apps</h3>
+                            <p>Most mobile applications follow a client-server model, with the app itself serving as the client and backend servers providing data, authentication, and business logic. APIs (often REST or GraphQL) typically facilitate this communication.</p>
+                            
+                            <h3>Gaming</h3>
+                            <p>Online multiplayer games use a client-server model where the game client handles rendering and user input, while game servers manage the game state, physics, and player interactions to ensure consistency and prevent cheating.</p>
+                        </section>
+
+                        <section class="content-section">
+                            <h2>Best Practices for Client-Server Design</h2>
+                            
+                            <h3>Clear Interface Definitions</h3>
+                            <p>Define clear, stable interfaces between clients and servers to enable independent development and evolution of each component.</p>
+                            
+                            <h3>Stateless Design</h3>
+                            <p>Where possible, design servers to be stateless, meaning they don't rely on stored client context between requests. This improves scalability and resilience.</p>
+                            
+                            <h3>Appropriate Data Transfer</h3>
+                            <p>Minimize the amount of data transferred between clients and servers by sending only what's needed and using efficient data formats and compression.</p>
+                            
+                            <h3>Error Handling</h3>
+                            <p>Implement robust error handling on both client and server sides, with clear error messages and graceful degradation when components fail.</p>
+                            
+                            <h3>Security Considerations</h3>
+                            <p>Apply security best practices, including authentication, authorization, input validation, and encryption of sensitive data in transit and at rest.</p>
+                            
+                            <h3>Caching Strategy</h3>
+                            <p>Implement appropriate caching at various levels (client, CDN, server) to reduce load and improve performance.</p>
+                            
+                            <h3>Monitoring and Logging</h3>
+                            <p>Set up comprehensive monitoring and logging to track system health, detect issues, and understand usage patterns.</p>
+                        </section>
+
+                        <section class="content-section">
+                            <h2>Conclusion</h2>
+                            <p>The client-server model remains the foundation of most distributed systems and network applications. Despite being decades old, it continues to evolve with new technologies and approaches that address its limitations while building on its strengths.</p>
+                            
+                            <p>Understanding the client-server model is essential for system designers because:</p>
+                            <ul>
+                                <li>It provides a clear separation of concerns between user interfaces and backend services</li>
+                                <li>It enables efficient resource sharing and centralized management</li>
+                                <li>It forms the basis for more complex architectural patterns like microservices</li>
+                                <li>It underlies most modern web and mobile applications</li>
+                            </ul>
+                            
+                            <p>As you continue your system design journey, you'll see how the client-server model interacts with other concepts like networking, databases, and distributed systems to create robust, scalable applications.</p>
+                        </section>
+
+                        <div class="next-steps">
+                            <h3>Next Steps</h3>
+                            <div class="next-links">
+                                <a href="network-basics.html" class="next-link">
+                                    <span class="next-text">Next Article</span>
+                                    <span class="next-title">Network Basics</span>
+                                    <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <span class="logo-text">System Design <span class="highlight">A-Z</span></span>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-nav">
+                        <h4>Navigation</h4>
+                        <ul>
+                            <li><a href="../../index.html">Home</a></li>
+                            <li><a href="../fundamentals/index.html">Fundamentals</a></li>
+                            <li><a href="../examples/index.html">Real-World Examples</a></li>
+                            <li><a href="../implementation/index.html">Implementation</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-resources">
+                        <h4>Resources</h4>
+                        <ul>
+                            <li><a href="#">Glossary</a></li>
+                            <li><a href="#">Recommended Books</a></li>
+                            <li><a href="#">Tools & Resources</a></li>
+                            <li><a href="#">FAQ</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 System Design A-Z. All images used are copyright-free.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../js/main.js"></script>
+</body>
+</html>

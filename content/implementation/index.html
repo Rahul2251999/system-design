@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Implementation | System Design A-Z</title>
+    <meta name="description" content="Practical implementation details and code examples for system design concepts">
+    <link rel="stylesheet" href="../../css/normalize.css">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/implementation.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="logo">
+                <a href="../../index.html">
+                    <span class="logo-text">System Design <span class="highlight">A-Z</span></span>
+                </a>
+            </div>
+            <nav class="main-nav">
+                <button class="menu-toggle" aria-label="Toggle menu">
+                    <span class="hamburger"></span>
+                </button>
+                <ul class="nav-links">
+                    <li><a href="../../index.html">Home</a></li>
+                    <li><a href="../fundamentals/index.html">Fundamentals</a></li>
+                    <li><a href="../examples/index.html">Real-World Examples</a></li>
+                    <li><a href="../implementation/index.html" class="active">Implementation</a></li>
+                    <li><a href="../../index.html#about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="implementation-hero">
+            <div class="container">
+                <h1>Practical <span class="highlight">Implementation</span></h1>
+                <p class="hero-subtitle">From theory to practice: Code examples and implementation details for system design concepts</p>
+            </div>
+        </section>
+
+        <section class="implementation-intro">
+            <div class="container">
+                <div class="intro-content">
+                    <h2>Bridging Theory and Practice</h2>
+                    <p>Understanding theoretical concepts is important, but implementing them in real systems is where the true learning happens. This section provides practical implementation details, code examples, and step-by-step guides for various system design components.</p>
+                    <p>Whether you're building a new system from scratch or improving an existing one, these implementation guides will help you translate system design concepts into working code.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="implementation-categories">
+            <div class="container">
+                <div class="category">
+                    <h2 class="category-title">Backend Services</h2>
+                    <div class="implementation-cards">
+                        <div class="implementation-card">
+                            <div class="card-icon">
+                                <i class="fas fa-cubes"></i>
+                            </div>
+                            <div class="card-content">
+                                <h3>Microservices Architecture</h3>
+                                <p>Implement a scalable microservices architecture with service discovery and API gateway</p>
+                                <div class="tech-stack">
+                                    <span class="tech">Spring Boot</span>
+                                    <span class="tech">Docker</span>
+                                    <span class="tech">Kubernetes</span>
+                                    <span class="tech">Netflix OSS</span>
+                                </div>
+                                <a href="microservices.html" class="btn btn-sm">View Implementation</a>
+                            </div>
+                        </div>
+                        <div class="implementation-card">
+                            <div class="card-icon">
+                                <i class="fas fa-exchange-alt"></i>
+                            </div>
+                            <div class="card-content">
+                                <h3>API Gateway</h3>
+                                <p>Set up an API gateway for routing, authentication, rate limiting, and request transformation</p>
+                                <div class="tech-stack">
+                                    <span class="tech">Kong</span>
+                                    <span class="tech">AWS API Gateway</span>
+                                    <span class="tech">Spring Cloud Gateway</span>
+                                </div>
+                                <a href="api-gateway.html" class="btn btn-sm">View Implementation</a>
+                            </div>
+                        </div>
+                        <div class="implementation-card">
+                            <div class="card-icon">
+                                <i class="fas fa-comments"></i>
+                            </div>
+                            <div class="card-content">
+                                <h3>Message Queue</h3>
+                                <p>Implement asynchronous communication between services using message queues</p>
+                                <div class="tech-stack">
+                                    <span class="tech">Kafka</span>
+                                    <span class="tech">RabbitMQ</span>
+                                    <span class="tech">AWS SQS</span>
+                                </div>
+                                <a href="message-queue.html" class="btn btn-sm">View Implementation</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category">
+                    <h2 class="category-title">Data Storage</h2>
+                    <div class="implementation-cards">
+                        <div class="implementation-card">
+                            <div class="card-icon">
+                                <i class="fas fa-database"></i>
+                            </div>
+                            <div class="card-content">
+                                <h3>Database Sharding</h3>
+                                <p>Implement horizontal sharding for relational databases to handle large datasets</p>
+                                <div class="tech-stack">
+                                    <span class="tech">PostgreSQL</span>
+                                    <span class="tech">MySQL</span>
+                                    <span class="tech">MongoDB</span>
+                                </div>
+                                <a href="database-sharding.html" class="btn btn-sm">View Implementation</a>
+                            </div>
+                        </div>
+                        <div class="implementation-card">
+                            <div class="card-icon">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                            <div class="card-content">
+                                <h3>Caching Layer</h3>
+                                <p>Implement efficient caching strategies to improve performance and reduce database load</p>
+                                <div class="tech-stack">
+                                    <span class="tech">Redis</span>
+                                    <span class="tech">Memcached</span>
+                                    <span class="tech">Hazelcast</span>
+                                </div>
+                                <a href="caching-layer.html" class="btn btn-sm">View Implementation</a>
+                            </div>
+                        </div>
+                        <div class="implementation-card">
+                            <div class="card-icon">
+                                <i class="fas fa-search"></i>
+                            </div>
+                            <div class="card-content">
+                                <h3>Search Engine</h3>
+                                <p>Build a scalable search engine with full-text search and faceted navigation</p>
+                                <div class="tech-stack">
+                                    <span class="tech">Elasticsearch</span>
+                                    <span class="tech">Solr</span>
+                                    <span class="tech">Algolia</span>
+                                </div>
+                                <a href="search-engine.html" class="btn btn-sm">View Implementation</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category">
+                    <h2 class="category-title">Infrastructure & DevOps</h2>
+                    <div class="implementation-cards">
+                        <div class="implementation-card">
+                            <div class="card-icon">
+                                <i class="fas fa-balance-scale"></i>
+                            </div>
+                            <div class="card-content">
+                                <h3>Load Balancer</h3>
+                                <p>Configure load balancers for distributing traffic and ensuring high availability</p>
+                                <div class="tech-stack">
+                                    <span class="tech">NGINX</span>
+                                    <span class="tech">HAProxy</span>
+                                    <span class="tech">AWS ELB</span>
+                                </div>
+                                <a href="load-balancer.html" class="btn btn-sm">View Implementation</a>
+                            </div>
+                        </div>
+                        <div class="implementation-card">
+                            <div class="card-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="card-content">
+                                <h3>Monitoring & Logging</h3>
+                                <p>Set up comprehensive monitoring, logging, and alerting for distributed systems</p>
+                                <div class="tech-stack">
+                                    <span class="tech">Prometheus</span>
+                                    <span class="tech">Grafana</span>
+                                    <span class="tech">ELK Stack</span>
+                                </div>
+                                <a href="monitoring-logging.html" class="btn btn-sm">View Implementation</a>
+                            </div>
+                        </div>
+                        <div class="implementation-card">
+                            <div class="card-icon">
+                                <i class="fas fa-code-branch"></i>
+                            </div>
+                            <div class="card-content">
+                                <h3>CI/CD Pipeline</h3>
+                                <p>Implement continuous integration and deployment for microservices architecture</p>
+                                <div class="tech-stack">
+                                    <span class="tech">Jenkins</span>
+                                    <span class="tech">GitHub Actions</span>
+                                    <span class="tech">ArgoCD</span>
+                                </div>
+                                <a href="cicd-pipeline.html" class="btn btn-sm">View Implementation</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category">
+                    <h2 class="category-title">Security & Reliability</h2>
+                    <div class="implementation-cards">
+                        <div class="implementation-card">
+                            <div class="card-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div class="card-content">
+                                <h3>Authentication & Authorization</h3>
+                                <p>Implement secure authentication and authorization for distributed systems</p>
+                                <div class="tech-stack">
+                                    <span class="tech">OAuth 2.0</span>
+                                    <span class="tech">JWT</span>
+                                    <span class="tech">Keycloak</span>
+                                </div>
+                                <a href="auth-system.html" class="btn btn-sm">View Implementation</a>
+                            </div>
+                        </div>
+                        <div class="implementation-card">
+                            <div class="card-icon">
+                                <i class="fas fa-stopwatch"></i>
+                            </div>
+                            <div class="card-content">
+                                <h3>Rate Limiting</h3>
+                                <p>Implement rate limiting to protect your APIs from abuse and ensure fair usage</p>
+                                <div class="tech-stack">
+                                    <span class="tech">Redis</span>
+                                    <span class="tech">NGINX</span>
+                                    <span class="tech">API Gateway</span>
+                                </div>
+                                <a href="rate-limiting.html" class="btn btn-sm">View Implementation</a>
+                            </div>
+                        </div>
+                        <div class="implementation-card">
+                            <div class="card-icon">
+                                <i class="fas fa-life-ring"></i>
+                            </div>
+                            <div class="card-content">
+                                <h3>Circuit Breaker</h3>
+                                <p>Implement the circuit breaker pattern to prevent cascading failures in microservices</p>
+                                <div class="tech-stack">
+                                    <span class="tech">Hystrix</span>
+                                    <span class="tech">Resilience4j</span>
+                                    <span class="tech">Istio</span>
+                                </div>
+                                <a href="circuit-breaker.html" class="btn btn-sm">View Implementation</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="implementation-approach">
+            <div class="container">
+                <h2 class="section-title">Our Implementation Approach</h2>
+                <div class="approach-content">
+                    <div class="approach-item">
+                        <div class="approach-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <div class="approach-text">
+                            <h3>Practical Code Examples</h3>
+                            <p>Each implementation guide includes real, working code examples that you can use as a starting point for your own projects.</p>
+                        </div>
+                    </div>
+                    <div class="approach-item">
+                        <div class="approach-icon">
+                            <i class="fas fa-project-diagram"></i>
+                        </div>
+                        <div class="approach-text">
+                            <h3>Architecture Diagrams</h3>
+                            <p>Visual representations of the system architecture help you understand how different components fit together.</p>
+                        </div>
+                    </div>
+                    <div class="approach-item">
+                        <div class="approach-icon">
+                            <i class="fas fa-list-ol"></i>
+                        </div>
+                        <div class="approach-text">
+                            <h3>Step-by-Step Guides</h3>
+                            <p>Detailed, step-by-step instructions make it easy to follow along and implement the solutions in your own environment.</p>
+                        </div>
+                    </div>
+                    <div class="approach-item">
+                        <div class="approach-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <div class="approach-text">
+                            <h3>Best Practices</h3>
+                            <p>Learn industry best practices and avoid common pitfalls when implementing system design components.</p>
+                        </div>
+                    </div>
+                    <div class="approach-item">
+                        <div class="approach-icon">
+                            <i class="fas fa-balance-scale-right"></i>
+                        </div>
+                        <div class="approach-text">
+                            <h3>Trade-off Analysis</h3>
+                            <p>Understand the pros and cons of different implementation approaches to make informed decisions.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="request-implementation">
+            <div class="container">
+                <div class="request-content">
+                    <h2>Need a Specific Implementation Guide?</h2>
+                    <p>We're constantly adding new implementation guides based on user feedback. If you'd like to see a specific implementation guide, let us know!</p>
+                    <a href="#" class="btn btn-primary">Request a Guide</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <span class="logo-text">System Design <span class="highlight">A-Z</span></span>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-nav">
+                        <h4>Navigation</h4>
+                        <ul>
+                            <li><a href="../../index.html">Home</a></li>
+                            <li><a href="../fundamentals/index.html">Fundamentals</a></li>
+                            <li><a href="../examples/index.html">Real-World Examples</a></li>
+                            <li><a href="../implementation/index.html">Implementation</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-resources">
+                        <h4>Resources</h4>
+                        <ul>
+                            <li><a href="#">Glossary</a></li>
+                            <li><a href="#">Recommended Books</a></li>
+                            <li><a href="#">Tools & Resources</a></li>
+                            <li><a href="#">FAQ</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 System Design A-Z. All images used are copyright-free.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../js/main.js"></script>
+</body>
+</html>

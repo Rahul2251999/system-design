@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-World Examples | System Design A-Z</title>
+    <meta name="description" content="Explore real-world system design examples from popular platforms and services">
+    <link rel="stylesheet" href="../../css/normalize.css">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/examples.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="logo">
+                <a href="../../index.html">
+                    <span class="logo-text">System Design <span class="highlight">A-Z</span></span>
+                </a>
+            </div>
+            <nav class="main-nav">
+                <button class="menu-toggle" aria-label="Toggle menu">
+                    <span class="hamburger"></span>
+                </button>
+                <ul class="nav-links">
+                    <li><a href="../../index.html">Home</a></li>
+                    <li><a href="../fundamentals/index.html">Fundamentals</a></li>
+                    <li><a href="../examples/index.html" class="active">Real-World Examples</a></li>
+                    <li><a href="../implementation/index.html">Implementation</a></li>
+                    <li><a href="../../index.html#about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="examples-hero">
+            <div class="container">
+                <h1>Real-World <span class="highlight">Examples</span></h1>
+                <p class="hero-subtitle">Explore how popular platforms and services are designed at scale</p>
+            </div>
+        </section>
+
+        <section class="examples-intro">
+            <div class="container">
+                <div class="intro-content">
+                    <h2>Learn From The Best</h2>
+                    <p>Understanding how successful companies have designed their systems provides invaluable insights into practical system design. Each case study explores the architecture, design decisions, trade-offs, and evolution of real-world systems.</p>
+                    <p>We've analyzed popular platforms and services to break down their system design into understandable components, highlighting key lessons that you can apply to your own projects.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="examples-grid">
+            <div class="container">
+                <div class="category">
+                    <h2 class="category-title">Communication & Social</h2>
+                    <div class="examples-cards">
+                        <div class="example-card">
+                            <div class="example-image">
+                                <div class="placeholder-image">
+                                    <i class="fab fa-twitter"></i>
+                                </div>
+                            </div>
+                            <div class="example-content">
+                                <h3>Twitter Feed System</h3>
+                                <p>How Twitter handles millions of tweets and delivers personalized feeds in real-time</p>
+                                <div class="example-tags">
+                                    <span class="tag">Real-time Processing</span>
+                                    <span class="tag">Fan-out</span>
+                                    <span class="tag">Caching</span>
+                                </div>
+                                <a href="twitter-feed.html" class="btn btn-sm">View Case Study</a>
+                            </div>
+                        </div>
+                        <div class="example-card">
+                            <div class="example-image">
+                                <div class="placeholder-image">
+                                    <i class="fab fa-whatsapp"></i>
+                                </div>
+                            </div>
+                            <div class="example-content">
+                                <h3>WhatsApp Messaging</h3>
+                                <p>The architecture behind WhatsApp's reliable messaging system serving billions of users</p>
+                                <div class="example-tags">
+                                    <span class="tag">End-to-End Encryption</span>
+                                    <span class="tag">Message Delivery</span>
+                                    <span class="tag">Presence</span>
+                                </div>
+                                <a href="whatsapp-messaging.html" class="btn btn-sm">View Case Study</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category">
+                    <h2 class="category-title">Transportation & Logistics</h2>
+                    <div class="examples-cards">
+                        <div class="example-card">
+                            <div class="example-image">
+                                <div class="placeholder-image">
+                                    <i class="fas fa-car"></i>
+                                </div>
+                            </div>
+                            <div class="example-content">
+                                <h3>Uber Ride-Sharing</h3>
+                                <p>How Uber matches riders with drivers and handles real-time location tracking</p>
+                                <div class="example-tags">
+                                    <span class="tag">Geospatial</span>
+                                    <span class="tag">Matching Algorithm</span>
+                                    <span class="tag">Real-time Updates</span>
+                                </div>
+                                <a href="uber-ride-sharing.html" class="btn btn-sm">View Case Study</a>
+                            </div>
+                        </div>
+                        <div class="example-card">
+                            <div class="example-image">
+                                <div class="placeholder-image">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </div>
+                            </div>
+                            <div class="example-content">
+                                <h3>Amazon Order Fulfillment</h3>
+                                <p>The complex system behind Amazon's efficient order processing and delivery</p>
+                                <div class="example-tags">
+                                    <span class="tag">Inventory Management</span>
+                                    <span class="tag">Logistics</span>
+                                    <span class="tag">Optimization</span>
+                                </div>
+                                <a href="amazon-order-fulfillment.html" class="btn btn-sm">View Case Study</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category">
+                    <h2 class="category-title">Content & Media</h2>
+                    <div class="examples-cards">
+                        <div class="example-card">
+                            <div class="example-image">
+                                <div class="placeholder-image">
+                                    <i class="fas fa-film"></i>
+                                </div>
+                            </div>
+                            <div class="example-content">
+                                <h3>Netflix Streaming</h3>
+                                <p>How Netflix delivers high-quality video content to millions of concurrent users</p>
+                                <div class="example-tags">
+                                    <span class="tag">CDN</span>
+                                    <span class="tag">Video Encoding</span>
+                                    <span class="tag">Recommendations</span>
+                                </div>
+                                <a href="netflix-streaming.html" class="btn btn-sm">View Case Study</a>
+                            </div>
+                        </div>
+                        <div class="example-card">
+                            <div class="example-image">
+                                <div class="placeholder-image">
+                                    <i class="fab fa-youtube"></i>
+                                </div>
+                            </div>
+                            <div class="example-content">
+                                <h3>YouTube Video Platform</h3>
+                                <p>The architecture that powers YouTube's massive video sharing platform</p>
+                                <div class="example-tags">
+                                    <span class="tag">Video Processing</span>
+                                    <span class="tag">Storage</span>
+                                    <span class="tag">Scalability</span>
+                                </div>
+                                <a href="youtube-platform.html" class="btn btn-sm">View Case Study</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category">
+                    <h2 class="category-title">Web Services & Infrastructure</h2>
+                    <div class="examples-cards">
+                        <div class="example-card">
+                            <div class="example-image">
+                                <div class="placeholder-image">
+                                    <i class="fas fa-link"></i>
+                                </div>
+                            </div>
+                            <div class="example-content">
+                                <h3>URL Shortener</h3>
+                                <p>How services like bit.ly handle billions of URL redirects efficiently</p>
+                                <div class="example-tags">
+                                    <span class="tag">Hashing</span>
+                                    <span class="tag">Redirection</span>
+                                    <span class="tag">Analytics</span>
+                                </div>
+                                <a href="url-shortener.html" class="btn btn-sm">View Case Study</a>
+                            </div>
+                        </div>
+                        <div class="example-card">
+                            <div class="example-image">
+                                <div class="placeholder-image">
+                                    <i class="fas fa-cloud"></i>
+                                </div>
+                            </div>
+                            <div class="example-content">
+                                <h3>Cloudflare CDN</h3>
+                                <p>How Cloudflare's global CDN delivers content and protects websites</p>
+                                <div class="example-tags">
+                                    <span class="tag">Edge Computing</span>
+                                    <span class="tag">DDoS Protection</span>
+                                    <span class="tag">Caching</span>
+                                </div>
+                                <a href="cloudflare-cdn.html" class="btn btn-sm">View Case Study</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="case-study-format">
+            <div class="container">
+                <h2 class="section-title">Our Case Study Format</h2>
+                <div class="format-steps">
+                    <div class="format-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h3>System Requirements</h3>
+                            <p>We begin by analyzing the functional and non-functional requirements that shaped the system's design</p>
+                        </div>
+                    </div>
+                    <div class="format-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h3>High-Level Architecture</h3>
+                            <p>A clear overview of the system's components and how they interact with each other</p>
+                        </div>
+                    </div>
+                    <div class="format-step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h3>Deep Dive into Components</h3>
+                            <p>Detailed exploration of key components, data models, and algorithms</p>
+                        </div>
+                    </div>
+                    <div class="format-step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h3>Scaling Challenges & Solutions</h3>
+                            <p>How the system evolved to handle growth and overcome technical challenges</p>
+                        </div>
+                    </div>
+                    <div class="format-step">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <h3>Key Takeaways</h3>
+                            <p>Practical lessons and design principles you can apply to your own systems</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="request-example">
+            <div class="container">
+                <div class="request-content">
+                    <h2>Don't See What You're Looking For?</h2>
+                    <p>We're constantly adding new case studies to our collection. If there's a specific system or platform you'd like us to analyze, let us know!</p>
+                    <a href="#" class="btn btn-primary">Request a Case Study</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <span class="logo-text">System Design <span class="highlight">A-Z</span></span>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-nav">
+                        <h4>Navigation</h4>
+                        <ul>
+                            <li><a href="../../index.html">Home</a></li>
+                            <li><a href="../fundamentals/index.html">Fundamentals</a></li>
+                            <li><a href="../examples/index.html">Real-World Examples</a></li>
+                            <li><a href="../implementation/index.html">Implementation</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-resources">
+                        <h4>Resources</h4>
+                        <ul>
+                            <li><a href="#">Glossary</a></li>
+                            <li><a href="#">Recommended Books</a></li>
+                            <li><a href="#">Tools & Resources</a></li>
+                            <li><a href="#">FAQ</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 System Design A-Z. All images used are copyright-free.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../js/main.js"></script>
+</body>
+</html>
