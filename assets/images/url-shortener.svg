@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- URL Shortener System Design -->
+  
+  <!-- Background Grid -->
+  <defs>
+    <pattern id="smallGrid" width="10" height="10" patternUnits="userSpaceOnUse">
+      <path d="M 10 0 L 0 0 0 10" fill="none" stroke="#4361ee" stroke-width="0.5" opacity="0.2"/>
+    </pattern>
+    <pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse">
+      <rect width="50" height="50" fill="url(#smallGrid)"/>
+      <path d="M 50 0 L 0 0 0 50" fill="none" stroke="#4361ee" stroke-width="1" opacity="0.2"/>
+    </pattern>
+  </defs>
+  
+  <rect width="100%" height="100%" fill="#f9fafb"/>
+  <rect width="100%" height="100%" fill="url(#grid)" opacity="0.6"/>
+  
+  <!-- Title -->
+  <text x="400" y="40" font-family="Inter, sans-serif" font-size="24" text-anchor="middle" fill="#2b2d42" font-weight="bold">URL Shortener System Design</text>
+  
+  <!-- Users -->
+  <circle cx="100" cy="150" r="30" fill="#eef2ff" stroke="#4361ee" stroke-width="2"/>
+  <text x="100" y="155" font-family="Inter, sans-serif" font-size="14" text-anchor="middle" fill="#2b2d42" font-weight="bold">Users</text>
+  
+  <!-- DNS -->
+  <rect x="250" y="150" width="120" height="50" rx="5" ry="5" fill="#ffd166" stroke="#e6bc5c" stroke-width="2"/>
+  <text x="310" y="180" font-family="Inter, sans-serif" font-size="14" text-anchor="middle" fill="#2b2d42" font-weight="bold">DNS</text>
+  
+  <!-- Load Balancer -->
+  <rect x="450" y="150" width="120" height="50" rx="5" ry="5" fill="#4cc9f0" stroke="#4361ee" stroke-width="2"/>
+  <text x="510" y="180" font-family="Inter, sans-serif" font-size="14" text-anchor="middle" fill="#ffffff" font-weight="bold">Load Balancer</text>
+  
+  <!-- Web Servers -->
+  <rect x="350" y="250" width="120" height="50" rx="5" ry="5" fill="#4361ee" stroke="#3a56d4" stroke-width="2"/>
+  <text x="410" y="280" font-family="Inter, sans-serif" font-size="14" text-anchor="middle" fill="#ffffff" font-weight="bold">Web Server</text>
+  
+  <rect x="550" y="250" width="120" height="50" rx="5" ry="5" fill="#4361ee" stroke="#3a56d4" stroke-width="2"/>
+  <text x="610" y="280" font-family="Inter, sans-serif" font-size="14" text-anchor="middle" fill="#ffffff" font-weight="bold">Web Server</text>
+  
+  <!-- Application Logic -->
+  <rect x="350" y="350" width="120" height="50" rx="5" ry="5" fill="#f72585" stroke="#ef476f" stroke-width="2"/>
+  <text x="410" y="380" font-family="Inter, sans-serif" font-size="14" text-anchor="middle" fill="#ffffff" font-weight="bold">URL Service</text>
+  
+  <rect x="550" y="350" width="120" height="50" rx="5" ry="5" fill="#f72585" stroke="#ef476f" stroke-width="2"/>
+  <text x="610" y="380" font-family="Inter, sans-serif" font-size="14" text-anchor="middle" fill="#ffffff" font-weight="bold">Analytics</text>
+  
+  <!-- Cache -->
+  <rect x="200" y="350" width="100" height="50" rx="5" ry="5" fill="#ffd166" stroke="#e6bc5c" stroke-width="2"/>
+  <text x="250" y="380" font-family="Inter, sans-serif" font-size="14" text-anchor="middle" fill="#2b2d42" font-weight="bold">Cache</text>
+  
+  <!-- Database -->
+  <rect x="350" y="450" width="120" height="50" rx="5" ry="5" fill="#06d6a0" stroke="#059669" stroke-width="2"/>
+  <text x="410" y="480" font-family="Inter, sans-serif" font-size="14" text-anchor="middle" fill="#ffffff" font-weight="bold">URL Database</text>
+  
+  <rect x="550" y="450" width="120" height="50" rx="5" ry="5" fill="#06d6a0" stroke="#059669" stroke-width="2"/>
+  <text x="610" y="480" font-family="Inter, sans-serif" font-size="14" text-anchor="middle" fill="#ffffff" font-weight="bold">Analytics DB</text>
+  
+  <!-- Connections -->
+  <!-- User to DNS -->
+  <line x1="130" y1="150" x2="250" y2="150" stroke="#4361ee" stroke-width="2"/>
+  <polygon points="250,150 240,145 240,155" fill="#4361ee"/>
+  
+  <!-- DNS to Load Balancer -->
+  <line x1="370" y1="150" x2="450" y2="150" stroke="#4361ee" stroke-width="2"/>
+  <polygon points="450,150 440,145 440,155" fill="#4361ee"/>
+  
+  <!-- Load Balancer to Web Servers -->
+  <line x1="510" y1="200" x2="410" y2="250" stroke="#4361ee" stroke-width="2"/>
+  <polygon points="410,250 415,240 420,245" fill="#4361ee"/>
+  
+  <line x1="510" y1="200" x2="610" y2="250" stroke="#4361ee" stroke-width="2"/>
+  <polygon points="610,250 605,240 600,245" fill="#4361ee"/>
+  
+  <!-- Web Servers to Application Logic -->
+  <line x1="410" y1="300" x2="410" y2="350" stroke="#4361ee" stroke-width="2"/>
+  <polygon points="410,350 405,340 415,340" fill="#4361ee"/>
+  
+  <line x1="610" y1="300" x2="610" y2="350" stroke="#4361ee" stroke-width="2"/>
+  <polygon points="610,350 605,340 615,340" fill="#4361ee"/>
+  
+  <!-- Application Logic to Database -->
+  <line x1="410" y1="400" x2="410" y2="450" stroke="#4361ee" stroke-width="2"/>
+  <polygon points="410,450 405,440 415,440" fill="#4361ee"/>
+  
+  <line x1="610" y1="400" x2="610" y2="450" stroke="#4361ee" stroke-width="2"/>
+  <polygon points="610,450 605,440 615,440" fill="#4361ee"/>
+  
+  <!-- URL Service to Cache -->
+  <line x1="350" y1="375" x2="300" y2="375" stroke="#4361ee" stroke-width="2"/>
+  <polygon points="300,375 310,370 310,380" fill="#4361ee"/>
+  
+  <!-- URL Service to Analytics -->
+  <line x1="470" y1="375" x2="550" y2="375" stroke="#4361ee" stroke-width="2" stroke-dasharray="5,5"/>
+  <polygon points="550,375 540,370 540,380" fill="#4361ee"/>
+  
+  <!-- Key Components Labels -->
+  <text x="100" y="550" font-family="Inter, sans-serif" font-size="16" text-anchor="start" fill="#2b2d42" font-weight="bold">Key Components:</text>
+  
+  <rect x="100" y="570" width="15" height="15" fill="#4361ee"/>
+  <text x="125" y="583" font-family="Inter, sans-serif" font-size="14" text-anchor="start" fill="#2b2d42">Web Tier</text>
+  
+  <rect x="250" y="570" width="15" height="15" fill="#f72585"/>
+  <text x="275" y="583" font-family="Inter, sans-serif" font-size="14" text-anchor="start" fill="#2b2d42">Application Tier</text>
+  
+  <rect x="450" y="570" width="15" height="15" fill="#06d6a0"/>
+  <text x="475" y="583" font-family="Inter, sans-serif" font-size="14" text-anchor="start" fill="#2b2d42">Data Tier</text>
+  
+  <rect x="650" y="570" width="15" height="15" fill="#ffd166"/>
+  <text x="675" y="583" font-family="Inter, sans-serif" font-size="14" text-anchor="start" fill="#2b2d42">Supporting Services</text>
+</svg>

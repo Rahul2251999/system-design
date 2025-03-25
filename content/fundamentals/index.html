@@ -3,32 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fundamentals | System Design A-Z</title>
-    <meta name="description" content="Learn the core concepts and principles of system design from beginner to advanced levels">
-    <link rel="stylesheet" href="../../css/normalize.css">
-    <link rel="stylesheet" href="../../css/styles.css">
-    <link rel="stylesheet" href="../../css/fundamentals.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>System Design Fundamentals | System Design Mastery</title>
+    <link rel="stylesheet" href="../../css/modern-styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header class="site-header">
+    <header class="sub-header">
         <div class="container">
-            <div class="logo">
-                <a href="../../index.html">
-                    <span class="logo-text">System Design <span class="highlight">A-Z</span></span>
-                </a>
-            </div>
-            <nav class="main-nav">
-                <button class="menu-toggle" aria-label="Toggle menu">
-                    <span class="hamburger"></span>
-                </button>
+            <nav class="navbar">
+                <div class="logo">
+                    <h1>System Design Mastery</h1>
+                </div>
                 <ul class="nav-links">
                     <li><a href="../../index.html">Home</a></li>
                     <li><a href="../fundamentals/index.html" class="active">Fundamentals</a></li>
-                    <li><a href="../examples/index.html">Real-World Examples</a></li>
+                    <li><a href="../examples/index.html">Real-world Examples</a></li>
                     <li><a href="../implementation/index.html">Implementation</a></li>
                     <li><a href="../../index.html#about">About</a></li>
                 </ul>
@@ -36,241 +27,202 @@
         </div>
     </header>
 
-    <main>
-        <section class="fundamentals-hero">
-            <div class="container">
-                <h1>System Design <span class="highlight">Fundamentals</span></h1>
-                <p class="hero-subtitle">Master the core concepts and principles of system design from beginner to advanced levels</p>
-            </div>
-        </section>
+    <section class="page-header">
+        <div class="container">
+            <h1>System Design Fundamentals</h1>
+            <p>Master the core concepts and principles of designing scalable, reliable, and efficient systems</p>
+        </div>
+    </section>
 
-        <section class="learning-path">
-            <div class="container">
-                <h2 class="section-title">Your Learning Path</h2>
-                <div class="learning-levels">
-                    <div class="level">
-                        <div class="level-header">
-                            <div class="level-icon beginner">
-                                <i class="fas fa-seedling"></i>
-                            </div>
-                            <h3>Beginner</h3>
+    <section class="content-section">
+        <div class="container">
+            <div class="content-grid">
+                <aside class="sidebar">
+                    <h3>Fundamentals Topics</h3>
+                    <ul class="sidebar-links">
+                        <li><a href="scalability.html">Scalability</a></li>
+                        <li><a href="reliability.html">Reliability</a></li>
+                        <li><a href="availability.html">Availability</a></li>
+                        <li><a href="performance.html">Performance</a></li>
+                        <li><a href="load-balancing.html">Load Balancing</a></li>
+                        <li><a href="caching.html">Caching</a></li>
+                        <li><a href="database-sharding.html">Database Sharding</a></li>
+                        <li><a href="cap-theorem.html">CAP Theorem</a></li>
+                        <li><a href="consistency-patterns.html">Consistency Patterns</a></li>
+                        <li><a href="microservices.html">Microservices Architecture</a></li>
+                    </ul>
+                </aside>
+                <main class="main-content">
+                    <article>
+                        <h2>Introduction to System Design Fundamentals</h2>
+                        <p>System design is the process of defining the architecture, components, modules, interfaces, and data for a system to satisfy specified requirements. It's a critical skill for software engineers, especially as applications grow in scale and complexity.</p>
+                        
+                        <p>In this section, we'll explore the fundamental concepts that form the foundation of effective system design. These concepts are essential for building systems that can handle millions of users, process vast amounts of data, and maintain high availability even in the face of failures.</p>
+
+                        <div class="info-box">
+                            <h3>Why System Design Matters</h3>
+                            <p>As applications grow in complexity and user base, designing them with scalability, performance, and availability in mind becomes crucial. A well-designed system is not only reliable and scalable but also easy to maintain and evolve as requirements change.</p>
                         </div>
-                        <div class="level-content">
-                            <p>Start with the basic concepts and terminology of system design</p>
-                            <ul class="topic-list">
-                                <li><a href="introduction.html">Introduction to System Design</a></li>
-                                <li><a href="client-server-model.html">Client-Server Model</a></li>
-                                <li><a href="network-basics.html">Network Basics</a></li>
-                                <li><a href="storage-basics.html">Storage Basics</a></li>
-                                <li><a href="apis.html">APIs and Communication</a></li>
+
+                        <h3>Key System Design Concepts</h3>
+                        
+                        <div class="concept-card">
+                            <h4>Scalability</h4>
+                            <p>Scalability refers to a system's ability to handle growing amounts of work by adding resources to the system. There are two main approaches to scaling:</p>
+                            <ul>
+                                <li><strong>Vertical Scaling (Scaling Up)</strong>: Adding more power to existing machines</li>
+                                <li><strong>Horizontal Scaling (Scaling Out)</strong>: Adding more machines to your pool of resources</li>
                             </ul>
+                            <a href="scalability.html" class="btn btn-secondary">Learn More About Scalability</a>
                         </div>
-                    </div>
 
-                    <div class="level">
-                        <div class="level-header">
-                            <div class="level-icon intermediate">
-                                <i class="fas fa-tree"></i>
-                            </div>
-                            <h3>Intermediate</h3>
-                        </div>
-                        <div class="level-content">
-                            <p>Explore more complex concepts and components of distributed systems</p>
-                            <ul class="topic-list">
-                                <li><a href="scalability.html">Scalability Concepts</a></li>
-                                <li><a href="load-balancing.html">Load Balancing</a></li>
-                                <li><a href="caching.html">Caching Strategies</a></li>
-                                <li><a href="databases.html">Database Systems</a></li>
-                                <li><a href="consistency.html">Consistency Patterns</a></li>
-                                <li><a href="availability.html">Availability Patterns</a></li>
+                        <div class="concept-card">
+                            <h4>Reliability</h4>
+                            <p>Reliability is the probability that a system will perform its intended function under specified conditions for a specified period. A reliable system continues to work correctly even when things go wrong.</p>
+                            <p>Key aspects of reliability include:</p>
+                            <ul>
+                                <li>Fault tolerance</li>
+                                <li>Redundancy</li>
+                                <li>Error handling</li>
+                                <li>Monitoring and alerting</li>
                             </ul>
+                            <a href="reliability.html" class="btn btn-secondary">Learn More About Reliability</a>
                         </div>
-                    </div>
 
-                    <div class="level">
-                        <div class="level-header">
-                            <div class="level-icon advanced">
-                                <i class="fas fa-mountain"></i>
-                            </div>
-                            <h3>Advanced</h3>
-                        </div>
-                        <div class="level-content">
-                            <p>Master advanced techniques and patterns for large-scale systems</p>
-                            <ul class="topic-list">
-                                <li><a href="microservices.html">Microservices Architecture</a></li>
-                                <li><a href="data-partitioning.html">Data Partitioning</a></li>
-                                <li><a href="distributed-systems.html">Distributed Systems</a></li>
-                                <li><a href="cap-theorem.html">CAP Theorem</a></li>
-                                <li><a href="message-queues.html">Message Queues</a></li>
-                                <li><a href="rate-limiting.html">Rate Limiting</a></li>
+                        <div class="concept-card">
+                            <h4>Availability</h4>
+                            <p>Availability measures the percentage of time that a system is operational and accessible for use. It's often expressed as a percentage (e.g., 99.99% uptime).</p>
+                            <p>Strategies to improve availability include:</p>
+                            <ul>
+                                <li>Eliminating single points of failure</li>
+                                <li>Implementing redundancy</li>
+                                <li>Designing for graceful degradation</li>
+                                <li>Implementing proper monitoring and quick recovery</li>
                             </ul>
+                            <a href="availability.html" class="btn btn-secondary">Learn More About Availability</a>
                         </div>
-                    </div>
 
-                    <div class="level">
-                        <div class="level-header">
-                            <div class="level-icon expert">
-                                <i class="fas fa-rocket"></i>
-                            </div>
-                            <h3>Expert</h3>
-                        </div>
-                        <div class="level-content">
-                            <p>Dive into specialized topics and cutting-edge techniques</p>
-                            <ul class="topic-list">
-                                <li><a href="system-design-interview.html">System Design Interview</a></li>
-                                <li><a href="distributed-consensus.html">Distributed Consensus</a></li>
-                                <li><a href="data-intensive.html">Data-Intensive Applications</a></li>
-                                <li><a href="streaming-processing.html">Streaming Processing</a></li>
-                                <li><a href="ml-systems.html">ML Systems Design</a></li>
-                                <li><a href="blockchain-systems.html">Blockchain Systems</a></li>
+                        <div class="concept-card">
+                            <h4>Performance</h4>
+                            <p>Performance refers to how quickly a system performs an action or processes data. Key performance metrics include:</p>
+                            <ul>
+                                <li><strong>Latency</strong>: The time it takes to complete a single operation</li>
+                                <li><strong>Throughput</strong>: The number of operations a system can handle in a given time period</li>
+                                <li><strong>Response Time</strong>: The time between a request and the beginning of a response</li>
                             </ul>
+                            <a href="performance.html" class="btn btn-secondary">Learn More About Performance</a>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </section>
 
-        <section class="featured-topics">
-            <div class="container">
-                <h2 class="section-title">Featured Topics</h2>
-                <div class="topics-grid">
-                    <div class="topic-card">
-                        <div class="topic-icon">
-                            <i class="fas fa-server"></i>
-                        </div>
-                        <h3>Scalability</h3>
-                        <p>Learn how to design systems that can handle growth from thousands to millions of users</p>
-                        <a href="scalability.html" class="btn btn-sm">Learn More</a>
-                    </div>
-                    <div class="topic-card">
-                        <div class="topic-icon">
-                            <i class="fas fa-database"></i>
-                        </div>
-                        <h3>Database Systems</h3>
-                        <p>Understand different database types and how to choose the right one for your needs</p>
-                        <a href="databases.html" class="btn btn-sm">Learn More</a>
-                    </div>
-                    <div class="topic-card">
-                        <div class="topic-icon">
-                            <i class="fas fa-network-wired"></i>
-                        </div>
-                        <h3>Distributed Systems</h3>
-                        <p>Master the complexities of building reliable distributed systems</p>
-                        <a href="distributed-systems.html" class="btn btn-sm">Learn More</a>
-                    </div>
-                    <div class="topic-card">
-                        <div class="topic-icon">
-                            <i class="fas fa-shield-alt"></i>
-                        </div>
-                        <h3>System Security</h3>
-                        <p>Learn essential security patterns and practices for robust system design</p>
-                        <a href="security.html" class="btn btn-sm">Learn More</a>
-                    </div>
-                </div>
-            </div>
-        </section>
+                        <h3>Building Blocks of System Design</h3>
+                        <p>Modern distributed systems are built using several key components and techniques:</p>
 
-        <section class="concept-map">
-            <div class="container">
-                <h2 class="section-title">System Design Concept Map</h2>
-                <div class="map-container">
-                    <!-- Placeholder for interactive concept map -->
-                    <div class="placeholder-image">
-                        <p>Interactive concept map showing relationships between system design concepts</p>
-                    </div>
-                </div>
-                <div class="map-description">
-                    <p>This concept map illustrates how different system design concepts relate to each other. Understanding these relationships is key to mastering system design.</p>
-                </div>
-            </div>
-        </section>
+                        <div class="image-content-block">
+                            <div class="image-block">
+                                <img src="../../assets/images/load-balancing.png" alt="Load Balancing Diagram">
+                            </div>
+                            <div class="content-block">
+                                <h4>Load Balancing</h4>
+                                <p>Load balancers distribute incoming network traffic across multiple servers to ensure no single server bears too much demand. This improves responsiveness and availability of applications.</p>
+                                <p>Common load balancing algorithms include:</p>
+                                <ul>
+                                    <li>Round Robin</li>
+                                    <li>Least Connections</li>
+                                    <li>IP Hash</li>
+                                    <li>Weighted Round Robin</li>
+                                </ul>
+                                <a href="load-balancing.html" class="btn btn-secondary">Learn More About Load Balancing</a>
+                            </div>
+                        </div>
 
-        <section class="resources">
-            <div class="container">
-                <h2 class="section-title">Additional Resources</h2>
-                <div class="resources-grid">
-                    <div class="resource-card">
-                        <div class="resource-icon">
-                            <i class="fas fa-book"></i>
+                        <div class="image-content-block reverse">
+                            <div class="image-block">
+                                <img src="../../assets/images/caching-system.png" alt="Caching Diagram">
+                            </div>
+                            <div class="content-block">
+                                <h4>Caching</h4>
+                                <p>Caching improves performance by storing copies of frequently accessed data in a location that's faster to access than the original storage location.</p>
+                                <p>Common caching strategies include:</p>
+                                <ul>
+                                    <li>Cache-Aside (Lazy Loading)</li>
+                                    <li>Write-Through</li>
+                                    <li>Write-Back (Write-Behind)</li>
+                                    <li>Write-Around</li>
+                                </ul>
+                                <a href="caching.html" class="btn btn-secondary">Learn More About Caching</a>
+                            </div>
                         </div>
-                        <h3>Recommended Books</h3>
-                        <ul>
-                            <li>Designing Data-Intensive Applications</li>
-                            <li>System Design Interview</li>
-                            <li>Building Microservices</li>
-                            <li>Clean Architecture</li>
-                        </ul>
-                    </div>
-                    <div class="resource-card">
-                        <div class="resource-icon">
-                            <i class="fas fa-video"></i>
-                        </div>
-                        <h3>Video Courses</h3>
-                        <ul>
-                            <li>MIT 6.824: Distributed Systems</li>
-                            <li>Grokking the System Design Interview</li>
-                            <li>System Design Fundamentals</li>
-                            <li>Microservices Architecture</li>
-                        </ul>
-                    </div>
-                    <div class="resource-card">
-                        <div class="resource-icon">
-                            <i class="fas fa-globe"></i>
-                        </div>
-                        <h3>Websites & Blogs</h3>
-                        <ul>
-                            <li>High Scalability</li>
-                            <li>System Design Primer</li>
-                            <li>Martin Fowler's Blog</li>
-                            <li>AWS Architecture Center</li>
-                        </ul>
-                    </div>
-                    <div class="resource-card">
-                        <div class="resource-icon">
-                            <i class="fas fa-tools"></i>
-                        </div>
-                        <h3>Tools & Software</h3>
-                        <ul>
-                            <li>Draw.io for Diagrams</li>
-                            <li>Prometheus for Monitoring</li>
-                            <li>Docker & Kubernetes</li>
-                            <li>Postman for API Testing</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
 
-    <footer class="site-footer">
+                        <div class="image-content-block">
+                            <div class="image-block">
+                                <img src="../../assets/images/database-sharding.png" alt="Database Sharding Diagram">
+                            </div>
+                            <div class="content-block">
+                                <h4>Database Sharding</h4>
+                                <p>Database sharding is a technique for horizontal scaling of databases, where data is split across multiple database instances (shards) to improve performance and manageability.</p>
+                                <p>Common sharding strategies include:</p>
+                                <ul>
+                                    <li>Key-Based Sharding</li>
+                                    <li>Range-Based Sharding</li>
+                                    <li>Directory-Based Sharding</li>
+                                    <li>Vertical Sharding</li>
+                                </ul>
+                                <a href="database-sharding.html" class="btn btn-secondary">Learn More About Database Sharding</a>
+                            </div>
+                        </div>
+
+                        <div class="next-steps">
+                            <h3>Next Steps</h3>
+                            <p>Now that you have an overview of the fundamental concepts in system design, dive deeper into each topic to gain a comprehensive understanding:</p>
+                            <div class="button-group">
+                                <a href="scalability.html" class="btn btn-primary">Start with Scalability</a>
+                                <a href="../examples/index.html" class="btn btn-secondary">Explore Real-world Examples</a>
+                            </div>
+                        </div>
+                    </article>
+                </main>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-logo">
-                    <span class="logo-text">System Design <span class="highlight">A-Z</span></span>
+                    <h2>System Design Mastery</h2>
+                    <p>Learn. Design. Implement.</p>
                 </div>
                 <div class="footer-links">
-                    <div class="footer-nav">
-                        <h4>Navigation</h4>
+                    <div class="footer-column">
+                        <h3>Quick Links</h3>
                         <ul>
                             <li><a href="../../index.html">Home</a></li>
                             <li><a href="../fundamentals/index.html">Fundamentals</a></li>
-                            <li><a href="../examples/index.html">Real-World Examples</a></li>
+                            <li><a href="../examples/index.html">Examples</a></li>
                             <li><a href="../implementation/index.html">Implementation</a></li>
                         </ul>
                     </div>
-                    <div class="footer-resources">
-                        <h4>Resources</h4>
+                    <div class="footer-column">
+                        <h3>Resources</h3>
                         <ul>
-                            <li><a href="#">Glossary</a></li>
-                            <li><a href="#">Recommended Books</a></li>
-                            <li><a href="#">Tools & Resources</a></li>
-                            <li><a href="#">FAQ</a></li>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Cheat Sheets</a></li>
+                            <li><a href="#">Interview Prep</a></li>
+                            <li><a href="#">Community</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Connect</h3>
+                        <ul>
+                            <li><a href="#">GitHub</a></li>
+                            <li><a href="#">Twitter</a></li>
+                            <li><a href="#">LinkedIn</a></li>
+                            <li><a href="#">Contact Us</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 System Design A-Z. All images used are copyright-free.</p>
+                <p>&copy; 2025 System Design Mastery. All rights reserved.</p>
             </div>
         </div>
     </footer>

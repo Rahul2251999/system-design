@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Sharding | System Design Mastery</title>
+    <link rel="stylesheet" href="../../css/modern-styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="sub-header">
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <h1>System Design Mastery</h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="../../index.html">Home</a></li>
+                    <li><a href="../fundamentals/index.html" class="active">Fundamentals</a></li>
+                    <li><a href="../examples/index.html">Real-world Examples</a></li>
+                    <li><a href="../implementation/index.html">Implementation</a></li>
+                    <li><a href="../../index.html#about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <div class="container">
+            <h1>Database Sharding</h1>
+            <p>A technique for horizontal scaling of databases to improve performance and handle large datasets</p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <div class="content-grid">
+                <aside class="sidebar">
+                    <h3>Fundamentals Topics</h3>
+                    <ul class="sidebar-links">
+                        <li><a href="scalability.html">Scalability</a></li>
+                        <li><a href="reliability.html">Reliability</a></li>
+                        <li><a href="availability.html">Availability</a></li>
+                        <li><a href="performance.html">Performance</a></li>
+                        <li><a href="load-balancing.html">Load Balancing</a></li>
+                        <li><a href="caching.html">Caching</a></li>
+                        <li><a href="database-sharding.html" class="active">Database Sharding</a></li>
+                        <li><a href="cap-theorem.html">CAP Theorem</a></li>
+                        <li><a href="consistency-patterns.html">Consistency Patterns</a></li>
+                        <li><a href="microservices.html">Microservices Architecture</a></li>
+                    </ul>
+                </aside>
+                <main class="main-content">
+                    <article>
+                        <h2>What is Database Sharding?</h2>
+                        <p>Database sharding is a technique for horizontal scaling of databases, where data is split across multiple database instances, or shards, to improve performance and reduce the impact of large amounts of data on a single database.</p>
+                        
+                        <div class="info-box">
+                            <h3>Why Sharding Matters</h3>
+                            <p>As applications grow and data volumes increase, a single database instance may struggle to handle the load efficiently. Sharding allows you to distribute this load across multiple machines, improving performance, reducing latency, and enabling your database infrastructure to scale with your application's needs.</p>
+                        </div>
+
+                        <div class="image-content-block">
+                            <div class="image-block">
+                                <img src="../../assets/images/database-sharding.png" alt="Database Sharding Diagram">
+                            </div>
+                            <div class="content-block">
+                                <h3>How Sharding Works</h3>
+                                <p>In a sharded database architecture:</p>
+                                <ul>
+                                    <li>Data is horizontally partitioned across multiple database instances</li>
+                                    <li>Each shard contains a subset of the data but maintains the same schema</li>
+                                    <li>Each row appears in exactly one shard</li>
+                                    <li>Queries are routed to the appropriate shard based on the sharding key</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <h3>Sharding Strategies</h3>
+                        <p>There are several approaches to implementing database sharding:</p>
+
+                        <div class="concept-card">
+                            <h4>Key-Based Sharding</h4>
+                            <p>Also known as hash-based sharding, this strategy uses a value from the data (like a customer ID or email) as input to a hash function. The resulting hash value determines which shard will store the data.</p>
+                            <p><strong>Advantages:</strong></p>
+                            <ul>
+                                <li>Even data distribution if the hash function is well-designed</li>
+                                <li>Simple to implement and maintain</li>
+                                <li>Predictable data location</li>
+                            </ul>
+                            <p><strong>Disadvantages:</strong></p>
+                            <ul>
+                                <li>Difficult to add or remove shards without rehashing</li>
+                                <li>May lead to uneven distribution if the sharding key is poorly chosen</li>
+                                <li>Range queries across shards are inefficient</li>
+                            </ul>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Range-Based Sharding</h4>
+                            <p>This strategy divides data based on ranges of a specific value. For example, customers with names A-M go to one shard, and N-Z to another.</p>
+                            <p><strong>Advantages:</strong></p>
+                            <ul>
+                                <li>Efficient for range queries within a shard</li>
+                                <li>Simple to understand and implement</li>
+                                <li>Easy to add new shards for new ranges</li>
+                            </ul>
+                            <p><strong>Disadvantages:</strong></p>
+                            <ul>
+                                <li>Potential for uneven data distribution (data skew)</li>
+                                <li>Hotspots can develop if certain ranges are accessed more frequently</li>
+                                <li>Requires careful planning of range boundaries</li>
+                            </ul>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Vertical Sharding</h4>
+                            <p>This approach splits entire columns from a table into separate tables. Different features of an entity are stored in different shards.</p>
+                            <p><strong>Advantages:</strong></p>
+                            <ul>
+                                <li>Can improve query performance for specific columns</li>
+                                <li>Reduces the amount of data that needs to be scanned for certain queries</li>
+                                <li>Can separate frequently accessed columns from rarely accessed ones</li>
+                            </ul>
+                            <p><strong>Disadvantages:</strong></p>
+                            <ul>
+                                <li>Joins across shards can be complex and expensive</li>
+                                <li>May require application changes to handle the split data model</li>
+                                <li>Some shards may become hotspots if they contain highly accessed columns</li>
+                            </ul>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Directory-Based Sharding</h4>
+                            <p>This strategy uses a lookup service or table that maps data to specific shards. The application first queries the lookup service to find the correct shard, then queries that shard.</p>
+                            <p><strong>Advantages:</strong></p>
+                            <ul>
+                                <li>Flexible data distribution</li>
+                                <li>Can add or remove shards without rehashing all data</li>
+                                <li>Can implement complex sharding logic</li>
+                            </ul>
+                            <p><strong>Disadvantages:</strong></p>
+                            <ul>
+                                <li>The lookup service becomes a potential single point of failure</li>
+                                <li>Additional network hop for each query</li>
+                                <li>Increased complexity in the system architecture</li>
+                            </ul>
+                        </div>
+
+                        <h3>Challenges of Database Sharding</h3>
+                        <p>While sharding offers significant benefits for scalability, it also introduces several challenges:</p>
+
+                        <div class="concept-card">
+                            <h4>Joins Across Shards</h4>
+                            <p>When data that needs to be joined is located on different shards, queries become more complex and potentially slower. Solutions include:</p>
+                            <ul>
+                                <li>Denormalizing data to reduce the need for joins</li>
+                                <li>Using application-level joins</li>
+                                <li>Implementing a federated query layer</li>
+                            </ul>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Maintaining Referential Integrity</h4>
+                            <p>Enforcing foreign key constraints across shards is challenging. Approaches include:</p>
+                            <ul>
+                                <li>Moving related data to the same shard</li>
+                                <li>Implementing integrity checks at the application level</li>
+                                <li>Using eventual consistency models</li>
+                            </ul>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Rebalancing Data</h4>
+                            <p>As data grows unevenly across shards, or when adding/removing shards, data needs to be rebalanced. This process can be complex and resource-intensive.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Transaction Management</h4>
+                            <p>Maintaining ACID transactions across multiple shards is difficult. Options include:</p>
+                            <ul>
+                                <li>Two-phase commit protocols</li>
+                                <li>Saga patterns for distributed transactions</li>
+                                <li>Accepting eventual consistency for some operations</li>
+                            </ul>
+                        </div>
+
+                        <h3>Real-World Examples of Database Sharding</h3>
+                        
+                        <div class="example-box">
+                            <h4>Instagram</h4>
+                            <p>Instagram uses sharding to handle billions of photos and interactions. They implemented a custom sharding solution on top of PostgreSQL, with data sharded by user ID. This allows them to efficiently handle queries related to a specific user's content and feed.</p>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>Uber</h4>
+                            <p>Uber shards its database by geographic region, allowing them to efficiently process ride requests and driver locations within specific areas. This approach reduces query latency by ensuring that most queries only need to access a single shard.</p>
+                        </div>
+
+                        <h3>Best Practices for Database Sharding</h3>
+                        <ol>
+                            <li><strong>Choose the right sharding key</strong> based on your access patterns</li>
+                            <li><strong>Plan for data growth</strong> and potential rebalancing needs</li>
+                            <li><strong>Implement a robust monitoring system</strong> to detect hotspots and imbalances</li>
+                            <li><strong>Consider data locality</strong> to minimize cross-shard operations</li>
+                            <li><strong>Design for failure</strong> with proper backup and recovery strategies</li>
+                            <li><strong>Test thoroughly</strong> before implementing in production</li>
+                            <li><strong>Start with fewer shards</strong> and scale as needed</li>
+                        </ol>
+
+                        <div class="next-steps">
+                            <h3>Next Steps</h3>
+                            <p>Now that you understand database sharding, explore related concepts that complement this scaling strategy:</p>
+                            <div class="button-group">
+                                <a href="caching.html" class="btn btn-primary">Learn About Caching</a>
+                                <a href="../implementation/database-sharding.html" class="btn btn-secondary">Explore Sharding Implementation</a>
+                            </div>
+                        </div>
+                    </article>
+                </main>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>System Design Mastery</h2>
+                    <p>Learn. Design. Implement.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3>Quick Links</h3>
+                        <ul>
+                            <li><a href="../../index.html">Home</a></li>
+                            <li><a href="../fundamentals/index.html">Fundamentals</a></li>
+                            <li><a href="../examples/index.html">Examples</a></li>
+                            <li><a href="../implementation/index.html">Implementation</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Resources</h3>
+                        <ul>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Cheat Sheets</a></li>
+                            <li><a href="#">Interview Prep</a></li>
+                            <li><a href="#">Community</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Connect</h3>
+                        <ul>
+                            <li><a href="#">GitHub</a></li>
+                            <li><a href="#">Twitter</a></li>
+                            <li><a href="#">LinkedIn</a></li>
+                            <li><a href="#">Contact Us</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 System Design Mastery. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../js/main.js"></script>
+</body>
+</html>

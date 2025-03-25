@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Load Balancing Diagram -->
+  
+  <!-- Background Grid -->
+  <defs>
+    <pattern id="smallGrid" width="10" height="10" patternUnits="userSpaceOnUse">
+      <path d="M 10 0 L 0 0 0 10" fill="none" stroke="#4361ee" stroke-width="0.5" opacity="0.2"/>
+    </pattern>
+    <pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse">
+      <rect width="50" height="50" fill="url(#smallGrid)"/>
+      <path d="M 50 0 L 0 0 0 50" fill="none" stroke="#4361ee" stroke-width="1" opacity="0.2"/>
+    </pattern>
+  </defs>
+  
+  <rect width="100%" height="100%" fill="#f9fafb"/>
+  <rect width="100%" height="100%" fill="url(#grid)" opacity="0.6"/>
+  
+  <!-- Title -->
+  <text x="400" y="40" font-family="Inter, sans-serif" font-size="24" text-anchor="middle" fill="#2b2d42" font-weight="bold">Load Balancing Architecture</text>
+  
+  <!-- Users -->
+  <circle cx="100" cy="150" r="30" fill="#eef2ff" stroke="#4361ee" stroke-width="2"/>
+  <text x="100" y="155" font-family="Inter, sans-serif" font-size="14" text-anchor="middle" fill="#2b2d42" font-weight="bold">Users</text>
+  
+  <!-- Internet Cloud -->
+  <ellipse cx="250" cy="150" rx="70" ry="40" fill="#ffd166" stroke="#e6bc5c" stroke-width="2"/>
+  <text x="250" y="155" font-family="Inter, sans-serif" font-size="14" text-anchor="middle" fill="#2b2d42" font-weight="bold">Internet</text>
+  
+  <!-- Load Balancer -->
+  <rect x="400" y="120" width="120" height="60" rx="5" ry="5" fill="#4cc9f0" stroke="#4361ee" stroke-width="2"/>
+  <text x="460" y="155" font-family="Inter, sans-serif" font-size="14" text-anchor="middle" fill="#ffffff" font-weight="bold">Load Balancer</text>
+  
+  <!-- Web Servers -->
+  <rect x="250" y="250" width="120" height="60" rx="5" ry="5" fill="#4361ee" stroke="#3a56d4" stroke-width="2"/>
+  <text x="310" y="285" font-family="Inter, sans-serif" font-size="14" text-anchor="middle" fill="#ffffff" font-weight="bold">Web Server 1</text>
+  
+  <rect x="400" y="250" width="120" height="60" rx="5" ry="5" fill="#4361ee" stroke="#3a56d4" stroke-width="2"/>
+  <text x="460" y="285" font-family="Inter, sans-serif" font-size="14" text-anchor="middle" fill="#ffffff" font-weight="bold">Web Server 2</text>
+  
+  <rect x="550" y="250" width="120" height="60" rx="5" ry="5" fill="#4361ee" stroke="#3a56d4" stroke-width="2"/>
+  <text x="610" y="285" font-family="Inter, sans-serif" font-size="14" text-anchor="middle" fill="#ffffff" font-weight="bold">Web Server 3</text>
+  
+  <!-- Database -->
+  <rect x="400" y="380" width="120" height="60" rx="5" ry="5" fill="#06d6a0" stroke="#059669" stroke-width="2"/>
+  <text x="460" y="415" font-family="Inter, sans-serif" font-size="14" text-anchor="middle" fill="#ffffff" font-weight="bold">Database</text>
+  
+  <!-- Connections -->
+  <!-- User to Internet -->
+  <line x1="130" y1="150" x2="180" y2="150" stroke="#4361ee" stroke-width="2"/>
+  <polygon points="180,150 170,145 170,155" fill="#4361ee"/>
+  
+  <!-- Internet to Load Balancer -->
+  <line x1="320" y1="150" x2="400" y2="150" stroke="#4361ee" stroke-width="2"/>
+  <polygon points="400,150 390,145 390,155" fill="#4361ee"/>
+  
+  <!-- Load Balancer to Web Servers -->
+  <line x1="460" y1="180" x2="310" y2="250" stroke="#4361ee" stroke-width="2"/>
+  <polygon points="310,250 315,240 320,245" fill="#4361ee"/>
+  
+  <line x1="460" y1="180" x2="460" y2="250" stroke="#4361ee" stroke-width="2"/>
+  <polygon points="460,250 455,240 465,240" fill="#4361ee"/>
+  
+  <line x1="460" y1="180" x2="610" y2="250" stroke="#4361ee" stroke-width="2"/>
+  <polygon points="610,250 605,240 600,245" fill="#4361ee"/>
+  
+  <!-- Web Servers to Database -->
+  <line x1="310" y1="310" x2="400" y2="380" stroke="#4361ee" stroke-width="2"/>
+  <polygon points="400,380 395,370 390,375" fill="#4361ee"/>
+  
+  <line x1="460" y1="310" x2="460" y2="380" stroke="#4361ee" stroke-width="2"/>
+  <polygon points="460,380 455,370 465,370" fill="#4361ee"/>
+  
+  <line x1="610" y1="310" x2="520" y2="380" stroke="#4361ee" stroke-width="2"/>
+  <polygon points="520,380 525,370 530,375" fill="#4361ee"/>
+  
+  <!-- Load Balancing Algorithms -->
+  <rect x="100" y="450" width="600" height="100" rx="5" ry="5" fill="#eef2ff" stroke="#4361ee" stroke-width="2"/>
+  <text x="400" y="480" font-family="Inter, sans-serif" font-size="16" text-anchor="middle" fill="#2b2d42" font-weight="bold">Load Balancing Algorithms</text>
+  
+  <rect x="120" y="500" width="120" height="30" rx="3" ry="3" fill="#f72585" stroke="#ef476f" stroke-width="1"/>
+  <text x="180" y="520" font-family="Inter, sans-serif" font-size="12" text-anchor="middle" fill="#ffffff">Round Robin</text>
+  
+  <rect x="260" y="500" width="120" height="30" rx="3" ry="3" fill="#f72585" stroke="#ef476f" stroke-width="1"/>
+  <text x="320" y="520" font-family="Inter, sans-serif" font-size="12" text-anchor="middle" fill="#ffffff">Least Connections</text>
+  
+  <rect x="400" y="500" width="120" height="30" rx="3" ry="3" fill="#f72585" stroke="#ef476f" stroke-width="1"/>
+  <text x="460" y="520" font-family="Inter, sans-serif" font-size="12" text-anchor="middle" fill="#ffffff">IP Hash</text>
+  
+  <rect x="540" y="500" width="140" height="30" rx="3" ry="3" fill="#f72585" stroke="#ef476f" stroke-width="1"/>
+  <text x="610" y="520" font-family="Inter, sans-serif" font-size="12" text-anchor="middle" fill="#ffffff">Weighted Round Robin</text>
+</svg>

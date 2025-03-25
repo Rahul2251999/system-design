@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scalability | System Design Mastery</title>
+    <link rel="stylesheet" href="../../css/modern-styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="sub-header">
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <h1>System Design Mastery</h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="../../index.html">Home</a></li>
+                    <li><a href="../fundamentals/index.html" class="active">Fundamentals</a></li>
+                    <li><a href="../examples/index.html">Real-world Examples</a></li>
+                    <li><a href="../implementation/index.html">Implementation</a></li>
+                    <li><a href="../../index.html#about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <div class="container">
+            <h1>Scalability</h1>
+            <p>Understanding how to design systems that can handle growing workloads</p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <div class="content-grid">
+                <aside class="sidebar">
+                    <h3>Fundamentals Topics</h3>
+                    <ul class="sidebar-links">
+                        <li><a href="scalability.html" class="active">Scalability</a></li>
+                        <li><a href="reliability.html">Reliability</a></li>
+                        <li><a href="availability.html">Availability</a></li>
+                        <li><a href="performance.html">Performance</a></li>
+                        <li><a href="load-balancing.html">Load Balancing</a></li>
+                        <li><a href="caching.html">Caching</a></li>
+                        <li><a href="database-sharding.html">Database Sharding</a></li>
+                        <li><a href="cap-theorem.html">CAP Theorem</a></li>
+                        <li><a href="consistency-patterns.html">Consistency Patterns</a></li>
+                        <li><a href="microservices.html">Microservices Architecture</a></li>
+                    </ul>
+                </aside>
+                <main class="main-content">
+                    <article>
+                        <h2>What is Scalability?</h2>
+                        <p>Scalability refers to a system's ability to handle growing amounts of work by adding resources to the system. In the context of web applications and distributed systems, scalability is the capability of a system to handle increased load without sacrificing performance.</p>
+                        
+                        <div class="info-box">
+                            <h3>Why Scalability Matters</h3>
+                            <p>As your user base grows, the demands on your system increase. Without proper scalability planning, your application may experience degraded performance, increased latency, or even complete failure under heavy load. Designing for scalability from the beginning helps ensure your system can grow with your business needs.</p>
+                        </div>
+
+                        <h3>Types of Scaling</h3>
+                        <p>There are two primary approaches to scaling a system:</p>
+
+                        <div class="image-content-block">
+                            <div class="image-block">
+                                <img src="../../assets/images/vertical-scaling.png" alt="Vertical Scaling Diagram">
+                            </div>
+                            <div class="content-block">
+                                <h4>Vertical Scaling (Scaling Up)</h4>
+                                <p>Vertical scaling involves adding more power to your existing machines. This can include:</p>
+                                <ul>
+                                    <li>Adding more CPU</li>
+                                    <li>Increasing RAM</li>
+                                    <li>Expanding storage capacity</li>
+                                    <li>Upgrading network equipment</li>
+                                </ul>
+                                <p><strong>Advantages:</strong></p>
+                                <ul>
+                                    <li>Simpler to implement</li>
+                                    <li>No application changes required</li>
+                                    <li>Less complex architecture</li>
+                                    <li>Lower administrative overhead</li>
+                                </ul>
+                                <p><strong>Disadvantages:</strong></p>
+                                <ul>
+                                    <li>Hardware limitations</li>
+                                    <li>Single point of failure</li>
+                                    <li>Downtime during upgrades</li>
+                                    <li>Higher costs at scale</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="image-content-block reverse">
+                            <div class="image-block">
+                                <img src="../../assets/images/horizontal-scaling.png" alt="Horizontal Scaling Diagram">
+                            </div>
+                            <div class="content-block">
+                                <h4>Horizontal Scaling (Scaling Out)</h4>
+                                <p>Horizontal scaling involves adding more machines to your resource pool. This approach:</p>
+                                <ul>
+                                    <li>Distributes workload across multiple machines</li>
+                                    <li>Adds more servers to handle increased traffic</li>
+                                    <li>Creates clusters of machines working together</li>
+                                </ul>
+                                <p><strong>Advantages:</strong></p>
+                                <ul>
+                                    <li>Virtually unlimited scaling potential</li>
+                                    <li>Better fault tolerance and reliability</li>
+                                    <li>Can scale dynamically based on demand</li>
+                                    <li>Cost-effective at large scale</li>
+                                </ul>
+                                <p><strong>Disadvantages:</strong></p>
+                                <ul>
+                                    <li>More complex architecture</li>
+                                    <li>May require application redesign</li>
+                                    <li>Increased operational complexity</li>
+                                    <li>Data consistency challenges</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <h3>Scalability Challenges</h3>
+                        <p>When designing for scalability, several challenges must be addressed:</p>
+
+                        <div class="concept-card">
+                            <h4>Stateless vs. Stateful Architecture</h4>
+                            <p><strong>Stateless applications</strong> don't store client session information between requests, making them easier to scale horizontally. Each request contains all the information needed to process it.</p>
+                            <p><strong>Stateful applications</strong> maintain client session data, making horizontal scaling more complex as session data must be shared or synchronized across servers.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Database Scalability</h4>
+                            <p>Databases often become bottlenecks in scalable systems. Strategies to scale databases include:</p>
+                            <ul>
+                                <li><strong>Replication:</strong> Creating copies of data across multiple database servers</li>
+                                <li><strong>Sharding:</strong> Partitioning data across multiple database instances</li>
+                                <li><strong>Read Replicas:</strong> Offloading read operations to replica databases</li>
+                                <li><strong>NoSQL Databases:</strong> Using databases designed for horizontal scalability</li>
+                            </ul>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Caching</h4>
+                            <p>Implementing caching at various levels can significantly improve scalability:</p>
+                            <ul>
+                                <li><strong>Client-side caching:</strong> Browsers, mobile apps</li>
+                                <li><strong>CDN caching:</strong> Edge servers caching static content</li>
+                                <li><strong>Application caching:</strong> In-memory data stores like Redis or Memcached</li>
+                                <li><strong>Database caching:</strong> Query results, computed values</li>
+                            </ul>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Load Balancing</h4>
+                            <p>Load balancers distribute incoming traffic across multiple servers, enabling horizontal scaling. They can use various algorithms to determine how to distribute requests:</p>
+                            <ul>
+                                <li>Round Robin</li>
+                                <li>Least Connections</li>
+                                <li>IP Hash</li>
+                                <li>Weighted methods</li>
+                            </ul>
+                        </div>
+
+                        <h3>Real-World Scalability Examples</h3>
+                        
+                        <div class="example-box">
+                            <h4>Netflix</h4>
+                            <p>Netflix handles millions of concurrent streams by implementing a highly distributed, microservices-based architecture. They use:</p>
+                            <ul>
+                                <li>AWS cloud infrastructure for horizontal scaling</li>
+                                <li>Cassandra for distributed database storage</li>
+                                <li>Microservices architecture for independent scaling of components</li>
+                                <li>Global CDN for content delivery</li>
+                            </ul>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>Amazon</h4>
+                            <p>Amazon's e-commerce platform handles massive traffic spikes during events like Prime Day by:</p>
+                            <ul>
+                                <li>Using service-oriented architecture</li>
+                                <li>Implementing auto-scaling groups</li>
+                                <li>Employing DynamoDB for scalable database operations</li>
+                                <li>Utilizing elastic load balancing</li>
+                            </ul>
+                        </div>
+
+                        <h3>Best Practices for Scalable System Design</h3>
+                        <ol>
+                            <li><strong>Design for statelessness</strong> whenever possible</li>
+                            <li><strong>Implement caching</strong> at multiple levels</li>
+                            <li><strong>Use asynchronous processing</strong> for time-consuming operations</li>
+                            <li><strong>Implement database sharding</strong> for data-intensive applications</li>
+                            <li><strong>Design with microservices</strong> to allow independent scaling</li>
+                            <li><strong>Use CDNs</strong> for static content delivery</li>
+                            <li><strong>Implement auto-scaling</strong> to handle variable loads</li>
+                            <li><strong>Monitor performance metrics</strong> to identify bottlenecks</li>
+                        </ol>
+
+                        <div class="next-steps">
+                            <h3>Next Steps</h3>
+                            <p>Now that you understand scalability, explore related concepts that work together to create robust, high-performance systems:</p>
+                            <div class="button-group">
+                                <a href="reliability.html" class="btn btn-primary">Learn About Reliability</a>
+                                <a href="database-sharding.html" class="btn btn-secondary">Explore Database Sharding</a>
+                            </div>
+                        </div>
+                    </article>
+                </main>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>System Design Mastery</h2>
+                    <p>Learn. Design. Implement.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3>Quick Links</h3>
+                        <ul>
+                            <li><a href="../../index.html">Home</a></li>
+                            <li><a href="../fundamentals/index.html">Fundamentals</a></li>
+                            <li><a href="../examples/index.html">Examples</a></li>
+                            <li><a href="../implementation/index.html">Implementation</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Resources</h3>
+                        <ul>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Cheat Sheets</a></li>
+                            <li><a href="#">Interview Prep</a></li>
+                            <li><a href="#">Community</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Connect</h3>
+                        <ul>
+                            <li><a href="#">GitHub</a></li>
+                            <li><a href="#">Twitter</a></li>
+                            <li><a href="#">LinkedIn</a></li>
+                            <li><a href="#">Contact Us</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 System Design Mastery. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../js/main.js"></script>
+</body>
+</html>

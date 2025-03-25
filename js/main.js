@@ -1,122 +1,81 @@
-/**
- * Main JavaScript for System Design A-Z Website
- */
+// Main JavaScript file for System Design Mastery website
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Mobile menu toggle
-    const menuToggle = document.querySelector('.menu-toggle');
+    // Mobile navigation toggle
+    const navToggle = document.querySelector('.nav-toggle');
     const navLinks = document.querySelector('.nav-links');
     
-    if (menuToggle && navLinks) {
-        menuToggle.addEventListener('click', function() {
+    if (navToggle) {
+        navToggle.addEventListener('click', function() {
             navLinks.classList.toggle('active');
-            
-            // Accessibility
-            const expanded = navLinks.classList.contains('active');
-            menuToggle.setAttribute('aria-expanded', expanded);
         });
     }
-    
+
     // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
-            if (this.getAttribute('href') !== '#') {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-                
-                if (targetElement) {
-                    // Close mobile menu if open
-                    if (navLinks && navLinks.classList.contains('active')) {
-                        navLinks.classList.remove('active');
-                        menuToggle.setAttribute('aria-expanded', false);
-                    }
-                    
-                    // Scroll to target
-                    targetElement.scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                    
-                    // Update URL
-                    history.pushState(null, null, targetId);
-                }
+            e.preventDefault();
+            
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+            
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                window.scrollTo({
+                    top: targetElement.offsetTop - 80,
+                    behavior: 'smooth'
+                });
             }
         });
     });
+
+    // Testimonial slider functionality
+    const testimonials = document.querySelectorAll('.testimonial');
+    let currentTestimonial = 0;
     
-    // Add active class to nav links based on current section
-    function setActiveNavLink() {
-        const sections = document.querySelectorAll('section[id]');
-        const navLinks = document.querySelectorAll('.nav-links a');
-        
-        let currentSection = '';
-        
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.offsetHeight;
-            
-            if (window.scrollY >= sectionTop - 100 && 
-                window.scrollY < sectionTop + sectionHeight - 100) {
-                currentSection = '#' + section.getAttribute('id');
+    if (testimonials.length > 1) {
+        // Hide all testimonials except the first one
+        testimonials.forEach((testimonial, index) => {
+            if (index !== 0) {
+                testimonial.style.display = 'none';
             }
         });
         
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href') === currentSection) {
-                link.classList.add('active');
-            }
-        });
+        // Auto-rotate testimonials every 5 seconds
+        setInterval(() => {
+            testimonials[currentTestimonial].style.display = 'none';
+            currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+            testimonials[currentTestimonial].style.display = 'block';
+        }, 5000);
     }
+
+    // Add active class to current page in sidebar
+    const sidebarLinks = document.querySelectorAll('.sidebar-links a');
+    const currentPage = window.location.pathname.split('/').pop();
     
-    // Initial call and scroll event listener
-    setActiveNavLink();
-    window.addEventListener('scroll', setActiveNavLink);
-    
-    // Animate elements when they come into view
+    sidebarLinks.forEach(link => {
+        const linkPage = link.getAttribute('href').split('/').pop();
+        if (linkPage === currentPage) {
+            link.classList.add('active');
+        }
+    });
+
+    // Add scroll animation for elements
     const animateOnScroll = function() {
-        const elements = document.querySelectorAll('.feature-card, .example-card, .path-step');
+        const elements = document.querySelectorAll('.concept-card, .example-card, .implementation-card, .image-content-block');
         
         elements.forEach(element => {
             const elementPosition = element.getBoundingClientRect().top;
-            const windowHeight = window.innerHeight;
+            const screenPosition = window.innerHeight / 1.3;
             
-            if (elementPosition < windowHeight - 50) {
+            if (elementPosition < screenPosition) {
                 element.classList.add('animate');
             }
         });
     };
     
-    // Add animation class to CSS
-    const style = document.createElement('style');
-    style.textContent = `
-        .feature-card, .example-card, .path-step {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-        
-        .feature-card.animate, .example-card.animate, .path-step.animate {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .feature-card:nth-child(2), .example-card:nth-child(2), .path-step:nth-child(2) {
-            transition-delay: 0.2s;
-        }
-        
-        .feature-card:nth-child(3), .example-card:nth-child(3), .path-step:nth-child(3) {
-            transition-delay: 0.4s;
-        }
-        
-        .feature-card:nth-child(4), .example-card:nth-child(4) {
-            transition-delay: 0.6s;
-        }
-    `;
-    document.head.appendChild(style);
-    
-    // Initial call and scroll event listener for animations
-    animateOnScroll();
+    // Run animation check on scroll
     window.addEventListener('scroll', animateOnScroll);
+    // Run once on page load
+    animateOnScroll();
 });

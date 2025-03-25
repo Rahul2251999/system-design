@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- System Design Hero Diagram -->
+  
+  <!-- Background Grid -->
+  <defs>
+    <pattern id="smallGrid" width="10" height="10" patternUnits="userSpaceOnUse">
+      <path d="M 10 0 L 0 0 0 10" fill="none" stroke="#4361ee" stroke-width="0.5" opacity="0.2"/>
+    </pattern>
+    <pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse">
+      <rect width="50" height="50" fill="url(#smallGrid)"/>
+      <path d="M 50 0 L 0 0 0 50" fill="none" stroke="#4361ee" stroke-width="1" opacity="0.2"/>
+    </pattern>
+  </defs>
+  
+  <rect width="100%" height="100%" fill="#f9fafb"/>
+  <rect width="100%" height="100%" fill="url(#grid)" opacity="0.6"/>
+  
+  <!-- Cloud -->
+  <ellipse cx="400" cy="100" rx="120" ry="60" fill="#eef2ff" stroke="#4361ee" stroke-width="2"/>
+  <text x="400" y="105" font-family="Inter, sans-serif" font-size="16" text-anchor="middle" fill="#2b2d42" font-weight="bold">Cloud Services</text>
+  
+  <!-- Load Balancer -->
+  <rect x="350" y="200" width="100" height="50" rx="5" ry="5" fill="#4cc9f0" stroke="#4361ee" stroke-width="2"/>
+  <text x="400" y="230" font-family="Inter, sans-serif" font-size="14" text-anchor="middle" fill="#ffffff" font-weight="bold">Load Balancer</text>
+  
+  <!-- Web Servers -->
+  <rect x="200" y="300" width="100" height="50" rx="5" ry="5" fill="#4361ee" stroke="#3a56d4" stroke-width="2"/>
+  <text x="250" y="330" font-family="Inter, sans-serif" font-size="14" text-anchor="middle" fill="#ffffff" font-weight="bold">Web Server</text>
+  
+  <rect x="350" y="300" width="100" height="50" rx="5" ry="5" fill="#4361ee" stroke="#3a56d4" stroke-width="2"/>
+  <text x="400" y="330" font-family="Inter, sans-serif" font-size="14" text-anchor="middle" fill="#ffffff" font-weight="bold">Web Server</text>
+  
+  <rect x="500" y="300" width="100" height="50" rx="5" ry="5" fill="#4361ee" stroke="#3a56d4" stroke-width="2"/>
+  <text x="550" y="330" font-family="Inter, sans-serif" font-size="14" text-anchor="middle" fill="#ffffff" font-weight="bold">Web Server</text>
+  
+  <!-- Application Servers -->
+  <rect x="200" y="400" width="100" height="50" rx="5" ry="5" fill="#f72585" stroke="#ef476f" stroke-width="2"/>
+  <text x="250" y="425" font-family="Inter, sans-serif" font-size="14" text-anchor="middle" fill="#ffffff" font-weight="bold">App Server</text>
+  
+  <rect x="350" y="400" width="100" height="50" rx="5" ry="5" fill="#f72585" stroke="#ef476f" stroke-width="2"/>
+  <text x="400" y="425" font-family="Inter, sans-serif" font-size="14" text-anchor="middle" fill="#ffffff" font-weight="bold">App Server</text>
+  
+  <rect x="500" y="400" width="100" height="50" rx="5" ry="5" fill="#f72585" stroke="#ef476f" stroke-width="2"/>
+  <text x="550" y="425" font-family="Inter, sans-serif" font-size="14" text-anchor="middle" fill="#ffffff" font-weight="bold">App Server</text>
+  
+  <!-- Database -->
+  <rect x="275" y="500" width="100" height="50" rx="5" ry="5" fill="#06d6a0" stroke="#059669" stroke-width="2"/>
+  <text x="325" y="525" font-family="Inter, sans-serif" font-size="14" text-anchor="middle" fill="#ffffff" font-weight="bold">Database</text>
+  
+  <rect x="425" y="500" width="100" height="50" rx="5" ry="5" fill="#06d6a0" stroke="#059669" stroke-width="2"/>
+  <text x="475" y="525" font-family="Inter, sans-serif" font-size="14" text-anchor="middle" fill="#ffffff" font-weight="bold">Database</text>
+  
+  <!-- Cache -->
+  <rect x="650" y="400" width="100" height="50" rx="5" ry="5" fill="#ffd166" stroke="#e6bc5c" stroke-width="2"/>
+  <text x="700" y="425" font-family="Inter, sans-serif" font-size="14" text-anchor="middle" fill="#2b2d42" font-weight="bold">Cache</text>
+  
+  <!-- CDN -->
+  <rect x="650" y="300" width="100" height="50" rx="5" ry="5" fill="#4cc9f0" stroke="#3a56d4" stroke-width="2"/>
+  <text x="700" y="325" font-family="Inter, sans-serif" font-size="14" text-anchor="middle" fill="#ffffff" font-weight="bold">CDN</text>
+  
+  <!-- Connections -->
+  <!-- Cloud to Load Balancer -->
+  <line x1="400" y1="160" x2="400" y2="200" stroke="#4361ee" stroke-width="2"/>
+  <polygon points="400,200 395,190 405,190" fill="#4361ee"/>
+  
+  <!-- Load Balancer to Web Servers -->
+  <line x1="400" y1="250" x2="400" y2="290" stroke="#4361ee" stroke-width="2"/>
+  <polygon points="400,290 395,280 405,280" fill="#4361ee"/>
+  
+  <line x1="400" y1="250" x2="250" y2="290" stroke="#4361ee" stroke-width="2"/>
+  <polygon points="250,290 255,280 260,285" fill="#4361ee"/>
+  
+  <line x1="400" y1="250" x2="550" y2="290" stroke="#4361ee" stroke-width="2"/>
+  <polygon points="550,290 545,280 540,285" fill="#4361ee"/>
+  
+  <!-- Web Servers to App Servers -->
+  <line x1="250" y1="350" x2="250" y2="400" stroke="#4361ee" stroke-width="2"/>
+  <polygon points="250,400 245,390 255,390" fill="#4361ee"/>
+  
+  <line x1="400" y1="350" x2="400" y2="400" stroke="#4361ee" stroke-width="2"/>
+  <polygon points="400,400 395,390 405,390" fill="#4361ee"/>
+  
+  <line x1="550" y1="350" x2="550" y2="400" stroke="#4361ee" stroke-width="2"/>
+  <polygon points="550,400 545,390 555,390" fill="#4361ee"/>
+  
+  <!-- App Servers to Databases -->
+  <line x1="250" y1="450" x2="325" y2="500" stroke="#4361ee" stroke-width="2"/>
+  <polygon points="325,500 320,490 315,495" fill="#4361ee"/>
+  
+  <line x1="400" y1="450" x2="400" y2="490" stroke="#4361ee" stroke-width="2"/>
+  <polygon points="400,490 395,480 405,480" fill="#4361ee"/>
+  
+  <line x1="550" y1="450" x2="475" y2="500" stroke="#4361ee" stroke-width="2"/>
+  <polygon points="475,500 480,490 485,495" fill="#4361ee"/>
+  
+  <!-- Web Servers to CDN -->
+  <line x1="550" y1="325" x2="650" y2="325" stroke="#4361ee" stroke-width="2"/>
+  <polygon points="650,325 640,320 640,330" fill="#4361ee"/>
+  
+  <!-- App Servers to Cache -->
+  <line x1="550" y1="425" x2="650" y2="425" stroke="#4361ee" stroke-width="2"/>
+  <polygon points="650,425 640,420 640,430" fill="#4361ee"/>
+  
+  <!-- Users -->
+  <circle cx="100" cy="100" r="30" fill="#eef2ff" stroke="#4361ee" stroke-width="2"/>
+  <text x="100" y="105" font-family="Inter, sans-serif" font-size="14" text-anchor="middle" fill="#2b2d42" font-weight="bold">Users</text>
+  
+  <!-- User to Cloud -->
+  <line x1="130" y1="100" x2="280" y2="100" stroke="#4361ee" stroke-width="2"/>
+  <polygon points="280,100 270,95 270,105" fill="#4361ee"/>
+  
+  <!-- Title -->
+  <text x="400" y="40" font-family="Inter, sans-serif" font-size="24" text-anchor="middle" fill="#2b2d42" font-weight="bold">Scalable System Architecture</text>
+</svg>

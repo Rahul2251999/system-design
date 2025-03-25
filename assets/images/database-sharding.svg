@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Database Sharding Diagram -->
+  
+  <!-- Background Grid -->
+  <defs>
+    <pattern id="smallGrid" width="10" height="10" patternUnits="userSpaceOnUse">
+      <path d="M 10 0 L 0 0 0 10" fill="none" stroke="#4361ee" stroke-width="0.5" opacity="0.2"/>
+    </pattern>
+    <pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse">
+      <rect width="50" height="50" fill="url(#smallGrid)"/>
+      <path d="M 50 0 L 0 0 0 50" fill="none" stroke="#4361ee" stroke-width="1" opacity="0.2"/>
+    </pattern>
+  </defs>
+  
+  <rect width="100%" height="100%" fill="#f9fafb"/>
+  <rect width="100%" height="100%" fill="url(#grid)" opacity="0.6"/>
+  
+  <!-- Title -->
+  <text x="400" y="40" font-family="Inter, sans-serif" font-size="24" text-anchor="middle" fill="#2b2d42" font-weight="bold">Database Sharding Strategies</text>
+  
+  <!-- Original Database -->
+  <rect x="300" y="80" width="200" height="80" rx="5" ry="5" fill="#4cc9f0" stroke="#4361ee" stroke-width="2"/>
+  <text x="400" y="125" font-family="Inter, sans-serif" font-size="16" text-anchor="middle" fill="#ffffff" font-weight="bold">Original Database</text>
+  
+  <!-- Arrows -->
+  <line x1="400" y1="160" x2="400" y2="190" stroke="#2b2d42" stroke-width="2"/>
+  <polygon points="400,190 395,180 405,180" fill="#2b2d42"/>
+  
+  <!-- Sharding Types -->
+  <text x="400" y="220" font-family="Inter, sans-serif" font-size="18" text-anchor="middle" fill="#2b2d42" font-weight="bold">Sharding Strategies</text>
+  
+  <!-- Key Based Sharding -->
+  <rect x="50" y="250" width="160" height="60" rx="5" ry="5" fill="#f72585" stroke="#ef476f" stroke-width="2"/>
+  <text x="130" y="285" font-family="Inter, sans-serif" font-size="14" text-anchor="middle" fill="#ffffff" font-weight="bold">Key Based Sharding</text>
+  
+  <!-- Range Based Sharding -->
+  <rect x="230" y="250" width="160" height="60" rx="5" ry="5" fill="#f72585" stroke="#ef476f" stroke-width="2"/>
+  <text x="310" y="285" font-family="Inter, sans-serif" font-size="14" text-anchor="middle" fill="#ffffff" font-weight="bold">Range Based Sharding</text>
+  
+  <!-- Vertical Sharding -->
+  <rect x="410" y="250" width="160" height="60" rx="5" ry="5" fill="#f72585" stroke="#ef476f" stroke-width="2"/>
+  <text x="490" y="285" font-family="Inter, sans-serif" font-size="14" text-anchor="middle" fill="#ffffff" font-weight="bold">Vertical Sharding</text>
+  
+  <!-- Directory Based Sharding -->
+  <rect x="590" y="250" width="160" height="60" rx="5" ry="5" fill="#f72585" stroke="#ef476f" stroke-width="2"/>
+  <text x="670" y="285" font-family="Inter, sans-serif" font-size="14" text-anchor="middle" fill="#ffffff" font-weight="bold">Directory Based</text>
+  
+  <!-- Arrows to Shards -->
+  <line x1="130" y1="310" x2="130" y2="340" stroke="#2b2d42" stroke-width="2"/>
+  <polygon points="130,340 125,330 135,330" fill="#2b2d42"/>
+  
+  <line x1="310" y1="310" x2="310" y2="340" stroke="#2b2d42" stroke-width="2"/>
+  <polygon points="310,340 305,330 315,330" fill="#2b2d42"/>
+  
+  <line x1="490" y1="310" x2="490" y2="340" stroke="#2b2d42" stroke-width="2"/>
+  <polygon points="490,340 485,330 495,330" fill="#2b2d42"/>
+  
+  <line x1="670" y1="310" x2="670" y2="340" stroke="#2b2d42" stroke-width="2"/>
+  <polygon points="670,340 665,330 675,330" fill="#2b2d42"/>
+  
+  <!-- Key Based Sharding Example -->
+  <rect x="50" y="350" width="160" height="200" rx="5" ry="5" fill="#eef2ff" stroke="#4361ee" stroke-width="2"/>
+  
+  <rect x="70" y="370" width="120" height="40" rx="3" ry="3" fill="#06d6a0" stroke="#059669" stroke-width="1"/>
+  <text x="130" y="395" font-family="Inter, sans-serif" font-size="12" text-anchor="middle" fill="#ffffff">Shard 1 (Hash % 3 = 0)</text>
+  
+  <rect x="70" y="430" width="120" height="40" rx="3" ry="3" fill="#06d6a0" stroke="#059669" stroke-width="1"/>
+  <text x="130" y="455" font-family="Inter, sans-serif" font-size="12" text-anchor="middle" fill="#ffffff">Shard 2 (Hash % 3 = 1)</text>
+  
+  <rect x="70" y="490" width="120" height="40" rx="3" ry="3" fill="#06d6a0" stroke="#059669" stroke-width="1"/>
+  <text x="130" y="515" font-family="Inter, sans-serif" font-size="12" text-anchor="middle" fill="#ffffff">Shard 3 (Hash % 3 = 2)</text>
+  
+  <!-- Range Based Sharding Example -->
+  <rect x="230" y="350" width="160" height="200" rx="5" ry="5" fill="#eef2ff" stroke="#4361ee" stroke-width="2"/>
+  
+  <rect x="250" y="370" width="120" height="40" rx="3" ry="3" fill="#06d6a0" stroke="#059669" stroke-width="1"/>
+  <text x="310" y="395" font-family="Inter, sans-serif" font-size="12" text-anchor="middle" fill="#ffffff">Shard 1 (A-G)</text>
+  
+  <rect x="250" y="430" width="120" height="40" rx="3" ry="3" fill="#06d6a0" stroke="#059669" stroke-width="1"/>
+  <text x="310" y="455" font-family="Inter, sans-serif" font-size="12" text-anchor="middle" fill="#ffffff">Shard 2 (H-P)</text>
+  
+  <rect x="250" y="490" width="120" height="40" rx="3" ry="3" fill="#06d6a0" stroke="#059669" stroke-width="1"/>
+  <text x="310" y="515" font-family="Inter, sans-serif" font-size="12" text-anchor="middle" fill="#ffffff">Shard 3 (Q-Z)</text>
+  
+  <!-- Vertical Sharding Example -->
+  <rect x="410" y="350" width="160" height="200" rx="5" ry="5" fill="#eef2ff" stroke="#4361ee" stroke-width="2"/>
+  
+  <rect x="430" y="370" width="120" height="40" rx="3" ry="3" fill="#06d6a0" stroke="#059669" stroke-width="1"/>
+  <text x="490" y="395" font-family="Inter, sans-serif" font-size="12" text-anchor="middle" fill="#ffffff">Shard 1 (User Profiles)</text>
+  
+  <rect x="430" y="430" width="120" height="40" rx="3" ry="3" fill="#06d6a0" stroke="#059669" stroke-width="1"/>
+  <text x="490" y="455" font-family="Inter, sans-serif" font-size="12" text-anchor="middle" fill="#ffffff">Shard 2 (Orders)</text>
+  
+  <rect x="430" y="490" width="120" height="40" rx="3" ry="3" fill="#06d6a0" stroke="#059669" stroke-width="1"/>
+  <text x="490" y="515" font-family="Inter, sans-serif" font-size="12" text-anchor="middle" fill="#ffffff">Shard 3 (Products)</text>
+  
+  <!-- Directory Based Sharding Example -->
+  <rect x="590" y="350" width="160" height="200" rx="5" ry="5" fill="#eef2ff" stroke="#4361ee" stroke-width="2"/>
+  
+  <rect x="610" y="370" width="120" height="40" rx="3" ry="3" fill="#ffd166" stroke="#e6bc5c" stroke-width="1"/>
+  <text x="670" y="395" font-family="Inter, sans-serif" font-size="12" text-anchor="middle" fill="#2b2d42">Lookup Service</text>
+  
+  <rect x="610" y="430" width="120" height="40" rx="3" ry="3" fill="#06d6a0" stroke="#059669" stroke-width="1"/>
+  <text x="670" y="455" font-family="Inter, sans-serif" font-size="12" text-anchor="middle" fill="#ffffff">Shard 1</text>
+  
+  <rect x="610" y="490" width="120" height="40" rx="3" ry="3" fill="#06d6a0" stroke="#059669" stroke-width="1"/>
+  <text x="670" y="515" font-family="Inter, sans-serif" font-size="12" text-anchor="middle" fill="#ffffff">Shard 2</text>
+  
+  <!-- Connecting lines for Directory Based -->
+  <line x1="670" y1="410" x2="670" y2="430" stroke="#2b2d42" stroke-width="1" stroke-dasharray="5,5"/>
+  <line x1="670" y1="410" x2="630" y2="430" stroke="#2b2d42" stroke-width="1" stroke-dasharray="5,5"/>
+  <line x1="670" y1="410" x2="710" y2="430" stroke="#2b2d42" stroke-width="1" stroke-dasharray="5,5"/>
+  <line x1="670" y1="470" x2="670" y2="490" stroke="#2b2d42" stroke-width="1" stroke-dasharray="5,5"/>
+</svg>

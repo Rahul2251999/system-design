@@ -3,211 +3,194 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>System Design A-Z | Learn System Design Concepts</title>
-    <meta name="description" content="Comprehensive guide to system design concepts from fundamentals to advanced implementations with real-world examples">
-    <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>System Design Mastery | Learn Modern System Design Concepts</title>
+    <link rel="stylesheet" href="css/modern-styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header class="site-header">
+    <header class="hero">
         <div class="container">
-            <div class="logo">
-                <a href="index.html">
-                    <span class="logo-text">System Design <span class="highlight">A-Z</span></span>
-                </a>
-            </div>
-            <nav class="main-nav">
-                <button class="menu-toggle" aria-label="Toggle menu">
-                    <span class="hamburger"></span>
-                </button>
+            <nav class="navbar">
+                <div class="logo">
+                    <h1>System Design Mastery</h1>
+                </div>
                 <ul class="nav-links">
                     <li><a href="index.html" class="active">Home</a></li>
                     <li><a href="content/fundamentals/index.html">Fundamentals</a></li>
-                    <li><a href="content/examples/index.html">Real-World Examples</a></li>
+                    <li><a href="content/examples/index.html">Real-world Examples</a></li>
                     <li><a href="content/implementation/index.html">Implementation</a></li>
                     <li><a href="#about">About</a></li>
                 </ul>
             </nav>
-        </div>
-    </header>
-
-    <main>
-        <section class="hero">
-            <div class="container">
-                <div class="hero-content">
-                    <h1>Master System Design <span class="highlight">From A to Z</span></h1>
-                    <p class="hero-subtitle">Learn how to design scalable, reliable, and efficient systems with real-world examples and practical implementations</p>
-                    <div class="hero-buttons">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Master System Design</h1>
+                    <h2>From Fundamentals to Advanced Concepts</h2>
+                    <p>Learn how to design scalable, reliable, and high-performance systems that can handle millions of users. Explore real-world examples and implementation strategies used by tech giants.</p>
+                    <div class="cta-buttons">
                         <a href="content/fundamentals/index.html" class="btn btn-primary">Start Learning</a>
-                        <a href="#featured-examples" class="btn btn-secondary">See Examples</a>
+                        <a href="#course-structure" class="btn btn-secondary">Explore Curriculum</a>
                     </div>
                 </div>
                 <div class="hero-image">
-                    <!-- Placeholder for hero image -->
-                    <div class="placeholder-image">
-                        <div class="system-design-diagram"></div>
+                    <img src="assets/images/system-design-hero.svg" alt="System Design Illustration">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="course-structure" class="course-structure">
+        <div class="container">
+            <h2 class="section-title">Course Structure</h2>
+            <div class="cards">
+                <div class="card">
+                    <div class="card-icon">
+                        <img src="assets/icons/foundation.svg" alt="Foundation Icon">
+                    </div>
+                    <h3>Fundamentals</h3>
+                    <p>Learn the core concepts of system design including scalability, reliability, availability, and performance. Understand the building blocks that make up modern distributed systems.</p>
+                    <a href="content/fundamentals/index.html" class="card-link">Explore Fundamentals</a>
+                </div>
+                <div class="card">
+                    <div class="card-icon">
+                        <img src="assets/icons/examples.svg" alt="Examples Icon">
+                    </div>
+                    <h3>Real-world Examples</h3>
+                    <p>Analyze how tech giants like Amazon, Netflix, and Uber designed their systems to handle massive scale. Learn from real-world architectures and design decisions.</p>
+                    <a href="content/examples/index.html" class="card-link">View Examples</a>
+                </div>
+                <div class="card">
+                    <div class="card-icon">
+                        <img src="assets/icons/implementation.svg" alt="Implementation Icon">
+                    </div>
+                    <h3>Implementation</h3>
+                    <p>Dive into practical implementation details of system design components. Learn how to implement load balancers, caching systems, database sharding, and more.</p>
+                    <a href="content/implementation/index.html" class="card-link">Start Implementing</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="key-concepts">
+        <div class="container">
+            <h2 class="section-title">Key System Design Concepts</h2>
+            <div class="concept-grid">
+                <div class="concept-item">
+                    <h3>Scalability</h3>
+                    <p>Learn how to design systems that can handle growing workloads by adding resources. Explore horizontal and vertical scaling strategies.</p>
+                    <img src="assets/images/url-shortener.png" alt="Scalability Diagram" class="concept-image">
+                </div>
+                <div class="concept-item">
+                    <h3>Reliability</h3>
+                    <p>Understand how to build systems that continue to work correctly even when things go wrong. Explore fault tolerance and redundancy.</p>
+                    <img src="assets/images/load-balancing.png" alt="Reliability Diagram" class="concept-image">
+                </div>
+                <div class="concept-item">
+                    <h3>Database Sharding</h3>
+                    <p>Master the techniques for horizontally partitioning data across multiple database instances to improve performance and scalability.</p>
+                    <img src="assets/images/database-sharding.png" alt="Database Sharding Diagram" class="concept-image">
+                </div>
+                <div class="concept-item">
+                    <h3>Caching</h3>
+                    <p>Learn how to implement caching strategies to reduce latency and database load. Explore different caching patterns and eviction policies.</p>
+                    <img src="assets/images/caching-system.png" alt="Caching Diagram" class="concept-image">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials">
+        <div class="container">
+            <h2 class="section-title">What Our Students Say</h2>
+            <div class="testimonial-slider">
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        <p>"This course completely transformed my understanding of system design. The real-world examples were particularly helpful in seeing how theoretical concepts are applied in practice."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <h4>Alex Johnson</h4>
+                        <p>Senior Software Engineer</p>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        <p>"The implementation section was a game-changer for me. Being able to see and understand how to actually build these components made complex concepts much more accessible."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <h4>Priya Sharma</h4>
+                        <p>Backend Developer</p>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        <p>"I used the knowledge from this course to ace my system design interviews at top tech companies. The structured approach to breaking down complex systems was invaluable."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <h4>Michael Chen</h4>
+                        <p>Software Architect</p>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section class="features">
-            <div class="container">
-                <h2 class="section-title">Why Learn System Design?</h2>
-                <div class="features-grid">
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-server"></i>
-                        </div>
-                        <h3>Scalable Architecture</h3>
-                        <p>Learn how to design systems that can handle growth from thousands to millions of users</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-shield-alt"></i>
-                        </div>
-                        <h3>Reliability & Fault Tolerance</h3>
-                        <p>Build systems that remain operational even when components fail</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-tachometer-alt"></i>
-                        </div>
-                        <h3>Performance Optimization</h3>
-                        <p>Techniques to ensure your systems respond quickly under various loads</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-code-branch"></i>
-                        </div>
-                        <h3>Real-World Applications</h3>
-                        <p>Study how major platforms like Netflix, Uber, and Twitter are designed</p>
-                    </div>
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title">About This Course</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>System Design Mastery is a comprehensive educational resource designed to help software engineers, architects, and tech enthusiasts learn the art and science of designing scalable, reliable, and efficient systems.</p>
+                    <p>Our curriculum is structured to build knowledge progressively, starting with fundamental concepts and advancing to complex system architectures used by industry leaders. We emphasize practical, real-world applications of theoretical concepts.</p>
+                    <p>Whether you're preparing for system design interviews, looking to advance your career, or simply interested in understanding how large-scale systems work, this course provides the knowledge and tools you need to succeed.</p>
+                </div>
+                <div class="about-image">
+                    <img src="assets/images/about-illustration.svg" alt="About Illustration">
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section class="learning-path">
-            <div class="container">
-                <h2 class="section-title">Your Learning Path</h2>
-                <div class="path-steps">
-                    <div class="path-step">
-                        <div class="step-number">1</div>
-                        <div class="step-content">
-                            <h3>System Design Fundamentals</h3>
-                            <p>Learn the core concepts, components, and principles that form the foundation of system design</p>
-                            <a href="content/fundamentals/index.html" class="btn btn-sm">Start Here</a>
-                        </div>
-                    </div>
-                    <div class="path-step">
-                        <div class="step-number">2</div>
-                        <div class="step-content">
-                            <h3>Real-World Examples</h3>
-                            <p>Analyze how popular services are designed and the trade-offs they make</p>
-                            <a href="content/examples/index.html" class="btn btn-sm">Explore Examples</a>
-                        </div>
-                    </div>
-                    <div class="path-step">
-                        <div class="step-number">3</div>
-                        <div class="step-content">
-                            <h3>Implementation Details</h3>
-                            <p>Dive into code and practical implementation of system design patterns</p>
-                            <a href="content/implementation/index.html" class="btn btn-sm">See Implementation</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="featured-examples" class="featured-examples">
-            <div class="container">
-                <h2 class="section-title">Featured System Design Examples</h2>
-                <div class="examples-grid">
-                    <div class="example-card">
-                        <div class="example-image">
-                            <!-- Placeholder for example image -->
-                            <div class="placeholder-image"></div>
-                        </div>
-                        <div class="example-content">
-                            <h3>URL Shortener Service</h3>
-                            <p>Learn how to design a scalable URL shortening service like bit.ly</p>
-                            <a href="content/examples/url-shortener.html" class="btn btn-sm">Read More</a>
-                        </div>
-                    </div>
-                    <div class="example-card">
-                        <div class="example-image">
-                            <!-- Placeholder for example image -->
-                            <div class="placeholder-image"></div>
-                        </div>
-                        <div class="example-content">
-                            <h3>Ride-Sharing Platform</h3>
-                            <p>Explore the architecture behind ride-sharing applications like Uber</p>
-                            <a href="content/examples/ride-sharing.html" class="btn btn-sm">Read More</a>
-                        </div>
-                    </div>
-                    <div class="example-card">
-                        <div class="example-image">
-                            <!-- Placeholder for example image -->
-                            <div class="placeholder-image"></div>
-                        </div>
-                        <div class="example-content">
-                            <h3>Social Media Feed</h3>
-                            <p>Understand how news feeds are designed for platforms like Twitter</p>
-                            <a href="content/examples/social-media-feed.html" class="btn btn-sm">Read More</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="view-all-container">
-                    <a href="content/examples/index.html" class="btn btn-secondary">View All Examples</a>
-                </div>
-            </div>
-        </section>
-
-        <section id="about" class="about">
-            <div class="container">
-                <h2 class="section-title">About This Resource</h2>
-                <div class="about-content">
-                    <p>System Design A-Z is a comprehensive resource designed to help software engineers, architects, and tech enthusiasts learn the art and science of designing scalable, reliable, and efficient systems.</p>
-                    <p>Whether you're preparing for technical interviews, working on a growing application, or simply interested in how large-scale systems are built, this resource provides clear explanations, practical examples, and implementation details to guide you through the complex world of system design.</p>
-                    <p>All content is regularly updated to reflect current best practices and emerging technologies in the field of distributed systems and software architecture.</p>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer class="site-footer">
+    <footer class="footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-logo">
-                    <span class="logo-text">System Design <span class="highlight">A-Z</span></span>
+                    <h2>System Design Mastery</h2>
+                    <p>Learn. Design. Implement.</p>
                 </div>
                 <div class="footer-links">
-                    <div class="footer-nav">
-                        <h4>Navigation</h4>
+                    <div class="footer-column">
+                        <h3>Quick Links</h3>
                         <ul>
                             <li><a href="index.html">Home</a></li>
                             <li><a href="content/fundamentals/index.html">Fundamentals</a></li>
-                            <li><a href="content/examples/index.html">Real-World Examples</a></li>
+                            <li><a href="content/examples/index.html">Examples</a></li>
                             <li><a href="content/implementation/index.html">Implementation</a></li>
                         </ul>
                     </div>
-                    <div class="footer-resources">
-                        <h4>Resources</h4>
+                    <div class="footer-column">
+                        <h3>Resources</h3>
                         <ul>
-                            <li><a href="#">Glossary</a></li>
-                            <li><a href="#">Recommended Books</a></li>
-                            <li><a href="#">Tools & Resources</a></li>
-                            <li><a href="#">FAQ</a></li>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Cheat Sheets</a></li>
+                            <li><a href="#">Interview Prep</a></li>
+                            <li><a href="#">Community</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Connect</h3>
+                        <ul>
+                            <li><a href="#">GitHub</a></li>
+                            <li><a href="#">Twitter</a></li>
+                            <li><a href="#">LinkedIn</a></li>
+                            <li><a href="#">Contact Us</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 System Design A-Z. All images used are copyright-free.</p>
+                <p>&copy; 2025 System Design Mastery. All rights reserved.</p>
             </div>
         </div>
     </footer>
