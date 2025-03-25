@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consistency Patterns | System Design Mastery</title>
+    <link rel="stylesheet" href="../../css/modern-styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="sub-header">
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <h1>System Design Mastery</h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="../../index.html">Home</a></li>
+                    <li><a href="../fundamentals/index.html" class="active">Fundamentals</a></li>
+                    <li><a href="../examples/index.html">Real-world Examples</a></li>
+                    <li><a href="../implementation/index.html">Implementation</a></li>
+                    <li><a href="../../index.html#about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <div class="container">
+            <h1>Consistency Patterns</h1>
+            <p>Understanding different approaches to data consistency in distributed systems</p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <div class="content-grid">
+                <aside class="sidebar">
+                    <h3>Fundamentals Topics</h3>
+                    <ul class="sidebar-links">
+                        <li><a href="scalability.html">Scalability</a></li>
+                        <li><a href="reliability.html">Reliability</a></li>
+                        <li><a href="availability.html">Availability</a></li>
+                        <li><a href="performance.html">Performance</a></li>
+                        <li><a href="load-balancing.html">Load Balancing</a></li>
+                        <li><a href="caching.html">Caching</a></li>
+                        <li><a href="database-sharding.html">Database Sharding</a></li>
+                        <li><a href="cap-theorem.html">CAP Theorem</a></li>
+                        <li><a href="consistency-patterns.html" class="active">Consistency Patterns</a></li>
+                        <li><a href="microservices.html">Microservices Architecture</a></li>
+                    </ul>
+                </aside>
+                <main class="main-content">
+                    <article>
+                        <h2>What are Consistency Patterns?</h2>
+                        <p>Consistency patterns define how and when data updates become visible to different parts of a distributed system. These patterns help system designers make appropriate tradeoffs between consistency, availability, and performance based on application requirements.</p>
+                        
+                        <div class="info-box">
+                            <h3>Why Consistency Patterns Matter</h3>
+                            <p>In distributed systems, achieving perfect consistency across all nodes while maintaining high availability and performance is challenging due to factors like network latency, partitions, and concurrent operations. Consistency patterns provide frameworks for managing these challenges by defining specific guarantees about how and when data updates propagate through the system.</p>
+                            <p>Understanding different consistency patterns allows system designers to choose the most appropriate approach for their specific use case, balancing the need for data accuracy with performance and availability requirements.</p>
+                        </div>
+
+                        <h3>The Consistency Spectrum</h3>
+                        <p>Consistency exists on a spectrum from strong to weak, with various models offering different guarantees:</p>
+
+                        <div class="image-content-block">
+                            <div class="image-block">
+                                <img src="../../assets/images/consistency-spectrum.png" alt="Consistency Spectrum Diagram">
+                            </div>
+                            <div class="content-block">
+                                <p>The consistency spectrum ranges from strong consistency (where all nodes see the same data at the same time) to eventual consistency (where nodes may temporarily see different values but will eventually converge).</p>
+                                <p>Stronger consistency models typically offer better data accuracy but may sacrifice availability or performance. Weaker consistency models prioritize availability and performance but may allow temporary inconsistencies.</p>
+                                <p>The diagram illustrates how different consistency models relate to each other in terms of strength of guarantees and typical performance characteristics.</p>
+                            </div>
+                        </div>
+
+                        <h3>Strong Consistency Models</h3>
+
+                        <div class="concept-card">
+                            <h4>Linearizability (Strong Consistency)</h4>
+                            <p>Linearizability is the strongest consistency model, providing the illusion that there is only a single copy of the data:</p>
+                            <ul>
+                                <li>Once a write completes, all subsequent reads from any node will return the updated value</li>
+                                <li>Operations appear to execute in a global, real-time order that matches their actual temporal order</li>
+                                <li>Provides the most intuitive behavior but often with significant performance costs</li>
+                            </ul>
+                            <p><strong>Implementation approaches:</strong></p>
+                            <ul>
+                                <li>Single-leader replication with synchronous updates</li>
+                                <li>Consensus algorithms like Paxos or Raft</li>
+                                <li>Two-phase commit (2PC) for distributed transactions</li>
+                            </ul>
+                            <p><strong>Use cases:</strong> Financial systems, inventory management, reservation systems, and other applications where data accuracy is critical.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Sequential Consistency</h4>
+                            <p>Sequential consistency ensures that operations appear to execute in some sequential order that is consistent with the order seen at individual nodes:</p>
+                            <ul>
+                                <li>All nodes see operations in the same order (though not necessarily the real-time order)</li>
+                                <li>Each node's operations appear in the order they were submitted</li>
+                                <li>Slightly relaxes linearizability by not requiring the global order to match real-time order</li>
+                            </ul>
+                            <p><strong>Implementation approaches:</strong></p>
+                            <ul>
+                                <li>Total order broadcast protocols</li>
+                                <li>State machine replication</li>
+                                <li>Distributed lock managers</li>
+                            </ul>
+                            <p><strong>Use cases:</strong> Distributed databases, shared memory systems, and applications requiring strong ordering guarantees but with some tolerance for real-time divergence.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Serializability</h4>
+                            <p>Serializability guarantees that the execution of concurrent transactions is equivalent to some serial execution:</p>
+                            <ul>
+                                <li>Ensures isolation between transactions</li>
+                                <li>Prevents anomalies like dirty reads, non-repeatable reads, and phantom reads</li>
+                                <li>Does not necessarily preserve real-time ordering</li>
+                            </ul>
+                            <p><strong>Implementation approaches:</strong></p>
+                            <ul>
+                                <li>Two-phase locking (2PL)</li>
+                                <li>Optimistic concurrency control</li>
+                                <li>Serializable snapshot isolation</li>
+                            </ul>
+                            <p><strong>Use cases:</strong> Traditional relational databases, financial transactions, and applications requiring strong isolation between concurrent operations.</p>
+                        </div>
+
+                        <h3>Intermediate Consistency Models</h3>
+
+                        <div class="concept-card">
+                            <h4>Causal Consistency</h4>
+                            <p>Causal consistency ensures that operations that are causally related are seen in the same order by all nodes:</p>
+                            <ul>
+                                <li>If operation A happens before operation B (in a causal sense), then all nodes see A before B</li>
+                                <li>Operations that are not causally related (concurrent) may be seen in different orders by different nodes</li>
+                                <li>Preserves cause-and-effect relationships while allowing concurrent operations to be reordered</li>
+                            </ul>
+                            <p><strong>Implementation approaches:</strong></p>
+                            <ul>
+                                <li>Vector clocks to track causal relationships</li>
+                                <li>Version vectors</li>
+                                <li>Causal broadcast protocols</li>
+                            </ul>
+                            <p><strong>Use cases:</strong> Collaborative applications, social networks, messaging systems, and distributed systems where causality matters but strong global ordering is not required.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Read-your-writes Consistency</h4>
+                            <p>Read-your-writes consistency guarantees that a user will always see their own updates:</p>
+                            <ul>
+                                <li>After a user performs a write, any subsequent reads by that same user will reflect that write</li>
+                                <li>Does not make guarantees about what other users will see</li>
+                                <li>Provides a more intuitive user experience while relaxing global consistency requirements</li>
+                            </ul>
+                            <p><strong>Implementation approaches:</strong></p>
+                            <ul>
+                                <li>Session tracking with sticky sessions</li>
+                                <li>Client-side caching of writes</li>
+                                <li>Routing requests from the same user to the same replica</li>
+                            </ul>
+                            <p><strong>Use cases:</strong> User profile updates, content management systems, and applications where users expect to see their own changes immediately.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Monotonic Reads Consistency</h4>
+                            <p>Monotonic reads consistency ensures that if a user has seen a particular value for a data item, they will never see an older value in subsequent reads:</p>
+                            <ul>
+                                <li>Reads within a session observe a non-decreasing subset of updates</li>
+                                <li>Prevents the "time travel" anomaly where data appears to move backward in time</li>
+                                <li>Does not guarantee that all updates are immediately visible</li>
+                            </ul>
+                            <p><strong>Implementation approaches:</strong></p>
+                            <ul>
+                                <li>Session tracking with version numbers</li>
+                                <li>Consistent hashing to route users to the same replicas</li>
+                                <li>Read-time version checking</li>
+                            </ul>
+                            <p><strong>Use cases:</strong> News feeds, activity streams, and applications where seeing data move backward in time would be confusing to users.</p>
+                        </div>
+
+                        <h3>Weak Consistency Models</h3>
+
+                        <div class="concept-card">
+                            <h4>Eventual Consistency</h4>
+                            <p>Eventual consistency guarantees that, given enough time without updates, all replicas will eventually converge to the same state:</p>
+                            <ul>
+                                <li>Updates propagate through the system asynchronously</li>
+                                <li>Temporary inconsistencies are allowed</li>
+                                <li>No guarantees about how quickly convergence happens</li>
+                            </ul>
+                            <p><strong>Implementation approaches:</strong></p>
+                            <ul>
+                                <li>Asynchronous replication</li>
+                                <li>Gossip protocols</li>
+                                <li>Conflict-free replicated data types (CRDTs)</li>
+                                <li>Last-writer-wins policies</li>
+                            </ul>
+                            <p><strong>Use cases:</strong> DNS, content delivery networks, social media feeds, and applications where high availability and performance are prioritized over immediate consistency.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Bounded Staleness</h4>
+                            <p>Bounded staleness limits how out-of-date a replica can be, either in terms of time or number of updates:</p>
+                            <ul>
+                                <li>Guarantees that replicas are never more than X seconds or Y updates behind</li>
+                                <li>Provides a middle ground between strong and eventual consistency</li>
+                                <li>Offers predictable staleness bounds for applications</li>
+                            </ul>
+                            <p><strong>Implementation approaches:</strong></p>
+                            <ul>
+                                <li>Time-based propagation guarantees</li>
+                                <li>Version vector thresholds</li>
+                                <li>Periodic synchronization with bounded delays</li>
+                            </ul>
+                            <p><strong>Use cases:</strong> Analytics systems, monitoring applications, and systems where some staleness is acceptable but needs to be bounded for business reasons.</p>
+                        </div>
+
+                        <h3>Conflict Resolution Strategies</h3>
+                        <p>When systems allow concurrent updates (particularly with eventual consistency), conflicts may arise that need resolution:</p>
+
+                        <div class="concept-card">
+                            <h4>Last-Writer-Wins (LWW)</h4>
+                            <p>The update with the latest timestamp is considered the "winner":</p>
+                            <ul>
+                                <li>Simple to implement and understand</li>
+                                <li>Requires synchronized clocks or logical timestamps</li>
+                                <li>May lose updates if timestamps are very close</li>
+                            </ul>
+                            <p><strong>Use cases:</strong> Simple key-value stores, caching systems, and applications where occasional data loss is acceptable.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Conflict-Free Replicated Data Types (CRDTs)</h4>
+                            <p>Data structures designed to automatically resolve conflicts in a mathematically sound way:</p>
+                            <ul>
+                                <li>Operations are designed to be commutative and associative</li>
+                                <li>Guarantees convergence without requiring coordination</li>
+                                <li>Different types for different use cases (counters, sets, maps, etc.)</li>
+                            </ul>
+                            <p><strong>Use cases:</strong> Collaborative editing, distributed counters, shopping carts, and other applications requiring conflict-free merging of concurrent updates.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Application-Level Conflict Resolution</h4>
+                            <p>The application logic handles conflicts based on domain-specific rules:</p>
+                            <ul>
+                                <li>Conflicts are surfaced to the application layer</li>
+                                <li>Business logic determines how to merge conflicting changes</li>
+                                <li>May involve user intervention for complex conflicts</li>
+                            </ul>
+                            <p><strong>Use cases:</strong> Document collaboration, version control systems, and applications with complex domain-specific conflict resolution requirements.</p>
+                        </div>
+
+                        <h3>Implementing Consistency Patterns</h3>
+
+                        <div class="concept-card">
+                            <h4>Consensus Algorithms</h4>
+                            <p>Algorithms that allow distributed nodes to agree on a single value:</p>
+                            <ul>
+                                <li><strong>Paxos:</strong> Classic consensus algorithm with complex implementation</li>
+                                <li><strong>Raft:</strong> Designed to be more understandable than Paxos</li>
+                                <li><strong>Zab:</strong> Used in ZooKeeper for atomic broadcast</li>
+                                <li><strong>Viewstamped Replication:</strong> Handles both replication and view changes</li>
+                            </ul>
+                            <p>These algorithms are fundamental building blocks for implementing strong consistency in distributed systems.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Distributed Transactions</h4>
+                            <p>Mechanisms to ensure that a group of operations either all succeed or all fail:</p>
+                            <ul>
+                                <li><strong>Two-Phase Commit (2PC):</strong> Coordinates transaction across multiple nodes</li>
+                                <li><strong>Three-Phase Commit (3PC):</strong> Addresses some limitations of 2PC</li>
+                                <li><strong>Saga Pattern:</strong> Sequences of local transactions with compensating actions</li>
+                            </ul>
+                            <p>Distributed transactions provide strong consistency guarantees but often at the cost of performance and availability.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Quorum-Based Systems</h4>
+                            <p>Systems that require agreement from a subset (quorum) of nodes:</p>
+                            <ul>
+                                <li>Read quorum (R) + Write quorum (W) > Total nodes (N) ensures consistency</li>
+                                <li>Adjustable R and W values allow tuning between read and write performance</li>
+                                <li>Examples include Amazon's Dynamo and Apache Cassandra</li>
+                            </ul>
+                            <p>Quorum systems provide a flexible approach to balancing consistency and availability.</p>
+                        </div>
+
+                        <h3>Real-World Consistency Pattern Examples</h3>
+                        
+                        <div class="example-box">
+                            <h4>Amazon DynamoDB</h4>
+                            <p>DynamoDB offers both eventual consistency and strong consistency options:</p>
+                            <ul>
+                                <li>Eventually consistent reads (default): Lower latency, higher throughput</li>
+                                <li>Strongly consistent reads: Reflect all successful writes prior to the read</li>
+                                <li>Allows developers to choose consistency level on a per-request basis</li>
+                                <li>Uses quorum-based replication across multiple availability zones</li>
+                            </ul>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>Google Spanner</h4>
+                            <p>Spanner provides external consistency (linearizability) at global scale:</p>
+                            <ul>
+                                <li>Uses TrueTime API with atomic clocks and GPS receivers to bound clock uncertainty</li>
+                                <li>Implements commit wait to ensure linearizable transactions</li>
+                                <li>Provides strong consistency while minimizing performance impact through careful design</li>
+                                <li>Demonstrates that strong consistency at scale is possible with the right infrastructure</li>
+                            </ul>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>Collaborative Editing (Google Docs)</h4>
+                            <p>Google Docs uses operational transformation for real-time collaboration:</p>
+                            <ul>
+                                <li>Local edits are applied immediately for responsiveness</li>
+                                <li>Operations are transformed to resolve conflicts when merging</li>
+                                <li>Eventual consistency is guaranteed as all editors converge to the same document</li>
+                                <li>Prioritizes availability and low latency over strong consistency</li>
+                            </ul>
+                        </div>
+
+                        <h3>Choosing the Right Consistency Pattern</h3>
+
+                        <div class="concept-card">
+                            <h4>Factors to Consider</h4>
+                            <p>When selecting a consistency pattern, consider:</p>
+                            <ul>
+                                <li><strong>Business requirements:</strong> What level of consistency does your application need?</li>
+                                <li><strong>User expectations:</strong> What would users find confusing or problematic?</li>
+                                <li><strong>Performance needs:</strong> What latency and throughput are acceptable?</li>
+                                <li><strong>Availability requirements:</strong> Can the system tolerate downtime during partitions?</li>
+                                <li><strong>Data characteristics:</strong> How frequently does the data change? How critical is it?</li>
+                                <li><strong>Geographic distribution:</strong> Are users and data globally distributed?</li>
+                            </ul>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Mixed Consistency Models</h4>
+                            <p>Many systems use different consistency models for different operations or data types:</p>
+                            <ul>
+                                <li>Strong consistency for critical operations (payments, bookings)</li>
+                                <li>Weaker consistency for less critical operations (view counts, recommendations)</li>
+                                <li>Tailored consistency models for specific data types (CRDTs for collaborative data)</li>
+                            </ul>
+                            <p>This approach optimizes the consistency-performance tradeoff for each use case.</p>
+                        </div>
+
+                        <h3>Best Practices for Consistency Management</h3>
+                        <ol>
+                            <li><strong>Document consistency requirements</strong> for different parts of your system</li>
+                            <li><strong>Choose the weakest consistency model</strong> that meets your requirements</li>
+                            <li><strong>Design for conflict resolution</strong> from the beginning</li>
+                            <li><strong>Implement monitoring</strong> to detect inconsistencies</li>
+                            <li><strong>Test with network partitions</strong> to understand system behavior</li>
+                            <li><strong>Consider versioning data</strong> to track changes and resolve conflicts</li>
+                            <li><strong>Use idempotent operations</strong> where possible to simplify retry logic</li>
+                            <li><strong>Implement compensating transactions</strong> for eventual consistency scenarios</li>
+                            <li><strong>Educate users about consistency guarantees</strong> when relevant</li>
+                            <li><strong>Regularly review consistency choices</strong> as system requirements evolve</li>
+                        </ol>
+
+                        <div class="next-steps">
+                            <h3>Next Steps</h3>
+                            <p>Now that you understand consistency patterns, explore related concepts that will help you design robust distributed systems:</p>
+                            <div class="button-group">
+                                <a href="microservices.html" class="btn btn-primary">Learn About Microservices Architecture</a>
+                                <a href="../examples/distributed-database.html" class="btn btn-secondary">Explore Distributed Database Examples</a>
+                            </div>
+                        </div>
+                    </article>
+                </main>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>System Design Mastery</h2>
+                    <p>Learn. Design. Implement.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3>Quick Links</h3>
+                        <ul>
+                            <li><a href="../../index.html">Home</a></li>
+                            <li><a href="../fundamentals/index.html">Fundamentals</a></li>
+                            <li><a href="../examples/index.html">Examples</a></li>
+                            <li><a href="../implementation/index.html">Implementation</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Resources</h3>
+                        <ul>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Cheat Sheets</a></li>
+                            <li><a href="#">Interview Prep</a></li>
+                            <li><a href="#">Community</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Connect</h3>
+                        <ul>
+                            <li><a href="#">GitHub</a></li>
+                            <li><a href="#">Twitter</a></li>
+                            <li><a href="#">LinkedIn</a></li>
+                            <li><a href="#">Contact Us</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 System Design Mastery. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../js/main.js"></script>
+</body>
+</html>

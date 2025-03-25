@@ -1,1 +1,1265 @@
---snip--
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Sharding Implementation | System Design Mastery</title>
+    <link rel="stylesheet" href="../../css/modern-styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="sub-header">
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <h1>System Design Mastery</h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="../../index.html">Home</a></li>
+                    <li><a href="../fundamentals/index.html">Fundamentals</a></li>
+                    <li><a href="../examples/index.html">Real-world Examples</a></li>
+                    <li><a href="../implementation/index.html" class="active">Implementation</a></li>
+                    <li><a href="../../index.html#about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <div class="container">
+            <h1>Database Sharding Implementation</h1>
+            <p>Practical guide to implementing database sharding for horizontal scalability</p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <div class="content-grid">
+                <aside class="sidebar">
+                    <h3>Implementation Guides</h3>
+                    <ul class="sidebar-links">
+                        <li><a href="index.html">Overview</a></li>
+                        <li><a href="api-design.html">API Design</a></li>
+                        <li><a href="database-sharding.html" class="active">Database Sharding</a></li>
+                        <li><a href="load-balancing.html">Load Balancing</a></li>
+                        <li><a href="caching-strategies.html">Caching Strategies</a></li>
+                        <li><a href="microservices.html">Microservices</a></li>
+                        <li><a href="distributed-systems.html">Distributed Systems</a></li>
+                        <li><a href="security-best-practices.html">Security Best Practices</a></li>
+                    </ul>
+                </aside>
+                <main class="main-content">
+                    <article>
+                        <h2>Implementing Database Sharding for Scalability</h2>
+                        <p>Database sharding is a horizontal partitioning technique that distributes data across multiple database instances to improve performance, scalability, and availability. As applications grow and data volumes increase, a single database instance often becomes a bottleneck. Sharding addresses this challenge by splitting data across multiple servers, allowing each to handle a portion of the workload. This guide covers practical approaches to implementing database sharding in real-world systems.</p>
+                        
+                        <div class="info-box">
+                            <h3>What You'll Learn</h3>
+                            <ul>
+                                <li>When and why to implement database sharding</li>
+                                <li>Different sharding strategies and their trade-offs</li>
+                                <li>Implementing sharding in relational and NoSQL databases</li>
+                                <li>Managing cross-shard queries and transactions</li>
+                                <li>Handling shard rebalancing and migration</li>
+                                <li>Monitoring and maintaining sharded databases</li>
+                                <li>Common challenges and their solutions</li>
+                            </ul>
+                        </div>
+
+                        <div class="image-content-block">
+                            <div class="image-block">
+                                <img src="../../assets/images/database-sharding.png" alt="Database Sharding Architecture">
+                            </div>
+                            <div class="content-block">
+                                <h3>Database Sharding Architecture</h3>
+                                <p>A typical sharded database architecture consists of:</p>
+                                <ol>
+                                    <li><strong>Shard Key:</strong> The attribute used to determine which shard stores a particular piece of data</li>
+                                    <li><strong>Shard Manager:</strong> Routes queries to the appropriate shard(s)</li>
+                                    <li><strong>Shards:</strong> Individual database instances, each containing a subset of the data</li>
+                                    <li><strong>Query Router:</strong> Directs queries to the appropriate shard(s) and aggregates results</li>
+                                    <li><strong>Metadata Store:</strong> Maintains information about shard locations and mappings</li>
+                                </ol>
+                                <p>The diagram illustrates how these components interact to distribute data and queries across multiple database instances.</p>
+                            </div>
+                        </div>
+
+                        <h3>When to Implement Sharding</h3>
+
+                        <div class="concept-card">
+                            <h4>Signs You Need Sharding</h4>
+                            <p>Consider implementing database sharding when you observe these indicators:</p>
+                            <ul>
+                                <li><strong>Increasing Query Latency:</strong> Queries taking longer to execute as data volume grows</li>
+                                <li><strong>High Database Load:</strong> CPU, memory, or I/O utilization consistently above 70-80%</li>
+                                <li><strong>Storage Limitations:</strong> Approaching the storage capacity of a single server</li>
+                                <li><strong>Write Bottlenecks:</strong> Write operations causing contention and slowing down the system</li>
+                                <li><strong>Geographic Distribution:</strong> Need to store data closer to users in different regions</li>
+                                <li><strong>Scaling Limitations:</strong> Vertical scaling (bigger servers) becoming prohibitively expensive</li>
+                            </ul>
+                            <p>Before implementing sharding, consider simpler alternatives like read replicas, caching, or database optimization, as sharding adds significant complexity to your system.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Benefits of Sharding</h4>
+                            <p>Database sharding offers several advantages:</p>
+                            <ul>
+                                <li><strong>Horizontal Scalability:</strong> Add more database servers as your data and traffic grow</li>
+                                <li><strong>Improved Performance:</strong> Each shard handles fewer queries and less data, reducing contention</li>
+                                <li><strong>Higher Availability:</strong> A failure in one shard doesn't affect others, limiting the impact of outages</li>
+                                <li><strong>Geographic Distribution:</strong> Place shards closer to users to reduce latency</li>
+                                <li><strong>Cost Efficiency:</strong> Use multiple smaller servers instead of one expensive high-end server</li>
+                                <li><strong>Workload Isolation:</strong> Separate different types of workloads onto different shards</li>
+                            </ul>
+                            <p>These benefits make sharding an essential technique for scaling large-scale applications with high data volumes and traffic.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Challenges and Considerations</h4>
+                            <p>Be aware of these challenges before implementing sharding:</p>
+                            <ul>
+                                <li><strong>Increased Complexity:</strong> Sharding adds significant complexity to your database architecture</li>
+                                <li><strong>Cross-Shard Operations:</strong> Queries spanning multiple shards are more complex and slower</li>
+                                <li><strong>Distributed Transactions:</strong> Maintaining ACID properties across shards is difficult</li>
+                                <li><strong>Schema Changes:</strong> Updating schemas across all shards requires careful coordination</li>
+                                <li><strong>Rebalancing:</strong> Redistributing data when adding or removing shards can be challenging</li>
+                                <li><strong>Operational Overhead:</strong> Managing multiple database instances increases operational complexity</li>
+                                <li><strong>Shard Key Selection:</strong> Choosing the wrong shard key can lead to uneven data distribution</li>
+                            </ul>
+                            <p>Carefully evaluate these challenges against the benefits to determine if sharding is the right solution for your specific use case.</p>
+                        </div>
+
+                        <h3>Sharding Strategies</h3>
+
+                        <div class="concept-card">
+                            <h4>Range-Based Sharding</h4>
+                            <p>Divides data based on ranges of a shard key:</p>
+                            <ul>
+                                <li><strong>Implementation:</strong> Data is partitioned based on ranges of values (e.g., user IDs 1-1000 in shard 1, 1001-2000 in shard 2)</li>
+                                <li><strong>Advantages:</strong> Simple to implement, efficient range queries, good for time-series data</li>
+                                <li><strong>Disadvantages:</strong> Potential for hot spots if data is not evenly distributed, complex rebalancing</li>
+                            </ul>
+                            <p>Example implementation in SQL:</p>
+                            <pre><code>-- Create shards for user data based on ID ranges
+CREATE TABLE users_shard_1 (
+    user_id INT PRIMARY KEY,
+    username VARCHAR(50),
+    email VARCHAR(100),
+    created_at TIMESTAMP,
+    -- other columns
+    CHECK (user_id BETWEEN 1 AND 1000000)
+);
+
+CREATE TABLE users_shard_2 (
+    user_id INT PRIMARY KEY,
+    username VARCHAR(50),
+    email VARCHAR(100),
+    created_at TIMESTAMP,
+    -- other columns
+    CHECK (user_id BETWEEN 1000001 AND 2000000)
+);
+
+-- Application logic to route queries
+function getUserById(userId) {
+    if (userId >= 1 && userId <= 1000000) {
+        return queryDatabase("SELECT * FROM users_shard_1 WHERE user_id = ?", userId);
+    } else if (userId >= 1000001 && userId <= 2000000) {
+        return queryDatabase("SELECT * FROM users_shard_2 WHERE user_id = ?", userId);
+    }
+    // Handle out of range or add more shards
+}</code></pre>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Hash-Based Sharding</h4>
+                            <p>Distributes data based on a hash function applied to the shard key:</p>
+                            <ul>
+                                <li><strong>Implementation:</strong> A hash function determines which shard stores each record (e.g., shard = hash(user_id) % num_shards)</li>
+                                <li><strong>Advantages:</strong> Even data distribution, reduces hot spots, simpler to implement</li>
+                                <li><strong>Disadvantages:</strong> Inefficient for range queries, rebalancing requires rehashing</li>
+                            </ul>
+                            <p>Example implementation in Python:</p>
+                            <pre><code>import hashlib
+
+class ShardManager:
+    def __init__(self, num_shards):
+        self.num_shards = num_shards
+        self.shard_connections = [
+            self.create_connection(f"shard_{i}") 
+            for i in range(num_shards)
+        ]
+    
+    def create_connection(self, shard_name):
+        # Connect to the database shard
+        # This is a simplified example
+        return {
+            "name": shard_name,
+            "connection": f"Connection to {shard_name}"
+        }
+    
+    def get_shard_for_key(self, key):
+        # Convert key to string if it's not already
+        key_str = str(key)
+        
+        # Create a hash of the key
+        hash_obj = hashlib.md5(key_str.encode())
+        hash_value = int(hash_obj.hexdigest(), 16)
+        
+        # Determine shard index using modulo
+        shard_index = hash_value % self.num_shards
+        
+        return self.shard_connections[shard_index]
+    
+    def insert_data(self, shard_key, data):
+        shard = self.get_shard_for_key(shard_key)
+        # Insert data into the appropriate shard
+        print(f"Inserting data with key {shard_key} into {shard['name']}")
+        # Actual implementation would execute an insert query
+    
+    def get_data(self, shard_key):
+        shard = self.get_shard_for_key(shard_key)
+        # Retrieve data from the appropriate shard
+        print(f"Getting data with key {shard_key} from {shard['name']}")
+        # Actual implementation would execute a select query
+
+# Usage example
+shard_manager = ShardManager(4)  # Create 4 shards
+shard_manager.insert_data("user_123", {"name": "John Doe", "email": "john@example.com"})
+shard_manager.get_data("user_123")</code></pre>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Directory-Based Sharding</h4>
+                            <p>Uses a lookup table to map shard keys to specific shards:</p>
+                            <ul>
+                                <li><strong>Implementation:</strong> A separate lookup service maps each key to its shard location</li>
+                                <li><strong>Advantages:</strong> Flexible data distribution, easier rebalancing, can optimize for access patterns</li>
+                                <li><strong>Disadvantages:</strong> Additional lookup step adds latency, lookup service can become a bottleneck</li>
+                            </ul>
+                            <p>Example implementation in Java:</p>
+                            <pre><code>import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+public class DirectoryShardManager {
+    private final Map<String, Integer> shardDirectory = new ConcurrentHashMap<>();
+    private final Map<Integer, DatabaseConnection> shardConnections = new HashMap<>();
+    
+    public DirectoryShardManager(int numShards) {
+        // Initialize shard connections
+        for (int i = 0; i < numShards; i++) {
+            shardConnections.put(i, new DatabaseConnection("shard_" + i));
+        }
+    }
+    
+    // Add or update a key's shard mapping
+    public void updateShardMapping(String key, int shardId) {
+        if (!shardConnections.containsKey(shardId)) {
+            throw new IllegalArgumentException("Invalid shard ID: " + shardId);
+        }
+        shardDirectory.put(key, shardId);
+    }
+    
+    // Get the shard for a specific key
+    public DatabaseConnection getShardForKey(String key) {
+        Integer shardId = shardDirectory.get(key);
+        if (shardId == null) {
+            throw new IllegalArgumentException("No shard mapping found for key: " + key);
+        }
+        return shardConnections.get(shardId);
+    }
+    
+    // Insert data using the directory
+    public void insertData(String key, Object data) {
+        DatabaseConnection shard = getShardForKey(key);
+        shard.executeInsert(key, data);
+    }
+    
+    // Retrieve data using the directory
+    public Object getData(String key) {
+        DatabaseConnection shard = getShardForKey(key);
+        return shard.executeQuery(key);
+    }
+    
+    // Move a key from one shard to another (for rebalancing)
+    public void moveKey(String key, int newShardId) {
+        if (!shardConnections.containsKey(newShardId)) {
+            throw new IllegalArgumentException("Invalid shard ID: " + newShardId);
+        }
+        
+        // Get current shard
+        Integer currentShardId = shardDirectory.get(key);
+        if (currentShardId == null) {
+            throw new IllegalArgumentException("No shard mapping found for key: " + key);
+        }
+        
+        if (currentShardId == newShardId) {
+            return; // Already in the target shard
+        }
+        
+        // Get data from current shard
+        DatabaseConnection currentShard = shardConnections.get(currentShardId);
+        Object data = currentShard.executeQuery(key);
+        
+        // Insert into new shard
+        DatabaseConnection newShard = shardConnections.get(newShardId);
+        newShard.executeInsert(key, data);
+        
+        // Delete from old shard
+        currentShard.executeDelete(key);
+        
+        // Update directory
+        shardDirectory.put(key, newShardId);
+    }
+    
+    // Simplified database connection class for illustration
+    private static class DatabaseConnection {
+        private final String shardName;
+        
+        public DatabaseConnection(String shardName) {
+            this.shardName = shardName;
+        }
+        
+        public void executeInsert(String key, Object data) {
+            System.out.println("Inserting data with key " + key + " into " + shardName);
+            // Actual implementation would execute an insert query
+        }
+        
+        public Object executeQuery(String key) {
+            System.out.println("Querying data with key " + key + " from " + shardName);
+            // Actual implementation would execute a select query
+            return new Object(); // Placeholder
+        }
+        
+        public void executeDelete(String key) {
+            System.out.println("Deleting data with key " + key + " from " + shardName);
+            // Actual implementation would execute a delete query
+        }
+    }
+}</code></pre>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Choosing a Shard Key</h4>
+                            <p>Selecting the right shard key is critical for effective sharding:</p>
+                            <ul>
+                                <li><strong>High Cardinality:</strong> The key should have many possible values to distribute data evenly</li>
+                                <li><strong>Even Distribution:</strong> Values should be distributed evenly to avoid hot spots</li>
+                                <li><strong>Query Patterns:</strong> Consider how data is accessed to minimize cross-shard queries</li>
+                                <li><strong>Write Frequency:</strong> Distribute write-heavy operations across shards</li>
+                                <li><strong>Immutability:</strong> Ideally, the shard key should not change over time</li>
+                            </ul>
+                            <p>Common shard key choices include:</p>
+                            <ul>
+                                <li><strong>User ID:</strong> Good for user-centric applications where most queries are scoped to a single user</li>
+                                <li><strong>Customer/Tenant ID:</strong> Effective for multi-tenant applications</li>
+                                <li><strong>Geographic Location:</strong> Useful for location-based services</li>
+                                <li><strong>Time-based Keys:</strong> Good for time-series data (combined with other attributes)</li>
+                                <li><strong>Composite Keys:</strong> Combining multiple attributes for better distribution</li>
+                            </ul>
+                        </div>
+
+                        <h3>Implementing Sharding in Different Databases</h3>
+
+                        <div class="implementation-steps">
+                            <h4>MongoDB Sharding Implementation</h4>
+                            <p>MongoDB has built-in support for sharding:</p>
+                            <ol>
+                                <li><strong>Set up a sharded cluster:</strong> Configure config servers, shard servers, and mongos routers</li>
+                                <li><strong>Enable sharding for a database:</strong> Activate sharding at the database level</li>
+                                <li><strong>Choose a shard key and create a sharded collection:</strong> Define how data will be distributed</li>
+                                <li><strong>Add more shards as needed:</strong> Scale horizontally by adding new shards</li>
+                            </ol>
+                            <p>Example MongoDB sharding commands:</p>
+                            <pre><code>// 1. Start config servers (in replica set mode)
+mongod --configsvr --replSet configRS --port 27019 --dbpath /data/configdb
+
+// 2. Initialize the config server replica set
+mongo --port 27019
+rs.initiate({
+  _id: "configRS",
+  members: [
+    { _id: 0, host: "localhost:27019" }
+  ]
+})
+
+// 3. Start shard servers (each as a replica set)
+mongod --shardsvr --replSet shard1RS --port 27018 --dbpath /data/shard1
+mongod --shardsvr --replSet shard2RS --port 27020 --dbpath /data/shard2
+
+// 4. Initialize each shard replica set
+mongo --port 27018
+rs.initiate({
+  _id: "shard1RS",
+  members: [
+    { _id: 0, host: "localhost:27018" }
+  ]
+})
+
+mongo --port 27020
+rs.initiate({
+  _id: "shard2RS",
+  members: [
+    { _id: 0, host: "localhost:27020" }
+  ]
+})
+
+// 5. Start mongos router
+mongos --configdb configRS/localhost:27019 --port 27017
+
+// 6. Add shards to the cluster
+mongo --port 27017
+sh.addShard("shard1RS/localhost:27018")
+sh.addShard("shard2RS/localhost:27020")
+
+// 7. Enable sharding for a database
+sh.enableSharding("myDatabase")
+
+// 8. Create an index on the shard key
+db.users.createIndex({ userId: 1 })
+
+// 9. Shard the collection
+sh.shardCollection("myDatabase.users", { userId: 1 })
+
+// 10. Check sharding status
+sh.status()</code></pre>
+                        </div>
+
+                        <div class="implementation-steps">
+                            <h4>MySQL Sharding Implementation</h4>
+                            <p>MySQL doesn't have built-in sharding, but you can implement it using these approaches:</p>
+                            <ol>
+                                <li><strong>Application-level sharding:</strong> The application routes queries to the appropriate shard</li>
+                                <li><strong>Proxy-based sharding:</strong> Use a middleware like ProxySQL or MySQL Router</li>
+                                <li><strong>Database-specific solutions:</strong> MySQL Cluster, Vitess, or MySQL Fabric</li>
+                            </ol>
+                            <p>Example of application-level sharding with MySQL:</p>
+                            <pre><code>// Database setup - create identical schema on each shard
+// Shard 1
+CREATE DATABASE shard_1;
+USE shard_1;
+CREATE TABLE users (
+    user_id INT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+// Shard 2
+CREATE DATABASE shard_2;
+USE shard_2;
+CREATE TABLE users (
+    user_id INT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+// Application code (Node.js example)
+const mysql = require('mysql2/promise');
+
+class MySQLShardManager {
+    constructor(numShards) {
+        this.numShards = numShards;
+        this.shardConnections = [];
+        
+        // Initialize connections to each shard
+        for (let i = 0; i < numShards; i++) {
+            this.shardConnections.push(mysql.createPool({
+                host: 'localhost',
+                user: 'root',
+                password: 'password',
+                database: `shard_${i + 1}`
+            }));
+        }
+    }
+    
+    getShardForUserId(userId) {
+        // Simple hash-based sharding
+        return userId % this.numShards;
+    }
+    
+    async getUserById(userId) {
+        const shardIndex = this.getShardForUserId(userId);
+        const connection = this.shardConnections[shardIndex];
+        
+        try {
+            const [rows] = await connection.execute(
+                'SELECT * FROM users WHERE user_id = ?',
+                [userId]
+            );
+            return rows[0];
+        } catch (error) {
+            console.error(`Error querying shard ${shardIndex + 1}:`, error);
+            throw error;
+        }
+    }
+    
+    async createUser(userData) {
+        const { user_id, username, email } = userData;
+        const shardIndex = this.getShardForUserId(user_id);
+        const connection = this.shardConnections[shardIndex];
+        
+        try {
+            await connection.execute(
+                'INSERT INTO users (user_id, username, email) VALUES (?, ?, ?)',
+                [user_id, username, email]
+            );
+            return { success: true, shardIndex };
+        } catch (error) {
+            console.error(`Error inserting into shard ${shardIndex + 1}:`, error);
+            throw error;
+        }
+    }
+    
+    async executeAcrossAllShards(query, params = []) {
+        const results = [];
+        
+        for (let i = 0; i < this.numShards; i++) {
+            try {
+                const [rows] = await this.shardConnections[i].execute(query, params);
+                results.push({ shardIndex: i, rows });
+            } catch (error) {
+                console.error(`Error executing on shard ${i + 1}:`, error);
+                throw error;
+            }
+        }
+        
+        return results;
+    }
+}
+
+// Usage
+async function main() {
+    const shardManager = new MySQLShardManager(2);
+    
+    // Create a user
+    await shardManager.createUser({
+        user_id: 123,
+        username: 'john_doe',
+        email: 'john@example.com'
+    });
+    
+    // Retrieve a user
+    const user = await shardManager.getUserById(123);
+    console.log('Retrieved user:', user);
+    
+    // Query across all shards
+    const allUsers = await shardManager.executeAcrossAllShards(
+        'SELECT * FROM users ORDER BY created_at DESC LIMIT 10'
+    );
+    console.log('Recent users across all shards:', allUsers);
+}
+
+main().catch(console.error);</code></pre>
+                        </div>
+
+                        <div class="implementation-steps">
+                            <h4>PostgreSQL Sharding Implementation</h4>
+                            <p>PostgreSQL offers several approaches to sharding:</p>
+                            <ol>
+                                <li><strong>Table partitioning:</strong> Built-in feature for dividing tables into smaller pieces</li>
+                                <li><strong>Foreign data wrappers:</strong> Access data stored in external databases</li>
+                                <li><strong>Citus extension:</strong> Distributed database built on PostgreSQL</li>
+                                <li><strong>Application-level sharding:</strong> Similar to MySQL approach</li>
+                            </ol>
+                            <p>Example using PostgreSQL table partitioning:</p>
+                            <pre><code>-- Create a partitioned table
+CREATE TABLE users (
+    user_id BIGINT NOT NULL,
+    username VARCHAR(50) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (user_id, created_at)
+) PARTITION BY RANGE (created_at);
+
+-- Create partitions by date range
+CREATE TABLE users_2023_q1 PARTITION OF users
+    FOR VALUES FROM ('2023-01-01') TO ('2023-04-01');
+
+CREATE TABLE users_2023_q2 PARTITION OF users
+    FOR VALUES FROM ('2023-04-01') TO ('2023-07-01');
+
+CREATE TABLE users_2023_q3 PARTITION OF users
+    FOR VALUES FROM ('2023-07-01') TO ('2023-10-01');
+
+CREATE TABLE users_2023_q4 PARTITION OF users
+    FOR VALUES FROM ('2023-10-01') TO ('2024-01-01');
+
+-- Insert data (PostgreSQL automatically routes to the correct partition)
+INSERT INTO users (user_id, username, email, created_at)
+VALUES (1, 'user1', 'user1@example.com', '2023-02-15');
+
+-- Query (PostgreSQL automatically queries only relevant partitions)
+SELECT * FROM users WHERE created_at BETWEEN '2023-01-01' AND '2023-06-30';</code></pre>
+                            <p>Example using Citus for distributed PostgreSQL:</p>
+                            <pre><code>-- Install Citus extension
+CREATE EXTENSION citus;
+
+-- Create distributed table
+CREATE TABLE users (
+    user_id BIGINT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Distribute the table by user_id
+SELECT create_distributed_table('users', 'user_id');
+
+-- Add worker nodes
+SELECT * from master_add_node('worker1.example.com', 5432);
+SELECT * from master_add_node('worker2.example.com', 5432);
+
+-- Use the table normally - Citus handles the distribution
+INSERT INTO users (user_id, username, email)
+VALUES (1, 'user1', 'user1@example.com');
+
+-- Queries are automatically routed to the appropriate shard
+SELECT * FROM users WHERE user_id = 1;</code></pre>
+                        </div>
+
+                        <h3>Managing Cross-Shard Operations</h3>
+
+                        <div class="concept-card">
+                            <h4>Cross-Shard Queries</h4>
+                            <p>Strategies for handling queries that span multiple shards:</p>
+                            <ul>
+                                <li><strong>Scatter-Gather:</strong> Query all shards and combine results</li>
+                                <li><strong>Query Routing:</strong> Determine which shards to query based on the query parameters</li>
+                                <li><strong>Aggregation:</strong> Perform partial aggregation on each shard, then combine results</li>
+                                <li><strong>Denormalization:</strong> Duplicate data across shards to avoid cross-shard joins</li>
+                                <li><strong>Global Tables:</strong> Replicate small, frequently joined tables to all shards</li>
+                            </ul>
+                            <p>Example of a scatter-gather query implementation:</p>
+                            <pre><code>async function findUsersByAgeRange(minAge, maxAge) {
+    const results = [];
+    
+    // Query each shard in parallel
+    const queryPromises = shardConnections.map(async (connection) => {
+        const query = 'SELECT * FROM users WHERE age BETWEEN ? AND ?';
+        const [rows] = await connection.execute(query, [minAge, maxAge]);
+        return rows;
+    });
+    
+    // Wait for all queries to complete
+    const shardResults = await Promise.all(queryPromises);
+    
+    // Combine results from all shards
+    for (const rows of shardResults) {
+        results.push(...rows);
+    }
+    
+    // Sort combined results if needed
+    results.sort((a, b) => a.age - b.age);
+    
+    return results;
+}</code></pre>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Distributed Transactions</h4>
+                            <p>Approaches for maintaining ACID properties across shards:</p>
+                            <ul>
+                                <li><strong>Two-Phase Commit (2PC):</strong> Prepare and commit phases to ensure atomicity</li>
+                                <li><strong>Saga Pattern:</strong> Series of local transactions with compensating actions</li>
+                                <li><strong>Eventual Consistency:</strong> Accept temporary inconsistencies that resolve over time</li>
+                                <li><strong>Distributed Transaction Managers:</strong> Tools like XA transactions</li>
+                            </ul>
+                            <p>Example of a two-phase commit implementation:</p>
+                            <pre><code>class DistributedTransactionManager {
+    constructor(shardConnections) {
+        this.shardConnections = shardConnections;
+        this.transactionId = null;
+    }
+    
+    async beginTransaction() {
+        this.transactionId = Date.now() + '-' + Math.random().toString(36).substring(2, 15);
+        
+        // Begin transaction on each shard
+        const beginPromises = this.shardConnections.map(async (connection) => {
+            await connection.execute('BEGIN');
+            await connection.execute('SET @tx_id = ?', [this.transactionId]);
+        });
+        
+        await Promise.all(beginPromises);
+        return this.transactionId;
+    }
+    
+    async prepare() {
+        // Prepare phase - check if all shards can commit
+        const preparePromises = this.shardConnections.map(async (connection, index) => {
+            try {
+                await connection.execute('PREPARE TRANSACTION ?', [this.transactionId]);
+                return { shardIndex: index, success: true };
+            } catch (error) {
+                return { shardIndex: index, success: false, error };
+            }
+        });
+        
+        const results = await Promise.all(preparePromises);
+        const canCommit = results.every(result => result.success);
+        
+        return { canCommit, results };
+    }
+    
+    async commit() {
+        // First check if all shards can commit
+        const { canCommit, results } = await this.prepare();
+        
+        if (!canCommit) {
+            // If any shard cannot commit, rollback all
+            await this.rollback();
+            throw new Error('Transaction failed during prepare phase: ' + 
+                JSON.stringify(results.filter(r => !r.success)));
+        }
+        
+        // Commit phase - all shards commit
+        const commitPromises = this.shardConnections.map(async (connection) => {
+            await connection.execute('COMMIT PREPARED ?', [this.transactionId]);
+        });
+        
+        try {
+            await Promise.all(commitPromises);
+            return { success: true };
+        } catch (error) {
+            // This is a critical failure - some shards may have committed
+            // while others failed. Manual recovery would be needed.
+            throw new Error('Critical error during commit phase: ' + error.message);
+        }
+    }
+    
+    async rollback() {
+        // Rollback all shards
+        const rollbackPromises = this.shardConnections.map(async (connection) => {
+            try {
+                await connection.execute('ROLLBACK PREPARED ?', [this.transactionId]);
+            } catch (error) {
+                // Log but continue with other rollbacks
+                console.error('Error rolling back shard:', error);
+            }
+        });
+        
+        await Promise.all(rollbackPromises);
+        return { success: true };
+    }
+    
+    async executeInTransaction(callback) {
+        await this.beginTransaction();
+        
+        try {
+            // Execute the callback with this transaction manager
+            await callback(this);
+            
+            // If successful, commit the transaction
+            return await this.commit();
+        } catch (error) {
+            // If any error occurs, rollback
+            await this.rollback();
+            throw error;
+        }
+    }
+}
+
+// Usage example
+async function transferFunds(fromUserId, toUserId, amount) {
+    const txManager = new DistributedTransactionManager(shardConnections);
+    
+    await txManager.executeInTransaction(async () => {
+        // Determine which shards contain the users
+        const fromShardIndex = getShardForUserId(fromUserId);
+        const toShardIndex = getShardForUserId(toUserId);
+        
+        // Deduct from source account
+        await shardConnections[fromShardIndex].execute(
+            'UPDATE accounts SET balance = balance - ? WHERE user_id = ?',
+            [amount, fromUserId]
+        );
+        
+        // Add to destination account
+        await shardConnections[toShardIndex].execute(
+            'UPDATE accounts SET balance = balance + ? WHERE user_id = ?',
+            [amount, toUserId]
+        );
+        
+        // Verify sufficient funds (could cause rollback)
+        const [rows] = await shardConnections[fromShardIndex].execute(
+            'SELECT balance FROM accounts WHERE user_id = ?',
+            [fromUserId]
+        );
+        
+        if (rows[0].balance < 0) {
+            throw new Error('Insufficient funds');
+        }
+    });
+}</code></pre>
+                        </div>
+
+                        <h3>Shard Rebalancing and Migration</h3>
+
+                        <div class="implementation-steps">
+                            <h4>Adding New Shards</h4>
+                            <p>Process for expanding a sharded database:</p>
+                            <ol>
+                                <li><strong>Provision new shard servers:</strong> Set up hardware and database instances</li>
+                                <li><strong>Configure schema:</strong> Ensure the new shards have the correct schema</li>
+                                <li><strong>Update shard map:</strong> Add new shards to the routing configuration</li>
+                                <li><strong>Rebalance data:</strong> Move data from existing shards to new ones</li>
+                                <li><strong>Verify and optimize:</strong> Check data integrity and performance</li>
+                            </ol>
+                            <p>Example of adding a new shard in MongoDB:</p>
+                            <pre><code>// 1. Start a new shard server
+mongod --shardsvr --replSet shard3RS --port 27021 --dbpath /data/shard3
+
+// 2. Initialize the replica set
+mongo --port 27021
+rs.initiate({
+  _id: "shard3RS",
+  members: [
+    { _id: 0, host: "localhost:27021" }
+  ]
+})
+
+// 3. Add the new shard to the cluster
+mongo --port 27017  // Connect to mongos
+sh.addShard("shard3RS/localhost:27021")
+
+// 4. Check sharding status
+sh.status()
+
+// MongoDB will automatically start balancing chunks to the new shard</code></pre>
+                        </div>
+
+                        <div class="implementation-steps">
+                            <h4>Rebalancing Data</h4>
+                            <p>Strategies for redistributing data across shards:</p>
+                            <ol>
+                                <li><strong>Online rebalancing:</strong> Move data while the system remains operational</li>
+                                <li><strong>Offline rebalancing:</strong> Take the system down for faster rebalancing</li>
+                                <li><strong>Incremental rebalancing:</strong> Move small chunks of data over time</li>
+                                <li><strong>Consistent hashing:</strong> Minimize data movement when adding/removing shards</li>
+                            </ol>
+                            <p>Example of implementing consistent hashing for rebalancing:</p>
+                            <pre><code>class ConsistentHashRing {
+    constructor(numberOfVirtualNodes = 100) {
+        this.virtualNodes = numberOfVirtualNodes;
+        this.ring = {};
+        this.sortedKeys = [];
+        this.nodes = new Set();
+    }
+    
+    addNode(node) {
+        if (this.nodes.has(node)) {
+            return false;
+        }
+        
+        this.nodes.add(node);
+        
+        // Add virtual nodes
+        for (let i = 0; i < this.virtualNodes; i++) {
+            const virtualNodeKey = this._hashKey(`${node}-${i}`);
+            this.ring[virtualNodeKey] = node;
+        }
+        
+        this._updateSortedKeys();
+        return true;
+    }
+    
+    removeNode(node) {
+        if (!this.nodes.has(node)) {
+            return false;
+        }
+        
+        this.nodes.delete(node);
+        
+        // Remove virtual nodes
+        for (let i = 0; i < this.virtualNodes; i++) {
+            const virtualNodeKey = this._hashKey(`${node}-${i}`);
+            delete this.ring[virtualNodeKey];
+        }
+        
+        this._updateSortedKeys();
+        return true;
+    }
+    
+    getNode(key) {
+        if (this.sortedKeys.length === 0) {
+            return null;
+        }
+        
+        const hash = this._hashKey(key);
+        
+        // Find the first node with a hash greater than or equal to the key hash
+        let nodeIndex = this.sortedKeys.findIndex(nodeHash => nodeHash >= hash);
+        
+        // If no node found, wrap around to the first node
+        if (nodeIndex === -1) {
+            nodeIndex = 0;
+        }
+        
+        return this.ring[this.sortedKeys[nodeIndex]];
+    }
+    
+    _hashKey(key) {
+        // Simple hash function for demonstration
+        let hash = 0;
+        for (let i = 0; i < key.length; i++) {
+            hash = (hash << 5) - hash + key.charCodeAt(i);
+            hash = hash & hash; // Convert to 32-bit integer
+        }
+        return Math.abs(hash).toString();
+    }
+    
+    _updateSortedKeys() {
+        this.sortedKeys = Object.keys(this.ring).sort();
+    }
+    
+    getNodeDistribution() {
+        const distribution = {};
+        this.nodes.forEach(node => {
+            distribution[node] = 0;
+        });
+        
+        // Count keys assigned to each node
+        for (let i = 0; i < 1000; i++) {
+            const node = this.getNode(`key-${i}`);
+            if (node) {
+                distribution[node]++;
+            }
+        }
+        
+        return distribution;
+    }
+}
+
+// Usage example
+const ring = new ConsistentHashRing(200);
+
+// Add initial shards
+ring.addNode('shard1');
+ring.addNode('shard2');
+
+// Get node for a key
+console.log('Key "user123" maps to:', ring.getNode('user123'));
+
+// Check distribution
+console.log('Initial distribution:', ring.getNodeDistribution());
+
+// Add a new shard
+ring.addNode('shard3');
+
+// Check new distribution
+console.log('Distribution after adding shard3:', ring.getNodeDistribution());
+
+// Remove a shard
+ring.removeNode('shard1');
+
+// Check distribution after removal
+console.log('Distribution after removing shard1:', ring.getNodeDistribution());</code></pre>
+                        </div>
+
+                        <div class="implementation-steps">
+                            <h4>Data Migration Process</h4>
+                            <p>Steps for safely moving data between shards:</p>
+                            <ol>
+                                <li><strong>Identify data to move:</strong> Determine which records need to be migrated</li>
+                                <li><strong>Copy data to destination:</strong> Transfer data to the new shard</li>
+                                <li><strong>Verify data integrity:</strong> Ensure data was copied correctly</li>
+                                <li><strong>Update routing information:</strong> Point queries to the new location</li>
+                                <li><strong>Remove data from source:</strong> Clean up the original data</li>
+                            </ol>
+                            <p>Example migration process implementation:</p>
+                            <pre><code>async function migrateDataBetweenShards(sourceShardIndex, destShardIndex, keyRange) {
+    const { startKey, endKey } = keyRange;
+    const sourceConn = shardConnections[sourceShardIndex];
+    const destConn = shardConnections[destShardIndex];
+    
+    console.log(`Starting migration from shard ${sourceShardIndex} to shard ${destShardIndex}`);
+    console.log(`Key range: ${startKey} to ${endKey}`);
+    
+    // 1. Begin transaction on both shards
+    await sourceConn.execute('BEGIN');
+    await destConn.execute('BEGIN');
+    
+    try {
+        // 2. Lock the range in the source shard to prevent modifications
+        await sourceConn.execute(
+            'SELECT * FROM users WHERE user_id BETWEEN ? AND ? FOR UPDATE',
+            [startKey, endKey]
+        );
+        
+        // 3. Get the data to migrate
+        const [rows] = await sourceConn.execute(
+            'SELECT * FROM users WHERE user_id BETWEEN ? AND ?',
+            [startKey, endKey]
+        );
+        
+        console.log(`Found ${rows.length} records to migrate`);
+        
+        // 4. Insert data into destination shard
+        if (rows.length > 0) {
+            // Prepare batch insert
+            const placeholders = rows.map(() => '(?, ?, ?, ?)').join(', ');
+            const values = [];
+            
+            rows.forEach(row => {
+                values.push(
+                    row.user_id,
+                    row.username,
+                    row.email,
+                    row.created_at
+                );
+            });
+            
+            // Execute batch insert
+            await destConn.execute(
+                `INSERT INTO users (user_id, username, email, created_at) VALUES ${placeholders}`,
+                values
+            );
+        }
+        
+        // 5. Verify data was copied correctly
+        const [destRows] = await destConn.execute(
+            'SELECT COUNT(*) as count FROM users WHERE user_id BETWEEN ? AND ?',
+            [startKey, endKey]
+        );
+        
+        if (destRows[0].count !== rows.length) {
+            throw new Error('Data verification failed: count mismatch');
+        }
+        
+        // 6. Update shard mapping in metadata store
+        await updateShardMapping(startKey, endKey, destShardIndex);
+        
+        // 7. Delete data from source shard
+        await sourceConn.execute(
+            'DELETE FROM users WHERE user_id BETWEEN ? AND ?',
+            [startKey, endKey]
+        );
+        
+        // 8. Commit transactions
+        await sourceConn.execute('COMMIT');
+        await destConn.execute('COMMIT');
+        
+        console.log('Migration completed successfully');
+        return { success: true, migratedCount: rows.length };
+    } catch (error) {
+        // Rollback on error
+        await sourceConn.execute('ROLLBACK');
+        await destConn.execute('ROLLBACK');
+        
+        console.error('Migration failed:', error);
+        throw error;
+    }
+}
+
+// Helper function to update shard mapping
+async function updateShardMapping(startKey, endKey, newShardIndex) {
+    // This would update your shard mapping service/database
+    console.log(`Updating shard mapping: keys ${startKey}-${endKey} now map to shard ${newShardIndex}`);
+    
+    // Example implementation depends on your shard mapping approach
+    // For directory-based sharding:
+    for (let key = startKey; key <= endKey; key++) {
+        shardDirectory[key] = newShardIndex;
+    }
+}</code></pre>
+                        </div>
+
+                        <h3>Monitoring and Maintenance</h3>
+
+                        <div class="concept-card">
+                            <h4>Key Metrics to Monitor</h4>
+                            <p>Important metrics for sharded database systems:</p>
+                            <ul>
+                                <li><strong>Data Distribution:</strong> How evenly data is spread across shards</li>
+                                <li><strong>Query Distribution:</strong> Balance of query load across shards</li>
+                                <li><strong>Cross-Shard Operations:</strong> Frequency and latency of queries spanning multiple shards</li>
+                                <li><strong>Shard Performance:</strong> CPU, memory, disk I/O, and network usage per shard</li>
+                                <li><strong>Rebalancing Activity:</strong> Ongoing data movement between shards</li>
+                                <li><strong>Shard Growth Rate:</strong> How quickly each shard is growing</li>
+                                <li><strong>Query Latency:</strong> Response time for different query types</li>
+                            </ul>
+                            <p>Example monitoring dashboard metrics:</p>
+                            <pre><code>// Prometheus metrics for sharded database monitoring
+// Data distribution
+# HELP shard_data_size_bytes Size of data in each shard in bytes
+# TYPE shard_data_size_bytes gauge
+shard_data_size_bytes{shard="shard1"} 1572864000
+shard_data_size_bytes{shard="shard2"} 1835008000
+shard_data_size_bytes{shard="shard3"} 1677721600
+
+// Query distribution
+# HELP shard_queries_total Total number of queries per shard
+# TYPE shard_queries_total counter
+shard_queries_total{shard="shard1",query_type="read"} 15782
+shard_queries_total{shard="shard1",query_type="write"} 4231
+shard_queries_total{shard="shard2",query_type="read"} 18934
+shard_queries_total{shard="shard2",query_type="write"} 5102
+shard_queries_total{shard="shard3",query_type="read"} 16845
+shard_queries_total{shard="shard3",query_type="write"} 4567
+
+// Cross-shard operations
+# HELP cross_shard_queries_total Total number of queries spanning multiple shards
+# TYPE cross_shard_queries_total counter
+cross_shard_queries_total 2845
+
+# HELP cross_shard_query_latency_seconds Latency of cross-shard queries in seconds
+# TYPE cross_shard_query_latency_seconds histogram
+cross_shard_query_latency_seconds_bucket{le="0.1"} 1245
+cross_shard_query_latency_seconds_bucket{le="0.5"} 2102
+cross_shard_query_latency_seconds_bucket{le="1.0"} 2634
+cross_shard_query_latency_seconds_bucket{le="2.0"} 2798
+cross_shard_query_latency_seconds_bucket{le="5.0"} 2845
+cross_shard_query_latency_seconds_bucket{le="+Inf"} 2845
+cross_shard_query_latency_seconds_sum 1423.5
+cross_shard_query_latency_seconds_count 2845
+
+// Rebalancing activity
+# HELP shard_rebalancing_operations_total Total number of rebalancing operations
+# TYPE shard_rebalancing_operations_total counter
+shard_rebalancing_operations_total{operation="move_chunk"} 157
+shard_rebalancing_operations_total{operation="split_chunk"} 42
+
+# HELP shard_rebalancing_bytes_total Total bytes moved during rebalancing
+# TYPE shard_rebalancing_bytes_total counter
+shard_rebalancing_bytes_total 8589934592</code></pre>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Common Maintenance Tasks</h4>
+                            <p>Regular maintenance activities for sharded databases:</p>
+                            <ul>
+                                <li><strong>Schema Updates:</strong> Coordinating schema changes across all shards</li>
+                                <li><strong>Index Management:</strong> Creating and optimizing indexes on each shard</li>
+                                <li><strong>Rebalancing:</strong> Redistributing data to maintain even distribution</li>
+                                <li><strong>Backup and Recovery:</strong> Backing up data from all shards</li>
+                                <li><strong>Performance Tuning:</strong> Optimizing each shard for better performance</li>
+                                <li><strong>Capacity Planning:</strong> Monitoring growth and planning for expansion</li>
+                            </ul>
+                            <p>Example of coordinated schema update across shards:</p>
+                            <pre><code>async function performSchemaUpdateAcrossShards(alterTableStatement) {
+    console.log(`Performing schema update: ${alterTableStatement}`);
+    
+    // Track success/failure for each shard
+    const results = [];
+    
+    // Execute the schema change on each shard sequentially
+    // (Parallel execution might be possible depending on the change)
+    for (let i = 0; i < shardConnections.length; i++) {
+        const connection = shardConnections[i];
+        
+        try {
+            console.log(`Updating schema on shard ${i}...`);
+            await connection.execute(alterTableStatement);
+            results.push({ shardIndex: i, success: true });
+            console.log(`Schema updated successfully on shard ${i}`);
+        } catch (error) {
+            console.error(`Schema update failed on shard ${i}:`, error);
+            results.push({ shardIndex: i, success: false, error: error.message });
+            
+            // Depending on your strategy, you might:
+            // 1. Continue with other shards
+            // 2. Attempt to rollback changes on successful shards
+            // 3. Stop and report the failure
+            
+            // For this example, we'll continue but track the failure
+        }
+    }
+    
+    // Check if all shards were updated successfully
+    const allSuccessful = results.every(result => result.success);
+    
+    if (allSuccessful) {
+        console.log('Schema update completed successfully on all shards');
+    } else {
+        console.error('Schema update failed on some shards:', 
+            results.filter(r => !r.success).map(r => `Shard ${r.shardIndex}: ${r.error}`));
+        
+        // Handle the inconsistent state - this might require manual intervention
+    }
+    
+    return { allSuccessful, results };
+}
+
+// Usage example
+async function addColumnToUsers() {
+    const alterStatement = 'ALTER TABLE users ADD COLUMN last_login_at TIMESTAMP';
+    return await performSchemaUpdateAcrossShards(alterStatement);
+}</code></pre>
+                        </div>
+
+                        <h3>Conclusion</h3>
+                        <p>Database sharding is a powerful technique for scaling databases horizontally, but it comes with significant complexity. By carefully planning your sharding strategy, choosing the right shard key, and implementing proper management tools, you can build a database system that scales with your application's growth.</p>
+                        
+                        <p>Remember these key takeaways:</p>
+                        <ul>
+                            <li>Start with simpler scaling techniques before implementing sharding</li>
+                            <li>Choose your shard key carefully based on your query patterns and data distribution</li>
+                            <li>Plan for cross-shard operations and distributed transactions</li>
+                            <li>Implement robust monitoring and maintenance procedures</li>
+                            <li>Consider using database systems with built-in sharding support when possible</li>
+                        </ul>
+                        
+                        <div class="next-steps">
+                            <h3>Next Steps</h3>
+                            <p>Continue your learning with these related topics:</p>
+                            <div class="button-group">
+                                <a href="load-balancing.html" class="btn btn-primary">Learn Load Balancing</a>
+                                <a href="caching-strategies.html" class="btn btn-secondary">Explore Caching Strategies</a>
+                            </div>
+                        </div>
+                    </article>
+                </main>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>System Design Mastery</h2>
+                    <p>Learn. Design. Implement.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3>Quick Links</h3>
+                        <ul>
+                            <li><a href="../../index.html">Home</a></li>
+                            <li><a href="../fundamentals/index.html">Fundamentals</a></li>
+                            <li><a href="../examples/index.html">Examples</a></li>
+                            <li><a href="../implementation/index.html">Implementation</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Resources</h3>
+                        <ul>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Cheat Sheets</a></li>
+                            <li><a href="#">Interview Prep</a></li>
+                            <li><a href="#">Community</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Connect</h3>
+                        <ul>
+                            <li><a href="#">GitHub</a></li>
+                            <li><a href="#">Twitter</a></li>
+                            <li><a href="#">LinkedIn</a></li>
+                            <li><a href="#">Contact Us</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 System Design Mastery. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../js/main.js"></script>
+</body>
+</html>

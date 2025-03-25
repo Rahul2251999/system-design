@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Performance | System Design Mastery</title>
+    <link rel="stylesheet" href="../../css/modern-styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="sub-header">
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <h1>System Design Mastery</h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="../../index.html">Home</a></li>
+                    <li><a href="../fundamentals/index.html" class="active">Fundamentals</a></li>
+                    <li><a href="../examples/index.html">Real-world Examples</a></li>
+                    <li><a href="../implementation/index.html">Implementation</a></li>
+                    <li><a href="../../index.html#about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <div class="container">
+            <h1>Performance</h1>
+            <p>Optimizing systems for speed, efficiency, and responsiveness</p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <div class="content-grid">
+                <aside class="sidebar">
+                    <h3>Fundamentals Topics</h3>
+                    <ul class="sidebar-links">
+                        <li><a href="scalability.html">Scalability</a></li>
+                        <li><a href="reliability.html">Reliability</a></li>
+                        <li><a href="availability.html">Availability</a></li>
+                        <li><a href="performance.html" class="active">Performance</a></li>
+                        <li><a href="load-balancing.html">Load Balancing</a></li>
+                        <li><a href="caching.html">Caching</a></li>
+                        <li><a href="database-sharding.html">Database Sharding</a></li>
+                        <li><a href="cap-theorem.html">CAP Theorem</a></li>
+                        <li><a href="consistency-patterns.html">Consistency Patterns</a></li>
+                        <li><a href="microservices.html">Microservices Architecture</a></li>
+                    </ul>
+                </aside>
+                <main class="main-content">
+                    <article>
+                        <h2>What is Performance in System Design?</h2>
+                        <p>Performance in system design refers to how efficiently a system uses resources to accomplish its tasks. It encompasses how quickly a system responds to user requests, how many operations it can handle simultaneously, and how effectively it utilizes available computing resources.</p>
+                        
+                        <div class="info-box">
+                            <h3>Why Performance Matters</h3>
+                            <p>Performance directly impacts user experience, operational costs, and business outcomes. Studies show that even small delays in response time can significantly affect user engagement and conversion rates. For example, Amazon found that every 100ms of latency cost them 1% in sales, while Google discovered that a half-second increase in search page generation time dropped traffic by 20%.</p>
+                        </div>
+
+                        <h3>Key Performance Metrics</h3>
+
+                        <div class="concept-card">
+                            <h4>Latency</h4>
+                            <p>Latency is the time it takes for a system to respond to a request. It's typically measured in milliseconds (ms) and represents the delay between a user action and the system's response.</p>
+                            <p><strong>Types of latency:</strong></p>
+                            <ul>
+                                <li><strong>Network latency:</strong> Time for data to travel across the network</li>
+                                <li><strong>Processing latency:</strong> Time for the system to process the request</li>
+                                <li><strong>Database latency:</strong> Time for database operations to complete</li>
+                                <li><strong>End-to-end latency:</strong> Total time from request to response</li>
+                            </ul>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Throughput</h4>
+                            <p>Throughput measures the number of operations a system can handle in a given time period. It's typically expressed as requests per second (RPS), transactions per second (TPS), or queries per second (QPS).</p>
+                            <p>High throughput systems can process many operations concurrently, which is essential for applications with many users or high transaction volumes.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Response Time</h4>
+                            <p>Response time is the total time between a client sending a request and receiving a complete response. It includes both latency and processing time.</p>
+                            <p>When analyzing response time, it's important to consider:</p>
+                            <ul>
+                                <li><strong>Average response time:</strong> The mean time across all requests</li>
+                                <li><strong>Percentiles (p95, p99):</strong> The response time that X% of requests fall under</li>
+                                <li><strong>Maximum response time:</strong> The worst-case scenario</li>
+                            </ul>
+                            <p>Percentiles are particularly important because averages can hide performance issues that affect a small percentage of users.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Resource Utilization</h4>
+                            <p>Resource utilization measures how effectively a system uses available computing resources:</p>
+                            <ul>
+                                <li><strong>CPU utilization:</strong> Percentage of CPU capacity being used</li>
+                                <li><strong>Memory usage:</strong> Amount of RAM being consumed</li>
+                                <li><strong>Disk I/O:</strong> Rate of read/write operations to storage</li>
+                                <li><strong>Network bandwidth:</strong> Amount of data transferred over the network</li>
+                            </ul>
+                            <p>Monitoring resource utilization helps identify bottlenecks and optimize system performance.</p>
+                        </div>
+
+                        <h3>Performance Optimization Strategies</h3>
+
+                        <div class="image-content-block">
+                            <div class="image-block">
+                                <img src="../../assets/images/caching-system.png" alt="Caching System Diagram">
+                            </div>
+                            <div class="content-block">
+                                <h4>Caching</h4>
+                                <p>Caching stores frequently accessed data in a fast-access storage layer to reduce the need to fetch data from slower sources.</p>
+                                <p><strong>Common caching strategies:</strong></p>
+                                <ul>
+                                    <li><strong>Client-side caching:</strong> Browsers storing static assets</li>
+                                    <li><strong>CDN caching:</strong> Distributing content geographically closer to users</li>
+                                    <li><strong>Application caching:</strong> In-memory stores like Redis or Memcached</li>
+                                    <li><strong>Database query caching:</strong> Storing results of expensive queries</li>
+                                </ul>
+                                <p>Effective caching can dramatically reduce latency and database load, but requires careful consideration of cache invalidation strategies.</p>
+                            </div>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Database Optimization</h4>
+                            <p>Databases are often performance bottlenecks. Key optimization techniques include:</p>
+                            <ul>
+                                <li><strong>Indexing:</strong> Creating indexes on frequently queried columns</li>
+                                <li><strong>Query optimization:</strong> Rewriting queries for efficiency</li>
+                                <li><strong>Denormalization:</strong> Reducing joins by duplicating data</li>
+                                <li><strong>Connection pooling:</strong> Reusing database connections</li>
+                                <li><strong>Sharding:</strong> Partitioning data across multiple database instances</li>
+                                <li><strong>Read replicas:</strong> Offloading read operations to replica databases</li>
+                            </ul>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Asynchronous Processing</h4>
+                            <p>Asynchronous processing decouples time-consuming operations from the request-response cycle:</p>
+                            <ul>
+                                <li><strong>Message queues:</strong> Using systems like Kafka, RabbitMQ, or SQS to queue work</li>
+                                <li><strong>Background jobs:</strong> Processing tasks outside the main request flow</li>
+                                <li><strong>Event-driven architecture:</strong> Responding to events asynchronously</li>
+                            </ul>
+                            <p>This approach improves response times by allowing the system to acknowledge requests quickly while processing intensive tasks in the background.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Load Balancing</h4>
+                            <p>Load balancers distribute traffic across multiple servers, improving both performance and availability:</p>
+                            <ul>
+                                <li>Prevents any single server from becoming overwhelmed</li>
+                                <li>Enables horizontal scaling by adding more servers</li>
+                                <li>Can route requests based on server capacity or response time</li>
+                                <li>Reduces latency by directing users to geographically closer servers</li>
+                            </ul>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Content Delivery Networks (CDNs)</h4>
+                            <p>CDNs distribute content across multiple geographically dispersed servers:</p>
+                            <ul>
+                                <li>Reduces network latency by serving content from locations closer to users</li>
+                                <li>Offloads traffic from origin servers</li>
+                                <li>Provides edge caching for static assets</li>
+                                <li>Can handle traffic spikes more effectively</li>
+                            </ul>
+                        </div>
+
+                        <h3>Code-Level Performance Optimization</h3>
+
+                        <div class="concept-card">
+                            <h4>Efficient Algorithms and Data Structures</h4>
+                            <p>The choice of algorithms and data structures significantly impacts performance:</p>
+                            <ul>
+                                <li>Use appropriate data structures for your access patterns (e.g., hash maps for lookups)</li>
+                                <li>Select algorithms with optimal time complexity for your use case</li>
+                                <li>Consider space-time tradeoffs based on your constraints</li>
+                                <li>Avoid unnecessary computations and memory allocations</li>
+                            </ul>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Optimizing Network Requests</h4>
+                            <p>Network operations are often performance bottlenecks:</p>
+                            <ul>
+                                <li><strong>Batching:</strong> Combining multiple requests into one</li>
+                                <li><strong>Compression:</strong> Reducing the size of transmitted data</li>
+                                <li><strong>Connection reuse:</strong> Keeping connections open for multiple requests</li>
+                                <li><strong>Protocol optimization:</strong> Using efficient protocols like HTTP/2 or gRPC</li>
+                            </ul>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Resource Pooling</h4>
+                            <p>Creating and destroying resources is expensive. Pooling reuses resources:</p>
+                            <ul>
+                                <li>Connection pools for databases and external services</li>
+                                <li>Thread pools for concurrent processing</li>
+                                <li>Object pools for expensive-to-create objects</li>
+                            </ul>
+                        </div>
+
+                        <h3>Performance Testing and Monitoring</h3>
+
+                        <div class="concept-card">
+                            <h4>Types of Performance Tests</h4>
+                            <p>Different tests reveal different aspects of system performance:</p>
+                            <ul>
+                                <li><strong>Load testing:</strong> Testing system behavior under expected load</li>
+                                <li><strong>Stress testing:</strong> Testing system behavior beyond normal capacity</li>
+                                <li><strong>Spike testing:</strong> Testing system response to sudden traffic increases</li>
+                                <li><strong>Endurance testing:</strong> Testing system performance over extended periods</li>
+                                <li><strong>Scalability testing:</strong> Testing how performance changes as resources are added</li>
+                            </ul>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Performance Monitoring</h4>
+                            <p>Continuous monitoring helps identify and address performance issues:</p>
+                            <ul>
+                                <li><strong>Application Performance Monitoring (APM):</strong> Tools like New Relic, Datadog, or Dynatrace</li>
+                                <li><strong>Real User Monitoring (RUM):</strong> Tracking actual user experiences</li>
+                                <li><strong>Synthetic monitoring:</strong> Simulating user interactions to detect issues</li>
+                                <li><strong>Log analysis:</strong> Identifying patterns in application logs</li>
+                                <li><strong>Alerting:</strong> Setting thresholds for performance metrics</li>
+                            </ul>
+                        </div>
+
+                        <h3>Real-World Performance Examples</h3>
+                        
+                        <div class="example-box">
+                            <h4>Netflix</h4>
+                            <p>Netflix serves millions of concurrent video streams with high performance through:</p>
+                            <ul>
+                                <li>Extensive use of CDNs (Open Connect) to deliver content close to users</li>
+                                <li>Predictive caching based on viewing patterns</li>
+                                <li>Adaptive streaming that adjusts video quality based on network conditions</li>
+                                <li>Microservices architecture that allows independent scaling of components</li>
+                            </ul>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>Facebook</h4>
+                            <p>Facebook handles billions of interactions daily with sub-second response times:</p>
+                            <ul>
+                                <li>Custom-built caching system (Memcached) at massive scale</li>
+                                <li>TAO (The Association Object) for efficient social graph operations</li>
+                                <li>Custom database solutions like MyRocks for specific workloads</li>
+                                <li>Edge computing to reduce latency for global users</li>
+                            </ul>
+                        </div>
+
+                        <h3>Best Practices for Performance Optimization</h3>
+                        <ol>
+                            <li><strong>Measure before optimizing</strong> - Identify actual bottlenecks rather than guessing</li>
+                            <li><strong>Focus on the critical path</strong> - Optimize the operations that directly affect user experience</li>
+                            <li><strong>Apply the 80/20 rule</strong> - 80% of performance issues often come from 20% of the code</li>
+                            <li><strong>Consider tradeoffs</strong> - Performance optimizations often come with increased complexity</li>
+                            <li><strong>Test with realistic data and traffic patterns</strong> - Performance in production may differ from development</li>
+                            <li><strong>Implement performance budgets</strong> - Set limits on metrics like page size or load time</li>
+                            <li><strong>Monitor continuously</strong> - Performance can degrade over time as systems evolve</li>
+                            <li><strong>Design for performance from the start</strong> - It's easier than retrofitting later</li>
+                            <li><strong>Optimize for the common case</strong> - Focus on frequent operations over rare ones</li>
+                            <li><strong>Consider the entire system</strong> - Performance bottlenecks can occur at any layer</li>
+                        </ol>
+
+                        <div class="next-steps">
+                            <h3>Next Steps</h3>
+                            <p>Now that you understand performance optimization, explore related concepts that can further enhance your system design skills:</p>
+                            <div class="button-group">
+                                <a href="load-balancing.html" class="btn btn-primary">Learn About Load Balancing</a>
+                                <a href="caching.html" class="btn btn-secondary">Explore Caching Strategies</a>
+                            </div>
+                        </div>
+                    </article>
+                </main>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>System Design Mastery</h2>
+                    <p>Learn. Design. Implement.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3>Quick Links</h3>
+                        <ul>
+                            <li><a href="../../index.html">Home</a></li>
+                            <li><a href="../fundamentals/index.html">Fundamentals</a></li>
+                            <li><a href="../examples/index.html">Examples</a></li>
+                            <li><a href="../implementation/index.html">Implementation</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Resources</h3>
+                        <ul>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Cheat Sheets</a></li>
+                            <li><a href="#">Interview Prep</a></li>
+                            <li><a href="#">Community</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Connect</h3>
+                        <ul>
+                            <li><a href="#">GitHub</a></li>
+                            <li><a href="#">Twitter</a></li>
+                            <li><a href="#">LinkedIn</a></li>
+                            <li><a href="#">Contact Us</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 System Design Mastery. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../js/main.js"></script>
+</body>
+</html>

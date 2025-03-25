@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Availability | System Design Mastery</title>
+    <link rel="stylesheet" href="../../css/modern-styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="sub-header">
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <h1>System Design Mastery</h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="../../index.html">Home</a></li>
+                    <li><a href="../fundamentals/index.html" class="active">Fundamentals</a></li>
+                    <li><a href="../examples/index.html">Real-world Examples</a></li>
+                    <li><a href="../implementation/index.html">Implementation</a></li>
+                    <li><a href="../../index.html#about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <div class="container">
+            <h1>Availability</h1>
+            <p>Designing systems that remain operational and accessible at all times</p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <div class="content-grid">
+                <aside class="sidebar">
+                    <h3>Fundamentals Topics</h3>
+                    <ul class="sidebar-links">
+                        <li><a href="scalability.html">Scalability</a></li>
+                        <li><a href="reliability.html">Reliability</a></li>
+                        <li><a href="availability.html" class="active">Availability</a></li>
+                        <li><a href="performance.html">Performance</a></li>
+                        <li><a href="load-balancing.html">Load Balancing</a></li>
+                        <li><a href="caching.html">Caching</a></li>
+                        <li><a href="database-sharding.html">Database Sharding</a></li>
+                        <li><a href="cap-theorem.html">CAP Theorem</a></li>
+                        <li><a href="consistency-patterns.html">Consistency Patterns</a></li>
+                        <li><a href="microservices.html">Microservices Architecture</a></li>
+                    </ul>
+                </aside>
+                <main class="main-content">
+                    <article>
+                        <h2>What is Availability?</h2>
+                        <p>Availability refers to the proportion of time a system is in a functioning condition and accessible to users. It is typically measured as a percentage of uptime in a given time period and is often expressed in terms of "nines" (e.g., "five nines" means 99.999% availability).</p>
+                        
+                        <div class="info-box">
+                            <h3>Why Availability Matters</h3>
+                            <p>In today's always-on digital world, users expect services to be available 24/7/365. Even brief outages can lead to significant revenue loss, damaged reputation, and customer churn. For critical systems like healthcare, financial services, or emergency response, high availability is not just desirable—it's essential.</p>
+                        </div>
+
+                        <h3>Measuring Availability</h3>
+                        
+                        <div class="concept-card">
+                            <h4>Availability Percentages and Downtime</h4>
+                            <p>Availability is typically expressed as a percentage of uptime over a period, usually a year:</p>
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Availability</th>
+                                        <th>Downtime per Year</th>
+                                        <th>Downtime per Month</th>
+                                        <th>Downtime per Week</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>99% ("two nines")</td>
+                                        <td>3.65 days</td>
+                                        <td>7.2 hours</td>
+                                        <td>1.68 hours</td>
+                                    </tr>
+                                    <tr>
+                                        <td>99.9% ("three nines")</td>
+                                        <td>8.76 hours</td>
+                                        <td>43.8 minutes</td>
+                                        <td>10.1 minutes</td>
+                                    </tr>
+                                    <tr>
+                                        <td>99.99% ("four nines")</td>
+                                        <td>52.56 minutes</td>
+                                        <td>4.38 minutes</td>
+                                        <td>1.01 minutes</td>
+                                    </tr>
+                                    <tr>
+                                        <td>99.999% ("five nines")</td>
+                                        <td>5.26 minutes</td>
+                                        <td>26.3 seconds</td>
+                                        <td>6.05 seconds</td>
+                                    </tr>
+                                    <tr>
+                                        <td>99.9999% ("six nines")</td>
+                                        <td>31.5 seconds</td>
+                                        <td>2.63 seconds</td>
+                                        <td>0.605 seconds</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Calculating Availability</h4>
+                            <p>The basic formula for calculating availability is:</p>
+                            <div class="formula">
+                                Availability = (Uptime / (Uptime + Downtime)) × 100%
+                            </div>
+                            <p>For systems with multiple components, the overall availability depends on how these components are arranged:</p>
+                            <ul>
+                                <li><strong>Series arrangement:</strong> All components must be available for the system to be available. Overall availability is the product of individual component availabilities.</li>
+                                <li><strong>Parallel arrangement:</strong> The system is available if at least one component is available. Overall availability is higher than any individual component.</li>
+                            </ul>
+                        </div>
+
+                        <h3>Strategies for High Availability</h3>
+
+                        <div class="image-content-block">
+                            <div class="image-block">
+                                <img src="../../assets/images/high-availability.png" alt="High Availability Architecture">
+                            </div>
+                            <div class="content-block">
+                                <h4>Redundancy</h4>
+                                <p>Redundancy involves duplicating critical components to eliminate single points of failure. Key redundancy strategies include:</p>
+                                <ul>
+                                    <li><strong>Active-Passive:</strong> A standby component takes over when the primary fails</li>
+                                    <li><strong>Active-Active:</strong> Multiple components handle workload simultaneously</li>
+                                    <li><strong>N+1, N+2, 2N:</strong> Different levels of redundancy based on requirements</li>
+                                </ul>
+                                <p>Redundancy should be implemented at multiple levels:</p>
+                                <ul>
+                                    <li>Server redundancy</li>
+                                    <li>Network path redundancy</li>
+                                    <li>Power supply redundancy</li>
+                                    <li>Data center redundancy</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Fault Detection and Recovery</h4>
+                            <p>Quickly detecting and recovering from failures is crucial for maintaining high availability:</p>
+                            <ul>
+                                <li><strong>Health checks:</strong> Regular monitoring of component health</li>
+                                <li><strong>Automated failover:</strong> Automatically switching to redundant components</li>
+                                <li><strong>Self-healing systems:</strong> Automatically replacing failed instances</li>
+                                <li><strong>Circuit breakers:</strong> Preventing cascading failures</li>
+                            </ul>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Geographical Distribution</h4>
+                            <p>Distributing your system across multiple geographical locations protects against regional failures:</p>
+                            <ul>
+                                <li><strong>Multi-region deployments:</strong> Running your application in multiple AWS/GCP/Azure regions</li>
+                                <li><strong>Global load balancing:</strong> Routing users to the nearest healthy region</li>
+                                <li><strong>Data replication:</strong> Keeping data synchronized across regions</li>
+                                <li><strong>Disaster recovery planning:</strong> Procedures for recovering from major outages</li>
+                            </ul>
+                        </div>
+
+                        <h3>Availability Patterns</h3>
+
+                        <div class="concept-card">
+                            <h4>Load Balancing</h4>
+                            <p>Load balancers distribute traffic across multiple servers, improving both availability and performance:</p>
+                            <ul>
+                                <li>Automatically routes traffic away from failed servers</li>
+                                <li>Performs health checks to detect server failures</li>
+                                <li>Can be implemented at multiple layers (L4 or L7)</li>
+                                <li>Often the first line of defense for high availability</li>
+                            </ul>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Database High Availability</h4>
+                            <p>Databases often require special consideration for high availability:</p>
+                            <ul>
+                                <li><strong>Primary-Secondary Replication:</strong> Automatic failover to a replica if the primary fails</li>
+                                <li><strong>Multi-Master Replication:</strong> Multiple writable database instances</li>
+                                <li><strong>Sharding:</strong> Distributing data across multiple database instances</li>
+                                <li><strong>Quorum-based Systems:</strong> Ensuring consistency across distributed databases</li>
+                            </ul>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Stateless Design</h4>
+                            <p>Stateless applications are inherently more available because any instance can handle any request:</p>
+                            <ul>
+                                <li>No server-side session state</li>
+                                <li>State stored in external systems (databases, caches)</li>
+                                <li>Easier to scale horizontally</li>
+                                <li>Simplifies failover and recovery</li>
+                            </ul>
+                        </div>
+
+                        <h3>Availability vs. Other System Properties</h3>
+
+                        <div class="concept-card">
+                            <h4>Availability vs. Reliability</h4>
+                            <p>While related, availability and reliability are distinct concepts:</p>
+                            <ul>
+                                <li><strong>Availability:</strong> The proportion of time a system is operational</li>
+                                <li><strong>Reliability:</strong> The probability that a system performs correctly over a specific time period</li>
+                            </ul>
+                            <p>A system can be available but not reliable (e.g., it's up but producing incorrect results), or reliable but not highly available (e.g., it works correctly but has significant planned downtime).</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Availability vs. Consistency (CAP Theorem)</h4>
+                            <p>The CAP theorem states that in a distributed system, you can only have two of the following three properties:</p>
+                            <ul>
+                                <li><strong>Consistency:</strong> All nodes see the same data at the same time</li>
+                                <li><strong>Availability:</strong> Every request receives a response</li>
+                                <li><strong>Partition Tolerance:</strong> The system continues to operate despite network partitions</li>
+                            </ul>
+                            <p>In practice, partition tolerance is necessary for distributed systems, so the real trade-off is between consistency and availability.</p>
+                        </div>
+
+                        <h3>Real-World Availability Examples</h3>
+                        
+                        <div class="example-box">
+                            <h4>Amazon S3</h4>
+                            <p>Amazon S3 offers 99.99% availability SLA and is designed for 99.999999999% durability. This is achieved through:</p>
+                            <ul>
+                                <li>Data replication across multiple facilities</li>
+                                <li>Automatic failover mechanisms</li>
+                                <li>Redundant network paths</li>
+                                <li>Continuous monitoring and automated recovery</li>
+                            </ul>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>Google's Gmail</h4>
+                            <p>Gmail has maintained over 99.9% availability for years, despite serving billions of users. Google achieves this through:</p>
+                            <ul>
+                                <li>Distributed architecture across global data centers</li>
+                                <li>Automated failover and recovery systems</li>
+                                <li>Gradual rollouts of new features</li>
+                                <li>Extensive monitoring and alerting</li>
+                            </ul>
+                        </div>
+
+                        <h3>Best Practices for High Availability</h3>
+                        <ol>
+                            <li><strong>Eliminate single points of failure</strong> at all levels of the system</li>
+                            <li><strong>Implement redundancy</strong> for critical components</li>
+                            <li><strong>Design for automated failover</strong> without human intervention</li>
+                            <li><strong>Use health checks and monitoring</strong> to detect failures quickly</li>
+                            <li><strong>Implement circuit breakers</strong> to prevent cascading failures</li>
+                            <li><strong>Design for graceful degradation</strong> when components fail</li>
+                            <li><strong>Distribute across multiple regions</strong> for geographic redundancy</li>
+                            <li><strong>Automate deployment and recovery processes</strong> to minimize human error</li>
+                            <li><strong>Test failure scenarios regularly</strong> through chaos engineering</li>
+                            <li><strong>Define clear SLAs</strong> and measure availability metrics</li>
+                        </ol>
+
+                        <div class="next-steps">
+                            <h3>Next Steps</h3>
+                            <p>Now that you understand availability, explore related concepts that work together to create robust, high-performance systems:</p>
+                            <div class="button-group">
+                                <a href="performance.html" class="btn btn-primary">Learn About Performance</a>
+                                <a href="cap-theorem.html" class="btn btn-secondary">Explore the CAP Theorem</a>
+                            </div>
+                        </div>
+                    </article>
+                </main>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>System Design Mastery</h2>
+                    <p>Learn. Design. Implement.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3>Quick Links</h3>
+                        <ul>
+                            <li><a href="../../index.html">Home</a></li>
+                            <li><a href="../fundamentals/index.html">Fundamentals</a></li>
+                            <li><a href="../examples/index.html">Examples</a></li>
+                            <li><a href="../implementation/index.html">Implementation</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Resources</h3>
+                        <ul>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Cheat Sheets</a></li>
+                            <li><a href="#">Interview Prep</a></li>
+                            <li><a href="#">Community</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Connect</h3>
+                        <ul>
+                            <li><a href="#">GitHub</a></li>
+                            <li><a href="#">Twitter</a></li>
+                            <li><a href="#">LinkedIn</a></li>
+                            <li><a href="#">Contact Us</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 System Design Mastery. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../js/main.js"></script>
+</body>
+</html>

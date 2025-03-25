@@ -3,33 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Real-World Example: Uber System Design | System Design A-Z</title>
-    <meta name="description" content="Learn about the system design behind Uber's ride-sharing platform, including architecture, scalability, and technical challenges">
-    <link rel="stylesheet" href="../../css/normalize.css">
-    <link rel="stylesheet" href="../../css/styles.css">
-    <link rel="stylesheet" href="../../css/examples.css">
-    <link rel="stylesheet" href="../../css/content-page.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Uber System Design | System Design Mastery</title>
+    <link rel="stylesheet" href="../../css/modern-styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header class="site-header">
+    <header class="sub-header">
         <div class="container">
-            <div class="logo">
-                <a href="../../index.html">
-                    <span class="logo-text">System Design <span class="highlight">A-Z</span></span>
-                </a>
-            </div>
-            <nav class="main-nav">
-                <button class="menu-toggle" aria-label="Toggle menu">
-                    <span class="hamburger"></span>
-                </button>
+            <nav class="navbar">
+                <div class="logo">
+                    <h1>System Design Mastery</h1>
+                </div>
                 <ul class="nav-links">
                     <li><a href="../../index.html">Home</a></li>
                     <li><a href="../fundamentals/index.html">Fundamentals</a></li>
-                    <li><a href="../examples/index.html" class="active">Real-World Examples</a></li>
+                    <li><a href="../examples/index.html" class="active">Real-world Examples</a></li>
                     <li><a href="../implementation/index.html">Implementation</a></li>
                     <li><a href="../../index.html#about">About</a></li>
                 </ul>
@@ -37,428 +27,374 @@
         </div>
     </header>
 
-    <main class="content-page">
+    <section class="page-header">
         <div class="container">
-            <div class="content-wrapper">
+            <h1>Uber System Design</h1>
+            <p>How Uber built a global ride-sharing platform that handles millions of trips daily</p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <div class="content-grid">
                 <aside class="sidebar">
-                    <div class="sidebar-content">
-                        <h3>Real-World Examples</h3>
-                        <ul class="sidebar-nav">
-                            <li><a href="netflix.html">Netflix</a></li>
-                            <li><a href="uber.html" class="active">Uber</a></li>
-                            <li><a href="twitter.html">Twitter</a></li>
-                            <li><a href="instagram.html">Instagram</a></li>
-                            <li><a href="amazon.html">Amazon</a></li>
-                            <li><a href="google-search.html">Google Search</a></li>
-                            <li><a href="payment-system.html">Payment System</a></li>
-                            <li><a href="url-shortener.html">URL Shortener</a></li>
-                            <li><a href="chat-application.html">Chat Application</a></li>
-                            <li><a href="e-commerce.html">E-Commerce Platform</a></li>
-                        </ul>
-                        <div class="sidebar-cta">
-                            <h4>Ready to implement?</h4>
-                            <p>Check out our implementation guides</p>
-                            <a href="../implementation/index.html" class="btn btn-sm">Implementation Guides</a>
-                        </div>
-                    </div>
+                    <h3>Example Systems</h3>
+                    <ul class="sidebar-links">
+                        <li><a href="netflix.html">Netflix</a></li>
+                        <li><a href="uber.html" class="active">Uber</a></li>
+                        <li><a href="amazon.html">Amazon</a></li>
+                        <li><a href="twitter.html">Twitter</a></li>
+                        <li><a href="url-shortener.html">URL Shortener</a></li>
+                        <li><a href="distributed-cache.html">Distributed Cache</a></li>
+                        <li><a href="payment-system.html">Payment System</a></li>
+                        <li><a href="chat-application.html">Chat Application</a></li>
+                    </ul>
                 </aside>
-
-                <article class="main-content">
-                    <div class="content-header">
-                        <h1>Uber System Design</h1>
-                        <div class="content-meta">
-                            <span class="difficulty advanced">Advanced</span>
-                            <span class="reading-time">25 min read</span>
+                <main class="main-content">
+                    <article>
+                        <h2>Uber: Real-time Ride Matching at Global Scale</h2>
+                        <p>Uber revolutionized transportation by connecting riders with drivers through a mobile app. Operating in over 10,000 cities across 71 countries, Uber's platform handles millions of trips daily, processing real-time location data, payments, and matching algorithms. Let's explore how Uber's system architecture enables this complex, real-time marketplace to function at global scale.</p>
+                        
+                        <div class="info-box">
+                            <h3>Key System Design Challenges</h3>
+                            <p>Uber faces several unique challenges in its system design:</p>
+                            <ul>
+                                <li><strong>Real-time Matching:</strong> Connecting riders with the optimal drivers in seconds</li>
+                                <li><strong>Location Tracking:</strong> Processing millions of GPS updates per second</li>
+                                <li><strong>Dynamic Pricing:</strong> Adjusting prices based on real-time supply and demand</li>
+                                <li><strong>Global Scale:</strong> Operating across different countries with varying regulations</li>
+                                <li><strong>Low Latency:</strong> Providing responsive experiences despite network variability</li>
+                                <li><strong>High Reliability:</strong> Maintaining service during traffic spikes and outages</li>
+                            </ul>
                         </div>
-                    </div>
 
-                    <div class="content-body">
-                        <section class="content-section">
-                            <h2>Introduction to Uber</h2>
-                            <p>Uber is a technology platform that connects riders with drivers through a mobile application. Since its launch in 2009, Uber has expanded to operate in over 10,000 cities across more than 70 countries, handling millions of rides daily. The platform has also diversified into food delivery (Uber Eats), freight, and other services.</p>
-                            
-                            <p>From a system design perspective, Uber presents fascinating challenges due to its real-time nature, location-based matching algorithms, dynamic pricing, and massive scale. The system must handle millions of concurrent users while maintaining low latency and high reliability across diverse geographical regions with varying network conditions.</p>
-                            
-                            <div class="image-container">
-                                <div class="placeholder-image">
-                                    <p>Uber High-Level Architecture Diagram</p>
-                                </div>
-                                <div class="image-caption">Figure 1: High-level architecture of Uber's ride-sharing platform.</div>
+                        <div class="image-content-block">
+                            <div class="image-block">
+                                <img src="../../assets/images/uber-architecture.png" alt="Uber Architecture Overview">
                             </div>
-                        </section>
-
-                        <section class="content-section">
-                            <h2>System Requirements</h2>
-                            
-                            <h3>Functional Requirements</h3>
-                            <ul>
-                                <li><strong>Rider Features</strong>: Users should be able to request rides, specify pickup and drop-off locations, track driver location in real-time, view estimated arrival time and fare, and pay for rides.</li>
-                                <li><strong>Driver Features</strong>: Drivers should be able to accept or reject ride requests, receive navigation to pickup and drop-off locations, track earnings, and get paid.</li>
-                                <li><strong>Matching</strong>: The system should efficiently match riders with nearby available drivers.</li>
-                                <li><strong>Routing</strong>: Calculate optimal routes between pickup and drop-off locations, considering traffic conditions.</li>
-                                <li><strong>Pricing</strong>: Implement dynamic pricing based on demand, supply, distance, time, and other factors.</li>
-                                <li><strong>Payments</strong>: Process payments securely between riders and drivers.</li>
-                                <li><strong>Notifications</strong>: Send real-time updates to both riders and drivers.</li>
-                                <li><strong>Rating System</strong>: Allow riders and drivers to rate each other after trips.</li>
-                            </ul>
-                            
-                            <h3>Non-Functional Requirements</h3>
-                            <ul>
-                                <li><strong>Scalability</strong>: The system must handle millions of concurrent users and rides.</li>
-                                <li><strong>Availability</strong>: High availability is critical for a real-time service (target of 99.99% uptime).</li>
-                                <li><strong>Low Latency</strong>: Real-time operations like matching and location updates must have minimal delay.</li>
-                                <li><strong>Reliability</strong>: The system should be resilient to failures and able to recover quickly.</li>
-                                <li><strong>Consistency</strong>: Data must be consistent across all system components.</li>
-                                <li><strong>Security</strong>: Protect user data, payment information, and prevent fraud.</li>
-                                <li><strong>Global Distribution</strong>: Support for users across different geographical regions with varying network infrastructures.</li>
-                            </ul>
-                        </section>
-
-                        <section class="content-section">
-                            <h2>High-Level Architecture</h2>
-                            <p>Uber's architecture is a complex distributed system composed of multiple services. At a high level, it can be divided into several key components:</p>
-                            
-                            <h3>Client Applications</h3>
-                            <p>Uber has separate applications for riders and drivers:</p>
-                            <ul>
-                                <li><strong>Rider App</strong>: Mobile application for iOS and Android that allows users to request rides.</li>
-                                <li><strong>Driver App</strong>: Mobile application for iOS and Android that allows drivers to accept ride requests and navigate to destinations.</li>
-                                <li><strong>Web Application</strong>: Web interface for account management and ride history.</li>
-                            </ul>
-                            
-                            <h3>API Gateway</h3>
-                            <p>The API Gateway serves as the entry point for all client requests, handling:</p>
-                            <ul>
-                                <li>Authentication and authorization</li>
-                                <li>Request routing to appropriate services</li>
-                                <li>Rate limiting and throttling</li>
-                                <li>Protocol translation</li>
-                                <li>Request/response transformation</li>
-                            </ul>
-                            
-                            <h3>Core Services</h3>
-                            <p>These services handle the primary business logic:</p>
-                            <ul>
-                                <li><strong>User Service</strong>: Manages user accounts, profiles, and authentication for both riders and drivers.</li>
-                                <li><strong>Trip Service</strong>: Handles the lifecycle of a trip from request to completion.</li>
-                                <li><strong>Matching Service</strong>: Matches riders with nearby available drivers based on various factors.</li>
-                                <li><strong>Pricing Service</strong>: Calculates fare estimates and implements surge pricing algorithms.</li>
-                                <li><strong>Payment Service</strong>: Processes payments, manages payment methods, and handles driver payouts.</li>
-                                <li><strong>Rating Service</strong>: Manages the rating system for both riders and drivers.</li>
-                            </ul>
-                            
-                            <h3>Location and Mapping Services</h3>
-                            <p>These services handle the geospatial aspects of the platform:</p>
-                            <ul>
-                                <li><strong>Geospatial Service</strong>: Tracks and manages the real-time location of drivers and riders.</li>
-                                <li><strong>Routing Service</strong>: Calculates optimal routes between locations, considering traffic and other factors.</li>
-                                <li><strong>ETA Service</strong>: Estimates time of arrival for drivers to pickup locations and for trips to destinations.</li>
-                                <li><strong>Geocoding Service</strong>: Converts addresses to geographic coordinates and vice versa.</li>
-                            </ul>
-                            
-                            <h3>Communication Services</h3>
-                            <p>These services handle communication between the platform and users:</p>
-                            <ul>
-                                <li><strong>Notification Service</strong>: Sends push notifications, SMS, and in-app messages to users.</li>
-                                <li><strong>Real-time Service</strong>: Manages WebSocket connections for real-time updates like driver location.</li>
-                                <li><strong>Email Service</strong>: Sends transactional and marketing emails to users.</li>
-                            </ul>
-                            
-                            <h3>Data Platform</h3>
-                            <p>Uber relies heavily on data for decision-making and operations:</p>
-                            <ul>
-                                <li><strong>Data Collection</strong>: Gathers data from user interactions, trips, and system operations.</li>
-                                <li><strong>Data Processing</strong>: Processes and analyzes the collected data using big data technologies.</li>
-                                <li><strong>Machine Learning</strong>: Powers demand prediction, ETA calculations, fraud detection, and other features.</li>
-                                <li><strong>Analytics</strong>: Provides business intelligence and operational insights.</li>
-                            </ul>
-                        </section>
-
-                        <section class="content-section">
-                            <h2>Key Components Deep Dive</h2>
-                            
-                            <h3>Geospatial System</h3>
-                            <p>The geospatial system is one of the most critical components of Uber's architecture. It needs to efficiently track the location of millions of drivers in real-time and find the nearest available drivers for a ride request.</p>
-                            
-                            <div class="image-container">
-                                <div class="placeholder-image">
-                                    <p>Uber Geospatial System Architecture</p>
-                                </div>
-                                <div class="image-caption">Figure 2: Architecture of Uber's geospatial system.</div>
+                            <div class="content-block">
+                                <h3>Uber Architecture Overview</h3>
+                                <p>Uber's architecture can be divided into several major components:</p>
+                                <ol>
+                                    <li><strong>Mobile Apps:</strong> Rider and driver applications</li>
+                                    <li><strong>API Gateway:</strong> Entry point for all client requests</li>
+                                    <li><strong>Core Services:</strong> Microservices handling business logic</li>
+                                    <li><strong>Dispatch System:</strong> Matches riders with drivers</li>
+                                    <li><strong>Geospatial Services:</strong> Handles location data and mapping</li>
+                                    <li><strong>Data Platform:</strong> Processes and analyzes vast amounts of data</li>
+                                </ol>
+                                <p>The diagram illustrates how these components interact to provide the seamless Uber experience.</p>
                             </div>
-                            
-                            <p><strong>Key aspects of the geospatial system:</strong></p>
-                            <ul>
-                                <li><strong>Geospatial Indexing</strong>: Uber uses specialized geospatial indexes to efficiently query for nearby drivers. They've developed a custom H3 hexagonal hierarchical geospatial indexing system.</li>
-                                <li><strong>Quadtree/Geohash</strong>: These data structures divide the world into hierarchical grid cells, allowing for efficient proximity searches.</li>
-                                <li><strong>Location Tracking</strong>: Driver locations are continuously updated and stored in a distributed database optimized for geospatial queries.</li>
-                                <li><strong>Geofencing</strong>: Defines virtual boundaries around real-world areas for features like airport queues, city boundaries, and no-pickup zones.</li>
-                            </ul>
-                            
-                            <p>This system allows Uber to quickly find the nearest drivers to a rider, typically in milliseconds, even with millions of drivers online simultaneously.</p>
-                            
-                            <h3>Matching System</h3>
-                            <p>The matching system is responsible for pairing riders with drivers. It's not as simple as just finding the nearest driver; it considers multiple factors to optimize the overall marketplace efficiency.</p>
-                            
-                            <p><strong>Matching algorithm considerations:</strong></p>
-                            <ul>
-                                <li><strong>Proximity</strong>: Distance between rider and driver.</li>
-                                <li><strong>ETA</strong>: Estimated time for the driver to reach the pickup location.</li>
-                                <li><strong>Driver Preferences</strong>: Some drivers may prefer certain types of trips or areas.</li>
-                                <li><strong>Rider Preferences</strong>: Vehicle type, accessibility requirements, etc.</li>
-                                <li><strong>Driver Rating</strong>: Higher-rated drivers may be prioritized.</li>
-                                <li><strong>Batching</strong>: In some cases, multiple ride requests may be batched together (like UberPool).</li>
-                                <li><strong>Market Efficiency</strong>: Balancing individual matches with overall marketplace health.</li>
-                            </ul>
-                            
-                            <p>The matching system must make these decisions in real-time, often within milliseconds, to provide a seamless experience for both riders and drivers.</p>
-                            
-                            <h3>Pricing System</h3>
-                            <p>Uber's dynamic pricing system (often called "surge pricing") adjusts prices based on supply and demand. This helps balance the marketplace by incentivizing more drivers to come online during high-demand periods.</p>
-                            
-                            <p><strong>Key components of the pricing system:</strong></p>
-                            <ul>
-                                <li><strong>Base Fare Calculation</strong>: Determines the standard fare based on distance, time, and service type.</li>
-                                <li><strong>Demand Prediction</strong>: Uses historical data and machine learning to predict demand patterns.</li>
-                                <li><strong>Supply Monitoring</strong>: Tracks the number of available drivers in different areas.</li>
-                                <li><strong>Surge Multiplier</strong>: Calculates the price multiplier based on the supply-demand imbalance.</li>
-                                <li><strong>Geospatial Segmentation</strong>: Applies different surge multipliers to different geographical areas.</li>
-                                <li><strong>Time-based Variation</strong>: Adjusts pricing based on time of day, day of week, and special events.</li>
-                            </ul>
-                            
-                            <p>The pricing system must be both responsive to real-time conditions and stable enough to avoid wild fluctuations that could confuse users.</p>
-                        </section>
+                        </div>
 
-                        <section class="content-section">
-                            <h2>Scalability and Performance Optimizations</h2>
-                            
-                            <h3>Microservices Architecture</h3>
-                            <p>Uber has evolved from a monolithic architecture to a microservices-based architecture to handle its massive scale. This approach offers several benefits:</p>
-                            <ul>
-                                <li><strong>Independent Scaling</strong>: Each service can be scaled based on its specific load patterns.</li>
-                                <li><strong>Technology Diversity</strong>: Different services can use different technologies based on their requirements.</li>
-                                <li><strong>Team Autonomy</strong>: Small teams can own and operate their services independently.</li>
-                                <li><strong>Fault Isolation</strong>: Failures are contained within specific services rather than affecting the entire system.</li>
-                                <li><strong>Incremental Deployment</strong>: Services can be updated independently with minimal risk.</li>
-                            </ul>
-                            
-                            <h3>Database Scaling</h3>
-                            <p>Uber uses a combination of database technologies to handle different types of data and access patterns:</p>
-                            <ul>
-                                <li><strong>MySQL</strong>: For transactional data that requires strong consistency.</li>
-                                <li><strong>Schemaless</strong>: Uber's custom sharded, replicated, and scalable datastore built on top of MySQL.</li>
-                                <li><strong>Cassandra</strong>: For high-volume, distributed data storage with no single point of failure.</li>
-                                <li><strong>Redis</strong>: For caching and real-time data processing.</li>
-                                <li><strong>Elasticsearch</strong>: For search functionality and log analysis.</li>
-                                <li><strong>Custom Geospatial Databases</strong>: For efficient location-based queries.</li>
-                            </ul>
-                            
-                            <p>Uber has also developed several tools to manage database scaling:</p>
-                            <ul>
-                                <li><strong>Database Sharding</strong>: Horizontally partitioning data across multiple database instances.</li>
-                                <li><strong>Read Replicas</strong>: Distributing read queries across multiple database replicas.</li>
-                                <li><strong>Connection Pooling</strong>: Efficiently managing database connections to reduce overhead.</li>
-                                <li><strong>Query Optimization</strong>: Tuning queries and database schemas for performance.</li>
-                            </ul>
-                            
-                            <h3>Caching Strategies</h3>
-                            <p>Caching is extensively used throughout Uber's architecture to reduce database load and improve response times:</p>
-                            <ul>
-                                <li><strong>Application-level Caching</strong>: Caching frequently accessed data in application memory.</li>
-                                <li><strong>Distributed Caching</strong>: Using Redis or Memcached for shared caching across service instances.</li>
-                                <li><strong>CDN</strong>: Caching static assets like images and JavaScript files at the edge.</li>
-                                <li><strong>Cache Invalidation</strong>: Carefully managing cache updates to ensure data consistency.</li>
-                            </ul>
-                            
-                            <h3>Asynchronous Processing</h3>
-                            <p>Not all operations need to be processed synchronously. Uber uses asynchronous processing for many tasks:</p>
-                            <ul>
-                                <li><strong>Message Queues</strong>: Using Kafka for reliable message delivery between services.</li>
-                                <li><strong>Event-driven Architecture</strong>: Services publish events that other services can subscribe to.</li>
-                                <li><strong>Background Jobs</strong>: Processing non-critical tasks asynchronously to improve response times.</li>
-                                <li><strong>Batch Processing</strong>: Aggregating and processing data in batches for efficiency.</li>
-                            </ul>
-                        </section>
+                        <h3>Uber's Microservices Architecture</h3>
 
-                        <section class="content-section">
-                            <h2>Fault Tolerance and Reliability</h2>
-                            
-                            <h3>Service Redundancy</h3>
-                            <p>Uber ensures high availability through multiple layers of redundancy:</p>
+                        <div class="concept-card">
+                            <h4>Evolution from Monolith to Microservices</h4>
+                            <p>Uber started with a monolithic architecture but quickly transitioned to microservices to support rapid growth:</p>
                             <ul>
-                                <li><strong>Multi-region Deployment</strong>: Services are deployed across multiple geographical regions.</li>
-                                <li><strong>Load Balancing</strong>: Distributes traffic across multiple service instances.</li>
-                                <li><strong>Auto-scaling</strong>: Automatically adjusts the number of service instances based on load.</li>
-                                <li><strong>Health Checking</strong>: Continuously monitors service health and removes unhealthy instances.</li>
+                                <li>Initial monolith became difficult to scale and maintain</li>
+                                <li>Gradual migration to microservices architecture</li>
+                                <li>Now operates thousands of microservices</li>
+                                <li>Services organized around business domains</li>
                             </ul>
-                            
-                            <h3>Circuit Breakers</h3>
-                            <p>Uber uses the circuit breaker pattern to prevent cascading failures:</p>
-                            <ul>
-                                <li>When a service dependency starts failing, the circuit breaker "trips" and stops sending requests to that dependency.</li>
-                                <li>Fallback mechanisms provide alternative responses when a dependency is unavailable.</li>
-                                <li>The circuit breaker periodically allows some requests through to check if the dependency has recovered.</li>
-                            </ul>
-                            
-                            <h3>Rate Limiting and Throttling</h3>
-                            <p>To protect services from being overwhelmed, Uber implements rate limiting at various levels:</p>
-                            <ul>
-                                <li><strong>API Gateway</strong>: Limits the number of requests from each client.</li>
-                                <li><strong>Service-to-Service</strong>: Limits the rate at which one service can call another.</li>
-                                <li><strong>Database</strong>: Limits the number of queries to prevent database overload.</li>
-                                <li><strong>Adaptive Throttling</strong>: Dynamically adjusts limits based on system load.</li>
-                            </ul>
-                            
-                            <h3>Disaster Recovery</h3>
-                            <p>Uber has comprehensive disaster recovery plans to handle major outages:</p>
-                            <ul>
-                                <li><strong>Data Backup</strong>: Regular backups of critical data across multiple regions.</li>
-                                <li><strong>Regional Failover</strong>: Ability to redirect traffic to different regions if one region experiences issues.</li>
-                                <li><strong>Recovery Procedures</strong>: Documented procedures for recovering from different types of failures.</li>
-                                <li><strong>Regular Testing</strong>: Simulating failures to ensure recovery mechanisms work as expected.</li>
-                            </ul>
-                        </section>
+                            <p>This transition allowed Uber to scale its engineering organization and technology stack to support global operations.</p>
+                        </div>
 
-                        <section class="content-section">
-                            <h2>Security Considerations</h2>
-                            
-                            <h3>User Authentication and Authorization</h3>
-                            <p>Securing user accounts is critical for both riders and drivers:</p>
+                        <div class="concept-card">
+                            <h4>Key Uber Microservices</h4>
+                            <p>Some of the critical microservices in Uber's architecture include:</p>
                             <ul>
-                                <li><strong>Multi-factor Authentication</strong>: Additional verification beyond passwords.</li>
-                                <li><strong>Session Management</strong>: Secure handling of user sessions across devices.</li>
-                                <li><strong>Role-based Access Control</strong>: Different permissions for different user types.</li>
-                                <li><strong>OAuth/OpenID Connect</strong>: Standardized protocols for authentication and authorization.</li>
+                                <li><strong>Trip Service:</strong> Manages the lifecycle of a trip</li>
+                                <li><strong>Driver Service:</strong> Handles driver information and availability</li>
+                                <li><strong>Rider Service:</strong> Manages rider profiles and preferences</li>
+                                <li><strong>Dispatch Service:</strong> Matches riders with drivers</li>
+                                <li><strong>Maps Service:</strong> Provides routing and navigation</li>
+                                <li><strong>Pricing Service:</strong> Calculates trip costs and surge pricing</li>
+                                <li><strong>Payment Service:</strong> Processes payments and handles financial transactions</li>
+                                <li><strong>Notification Service:</strong> Sends push notifications and SMS</li>
                             </ul>
-                            
-                            <h3>Payment Security</h3>
-                            <p>Protecting payment information is essential for user trust:</p>
-                            <ul>
-                                <li><strong>PCI Compliance</strong>: Adherence to Payment Card Industry standards.</li>
-                                <li><strong>Tokenization</strong>: Replacing sensitive payment data with non-sensitive tokens.</li>
-                                <li><strong>Encryption</strong>: Encrypting payment data both in transit and at rest.</li>
-                                <li><strong>Fraud Detection</strong>: Using machine learning to identify and prevent fraudulent transactions.</li>
-                            </ul>
-                            
-                            <h3>Data Privacy</h3>
-                            <p>Protecting user data is both a legal requirement and a trust issue:</p>
-                            <ul>
-                                <li><strong>Data Minimization</strong>: Collecting only necessary data.</li>
-                                <li><strong>Access Controls</strong>: Limiting who can access user data within the organization.</li>
-                                <li><strong>Anonymization</strong>: Removing personally identifiable information when possible.</li>
-                                <li><strong>Compliance</strong>: Adherence to regulations like GDPR, CCPA, etc.</li>
-                            </ul>
-                            
-                            <h3>API Security</h3>
-                            <p>Securing the APIs that connect clients to the backend:</p>
-                            <ul>
-                                <li><strong>API Keys</strong>: Unique identifiers for API clients.</li>
-                                <li><strong>JWT Tokens</strong>: Secure tokens for authentication and authorization.</li>
-                                <li><strong>HTTPS</strong>: Encrypted communication between clients and servers.</li>
-                                <li><strong>Input Validation</strong>: Preventing injection attacks and other vulnerabilities.</li>
-                                <li><strong>API Gateway Security</strong>: Centralized security controls at the API gateway.</li>
-                            </ul>
-                        </section>
+                            <p>Each service is independently deployable and scalable, allowing Uber to evolve different parts of its system at different rates.</p>
+                        </div>
 
-                        <section class="content-section">
-                            <h2>Evolution and Lessons Learned</h2>
-                            
-                            <h3>From Monolith to Microservices</h3>
-                            <p>Uber's architecture has evolved significantly since its inception:</p>
+                        <div class="concept-card">
+                            <h4>Service Communication</h4>
+                            <p>Uber uses multiple communication patterns between services:</p>
                             <ul>
-                                <li><strong>2009-2014</strong>: Started with a monolithic architecture that became increasingly difficult to scale and maintain.</li>
-                                <li><strong>2014-2016</strong>: Began the transition to microservices to address scaling challenges.</li>
-                                <li><strong>2016-present</strong>: Continued refinement of the microservices architecture, with hundreds of services now powering the platform.</li>
+                                <li><strong>Synchronous Communication:</strong> REST and gRPC for direct service-to-service calls</li>
+                                <li><strong>Asynchronous Communication:</strong> Kafka for event-driven architecture</li>
+                                <li><strong>Service Discovery:</strong> Custom solution called Hyperbahn (based on TChannel)</li>
+                                <li><strong>API Gateway:</strong> Routes external requests to appropriate services</li>
                             </ul>
-                            
-                            <p>This transition wasn't without challenges. Uber faced issues with service discovery, inter-service communication, and maintaining data consistency across services. They developed several tools to address these challenges, including:</p>
-                            <ul>
-                                <li><strong>Ringpop</strong>: A library for building distributed applications.</li>
-                                <li><strong>TChannel</strong>: A network multiplexing and framing protocol for RPC.</li>
-                                <li><strong>Jaeger</strong>: A distributed tracing system for monitoring microservices.</li>
-                            </ul>
-                            
-                            <h3>Scaling Challenges</h3>
-                            <p>As Uber grew from a small startup to a global company, they faced numerous scaling challenges:</p>
-                            <ul>
-                                <li><strong>Database Scaling</strong>: The initial MySQL database couldn't handle the growing load, leading to the development of Schemaless and adoption of other database technologies.</li>
-                                <li><strong>Geospatial Scaling</strong>: Traditional geospatial indexes couldn't handle millions of moving objects, leading to the development of custom solutions.</li>
-                                <li><strong>Global Expansion</strong>: Operating in different countries introduced challenges with latency, regulations, and localization.</li>
-                                <li><strong>Peak Load Handling</strong>: Managing traffic spikes during events, holidays, and bad weather.</li>
-                            </ul>
-                            
-                            <h3>Key Lessons</h3>
-                            <p>Uber's journey offers several valuable lessons for system designers:</p>
-                            <ul>
-                                <li><strong>Start Simple, Evolve as Needed</strong>: Begin with a simpler architecture and evolve as requirements and scale demand.</li>
-                                <li><strong>Invest in Observability</strong>: Comprehensive monitoring, logging, and tracing are essential for understanding and troubleshooting distributed systems.</li>
-                                <li><strong>Embrace Failure</strong>: Design systems expecting that components will fail, and ensure the system can handle these failures gracefully.</li>
-                                <li><strong>Data Consistency Tradeoffs</strong>: In distributed systems, there are often tradeoffs between consistency, availability, and partition tolerance (CAP theorem).</li>
-                                <li><strong>Local Optimization vs. Global Optimization</strong>: Sometimes optimizing individual components can lead to suboptimal overall system performance.</li>
-                            </ul>
-                        </section>
+                            <p>This combination of communication patterns allows Uber to balance performance, reliability, and development velocity.</p>
+                        </div>
 
-                        <section class="content-section">
-                            <h2>Conclusion</h2>
-                            <p>Uber's system design represents a fascinating case study in building large-scale, real-time, location-based services. Their architecture has evolved to meet the challenges of connecting millions of riders and drivers worldwide, with a focus on reliability, performance, and user experience.</p>
-                            
-                            <p>Key takeaways from Uber's architecture include:</p>
+                        <h3>Geospatial Systems</h3>
+
+                        <div class="concept-card">
+                            <h4>Geospatial Indexing</h4>
+                            <p>Uber's geospatial system is critical for matching riders with nearby drivers:</p>
                             <ul>
-                                <li>The importance of efficient geospatial systems for location-based services</li>
-                                <li>The benefits of a microservices architecture for scalability and team autonomy</li>
-                                <li>The complexity of real-time matching algorithms that balance multiple factors</li>
-                                <li>The challenges of maintaining data consistency in a distributed system</li>
-                                <li>The critical role of fault tolerance and reliability in a service that people depend on</li>
+                                <li><strong>Quadtrees:</strong> Divides geographic areas into hierarchical quadrants</li>
+                                <li><strong>H3:</strong> Hexagonal hierarchical geospatial indexing system</li>
+                                <li><strong>Geohashing:</strong> Encodes geographic coordinates into short strings</li>
+                                <li><strong>Real-time Indexing:</strong> Continuously updates driver locations</li>
                             </ul>
-                            
-                            <p>By studying Uber's approach to system design, engineers can gain insights applicable to a wide range of distributed systems, particularly those involving real-time interactions, location-based features, and marketplace dynamics.</p>
-                        </section>
+                            <p>These indexing systems allow Uber to efficiently query for nearby drivers when a ride is requested.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Marketplace and Dispatch System</h4>
+                            <p>Uber's dispatch system matches riders with drivers using sophisticated algorithms:</p>
+                            <ul>
+                                <li><strong>Supply-Demand Matching:</strong> Considers driver proximity, ETA, and other factors</li>
+                                <li><strong>Batching:</strong> Groups nearby requests for efficiency (e.g., UberPool)</li>
+                                <li><strong>Optimization:</strong> Minimizes wait times and maximizes driver utilization</li>
+                                <li><strong>Machine Learning:</strong> Predicts ETAs, optimal routes, and rider preferences</li>
+                            </ul>
+                            <p>The dispatch system processes millions of location updates and makes matching decisions in milliseconds.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Maps and Routing</h4>
+                            <p>Uber has built sophisticated mapping and routing capabilities:</p>
+                            <ul>
+                                <li><strong>Custom Maps:</strong> Developed proprietary mapping data in some regions</li>
+                                <li><strong>ETA Prediction:</strong> Machine learning models to predict travel times</li>
+                                <li><strong>Route Optimization:</strong> Algorithms to find optimal routes considering traffic</li>
+                                <li><strong>Geocoding:</strong> Converting addresses to coordinates and vice versa</li>
+                            </ul>
+                            <p>Accurate mapping and routing are essential for providing reliable ETAs and efficient trips.</p>
+                        </div>
+
+                        <h3>Data Storage and Processing</h3>
+
+                        <div class="concept-card">
+                            <h4>Database Systems</h4>
+                            <p>Uber uses a variety of database technologies for different needs:</p>
+                            <ul>
+                                <li><strong>MySQL:</strong> Primary database for transactional data, heavily sharded</li>
+                                <li><strong>Schemaless:</strong> Custom layer on top of MySQL for flexibility</li>
+                                <li><strong>Cassandra:</strong> For high-throughput, low-latency storage</li>
+                                <li><strong>Redis:</strong> In-memory data store for caching and real-time features</li>
+                                <li><strong>Elasticsearch:</strong> For search functionality</li>
+                                <li><strong>PostgreSQL with PostGIS:</strong> For geospatial data</li>
+                            </ul>
+                            <p>Uber's database architecture has evolved to handle extreme scale, with custom sharding and replication solutions.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Real-time Data Processing</h4>
+                            <p>Uber processes massive amounts of real-time data:</p>
+                            <ul>
+                                <li><strong>Kafka:</strong> Handles trillions of messages per day</li>
+                                <li><strong>Flink:</strong> Stream processing for real-time analytics</li>
+                                <li><strong>Spark:</strong> Batch processing for analytics</li>
+                                <li><strong>AresDB:</strong> Real-time analytics database developed by Uber</li>
+                                <li><strong>Hudi:</strong> Data lake storage for analytics</li>
+                            </ul>
+                            <p>This real-time data processing infrastructure enables features like dynamic pricing and fraud detection.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Data Platform</h4>
+                            <p>Uber's data platform supports analytics and machine learning:</p>
+                            <ul>
+                                <li><strong>Michelangelo:</strong> Machine learning platform for model training and deployment</li>
+                                <li><strong>Databook:</strong> Data discovery and metadata management</li>
+                                <li><strong>Presto:</strong> SQL query engine for data analysis</li>
+                                <li><strong>M3:</strong> Metrics platform for monitoring</li>
+                                <li><strong>Jaeger:</strong> Distributed tracing system</li>
+                            </ul>
+                            <p>This platform enables data-driven decision making across the organization.</p>
+                        </div>
+
+                        <h3>Reliability and Scalability</h3>
+
+                        <div class="concept-card">
+                            <h4>Fault Tolerance</h4>
+                            <p>Uber implements several strategies for fault tolerance:</p>
+                            <ul>
+                                <li><strong>Multi-region Deployment:</strong> Services deployed across multiple regions</li>
+                                <li><strong>Circuit Breakers:</strong> Prevent cascading failures</li>
+                                <li><strong>Rate Limiting:</strong> Protects services from overload</li>
+                                <li><strong>Fallbacks:</strong> Graceful degradation when services fail</li>
+                                <li><strong>Chaos Testing:</strong> Deliberately introducing failures to test resilience</li>
+                            </ul>
+                            <p>These strategies ensure that Uber's platform remains available even during partial outages.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Scalability Approaches</h4>
+                            <p>Uber scales its systems to handle global demand:</p>
+                            <ul>
+                                <li><strong>Horizontal Scaling:</strong> Adding more instances of services</li>
+                                <li><strong>Database Sharding:</strong> Partitioning data across multiple databases</li>
+                                <li><strong>Caching:</strong> Extensive use of caching to reduce database load</li>
+                                <li><strong>Asynchronous Processing:</strong> Moving non-critical operations to background jobs</li>
+                                <li><strong>Load Shedding:</strong> Dropping less important requests during peak load</li>
+                            </ul>
+                            <p>These approaches allow Uber to handle traffic spikes, such as New Year's Eve, when demand can increase by 10x.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Monitoring and Observability</h4>
+                            <p>Uber has built comprehensive monitoring systems:</p>
+                            <ul>
+                                <li><strong>M3:</strong> Time-series metrics database</li>
+                                <li><strong>Jaeger:</strong> Distributed tracing</li>
+                                <li><strong>Argos:</strong> End-to-end request monitoring</li>
+                                <li><strong>Real-time Alerting:</strong> Automated alerts for anomalies</li>
+                                <li><strong>Dashboards:</strong> Visualizations for system health</li>
+                            </ul>
+                            <p>These tools provide visibility into the complex distributed system, enabling quick identification and resolution of issues.</p>
+                        </div>
+
+                        <h3>Mobile Applications</h3>
+
+                        <div class="concept-card">
+                            <h4>Rider and Driver Apps</h4>
+                            <p>Uber's mobile applications are optimized for their specific use cases:</p>
+                            <ul>
+                                <li><strong>Rider App:</strong> Focused on ease of requesting rides and tracking</li>
+                                <li><strong>Driver App:</strong> Optimized for navigation and trip management</li>
+                                <li><strong>Offline Capabilities:</strong> Functions with intermittent connectivity</li>
+                                <li><strong>Battery Efficiency:</strong> Optimized location tracking to preserve battery</li>
+                                <li><strong>Cross-platform Development:</strong> Shared code between iOS and Android</li>
+                            </ul>
+                            <p>The apps are designed to work reliably in various network conditions and device capabilities.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Mobile Architecture</h4>
+                            <p>Uber's mobile architecture has evolved to support rapid development:</p>
+                            <ul>
+                                <li><strong>RIBs (Router, Interactor, Builder):</strong> Architecture pattern for mobile apps</li>
+                                <li><strong>Modularization:</strong> Breaking the app into independent modules</li>
+                                <li><strong>Feature Flags:</strong> Controlling feature rollout</li>
+                                <li><strong>Experimentation Framework:</strong> A/B testing in the app</li>
+                                <li><strong>Client-side Caching:</strong> Reducing network requests</li>
+                            </ul>
+                            <p>This architecture allows hundreds of engineers to work on the apps simultaneously without conflicts.</p>
+                        </div>
+
+                        <h3>Key System Design Lessons from Uber</h3>
+                        
+                        <div class="example-box">
+                            <h4>Domain-Driven Microservices</h4>
+                            <p>Uber's microservices architecture demonstrates the benefits of domain-driven design:</p>
+                            <ul>
+                                <li>Services aligned with business domains improve team autonomy</li>
+                                <li>Clear service boundaries reduce coordination overhead</li>
+                                <li>Independent scaling of different components based on demand</li>
+                                <li>Technology choices tailored to specific service requirements</li>
+                            </ul>
+                            <p>This approach has allowed Uber to scale its engineering organization alongside its technology.</p>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>Geospatial System Design</h4>
+                            <p>Uber's geospatial systems offer valuable lessons:</p>
+                            <ul>
+                                <li>Specialized indexing structures are crucial for location-based queries</li>
+                                <li>Balancing accuracy with performance is essential</li>
+                                <li>Hierarchical approaches (like quadtrees) enable efficient queries at different scales</li>
+                                <li>Real-time updates require careful system design</li>
+                            </ul>
+                            <p>These principles apply to any system that needs to process and query location data efficiently.</p>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>Polyglot Persistence</h4>
+                            <p>Uber's database strategy shows the value of using the right tool for each job:</p>
+                            <ul>
+                                <li>Different data storage technologies for different access patterns</li>
+                                <li>Custom solutions (like Schemaless) when existing tools don't meet needs</li>
+                                <li>Careful sharding and replication strategies for scale</li>
+                                <li>Separation of transactional and analytical workloads</li>
+                            </ul>
+                            <p>This approach allows each part of the system to use the most appropriate storage solution.</p>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>Real-time Data Processing</h4>
+                            <p>Uber's data infrastructure demonstrates how to handle real-time data at scale:</p>
+                            <ul>
+                                <li>Event-driven architecture for decoupling and scalability</li>
+                                <li>Stream processing for real-time insights</li>
+                                <li>Batch processing for deeper analytics</li>
+                                <li>Custom analytics databases for specific query patterns</li>
+                            </ul>
+                            <p>These patterns enable real-time features like dynamic pricing and fraud detection.</p>
+                        </div>
+
+                        <h3>Implementation Considerations</h3>
+                        <ol>
+                            <li><strong>Start with clear domain boundaries</strong> before implementing microservices</li>
+                            <li><strong>Invest in service discovery and API gateway</strong> infrastructure early</li>
+                            <li><strong>Choose appropriate communication patterns</strong> (sync vs. async) based on use case</li>
+                            <li><strong>Design geospatial indexes</strong> based on query patterns and scale</li>
+                            <li><strong>Implement comprehensive monitoring and tracing</strong> from the beginning</li>
+                            <li><strong>Plan for database sharding</strong> before hitting scaling limits</li>
+                            <li><strong>Build resilience with circuit breakers and fallbacks</strong></li>
+                            <li><strong>Optimize mobile apps for offline operation</strong> and battery efficiency</li>
+                            <li><strong>Implement feature flags</strong> for controlled rollouts</li>
+                            <li><strong>Design for graceful degradation</strong> during partial system failures</li>
+                        </ol>
 
                         <div class="next-steps">
                             <h3>Next Steps</h3>
-                            <div class="next-links">
-                                <a href="twitter.html" class="next-link">
-                                    <span class="next-text">Next Example</span>
-                                    <span class="next-title">Twitter System Design</span>
-                                    <i class="fas fa-arrow-right"></i>
-                                </a>
+                            <p>Explore other real-world system design examples or learn how to implement specific components:</p>
+                            <div class="button-group">
+                                <a href="amazon.html" class="btn btn-primary">Explore Amazon's System Design</a>
+                                <a href="../implementation/geospatial-indexing.html" class="btn btn-secondary">Learn Geospatial Indexing Implementation</a>
                             </div>
                         </div>
-                    </div>
-                </article>
+                    </article>
+                </main>
             </div>
         </div>
-    </main>
+    </section>
 
-    <footer class="site-footer">
+    <footer class="footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-logo">
-                    <span class="logo-text">System Design <span class="highlight">A-Z</span></span>
+                    <h2>System Design Mastery</h2>
+                    <p>Learn. Design. Implement.</p>
                 </div>
                 <div class="footer-links">
-                    <div class="footer-nav">
-                        <h4>Navigation</h4>
+                    <div class="footer-column">
+                        <h3>Quick Links</h3>
                         <ul>
                             <li><a href="../../index.html">Home</a></li>
                             <li><a href="../fundamentals/index.html">Fundamentals</a></li>
-                            <li><a href="../examples/index.html">Real-World Examples</a></li>
+                            <li><a href="../examples/index.html">Examples</a></li>
                             <li><a href="../implementation/index.html">Implementation</a></li>
                         </ul>
                     </div>
-                    <div class="footer-resources">
-                        <h4>Resources</h4>
+                    <div class="footer-column">
+                        <h3>Resources</h3>
                         <ul>
-                            <li><a href="#">Glossary</a></li>
-                            <li><a href="#">Recommended Books</a></li>
-                            <li><a href="#">Tools & Resources</a></li>
-                            <li><a href="#">FAQ</a></li>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Cheat Sheets</a></li>
+                            <li><a href="#">Interview Prep</a></li>
+                            <li><a href="#">Community</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Connect</h3>
+                        <ul>
+                            <li><a href="#">GitHub</a></li>
+                            <li><a href="#">Twitter</a></li>
+                            <li><a href="#">LinkedIn</a></li>
+                            <li><a href="#">Contact Us</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 System Design A-Z. All images used are copyright-free.</p>
+                <p>&copy; 2025 System Design Mastery. All rights reserved.</p>
             </div>
         </div>
     </footer>

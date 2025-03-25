@@ -3,33 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Real-World Example: Twitter System Design | System Design A-Z</title>
-    <meta name="description" content="Learn about the system design behind Twitter's social media platform, including architecture, scalability, and technical challenges">
-    <link rel="stylesheet" href="../../css/normalize.css">
-    <link rel="stylesheet" href="../../css/styles.css">
-    <link rel="stylesheet" href="../../css/examples.css">
-    <link rel="stylesheet" href="../../css/content-page.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Twitter System Design | System Design Mastery</title>
+    <link rel="stylesheet" href="../../css/modern-styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header class="site-header">
+    <header class="sub-header">
         <div class="container">
-            <div class="logo">
-                <a href="../../index.html">
-                    <span class="logo-text">System Design <span class="highlight">A-Z</span></span>
-                </a>
-            </div>
-            <nav class="main-nav">
-                <button class="menu-toggle" aria-label="Toggle menu">
-                    <span class="hamburger"></span>
-                </button>
+            <nav class="navbar">
+                <div class="logo">
+                    <h1>System Design Mastery</h1>
+                </div>
                 <ul class="nav-links">
                     <li><a href="../../index.html">Home</a></li>
                     <li><a href="../fundamentals/index.html">Fundamentals</a></li>
-                    <li><a href="../examples/index.html" class="active">Real-World Examples</a></li>
+                    <li><a href="../examples/index.html" class="active">Real-world Examples</a></li>
                     <li><a href="../implementation/index.html">Implementation</a></li>
                     <li><a href="../../index.html#about">About</a></li>
                 </ul>
@@ -37,458 +27,401 @@
         </div>
     </header>
 
-    <main class="content-page">
+    <section class="page-header">
         <div class="container">
-            <div class="content-wrapper">
+            <h1>Twitter System Design</h1>
+            <p>How Twitter handles millions of tweets and real-time interactions at global scale</p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <div class="content-grid">
                 <aside class="sidebar">
-                    <div class="sidebar-content">
-                        <h3>Real-World Examples</h3>
-                        <ul class="sidebar-nav">
-                            <li><a href="netflix.html">Netflix</a></li>
-                            <li><a href="uber.html">Uber</a></li>
-                            <li><a href="twitter.html" class="active">Twitter</a></li>
-                            <li><a href="instagram.html">Instagram</a></li>
-                            <li><a href="amazon.html">Amazon</a></li>
-                            <li><a href="google-search.html">Google Search</a></li>
-                            <li><a href="payment-system.html">Payment System</a></li>
-                            <li><a href="url-shortener.html">URL Shortener</a></li>
-                            <li><a href="chat-application.html">Chat Application</a></li>
-                            <li><a href="e-commerce.html">E-Commerce Platform</a></li>
-                        </ul>
-                        <div class="sidebar-cta">
-                            <h4>Ready to implement?</h4>
-                            <p>Check out our implementation guides</p>
-                            <a href="../implementation/index.html" class="btn btn-sm">Implementation Guides</a>
-                        </div>
-                    </div>
+                    <h3>Example Systems</h3>
+                    <ul class="sidebar-links">
+                        <li><a href="netflix.html">Netflix</a></li>
+                        <li><a href="uber.html">Uber</a></li>
+                        <li><a href="amazon.html">Amazon</a></li>
+                        <li><a href="twitter.html" class="active">Twitter</a></li>
+                        <li><a href="url-shortener.html">URL Shortener</a></li>
+                        <li><a href="distributed-cache.html">Distributed Cache</a></li>
+                        <li><a href="payment-system.html">Payment System</a></li>
+                        <li><a href="chat-application.html">Chat Application</a></li>
+                    </ul>
                 </aside>
-
-                <article class="main-content">
-                    <div class="content-header">
-                        <h1>Twitter System Design</h1>
-                        <div class="content-meta">
-                            <span class="difficulty advanced">Advanced</span>
-                            <span class="reading-time">22 min read</span>
+                <main class="main-content">
+                    <article>
+                        <h2>Twitter: Real-time Social Network at Scale</h2>
+                        <p>Twitter (now X) is a social networking platform that enables users to post and interact with short messages called "tweets." With over 350 million monthly active users generating hundreds of millions of tweets daily, Twitter's system architecture must handle massive scale, real-time delivery, and complex social graph operations. Let's explore how Twitter's architecture enables this global, real-time communication platform.</p>
+                        
+                        <div class="info-box">
+                            <h3>Key System Design Challenges</h3>
+                            <p>Twitter faces several unique challenges in its system design:</p>
+                            <ul>
+                                <li><strong>Real-time Delivery:</strong> Delivering tweets to millions of followers instantly</li>
+                                <li><strong>High Write Volume:</strong> Processing hundreds of thousands of tweets per second</li>
+                                <li><strong>Social Graph Complexity:</strong> Managing billions of follow relationships</li>
+                                <li><strong>Timeline Generation:</strong> Creating personalized timelines for millions of users</li>
+                                <li><strong>Search Functionality:</strong> Indexing and searching billions of tweets</li>
+                                <li><strong>Global Distribution:</strong> Serving users worldwide with low latency</li>
+                            </ul>
                         </div>
-                    </div>
 
-                    <div class="content-body">
-                        <section class="content-section">
-                            <h2>Introduction to Twitter</h2>
-                            <p>Twitter is a social media platform that allows users to post and interact with short messages called "tweets." Since its launch in 2006, Twitter has grown to serve hundreds of millions of active users, processing over 500 million tweets per day and handling more than 1.6 billion search queries daily.</p>
-                            
-                            <p>From a system design perspective, Twitter presents fascinating challenges due to its massive scale, real-time nature, and complex social graph. The platform must handle an enormous volume of data while maintaining low latency for both reading and writing operations, making it an excellent case study for distributed systems design.</p>
-                            
-                            <div class="image-container">
-                                <div class="placeholder-image">
-                                    <p>Twitter High-Level Architecture Diagram</p>
-                                </div>
-                                <div class="image-caption">Figure 1: High-level architecture of Twitter's platform.</div>
+                        <div class="image-content-block">
+                            <div class="image-block">
+                                <img src="../../assets/images/twitter-architecture.png" alt="Twitter Architecture Overview">
                             </div>
-                        </section>
-
-                        <section class="content-section">
-                            <h2>System Requirements</h2>
-                            
-                            <h3>Functional Requirements</h3>
-                            <ul>
-                                <li><strong>Tweet Creation</strong>: Users should be able to post tweets (text, images, videos, links).</li>
-                                <li><strong>Timeline Generation</strong>: Users should see tweets from accounts they follow in their home timeline.</li>
-                                <li><strong>Follow/Unfollow</strong>: Users should be able to follow or unfollow other users.</li>
-                                <li><strong>Search</strong>: Users should be able to search for tweets by keywords, hashtags, or users.</li>
-                                <li><strong>Trending Topics</strong>: The system should identify and display trending topics.</li>
-                                <li><strong>Interactions</strong>: Users should be able to like, retweet, and reply to tweets.</li>
-                                <li><strong>Notifications</strong>: Users should receive notifications for relevant activities (mentions, likes, retweets, etc.).</li>
-                                <li><strong>User Profiles</strong>: Users should have profiles displaying their information and tweets.</li>
-                            </ul>
-                            
-                            <h3>Non-Functional Requirements</h3>
-                            <ul>
-                                <li><strong>Scalability</strong>: The system must handle hundreds of millions of users and billions of tweets.</li>
-                                <li><strong>Availability</strong>: High availability is critical for a social media platform (target of 99.99% uptime).</li>
-                                <li><strong>Low Latency</strong>: Timeline generation and tweet posting should have minimal delay.</li>
-                                <li><strong>Consistency</strong>: Users should see consistent data across different devices and sessions.</li>
-                                <li><strong>Durability</strong>: Tweets and user data should not be lost once accepted by the system.</li>
-                                <li><strong>Security</strong>: Protect user data and prevent unauthorized access.</li>
-                                <li><strong>Global Distribution</strong>: Support for users across different geographical regions with varying network infrastructures.</li>
-                            </ul>
-                        </section>
-
-                        <section class="content-section">
-                            <h2>High-Level Architecture</h2>
-                            <p>Twitter's architecture has evolved significantly over the years to handle its massive scale. At a high level, it can be divided into several key components:</p>
-                            
-                            <h3>Client Applications</h3>
-                            <p>Twitter is accessible through various client applications:</p>
-                            <ul>
-                                <li><strong>Mobile Apps</strong>: Native applications for iOS and Android.</li>
-                                <li><strong>Web Application</strong>: Browser-based interface.</li>
-                                <li><strong>Third-party Clients</strong>: Applications built using Twitter's API.</li>
-                            </ul>
-                            
-                            <h3>API Layer</h3>
-                            <p>The API layer serves as the entry point for all client requests, handling:</p>
-                            <ul>
-                                <li>Authentication and authorization</li>
-                                <li>Rate limiting and throttling</li>
-                                <li>Request routing to appropriate services</li>
-                                <li>API versioning</li>
-                            </ul>
-                            
-                            <h3>Core Services</h3>
-                            <p>These services handle the primary business logic:</p>
-                            <ul>
-                                <li><strong>Tweet Service</strong>: Handles tweet creation, retrieval, and interactions.</li>
-                                <li><strong>Timeline Service</strong>: Generates and manages user timelines.</li>
-                                <li><strong>User Service</strong>: Manages user accounts, profiles, and relationships.</li>
-                                <li><strong>Media Service</strong>: Handles image and video uploads and processing.</li>
-                                <li><strong>Search Service</strong>: Enables searching for tweets, users, and topics.</li>
-                                <li><strong>Notification Service</strong>: Manages and delivers user notifications.</li>
-                            </ul>
-                            
-                            <h3>Data Storage</h3>
-                            <p>Twitter uses a combination of storage systems to handle different types of data:</p>
-                            <ul>
-                                <li><strong>Tweet Storage</strong>: Stores the actual tweet content and metadata.</li>
-                                <li><strong>User Graph Storage</strong>: Stores the social graph (who follows whom).</li>
-                                <li><strong>Timeline Storage</strong>: Stores pre-computed timelines for users.</li>
-                                <li><strong>Media Storage</strong>: Stores images, videos, and other media.</li>
-                                <li><strong>Search Index</strong>: Indexes tweets for efficient searching.</li>
-                                <li><strong>Cache Layer</strong>: Caches frequently accessed data to reduce database load.</li>
-                            </ul>
-                            
-                            <h3>Infrastructure Services</h3>
-                            <p>These services support the overall platform:</p>
-                            <ul>
-                                <li><strong>Load Balancers</strong>: Distribute traffic across service instances.</li>
-                                <li><strong>CDN</strong>: Delivers static content and media from edge locations.</li>
-                                <li><strong>Monitoring and Logging</strong>: Tracks system health and performance.</li>
-                                <li><strong>Analytics</strong>: Processes data for business intelligence and feature improvements.</li>
-                            </ul>
-                        </section>
-
-                        <section class="content-section">
-                            <h2>Key Components Deep Dive</h2>
-                            
-                            <h3>Timeline Service</h3>
-                            <p>The Timeline Service is one of the most critical components of Twitter's architecture. It's responsible for generating the tweets that appear in a user's home timeline.</p>
-                            
-                            <div class="image-container">
-                                <div class="placeholder-image">
-                                    <p>Twitter Timeline Service Architecture</p>
-                                </div>
-                                <div class="image-caption">Figure 2: Architecture of Twitter's Timeline Service.</div>
+                            <div class="content-block">
+                                <h3>Twitter Architecture Overview</h3>
+                                <p>Twitter's architecture can be divided into several major components:</p>
+                                <ol>
+                                    <li><strong>Tweet Service:</strong> Handles tweet creation and storage</li>
+                                    <li><strong>Timeline Service:</strong> Generates user timelines</li>
+                                    <li><strong>Social Graph Service:</strong> Manages follow relationships</li>
+                                    <li><strong>Search Service:</strong> Indexes and searches tweets</li>
+                                    <li><strong>Media Service:</strong> Manages photos, videos, and other media</li>
+                                    <li><strong>Notification Service:</strong> Delivers real-time notifications</li>
+                                </ol>
+                                <p>The diagram illustrates how these components interact to provide the Twitter experience.</p>
                             </div>
-                            
-                            <p>Twitter has evolved its timeline generation approach over the years:</p>
-                            
-                            <h4>Early Approach: Pull Model</h4>
-                            <p>In the early days, Twitter used a pull-based model for timeline generation:</p>
-                            <ol>
-                                <li>When a user requested their timeline, the system would identify all the accounts they follow.</li>
-                                <li>It would then query the tweet database to find recent tweets from those accounts.</li>
-                                <li>These tweets would be merged, sorted by time, and returned to the user.</li>
-                            </ol>
-                            <p>This approach became inefficient as the platform grew, especially for users following many accounts.</p>
-                            
-                            <h4>Current Approach: Push Model with Fan-out</h4>
-                            <p>Twitter now uses a push-based model with fan-out for timeline generation:</p>
-                            <ol>
-                                <li>When a user posts a tweet, the system identifies all followers of that user.</li>
-                                <li>The tweet is then "pushed" (copied) to the timeline cache of each follower.</li>
-                                <li>When a user requests their timeline, the system simply retrieves the pre-computed timeline from the cache.</li>
-                            </ol>
-                            <p>This approach provides much faster timeline retrieval but requires more storage and processing during tweet creation.</p>
-                            
-                            <h4>Hybrid Approach for High-Follow Accounts</h4>
-                            <p>For accounts with millions of followers (celebrities, news outlets, etc.), the pure push model would be too expensive. Twitter uses a hybrid approach for these accounts:</p>
-                            <ul>
-                                <li>Tweets from regular users are pushed to follower timelines as described above.</li>
-                                <li>Tweets from high-follow accounts are not pushed to follower timelines at creation time.</li>
-                                <li>When generating a timeline, the system merges the pre-computed timeline with recent tweets from high-follow accounts that the user follows.</li>
-                            </ul>
-                            <p>This hybrid approach balances performance and resource usage effectively.</p>
-                            
-                            <h3>Social Graph Service</h3>
-                            <p>The Social Graph Service manages the relationships between users (who follows whom). This is a critical component that affects many aspects of the platform, including timeline generation, notifications, and recommendations.</p>
-                            
-                            <p>Key aspects of the Social Graph Service:</p>
-                            <ul>
-                                <li><strong>Graph Storage</strong>: The social graph is typically stored in a graph database or a specialized data structure optimized for relationship queries.</li>
-                                <li><strong>Bidirectional Indexing</strong>: The system maintains both "following" and "followers" indexes to efficiently answer queries like "Who does User A follow?" and "Who follows User A?"</li>
-                                <li><strong>Caching</strong>: Frequently accessed portions of the graph are cached to reduce database load.</li>
-                                <li><strong>Sharding</strong>: The graph is sharded (partitioned) across multiple servers to handle the massive scale.</li>
-                            </ul>
-                            
-                            <h3>Search Service</h3>
-                            <p>Twitter's Search Service enables users to find tweets, users, and topics. It handles over 1.6 billion queries per day and must provide results with low latency.</p>
-                            
-                            <p>Key components of the Search Service:</p>
-                            <ul>
-                                <li><strong>Ingestion Pipeline</strong>: Processes new tweets and adds them to the search index.</li>
-                                <li><strong>Inverted Index</strong>: Maps terms to the tweets that contain them for efficient retrieval.</li>
-                                <li><strong>Query Processing</strong>: Parses and optimizes search queries.</li>
-                                <li><strong>Ranking</strong>: Orders search results based on relevance, recency, and other factors.</li>
-                                <li><strong>Distributed Search</strong>: Distributes queries across multiple search servers for scalability.</li>
-                            </ul>
-                            
-                            <p>Twitter's search infrastructure is built on top of technologies like Lucene/Elasticsearch, with custom modifications to handle Twitter's specific requirements.</p>
-                        </section>
+                        </div>
 
-                        <section class="content-section">
-                            <h2>Scalability and Performance Optimizations</h2>
-                            
-                            <h3>Caching Strategy</h3>
-                            <p>Caching is extensively used throughout Twitter's architecture to reduce database load and improve response times:</p>
-                            <ul>
-                                <li><strong>Timeline Cache</strong>: Stores pre-computed timelines for users.</li>
-                                <li><strong>Tweet Cache</strong>: Caches frequently accessed tweets.</li>
-                                <li><strong>User Cache</strong>: Stores user profile information.</li>
-                                <li><strong>Social Graph Cache</strong>: Caches portions of the social graph.</li>
-                                <li><strong>Search Cache</strong>: Caches common search queries and results.</li>
-                            </ul>
-                            <p>Twitter uses in-memory caching systems like Redis and Memcached, often with custom modifications to handle their specific requirements.</p>
-                            
-                            <h3>Database Sharding</h3>
-                            <p>To handle the massive scale of data, Twitter shards (horizontally partitions) its databases:</p>
-                            <ul>
-                                <li><strong>User Sharding</strong>: Users are distributed across database shards based on user ID.</li>
-                                <li><strong>Tweet Sharding</strong>: Tweets are sharded based on tweet ID.</li>
-                                <li><strong>Timeline Sharding</strong>: Timelines are sharded based on user ID.</li>
-                            </ul>
-                            <p>Sharding allows Twitter to distribute the load across multiple database servers and scale horizontally as the platform grows.</p>
-                            
-                            <h3>Read Replication</h3>
-                            <p>Twitter's workload is heavily read-dominated (many more timeline views than tweet creations). To handle this, Twitter uses read replicas:</p>
-                            <ul>
-                                <li>Write operations go to the primary database.</li>
-                                <li>Read operations are distributed across multiple read replicas.</li>
-                                <li>This approach allows Twitter to handle many more read operations than would be possible with a single database instance.</li>
-                            </ul>
-                            
-                            <h3>Asynchronous Processing</h3>
-                            <p>Not all operations need to be processed synchronously. Twitter uses asynchronous processing for many tasks:</p>
-                            <ul>
-                                <li><strong>Timeline Fan-out</strong>: When a user posts a tweet, the fan-out to follower timelines happens asynchronously.</li>
-                                <li><strong>Notifications</strong>: Notifications are generated and delivered asynchronously.</li>
-                                <li><strong>Analytics</strong>: Tweet engagement metrics are updated asynchronously.</li>
-                                <li><strong>Search Indexing</strong>: New tweets are added to the search index asynchronously.</li>
-                            </ul>
-                            <p>Twitter uses message queues and event-driven architectures to implement asynchronous processing, which helps improve system responsiveness and throughput.</p>
-                        </section>
+                        <h3>Data Model and Storage</h3>
 
-                        <section class="content-section">
-                            <h2>Fault Tolerance and Reliability</h2>
-                            
-                            <h3>Data Replication</h3>
-                            <p>To ensure data durability and availability, Twitter replicates data across multiple servers and data centers:</p>
+                        <div class="concept-card">
+                            <h4>Tweet Storage</h4>
+                            <p>Twitter's tweet storage system has evolved over time:</p>
                             <ul>
-                                <li><strong>Database Replication</strong>: Data is replicated across multiple database servers.</li>
-                                <li><strong>Cross-datacenter Replication</strong>: Critical data is replicated across multiple data centers.</li>
-                                <li><strong>Replication Strategies</strong>: Different data types may use different replication strategies based on their importance and access patterns.</li>
+                                <li><strong>Early Days:</strong> MySQL with heavy sharding</li>
+                                <li><strong>Current Approach:</strong> Manhattan (distributed key-value store)</li>
+                                <li><strong>Tweet Object:</strong> Contains content, metadata, user ID, timestamp, etc.</li>
+                                <li><strong>Media Storage:</strong> Separate blob storage for images and videos</li>
+                                <li><strong>Archival Storage:</strong> Older tweets moved to cold storage</li>
                             </ul>
-                            
-                            <h3>Service Redundancy</h3>
-                            <p>Twitter ensures high availability through service redundancy:</p>
-                            <ul>
-                                <li><strong>Multiple Service Instances</strong>: Each service runs multiple instances across different servers.</li>
-                                <li><strong>Load Balancing</strong>: Requests are distributed across service instances.</li>
-                                <li><strong>Auto-scaling</strong>: The number of service instances is automatically adjusted based on load.</li>
-                                <li><strong>Health Checking</strong>: Unhealthy service instances are detected and removed from rotation.</li>
-                            </ul>
-                            
-                            <h3>Graceful Degradation</h3>
-                            <p>In case of partial system failures, Twitter's architecture is designed to degrade gracefully:</p>
-                            <ul>
-                                <li><strong>Feature Disabling</strong>: Non-critical features can be disabled during high load or partial failures.</li>
-                                <li><strong>Fallback Mechanisms</strong>: Alternative, simpler implementations are used when primary systems are unavailable.</li>
-                                <li><strong>Circuit Breakers</strong>: Prevent cascading failures by stopping requests to failing components.</li>
-                            </ul>
-                            <p>For example, if the timeline service is experiencing issues, Twitter might fall back to showing a simplified timeline or temporarily disable certain timeline features.</p>
-                            
-                            <h3>Disaster Recovery</h3>
-                            <p>Twitter has comprehensive disaster recovery plans to handle major outages:</p>
-                            <ul>
-                                <li><strong>Multi-datacenter Architecture</strong>: Services are deployed across multiple data centers.</li>
-                                <li><strong>Datacenter Failover</strong>: Traffic can be redirected to different data centers if one experiences issues.</li>
-                                <li><strong>Regular Testing</strong>: Disaster recovery procedures are regularly tested to ensure they work as expected.</li>
-                            </ul>
-                        </section>
+                            <p>Twitter's storage systems must handle extremely high write throughput while maintaining durability.</p>
+                        </div>
 
-                        <section class="content-section">
-                            <h2>Data Storage and Management</h2>
-                            
-                            <h3>Tweet Storage</h3>
-                            <p>Tweets are the core data entity in Twitter's system. The tweet storage system must handle billions of tweets while providing fast read and write operations.</p>
-                            
-                            <p>Twitter has used various database technologies for tweet storage over the years:</p>
+                        <div class="concept-card">
+                            <h4>Social Graph Storage</h4>
+                            <p>The social graph represents follow relationships between users:</p>
                             <ul>
-                                <li><strong>Early Days</strong>: MySQL with sharding.</li>
-                                <li><strong>Middle Period</strong>: A combination of MySQL and NoSQL databases like Cassandra.</li>
-                                <li><strong>Recent Years</strong>: Custom distributed database systems like Manhattan (Twitter's homegrown distributed key-value database).</li>
+                                <li><strong>FlockDB:</strong> Specialized graph database for social relationships</li>
+                                <li><strong>Bidirectional Edges:</strong> "Follows" and "followed by" relationships</li>
+                                <li><strong>Sharding:</strong> Graph data sharded by user ID</li>
+                                <li><strong>Caching:</strong> Heavy caching of frequently accessed relationships</li>
+                                <li><strong>In-memory Representation:</strong> Critical parts of the graph kept in memory</li>
                             </ul>
-                            
-                            <p>Key considerations for tweet storage:</p>
-                            <ul>
-                                <li><strong>Schema Design</strong>: The tweet schema includes the tweet content, metadata (timestamp, user ID, etc.), and references to media.</li>
-                                <li><strong>ID Generation</strong>: Twitter uses Snowflake, a distributed ID generation system, to create unique IDs for tweets.</li>
-                                <li><strong>Indexing</strong>: Tweets are indexed by ID, user ID, and timestamp for efficient retrieval.</li>
-                                <li><strong>Archiving</strong>: Older tweets may be moved to cheaper storage while maintaining accessibility.</li>
-                            </ul>
-                            
-                            <h3>Timeline Storage</h3>
-                            <p>Pre-computed timelines are stored to enable fast timeline retrieval:</p>
-                            <ul>
-                                <li><strong>Data Structure</strong>: Timelines are typically stored as ordered lists of tweet IDs.</li>
-                                <li><strong>Storage System</strong>: In-memory databases like Redis are often used for timeline storage due to the need for fast access and list operations.</li>
-                                <li><strong>Caching Strategy</strong>: Only recent portions of timelines may be cached, with older portions loaded from persistent storage when needed.</li>
-                            </ul>
-                            
-                            <h3>Media Storage</h3>
-                            <p>Images, videos, and other media attached to tweets require specialized storage:</p>
-                            <ul>
-                                <li><strong>Object Storage</strong>: Media files are typically stored in distributed object storage systems.</li>
-                                <li><strong>CDN Integration</strong>: Media is served through CDNs to reduce latency for users worldwide.</li>
-                                <li><strong>Transcoding</strong>: Videos are transcoded into multiple formats and resolutions to support different devices and network conditions.</li>
-                                <li><strong>Thumbnail Generation</strong>: Thumbnails are generated for images and videos to improve timeline loading performance.</li>
-                            </ul>
-                        </section>
+                            <p>The social graph is one of the most critical components, as it determines tweet delivery.</p>
+                        </div>
 
-                        <section class="content-section">
-                            <h2>Security Considerations</h2>
-                            
-                            <h3>Authentication and Authorization</h3>
-                            <p>Securing user accounts and controlling access to resources:</p>
+                        <div class="concept-card">
+                            <h4>Cache Architecture</h4>
+                            <p>Caching is essential for Twitter's performance:</p>
                             <ul>
-                                <li><strong>User Authentication</strong>: Secure login mechanisms with options for two-factor authentication.</li>
-                                <li><strong>OAuth</strong>: Used for third-party application authorization.</li>
-                                <li><strong>Session Management</strong>: Secure handling of user sessions across devices.</li>
-                                <li><strong>Access Control</strong>: Fine-grained permissions for different types of operations.</li>
+                                <li><strong>Redis:</strong> Used for various caching needs</li>
+                                <li><strong>Memcached:</strong> Used for distributed caching</li>
+                                <li><strong>Timeline Cache:</strong> Caches recent timelines for users</li>
+                                <li><strong>Tweet Cache:</strong> Caches frequently accessed tweets</li>
+                                <li><strong>User Cache:</strong> Caches user profile information</li>
+                                <li><strong>Social Graph Cache:</strong> Caches follow relationships</li>
                             </ul>
-                            
-                            <h3>Data Protection</h3>
-                            <p>Protecting user data and content:</p>
-                            <ul>
-                                <li><strong>Encryption</strong>: Data is encrypted both in transit (using TLS) and at rest.</li>
-                                <li><strong>Privacy Controls</strong>: Users can control who can see their tweets (public vs. protected accounts).</li>
-                                <li><strong>Data Access Logging</strong>: Access to sensitive user data is logged and monitored.</li>
-                                <li><strong>Data Retention Policies</strong>: Clear policies on how long different types of data are retained.</li>
-                            </ul>
-                            
-                            <h3>Abuse Prevention</h3>
-                            <p>Preventing spam, abuse, and other malicious activities:</p>
-                            <ul>
-                                <li><strong>Rate Limiting</strong>: Limits on the number of actions a user can perform in a given time period.</li>
-                                <li><strong>CAPTCHA</strong>: Used to prevent automated account creation and abuse.</li>
-                                <li><strong>Content Filtering</strong>: Automated systems to detect and filter spam, abuse, and inappropriate content.</li>
-                                <li><strong>Account Verification</strong>: Verification of high-profile accounts to prevent impersonation.</li>
-                                <li><strong>Reporting Mechanisms</strong>: Tools for users to report abusive content and accounts.</li>
-                            </ul>
-                            
-                            <h3>Infrastructure Security</h3>
-                            <p>Securing the underlying infrastructure:</p>
-                            <ul>
-                                <li><strong>Network Security</strong>: Firewalls, intrusion detection systems, and network segmentation.</li>
-                                <li><strong>DDoS Protection</strong>: Systems to detect and mitigate distributed denial-of-service attacks.</li>
-                                <li><strong>Vulnerability Management</strong>: Regular security assessments and prompt patching of vulnerabilities.</li>
-                                <li><strong>Secure Development Practices</strong>: Code reviews, security testing, and secure coding guidelines.</li>
-                            </ul>
-                        </section>
+                            <p>Twitter's caching strategy is multi-layered and designed to minimize database load.</p>
+                        </div>
 
-                        <section class="content-section">
-                            <h2>Evolution and Lessons Learned</h2>
-                            
-                            <h3>Scaling Challenges</h3>
-                            <p>Twitter has faced numerous scaling challenges as it grew from a small startup to a global platform:</p>
-                            <ul>
-                                <li><strong>The Fail Whale Era</strong>: In its early years, Twitter was notorious for its frequent outages, symbolized by the "Fail Whale" error image.</li>
-                                <li><strong>Monolith to Microservices</strong>: Twitter evolved from a monolithic Ruby on Rails application to a distributed microservices architecture.</li>
-                                <li><strong>Database Scaling</strong>: The initial MySQL database couldn't handle the growing load, leading to the adoption of sharding and eventually custom database solutions.</li>
-                                <li><strong>Timeline Generation</strong>: The original pull-based timeline model couldn't scale, leading to the development of the push-based fan-out model.</li>
-                            </ul>
-                            
-                            <h3>Architecture Evolution</h3>
-                            <p>Twitter's architecture has evolved significantly over time:</p>
-                            <ul>
-                                <li><strong>2006-2008</strong>: Monolithic Ruby on Rails application with a MySQL database.</li>
-                                <li><strong>2009-2011</strong>: Began breaking the monolith into services, introduced caching and sharding.</li>
-                                <li><strong>2012-2014</strong>: Moved to a microservices architecture, developed custom infrastructure like Manhattan and Snowflake.</li>
-                                <li><strong>2015-present</strong>: Continued refinement of the architecture, with a focus on reliability, performance, and new features.</li>
-                            </ul>
-                            
-                            <h3>Key Lessons</h3>
-                            <p>Twitter's journey offers several valuable lessons for system designers:</p>
-                            <ul>
-                                <li><strong>Start Simple, Evolve as Needed</strong>: Twitter began with a simple architecture and evolved it as requirements and scale demanded.</li>
-                                <li><strong>Data Access Patterns Matter</strong>: Understanding how data is accessed and optimizing for those patterns is crucial for performance.</li>
-                                <li><strong>Caching is Essential</strong>: Effective caching strategies are critical for handling read-heavy workloads.</li>
-                                <li><strong>Asynchronous Processing</strong>: Moving non-critical operations to asynchronous processing can significantly improve system responsiveness.</li>
-                                <li><strong>Monitoring and Observability</strong>: Comprehensive monitoring is essential for understanding system behavior and identifying issues.</li>
-                                <li><strong>Graceful Degradation</strong>: Design systems to degrade gracefully under load or partial failures.</li>
-                            </ul>
-                        </section>
+                        <h3>Timeline Generation</h3>
 
-                        <section class="content-section">
-                            <h2>Conclusion</h2>
-                            <p>Twitter's system design represents a fascinating case study in building large-scale, real-time social media platforms. Their architecture has evolved to meet the challenges of handling billions of tweets and serving hundreds of millions of users worldwide, with a focus on performance, reliability, and user experience.</p>
-                            
-                            <p>Key takeaways from Twitter's architecture include:</p>
+                        <div class="concept-card">
+                            <h4>The Fan-out Problem</h4>
+                            <p>Twitter's core challenge is the "fan-out" problem:</p>
                             <ul>
-                                <li>The importance of understanding data access patterns and optimizing for them</li>
-                                <li>The evolution from pull-based to push-based timeline generation for performance</li>
-                                <li>The critical role of caching in handling read-heavy workloads</li>
-                                <li>The benefits of asynchronous processing for non-critical operations</li>
-                                <li>The necessity of designing for fault tolerance and graceful degradation</li>
+                                <li><strong>Definition:</strong> Delivering a tweet to all followers of the author</li>
+                                <li><strong>Scale Challenge:</strong> Some users have millions of followers</li>
+                                <li><strong>Real-time Requirement:</strong> Tweets should appear in timelines immediately</li>
+                                <li><strong>Consistency Challenge:</strong> All followers should see the tweet</li>
                             </ul>
-                            
-                            <p>By studying Twitter's approach to system design, engineers can gain insights applicable to a wide range of distributed systems, particularly those involving social networks, real-time updates, and content delivery.</p>
-                        </section>
+                            <p>The fan-out problem is particularly challenging for high-profile accounts with millions of followers.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Push Model (Early Twitter)</h4>
+                            <p>Twitter initially used a push-based approach:</p>
+                            <ul>
+                                <li><strong>Process:</strong> When a user tweets, copy the tweet to all followers' timelines</li>
+                                <li><strong>Advantage:</strong> Reading timelines is fast (pre-computed)</li>
+                                <li><strong>Disadvantage:</strong> Writing becomes expensive for users with many followers</li>
+                                <li><strong>"Thundering Herd" Problem:</strong> Celebrity tweets cause massive write spikes</li>
+                            </ul>
+                            <p>This approach works well for most users but breaks down for celebrities with millions of followers.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Hybrid Push-Pull Model (Current Twitter)</h4>
+                            <p>Twitter evolved to a hybrid approach:</p>
+                            <ul>
+                                <li><strong>Regular Users:</strong> Push model - tweets are written to followers' timelines</li>
+                                <li><strong>High-profile Users:</strong> Pull model - tweets are fetched at timeline generation time</li>
+                                <li><strong>Timeline Merge:</strong> Combine pre-computed timeline with pulled celebrity tweets</li>
+                                <li><strong>Ranking:</strong> Apply relevance ranking to the merged timeline</li>
+                            </ul>
+                            <p>This hybrid approach balances write efficiency with read performance.</p>
+                        </div>
+
+                        <h3>Real-time Processing</h3>
+
+                        <div class="concept-card">
+                            <h4>Event Processing Pipeline</h4>
+                            <p>Twitter processes events in real-time:</p>
+                            <ul>
+                                <li><strong>Event Sources:</strong> Tweets, likes, retweets, follows, etc.</li>
+                                <li><strong>Event Bus:</strong> Kafka for reliable event distribution</li>
+                                <li><strong>Stream Processing:</strong> Heron (successor to Storm) for real-time analytics</li>
+                                <li><strong>Lambda Architecture:</strong> Combines real-time and batch processing</li>
+                                <li><strong>Event Consumers:</strong> Timeline service, notification service, analytics, etc.</li>
+                            </ul>
+                            <p>This event-driven architecture enables real-time features and decouples system components.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Notification System</h4>
+                            <p>Twitter's notification system delivers real-time updates:</p>
+                            <ul>
+                                <li><strong>Push Notifications:</strong> Mobile notifications via APNS, FCM</li>
+                                <li><strong>WebSockets:</strong> Real-time updates for web clients</li>
+                                <li><strong>Email Notifications:</strong> Digest emails for less time-sensitive updates</li>
+                                <li><strong>Notification Aggregation:</strong> Batching similar notifications</li>
+                                <li><strong>Delivery Prioritization:</strong> Prioritizing important notifications</li>
+                            </ul>
+                            <p>The notification system must handle millions of concurrent connections and deliver updates with low latency.</p>
+                        </div>
+
+                        <h3>Search and Discovery</h3>
+
+                        <div class="concept-card">
+                            <h4>Search Infrastructure</h4>
+                            <p>Twitter's search system indexes billions of tweets:</p>
+                            <ul>
+                                <li><strong>Earlybird:</strong> Custom search engine based on Lucene</li>
+                                <li><strong>Real-time Indexing:</strong> New tweets indexed within seconds</li>
+                                <li><strong>Distributed Indexes:</strong> Sharded by time and other dimensions</li>
+                                <li><strong>Query Understanding:</strong> Parsing hashtags, mentions, and natural language</li>
+                                <li><strong>Relevance Ranking:</strong> Combining recency, popularity, and personalization</li>
+                            </ul>
+                            <p>Twitter's search system must handle both real-time and historical search queries.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Trending Topics</h4>
+                            <p>Twitter's trending topics feature identifies popular conversations:</p>
+                            <ul>
+                                <li><strong>Stream Processing:</strong> Real-time analysis of tweet volume</li>
+                                <li><strong>Clustering:</strong> Grouping similar topics and hashtags</li>
+                                <li><strong>Anomaly Detection:</strong> Identifying unusual spikes in activity</li>
+                                <li><strong>Personalization:</strong> Tailoring trends to user interests and location</li>
+                                <li><strong>Abuse Prevention:</strong> Filtering out manipulated trends</li>
+                            </ul>
+                            <p>Trending topics must be computed in real-time and updated frequently to reflect current conversations.</p>
+                        </div>
+
+                        <h3>Scaling and Reliability</h3>
+
+                        <div class="concept-card">
+                            <h4>Microservices Architecture</h4>
+                            <p>Twitter has evolved to a microservices architecture:</p>
+                            <ul>
+                                <li><strong>Service Decomposition:</strong> Breaking monolithic applications into services</li>
+                                <li><strong>Service Discovery:</strong> Finagle for service discovery and load balancing</li>
+                                <li><strong>API Gateway:</strong> Managing external API access</li>
+                                <li><strong>Circuit Breaking:</strong> Preventing cascading failures</li>
+                                <li><strong>Rate Limiting:</strong> Protecting services from overload</li>
+                            </ul>
+                            <p>This architecture allows Twitter to scale different components independently and improve fault isolation.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Global Distribution</h4>
+                            <p>Twitter serves users worldwide:</p>
+                            <ul>
+                                <li><strong>Multiple Data Centers:</strong> Distributed across geographic regions</li>
+                                <li><strong>CDN:</strong> Content delivery network for static assets</li>
+                                <li><strong>Edge Caching:</strong> Caching frequently accessed data at edge locations</li>
+                                <li><strong>Regional Routing:</strong> Directing users to the closest data center</li>
+                                <li><strong>Data Replication:</strong> Replicating data across regions</li>
+                            </ul>
+                            <p>Global distribution reduces latency and improves availability during regional outages.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Fault Tolerance</h4>
+                            <p>Twitter implements several strategies for fault tolerance:</p>
+                            <ul>
+                                <li><strong>Redundancy:</strong> Multiple instances of critical services</li>
+                                <li><strong>Data Replication:</strong> Multiple copies of data</li>
+                                <li><strong>Circuit Breakers:</strong> Preventing cascading failures</li>
+                                <li><strong>Graceful Degradation:</strong> Falling back to simpler functionality</li>
+                                <li><strong>Chaos Engineering:</strong> Deliberately introducing failures to test resilience</li>
+                            </ul>
+                            <p>These strategies ensure that Twitter remains available even during partial outages.</p>
+                        </div>
+
+                        <h3>Unique Technical Solutions</h3>
+
+                        <div class="concept-card">
+                            <h4>Manhattan Database</h4>
+                            <p>Twitter developed Manhattan, a distributed database:</p>
+                            <ul>
+                                <li><strong>Key-Value Store:</strong> Optimized for Twitter's access patterns</li>
+                                <li><strong>Multi-tenancy:</strong> Supports multiple applications with different requirements</li>
+                                <li><strong>Horizontal Scaling:</strong> Scales by adding more nodes</li>
+                                <li><strong>Flexible Consistency:</strong> Different consistency levels for different use cases</li>
+                                <li><strong>Storage Engines:</strong> Multiple storage engines for different workloads</li>
+                            </ul>
+                            <p>Manhattan replaced many of Twitter's MySQL and Cassandra clusters, providing a unified storage solution.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Snowflake ID Generation</h4>
+                            <p>Twitter developed Snowflake for distributed ID generation:</p>
+                            <ul>
+                                <li><strong>64-bit IDs:</strong> Composed of timestamp, worker ID, and sequence number</li>
+                                <li><strong>Time-sorted:</strong> IDs are roughly sortable by time</li>
+                                <li><strong>Distributed:</strong> No central coordination needed</li>
+                                <li><strong>High Throughput:</strong> Can generate thousands of IDs per second per node</li>
+                                <li><strong>No Collisions:</strong> Guaranteed unique across the system</li>
+                            </ul>
+                            <p>Snowflake IDs are used for tweets, users, and other entities, enabling efficient storage and retrieval.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Heron Stream Processing</h4>
+                            <p>Twitter developed Heron to replace Storm:</p>
+                            <ul>
+                                <li><strong>Real-time Analytics:</strong> Processing millions of events per second</li>
+                                <li><strong>Resource Isolation:</strong> Better isolation between processing tasks</li>
+                                <li><strong>Back Pressure:</strong> Handling overload situations gracefully</li>
+                                <li><strong>Debugging:</strong> Improved monitoring and debugging capabilities</li>
+                                <li><strong>Compatibility:</strong> API compatible with Storm for easy migration</li>
+                            </ul>
+                            <p>Heron powers Twitter's real-time analytics, trending topics, and other stream processing needs.</p>
+                        </div>
+
+                        <h3>Key System Design Lessons from Twitter</h3>
+                        
+                        <div class="example-box">
+                            <h4>Hybrid Data Access Patterns</h4>
+                            <p>Twitter's hybrid push-pull model for timeline generation offers valuable lessons:</p>
+                            <ul>
+                                <li>Different access patterns can be optimal for different user segments</li>
+                                <li>Hybrid approaches can balance write and read efficiency</li>
+                                <li>System design should account for power-law distributions in social networks</li>
+                                <li>Caching strategies should align with access patterns</li>
+                            </ul>
+                            <p>This approach demonstrates how to handle the fan-out problem in social networks efficiently.</p>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>Event-Driven Architecture</h4>
+                            <p>Twitter's event-driven approach offers several benefits:</p>
+                            <ul>
+                                <li>Decoupling producers and consumers improves system modularity</li>
+                                <li>Event logs provide a reliable source of truth</li>
+                                <li>New features can be added by consuming existing event streams</li>
+                                <li>Real-time and batch processing can work from the same data source</li>
+                            </ul>
+                            <p>Event-driven architecture is particularly well-suited for real-time social platforms.</p>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>Custom Infrastructure</h4>
+                            <p>Twitter's custom infrastructure components demonstrate when to build vs. buy:</p>
+                            <ul>
+                                <li>Build custom solutions when existing tools don't meet specific requirements</li>
+                                <li>Focus custom development on core competitive advantages</li>
+                                <li>Balance innovation with operational complexity</li>
+                                <li>Open-source custom solutions to benefit from community contributions</li>
+                            </ul>
+                            <p>Twitter has open-sourced many of its custom infrastructure components, including Heron and parts of Manhattan.</p>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>Graceful Degradation</h4>
+                            <p>Twitter's approach to handling failures demonstrates the importance of graceful degradation:</p>
+                            <ul>
+                                <li>Design systems to function with reduced capabilities during partial failures</li>
+                                <li>Prioritize core functionality over non-essential features</li>
+                                <li>Implement circuit breakers to prevent cascading failures</li>
+                                <li>Design user experiences that handle degraded functionality gracefully</li>
+                            </ul>
+                            <p>Graceful degradation ensures that the service remains available even during partial outages.</p>
+                        </div>
+
+                        <h3>Implementation Considerations</h3>
+                        <ol>
+                            <li><strong>Start with a clear data model</strong> that supports the core social networking features</li>
+                            <li><strong>Design for power-law distributions</strong> in social networks from the beginning</li>
+                            <li><strong>Implement a hybrid approach</strong> for timeline generation to handle celebrities</li>
+                            <li><strong>Use event sourcing</strong> to enable real-time features and analytics</li>
+                            <li><strong>Implement comprehensive caching</strong> at multiple levels</li>
+                            <li><strong>Design for horizontal scaling</strong> of all components</li>
+                            <li><strong>Build robust monitoring and alerting</strong> for real-time systems</li>
+                            <li><strong>Implement rate limiting and abuse prevention</strong> from the start</li>
+                            <li><strong>Design for global distribution</strong> to serve users worldwide</li>
+                            <li><strong>Plan for graceful degradation</strong> during partial system failures</li>
+                        </ol>
 
                         <div class="next-steps">
                             <h3>Next Steps</h3>
-                            <div class="next-links">
-                                <a href="instagram.html" class="next-link">
-                                    <span class="next-text">Next Example</span>
-                                    <span class="next-title">Instagram System Design</span>
-                                    <i class="fas fa-arrow-right"></i>
-                                </a>
+                            <p>Explore other real-world system design examples or learn how to implement specific components:</p>
+                            <div class="button-group">
+                                <a href="url-shortener.html" class="btn btn-primary">Explore URL Shortener Design</a>
+                                <a href="../implementation/social-network.html" class="btn btn-secondary">Learn Social Network Implementation</a>
                             </div>
                         </div>
-                    </div>
-                </article>
+                    </article>
+                </main>
             </div>
         </div>
-    </main>
+    </section>
 
-    <footer class="site-footer">
+    <footer class="footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-logo">
-                    <span class="logo-text">System Design <span class="highlight">A-Z</span></span>
+                    <h2>System Design Mastery</h2>
+                    <p>Learn. Design. Implement.</p>
                 </div>
                 <div class="footer-links">
-                    <div class="footer-nav">
-                        <h4>Navigation</h4>
+                    <div class="footer-column">
+                        <h3>Quick Links</h3>
                         <ul>
                             <li><a href="../../index.html">Home</a></li>
                             <li><a href="../fundamentals/index.html">Fundamentals</a></li>
-                            <li><a href="../examples/index.html">Real-World Examples</a></li>
+                            <li><a href="../examples/index.html">Examples</a></li>
                             <li><a href="../implementation/index.html">Implementation</a></li>
                         </ul>
                     </div>
-                    <div class="footer-resources">
-                        <h4>Resources</h4>
+                    <div class="footer-column">
+                        <h3>Resources</h3>
                         <ul>
-                            <li><a href="#">Glossary</a></li>
-                            <li><a href="#">Recommended Books</a></li>
-                            <li><a href="#">Tools & Resources</a></li>
-                            <li><a href="#">FAQ</a></li>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Cheat Sheets</a></li>
+                            <li><a href="#">Interview Prep</a></li>
+                            <li><a href="#">Community</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Connect</h3>
+                        <ul>
+                            <li><a href="#">GitHub</a></li>
+                            <li><a href="#">Twitter</a></li>
+                            <li><a href="#">LinkedIn</a></li>
+                            <li><a href="#">Contact Us</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 System Design A-Z. All images used are copyright-free.</p>
+                <p>&copy; 2025 System Design Mastery. All rights reserved.</p>
             </div>
         </div>
     </footer>

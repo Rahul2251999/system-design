@@ -1,1 +1,1371 @@
---snip--
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Design Implementation | System Design Mastery</title>
+    <link rel="stylesheet" href="../../css/modern-styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="sub-header">
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <h1>System Design Mastery</h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="../../index.html">Home</a></li>
+                    <li><a href="../fundamentals/index.html">Fundamentals</a></li>
+                    <li><a href="../examples/index.html">Real-world Examples</a></li>
+                    <li><a href="../implementation/index.html" class="active">Implementation</a></li>
+                    <li><a href="../../index.html#about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <div class="container">
+            <h1>API Design Implementation</h1>
+            <p>Practical guide to designing and implementing robust, scalable APIs</p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <div class="content-grid">
+                <aside class="sidebar">
+                    <h3>Implementation Guides</h3>
+                    <ul class="sidebar-links">
+                        <li><a href="index.html">Overview</a></li>
+                        <li><a href="api-design.html" class="active">API Design</a></li>
+                        <li><a href="database-sharding.html">Database Sharding</a></li>
+                        <li><a href="load-balancing.html">Load Balancing</a></li>
+                        <li><a href="caching-strategies.html">Caching Strategies</a></li>
+                        <li><a href="microservices.html">Microservices</a></li>
+                        <li><a href="distributed-systems.html">Distributed Systems</a></li>
+                        <li><a href="security-best-practices.html">Security Best Practices</a></li>
+                    </ul>
+                </aside>
+                <main class="main-content">
+                    <article>
+                        <h2>Designing and Implementing Robust APIs</h2>
+                        <p>APIs (Application Programming Interfaces) are the backbone of modern software architecture, enabling different systems to communicate and share data. A well-designed API can significantly enhance developer productivity, system scalability, and overall user experience. This guide covers practical approaches to designing, implementing, and maintaining high-quality APIs that can evolve with your system's needs.</p>
+                        
+                        <div class="info-box">
+                            <h3>What You'll Learn</h3>
+                            <ul>
+                                <li>API design principles and best practices</li>
+                                <li>RESTful API implementation techniques</li>
+                                <li>GraphQL API development</li>
+                                <li>API versioning strategies</li>
+                                <li>Authentication and authorization</li>
+                                <li>Rate limiting and throttling</li>
+                                <li>Documentation and developer experience</li>
+                                <li>Testing and monitoring APIs</li>
+                            </ul>
+                        </div>
+
+                        <h3>API Design Principles</h3>
+
+                        <div class="concept-card">
+                            <h4>Consistency</h4>
+                            <p>Consistency in API design creates a predictable experience for developers:</p>
+                            <ul>
+                                <li><strong>Naming Conventions:</strong> Use consistent naming patterns for endpoints, parameters, and responses</li>
+                                <li><strong>Resource Structure:</strong> Maintain consistent resource hierarchies and relationships</li>
+                                <li><strong>Response Formats:</strong> Use consistent data structures and error formats</li>
+                                <li><strong>HTTP Methods:</strong> Apply HTTP methods consistently (GET, POST, PUT, DELETE, etc.)</li>
+                                <li><strong>Status Codes:</strong> Use HTTP status codes consistently and appropriately</li>
+                            </ul>
+                            <p>Example of consistent endpoint naming:</p>
+                            <pre><code>GET /users                # List users
+GET /users/{id}           # Get a specific user
+POST /users               # Create a user
+PUT /users/{id}           # Update a user
+DELETE /users/{id}        # Delete a user
+GET /users/{id}/orders    # List orders for a user</code></pre>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Resource-Oriented Design</h4>
+                            <p>Design APIs around resources (nouns) rather than actions (verbs):</p>
+                            <ul>
+                                <li><strong>Resources as Nouns:</strong> Model your API around resources (users, products, orders)</li>
+                                <li><strong>HTTP Methods as Verbs:</strong> Use HTTP methods to indicate actions on resources</li>
+                                <li><strong>Resource Relationships:</strong> Express relationships through nested resources</li>
+                                <li><strong>Collection and Item Endpoints:</strong> Distinguish between collections and individual items</li>
+                            </ul>
+                            <p>Instead of action-based endpoints like <code>/getUser</code> or <code>/createOrder</code>, use resource-based endpoints:</p>
+                            <pre><code>// Good: Resource-oriented
+GET /products
+GET /products/{id}
+POST /orders
+
+// Avoid: Action-oriented
+GET /getProducts
+POST /createOrder</code></pre>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Simplicity and Intuitiveness</h4>
+                            <p>Design APIs that are easy to understand and use:</p>
+                            <ul>
+                                <li><strong>Clear Purpose:</strong> Each endpoint should have a single, well-defined purpose</li>
+                                <li><strong>Minimal Parameters:</strong> Require only essential parameters</li>
+                                <li><strong>Sensible Defaults:</strong> Provide reasonable default values when possible</li>
+                                <li><strong>Predictable Behavior:</strong> Operations should behave as developers would expect</li>
+                                <li><strong>Self-Descriptive:</strong> Endpoints and parameters should be self-explanatory</li>
+                            </ul>
+                            <p>Example of a simple, intuitive API design:</p>
+                            <pre><code>// Search products with intuitive parameters
+GET /products?query=laptop&category=electronics&sort=price&order=asc&limit=20&page=2
+
+// Instead of complex, non-intuitive parameters
+GET /products?q=laptop&cat=3&s=1&o=0&l=20&p=2</code></pre>
+                        </div>
+
+                        <h3>RESTful API Implementation</h3>
+
+                        <div class="implementation-steps">
+                            <h4>Step 1: Define Your Resources</h4>
+                            <p>Start by identifying the key resources in your system:</p>
+                            <ol>
+                                <li>List all the entities in your domain (e.g., users, products, orders)</li>
+                                <li>Determine the relationships between these entities</li>
+                                <li>Decide which entities should be exposed as API resources</li>
+                                <li>Define the attributes of each resource</li>
+                            </ol>
+                            <p>Example resource definition for an e-commerce API:</p>
+                            <pre><code>// User resource
+{
+  "id": "string",
+  "username": "string",
+  "email": "string",
+  "firstName": "string",
+  "lastName": "string",
+  "createdAt": "datetime",
+  "updatedAt": "datetime"
+}
+
+// Product resource
+{
+  "id": "string",
+  "name": "string",
+  "description": "string",
+  "price": "number",
+  "category": "string",
+  "inventory": "number",
+  "createdAt": "datetime",
+  "updatedAt": "datetime"
+}</code></pre>
+                        </div>
+
+                        <div class="implementation-steps">
+                            <h4>Step 2: Design Your Endpoints</h4>
+                            <p>Create a consistent URL structure for your API:</p>
+                            <ol>
+                                <li>Use plural nouns for collection resources (e.g., <code>/users</code>, <code>/products</code>)</li>
+                                <li>Use resource IDs to identify specific items (e.g., <code>/users/{id}</code>)</li>
+                                <li>Express relationships through nested resources (e.g., <code>/users/{id}/orders</code>)</li>
+                                <li>Use query parameters for filtering, sorting, and pagination</li>
+                            </ol>
+                            <p>Example endpoint structure for an e-commerce API:</p>
+                            <pre><code>// User endpoints
+GET /users                  # List users
+GET /users/{id}             # Get a specific user
+POST /users                 # Create a user
+PUT /users/{id}             # Update a user
+DELETE /users/{id}          # Delete a user
+
+// Product endpoints
+GET /products               # List products
+GET /products/{id}          # Get a specific product
+POST /products              # Create a product
+PUT /products/{id}          # Update a product
+DELETE /products/{id}       # Delete a product
+
+// Order endpoints
+GET /orders                 # List orders
+GET /orders/{id}            # Get a specific order
+POST /orders                # Create an order
+PUT /orders/{id}            # Update an order
+DELETE /orders/{id}         # Delete an order
+
+// Nested resources
+GET /users/{id}/orders      # List orders for a user
+GET /orders/{id}/items      # List items in an order</code></pre>
+                        </div>
+
+                        <div class="implementation-steps">
+                            <h4>Step 3: Implement HTTP Methods Correctly</h4>
+                            <p>Use HTTP methods according to their intended purpose:</p>
+                            <ul>
+                                <li><strong>GET:</strong> Retrieve resources (should be idempotent and safe)</li>
+                                <li><strong>POST:</strong> Create new resources or perform non-idempotent operations</li>
+                                <li><strong>PUT:</strong> Update resources by replacing them entirely (should be idempotent)</li>
+                                <li><strong>PATCH:</strong> Partially update resources (should be idempotent)</li>
+                                <li><strong>DELETE:</strong> Remove resources (should be idempotent)</li>
+                            </ul>
+                            <p>Example implementation in Node.js with Express:</p>
+                            <pre><code>const express = require('express');
+const router = express.Router();
+
+// GET - List all users
+router.get('/users', async (req, res) => {
+  try {
+    const users = await User.find();
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to retrieve users' });
+  }
+});
+
+// GET - Get a specific user
+router.get('/users/:id', async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to retrieve user' });
+  }
+});
+
+// POST - Create a new user
+router.post('/users', async (req, res) => {
+  try {
+    const user = new User(req.body);
+    await user.save();
+    res.status(201).json(user);
+  } catch (error) {
+    res.status(400).json({ error: 'Failed to create user' });
+  }
+});
+
+// PUT - Update a user
+router.put('/users/:id', async (req, res) => {
+  try {
+    const user = await User.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true, runValidators: true }
+    );
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(400).json({ error: 'Failed to update user' });
+  }
+});
+
+// DELETE - Delete a user
+router.delete('/users/:id', async (req, res) => {
+  try {
+    const user = await User.findByIdAndDelete(req.params.id);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    res.status(204).send();
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to delete user' });
+  }
+});</code></pre>
+                        </div>
+
+                        <div class="implementation-steps">
+                            <h4>Step 4: Design Consistent Response Formats</h4>
+                            <p>Create standardized response structures:</p>
+                            <ol>
+                                <li>Use consistent JSON structures for all responses</li>
+                                <li>Include metadata when returning collections (pagination info, counts)</li>
+                                <li>Design a standard error response format</li>
+                                <li>Use appropriate HTTP status codes</li>
+                            </ol>
+                            <p>Example response formats:</p>
+                            <pre><code>// Success response for a single resource
+{
+  "data": {
+    "id": "123",
+    "name": "Product Name",
+    "price": 99.99,
+    // other attributes
+  }
+}
+
+// Success response for a collection
+{
+  "data": [
+    { "id": "123", "name": "Product 1", "price": 99.99 },
+    { "id": "456", "name": "Product 2", "price": 149.99 }
+  ],
+  "meta": {
+    "total": 42,
+    "page": 1,
+    "perPage": 10,
+    "totalPages": 5
+  },
+  "links": {
+    "self": "/products?page=1",
+    "next": "/products?page=2",
+    "prev": null
+  }
+}
+
+// Error response
+{
+  "error": {
+    "code": "VALIDATION_ERROR",
+    "message": "Invalid input data",
+    "details": [
+      { "field": "email", "message": "Must be a valid email address" },
+      { "field": "password", "message": "Must be at least 8 characters" }
+    ]
+  }
+}</code></pre>
+                        </div>
+
+                        <h3>GraphQL API Implementation</h3>
+
+                        <div class="concept-card">
+                            <h4>When to Choose GraphQL</h4>
+                            <p>GraphQL is particularly well-suited for certain scenarios:</p>
+                            <ul>
+                                <li><strong>Complex Data Requirements:</strong> Clients need to fetch related data in a single request</li>
+                                <li><strong>Multiple Client Types:</strong> Different clients (web, mobile, etc.) need different data</li>
+                                <li><strong>Rapid Iteration:</strong> Frontend requirements change frequently</li>
+                                <li><strong>Bandwidth Concerns:</strong> Need to minimize data transfer, especially on mobile</li>
+                                <li><strong>Complex Filtering:</strong> Clients need sophisticated query capabilities</li>
+                            </ul>
+                            <p>Consider the trade-offs between REST and GraphQL based on your specific requirements.</p>
+                        </div>
+
+                        <div class="implementation-steps">
+                            <h4>Step 1: Define Your Schema</h4>
+                            <p>Create a GraphQL schema that defines your types and operations:</p>
+                            <pre><code>const { gql } = require('apollo-server');
+
+const typeDefs = gql`
+  type User {
+    id: ID!
+    username: String!
+    email: String!
+    firstName: String
+    lastName: String
+    orders: [Order!]
+    createdAt: String!
+    updatedAt: String!
+  }
+
+  type Product {
+    id: ID!
+    name: String!
+    description: String
+    price: Float!
+    category: String
+    inventory: Int!
+    createdAt: String!
+    updatedAt: String!
+  }
+
+  type Order {
+    id: ID!
+    user: User!
+    items: [OrderItem!]!
+    totalAmount: Float!
+    status: OrderStatus!
+    createdAt: String!
+    updatedAt: String!
+  }
+
+  type OrderItem {
+    id: ID!
+    product: Product!
+    quantity: Int!
+    price: Float!
+  }
+
+  enum OrderStatus {
+    PENDING
+    PROCESSING
+    SHIPPED
+    DELIVERED
+    CANCELLED
+  }
+
+  type Query {
+    user(id: ID!): User
+    users(limit: Int, offset: Int): [User!]!
+    product(id: ID!): Product
+    products(
+      category: String,
+      minPrice: Float,
+      maxPrice: Float,
+      limit: Int,
+      offset: Int
+    ): [Product!]!
+    order(id: ID!): Order
+    orders(status: OrderStatus, limit: Int, offset: Int): [Order!]!
+  }
+
+  type Mutation {
+    createUser(input: CreateUserInput!): User!
+    updateUser(id: ID!, input: UpdateUserInput!): User!
+    deleteUser(id: ID!): Boolean!
+    
+    createProduct(input: CreateProductInput!): Product!
+    updateProduct(id: ID!, input: UpdateProductInput!): Product!
+    deleteProduct(id: ID!): Boolean!
+    
+    createOrder(input: CreateOrderInput!): Order!
+    updateOrderStatus(id: ID!, status: OrderStatus!): Order!
+    cancelOrder(id: ID!): Order!
+  }
+
+  input CreateUserInput {
+    username: String!
+    email: String!
+    password: String!
+    firstName: String
+    lastName: String
+  }
+
+  input UpdateUserInput {
+    username: String
+    email: String
+    firstName: String
+    lastName: String
+  }
+
+  input CreateProductInput {
+    name: String!
+    description: String
+    price: Float!
+    category: String
+    inventory: Int!
+  }
+
+  input UpdateProductInput {
+    name: String
+    description: String
+    price: Float
+    category: String
+    inventory: Int
+  }
+
+  input CreateOrderInput {
+    items: [OrderItemInput!]!
+  }
+
+  input OrderItemInput {
+    productId: ID!
+    quantity: Int!
+  }
+`;</code></pre>
+                        </div>
+
+                        <div class="implementation-steps">
+                            <h4>Step 2: Implement Resolvers</h4>
+                            <p>Create resolver functions to handle GraphQL operations:</p>
+                            <pre><code>const resolvers = {
+  Query: {
+    user: async (_, { id }, { dataSources }) => {
+      return dataSources.userAPI.getUserById(id);
+    },
+    users: async (_, { limit = 10, offset = 0 }, { dataSources }) => {
+      return dataSources.userAPI.getUsers(limit, offset);
+    },
+    product: async (_, { id }, { dataSources }) => {
+      return dataSources.productAPI.getProductById(id);
+    },
+    products: async (_, args, { dataSources }) => {
+      return dataSources.productAPI.getProducts(args);
+    },
+    order: async (_, { id }, { dataSources }) => {
+      return dataSources.orderAPI.getOrderById(id);
+    },
+    orders: async (_, args, { dataSources }) => {
+      return dataSources.orderAPI.getOrders(args);
+    }
+  },
+  
+  Mutation: {
+    createUser: async (_, { input }, { dataSources }) => {
+      return dataSources.userAPI.createUser(input);
+    },
+    updateUser: async (_, { id, input }, { dataSources }) => {
+      return dataSources.userAPI.updateUser(id, input);
+    },
+    deleteUser: async (_, { id }, { dataSources }) => {
+      return dataSources.userAPI.deleteUser(id);
+    },
+    // Other mutation resolvers...
+  },
+  
+  User: {
+    orders: async (parent, _, { dataSources }) => {
+      return dataSources.orderAPI.getOrdersByUserId(parent.id);
+    }
+  },
+  
+  Order: {
+    user: async (parent, _, { dataSources }) => {
+      return dataSources.userAPI.getUserById(parent.userId);
+    },
+    items: async (parent, _, { dataSources }) => {
+      return dataSources.orderAPI.getOrderItems(parent.id);
+    }
+  },
+  
+  OrderItem: {
+    product: async (parent, _, { dataSources }) => {
+      return dataSources.productAPI.getProductById(parent.productId);
+    }
+  }
+};</code></pre>
+                        </div>
+
+                        <div class="implementation-steps">
+                            <h4>Step 3: Set Up the GraphQL Server</h4>
+                            <p>Configure and start your GraphQL server:</p>
+                            <pre><code>const { ApolloServer } = require('apollo-server');
+const UserAPI = require('./datasources/user-api');
+const ProductAPI = require('./datasources/product-api');
+const OrderAPI = require('./datasources/order-api');
+
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  dataSources: () => ({
+    userAPI: new UserAPI(),
+    productAPI: new ProductAPI(),
+    orderAPI: new OrderAPI()
+  }),
+  context: ({ req }) => {
+    // Extract auth token from request headers
+    const token = req.headers.authorization || '';
+    
+    // Verify the token and get user info
+    const user = getUser(token);
+    
+    return { user };
+  }
+});
+
+server.listen().then(({ url }) => {
+  console.log(`🚀 Server ready at ${url}`);
+});</code></pre>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>GraphQL Best Practices</h4>
+                            <p>Follow these practices for effective GraphQL APIs:</p>
+                            <ul>
+                                <li><strong>Pagination:</strong> Implement cursor-based pagination for collections</li>
+                                <li><strong>Batching and Caching:</strong> Use DataLoader to batch and cache database queries</li>
+                                <li><strong>Error Handling:</strong> Return partial results with errors when possible</li>
+                                <li><strong>Rate Limiting:</strong> Implement query complexity analysis for rate limiting</li>
+                                <li><strong>Versioning:</strong> Evolve the schema gradually instead of versioning</li>
+                                <li><strong>Monitoring:</strong> Track resolver performance and error rates</li>
+                            </ul>
+                            <p>Example of implementing DataLoader for batching:</p>
+                            <pre><code>const DataLoader = require('dataloader');
+
+class UserAPI {
+  constructor() {
+    this.userLoader = new DataLoader(async (ids) => {
+      const users = await User.find({ _id: { $in: ids } });
+      
+      // Sort the results to match the order of the keys
+      const userMap = {};
+      users.forEach(user => {
+        userMap[user.id] = user;
+      });
+      
+      return ids.map(id => userMap[id] || null);
+    });
+  }
+  
+  async getUserById(id) {
+    return this.userLoader.load(id);
+  }
+  
+  // Other methods...
+}</code></pre>
+                        </div>
+
+                        <h3>API Versioning Strategies</h3>
+
+                        <div class="concept-card">
+                            <h4>URL Path Versioning</h4>
+                            <p>Include the version in the URL path:</p>
+                            <pre><code>https://api.example.com/v1/users
+https://api.example.com/v2/users</code></pre>
+                            <p><strong>Pros:</strong></p>
+                            <ul>
+                                <li>Simple and explicit</li>
+                                <li>Easy to understand and document</li>
+                                <li>Supports multiple concurrent versions</li>
+                            </ul>
+                            <p><strong>Cons:</strong></p>
+                            <ul>
+                                <li>Requires clients to update URLs when versions change</li>
+                                <li>Can lead to code duplication on the server</li>
+                            </ul>
+                            <p>Implementation example in Express:</p>
+                            <pre><code>const express = require('express');
+const app = express();
+
+// v1 routes
+const v1Router = express.Router();
+v1Router.get('/users', v1Controllers.getUsers);
+v1Router.get('/users/:id', v1Controllers.getUserById);
+app.use('/v1', v1Router);
+
+// v2 routes
+const v2Router = express.Router();
+v2Router.get('/users', v2Controllers.getUsers);
+v2Router.get('/users/:id', v2Controllers.getUserById);
+app.use('/v2', v2Router);</code></pre>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Header-Based Versioning</h4>
+                            <p>Specify the version in a custom HTTP header:</p>
+                            <pre><code>GET /users HTTP/1.1
+Host: api.example.com
+Accept-Version: v2</code></pre>
+                            <p><strong>Pros:</strong></p>
+                            <ul>
+                                <li>Keeps URLs clean and consistent</li>
+                                <li>Follows HTTP protocol design</li>
+                                <li>Separates versioning concerns from resource identification</li>
+                            </ul>
+                            <p><strong>Cons:</strong></p>
+                            <ul>
+                                <li>Less visible and harder to test</li>
+                                <li>May be overlooked in documentation</li>
+                                <li>Not supported by all HTTP clients</li>
+                            </ul>
+                            <p>Implementation example in Express:</p>
+                            <pre><code>app.get('/users', (req, res, next) => {
+  const version = req.headers['accept-version'];
+  
+  if (version === 'v2') {
+    return v2Controllers.getUsers(req, res, next);
+  }
+  
+  // Default to v1
+  return v1Controllers.getUsers(req, res, next);
+});</code></pre>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Content Negotiation</h4>
+                            <p>Use the Accept header with custom media types:</p>
+                            <pre><code>GET /users HTTP/1.1
+Host: api.example.com
+Accept: application/vnd.example.v2+json</code></pre>
+                            <p><strong>Pros:</strong></p>
+                            <ul>
+                                <li>Follows HTTP content negotiation standards</li>
+                                <li>Allows versioning of media types rather than endpoints</li>
+                                <li>Can version both the API and the representation format</li>
+                            </ul>
+                            <p><strong>Cons:</strong></p>
+                            <ul>
+                                <li>More complex to implement</li>
+                                <li>Less intuitive for API consumers</li>
+                                <li>May require custom content type parsing</li>
+                            </ul>
+                            <p>Implementation example in Express:</p>
+                            <pre><code>app.get('/users', (req, res, next) => {
+  const acceptHeader = req.headers.accept;
+  
+  if (acceptHeader.includes('application/vnd.example.v2+json')) {
+    return v2Controllers.getUsers(req, res, next);
+  }
+  
+  // Default to v1
+  return v1Controllers.getUsers(req, res, next);
+});</code></pre>
+                        </div>
+
+                        <h3>Authentication and Authorization</h3>
+
+                        <div class="implementation-steps">
+                            <h4>Step 1: Implement Token-Based Authentication</h4>
+                            <p>JWT (JSON Web Token) is a popular choice for API authentication:</p>
+                            <pre><code>const jwt = require('jsonwebtoken');
+const express = require('express');
+const router = express.Router();
+
+// Secret key for signing tokens
+const JWT_SECRET = process.env.JWT_SECRET;
+
+// Login endpoint to issue tokens
+router.post('/login', async (req, res) => {
+  const { username, password } = req.body;
+  
+  try {
+    // Validate credentials
+    const user = await User.findOne({ username });
+    if (!user || !await user.comparePassword(password)) {
+      return res.status(401).json({ error: 'Invalid credentials' });
+    }
+    
+    // Create token payload
+    const payload = {
+      userId: user.id,
+      username: user.username,
+      role: user.role
+    };
+    
+    // Sign the token
+    const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '24h' });
+    
+    // Return the token
+    res.json({ token });
+  } catch (error) {
+    res.status(500).json({ error: 'Authentication failed' });
+  }
+});
+
+// Middleware to verify tokens
+const authenticateToken = (req, res, next) => {
+  // Get token from Authorization header
+  const authHeader = req.headers.authorization;
+  const token = authHeader && authHeader.split(' ')[1]; // "Bearer TOKEN"
+  
+  if (!token) {
+    return res.status(401).json({ error: 'Authentication required' });
+  }
+  
+  try {
+    // Verify the token
+    const decoded = jwt.verify(token, JWT_SECRET);
+    
+    // Attach user info to request
+    req.user = decoded;
+    
+    next();
+  } catch (error) {
+    return res.status(403).json({ error: 'Invalid or expired token' });
+  }
+};
+
+// Protected endpoint example
+router.get('/protected-resource', authenticateToken, (req, res) => {
+  res.json({ message: 'This is protected data', user: req.user });
+});</code></pre>
+                        </div>
+
+                        <div class="implementation-steps">
+                            <h4>Step 2: Implement Role-Based Authorization</h4>
+                            <p>Control access to resources based on user roles:</p>
+                            <pre><code>// Middleware to check user roles
+const authorizeRoles = (...roles) => {
+  return (req, res, next) => {
+    // Check if user exists and has a role
+    if (!req.user || !roles.includes(req.user.role)) {
+      return res.status(403).json({ 
+        error: 'Insufficient permissions' 
+      });
+    }
+    
+    next();
+  };
+};
+
+// Admin-only endpoint
+router.delete('/users/:id', 
+  authenticateToken, 
+  authorizeRoles('admin'), 
+  async (req, res) => {
+    try {
+      await User.findByIdAndDelete(req.params.id);
+      res.status(204).send();
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to delete user' });
+    }
+  }
+);
+
+// Endpoint accessible to multiple roles
+router.get('/reports', 
+  authenticateToken, 
+  authorizeRoles('admin', 'manager'), 
+  async (req, res) => {
+    // Return reports data
+    res.json({ reports: [] });
+  }
+);</code></pre>
+                        </div>
+
+                        <div class="implementation-steps">
+                            <h4>Step 3: Implement Resource-Based Authorization</h4>
+                            <p>Control access based on resource ownership:</p>
+                            <pre><code>// Middleware to check resource ownership
+const authorizeResourceAccess = async (req, res, next) => {
+  try {
+    const resourceId = req.params.id;
+    const userId = req.user.userId;
+    
+    // Find the resource
+    const resource = await Resource.findById(resourceId);
+    
+    if (!resource) {
+      return res.status(404).json({ error: 'Resource not found' });
+    }
+    
+    // Check if user owns the resource
+    if (resource.ownerId.toString() !== userId && req.user.role !== 'admin') {
+      return res.status(403).json({ error: 'Access denied' });
+    }
+    
+    // Attach resource to request for later use
+    req.resource = resource;
+    next();
+  } catch (error) {
+    res.status(500).json({ error: 'Authorization failed' });
+  }
+};
+
+// Protected resource endpoint
+router.put('/resources/:id', 
+  authenticateToken, 
+  authorizeResourceAccess, 
+  async (req, res) => {
+    try {
+      // Update the resource
+      const updatedResource = await Resource.findByIdAndUpdate(
+        req.params.id,
+        req.body,
+        { new: true }
+      );
+      
+      res.json(updatedResource);
+    } catch (error) {
+      res.status(400).json({ error: 'Failed to update resource' });
+    }
+  }
+);</code></pre>
+                        </div>
+
+                        <h3>Rate Limiting and Throttling</h3>
+
+                        <div class="implementation-steps">
+                            <h4>Implementing Rate Limiting in Express</h4>
+                            <p>Use the express-rate-limit middleware:</p>
+                            <pre><code>const rateLimit = require('express-rate-limit');
+const RedisStore = require('rate-limit-redis');
+const Redis = require('ioredis');
+
+const redisClient = new Redis({
+  host: process.env.REDIS_HOST,
+  port: process.env.REDIS_PORT
+});
+
+// Basic rate limiter
+const apiLimiter = rateLimit({
+  store: new RedisStore({
+    client: redisClient,
+    prefix: 'rate-limit:'
+  }),
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
+  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+  message: {
+    error: 'Too many requests, please try again later.'
+  }
+});
+
+// Apply rate limiting to all API routes
+app.use('/api', apiLimiter);
+
+// Different limits for different endpoints
+const loginLimiter = rateLimit({
+  store: new RedisStore({
+    client: redisClient,
+    prefix: 'login-limit:'
+  }),
+  windowMs: 60 * 60 * 1000, // 1 hour
+  max: 5, // limit each IP to 5 login attempts per hour
+  message: {
+    error: 'Too many login attempts, please try again later.'
+  }
+});
+
+app.use('/api/login', loginLimiter);</code></pre>
+                        </div>
+
+                        <div class="implementation-steps">
+                            <h4>Implementing Tiered Rate Limiting</h4>
+                            <p>Apply different limits based on user roles or subscription tiers:</p>
+                            <pre><code>// Middleware to apply different rate limits based on user tier
+const tieredRateLimit = (req, res, next) => {
+  // Get user from request (set by authentication middleware)
+  const user = req.user;
+  
+  // Define limits for different tiers
+  const limits = {
+    free: 100,      // 100 requests per hour for free tier
+    basic: 1000,    // 1000 requests per hour for basic tier
+    premium: 10000  // 10000 requests per hour for premium tier
+  };
+  
+  // Default to free tier if no user or tier not specified
+  const tier = user?.tier || 'free';
+  const limit = limits[tier] || limits.free;
+  
+  // Create a rate limiter for this tier
+  const limiter = rateLimit({
+    store: new RedisStore({
+      client: redisClient,
+      prefix: `rate-limit:${tier}:`
+    }),
+    windowMs: 60 * 60 * 1000, // 1 hour
+    max: limit,
+    keyGenerator: (req) => {
+      // Use user ID as key if available, otherwise IP
+      return user?.userId || req.ip;
+    },
+    message: {
+      error: `Rate limit exceeded for ${tier} tier. Please upgrade your plan or try again later.`
+    }
+  });
+  
+  // Apply the limiter to this request
+  return limiter(req, res, next);
+};
+
+// Apply tiered rate limiting to API routes
+app.use('/api', authenticateToken, tieredRateLimit);</code></pre>
+                        </div>
+
+                        <h3>API Documentation</h3>
+
+                        <div class="concept-card">
+                            <h4>OpenAPI (Swagger) Specification</h4>
+                            <p>Document your API using the OpenAPI specification:</p>
+                            <pre><code>// openapi.yaml
+openapi: 3.0.0
+info:
+  title: E-commerce API
+  description: API for managing users, products, and orders
+  version: 1.0.0
+servers:
+  - url: https://api.example.com/v1
+    description: Production server
+  - url: https://staging-api.example.com/v1
+    description: Staging server
+paths:
+  /users:
+    get:
+      summary: List all users
+      description: Returns a list of users with pagination
+      parameters:
+        - name: limit
+          in: query
+          description: Maximum number of users to return
+          schema:
+            type: integer
+            default: 10
+        - name: offset
+          in: query
+          description: Number of users to skip
+          schema:
+            type: integer
+            default: 0
+      responses:
+        '200':
+          description: A list of users
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/User'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+    post:
+      summary: Create a new user
+      description: Creates a new user account
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserInput'
+      responses:
+        '201':
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/User'
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        username:
+          type: string
+        email:
+          type: string
+          format: email
+        firstName:
+          type: string
+        lastName:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    CreateUserInput:
+      type: object
+      required:
+        - username
+        - email
+        - password
+      properties:
+        username:
+          type: string
+          minLength: 3
+          maxLength: 50
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          minLength: 8
+          format: password
+        firstName:
+          type: string
+        lastName:
+          type: string
+    PaginationMeta:
+      type: object
+      properties:
+        total:
+          type: integer
+        page:
+          type: integer
+        perPage:
+          type: integer
+        totalPages:
+          type: integer
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+            details:
+              type: array
+              items:
+                type: object
+                properties:
+                  field:
+                    type: string
+                  message:
+                    type: string</code></pre>
+                        </div>
+
+                        <div class="implementation-steps">
+                            <h4>Generating API Documentation</h4>
+                            <p>Use Swagger UI to create interactive documentation:</p>
+                            <pre><code>const express = require('express');
+const swaggerUi = require('swagger-ui-express');
+const YAML = require('yamljs');
+const path = require('path');
+
+const app = express();
+
+// Load OpenAPI specification
+const swaggerDocument = YAML.load(path.join(__dirname, 'openapi.yaml'));
+
+// Serve Swagger UI
+app.use(
+  '/api-docs',
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerDocument, {
+    explorer: true,
+    customCss: '.swagger-ui .topbar { display: none }'
+  })
+);
+
+// API routes
+app.use('/api/v1', apiRoutes);
+
+app.listen(3000, () => {
+  console.log('Server running on port 3000');
+  console.log('API documentation available at http://localhost:3000/api-docs');
+});</code></pre>
+                        </div>
+
+                        <h3>Testing and Monitoring</h3>
+
+                        <div class="implementation-steps">
+                            <h4>API Testing with Jest and Supertest</h4>
+                            <p>Write automated tests for your API endpoints:</p>
+                            <pre><code>const request = require('supertest');
+const app = require('../app');
+const mongoose = require('mongoose');
+const User = require('../models/user');
+const jwt = require('jsonwebtoken');
+
+describe('User API', () => {
+  let token;
+  
+  // Setup before tests
+  beforeAll(async () => {
+    // Connect to test database
+    await mongoose.connect(process.env.TEST_MONGODB_URI);
+    
+    // Create a test user
+    const testUser = new User({
+      username: 'testuser',
+      email: 'test@example.com',
+      password: 'password123'
+    });
+    await testUser.save();
+    
+    // Generate a token for the test user
+    token = jwt.sign(
+      { userId: testUser._id, username: testUser.username },
+      process.env.JWT_SECRET,
+      { expiresIn: '1h' }
+    );
+  });
+  
+  // Cleanup after tests
+  afterAll(async () => {
+    await User.deleteMany({});
+    await mongoose.connection.close();
+  });
+  
+  // Test GET /users endpoint
+  describe('GET /api/users', () => {
+    it('should return a list of users', async () => {
+      const response = await request(app)
+        .get('/api/users')
+        .set('Authorization', `Bearer ${token}`);
+      
+      expect(response.status).toBe(200);
+      expect(response.body.data).toBeInstanceOf(Array);
+      expect(response.body.meta).toHaveProperty('total');
+    });
+    
+    it('should return 401 if not authenticated', async () => {
+      const response = await request(app).get('/api/users');
+      
+      expect(response.status).toBe(401);
+    });
+  });
+  
+  // Test POST /users endpoint
+  describe('POST /api/users', () => {
+    it('should create a new user', async () => {
+      const userData = {
+        username: 'newuser',
+        email: 'new@example.com',
+        password: 'newpassword123'
+      };
+      
+      const response = await request(app)
+        .post('/api/users')
+        .set('Authorization', `Bearer ${token}`)
+        .send(userData);
+      
+      expect(response.status).toBe(201);
+      expect(response.body.data).toHaveProperty('id');
+      expect(response.body.data.username).toBe(userData.username);
+      expect(response.body.data.email).toBe(userData.email);
+      expect(response.body.data).not.toHaveProperty('password');
+    });
+    
+    it('should return 400 for invalid input', async () => {
+      const invalidData = {
+        username: 'u', // too short
+        email: 'invalid-email',
+        password: 'short'
+      };
+      
+      const response = await request(app)
+        .post('/api/users')
+        .set('Authorization', `Bearer ${token}`)
+        .send(invalidData);
+      
+      expect(response.status).toBe(400);
+      expect(response.body).toHaveProperty('error');
+    });
+  });
+});</code></pre>
+                        </div>
+
+                        <div class="implementation-steps">
+                            <h4>API Monitoring with Prometheus and Grafana</h4>
+                            <p>Implement monitoring for your API:</p>
+                            <pre><code>const express = require('express');
+const promClient = require('prom-client');
+const responseTime = require('response-time');
+
+const app = express();
+
+// Create a Registry to register metrics
+const register = new promClient.Registry();
+
+// Add default metrics (memory usage, CPU usage, etc.)
+promClient.collectDefaultMetrics({ register });
+
+// Create custom metrics
+const httpRequestDurationMicroseconds = new promClient.Histogram({
+  name: 'http_request_duration_ms',
+  help: 'Duration of HTTP requests in ms',
+  labelNames: ['method', 'route', 'status_code'],
+  buckets: [5, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000]
+});
+
+const httpRequestCounter = new promClient.Counter({
+  name: 'http_requests_total',
+  help: 'Total number of HTTP requests',
+  labelNames: ['method', 'route', 'status_code']
+});
+
+// Register custom metrics
+register.registerMetric(httpRequestDurationMicroseconds);
+register.registerMetric(httpRequestCounter);
+
+// Middleware to measure response time and record metrics
+app.use(responseTime((req, res, time) => {
+  const route = req.route ? req.route.path : req.path;
+  const method = req.method;
+  const statusCode = res.statusCode;
+  
+  // Record request duration
+  httpRequestDurationMicroseconds
+    .labels(method, route, statusCode)
+    .observe(time);
+  
+  // Increment request counter
+  httpRequestCounter
+    .labels(method, route, statusCode)
+    .inc();
+}));
+
+// Expose metrics endpoint for Prometheus to scrape
+app.get('/metrics', async (req, res) => {
+  res.set('Content-Type', register.contentType);
+  res.end(await register.metrics());
+});
+
+// API routes
+app.use('/api', apiRoutes);
+
+app.listen(3000, () => {
+  console.log('Server running on port 3000');
+  console.log('Metrics available at http://localhost:3000/metrics');
+});</code></pre>
+                        </div>
+
+                        <h3>Conclusion</h3>
+                        <p>Designing and implementing robust APIs is a critical skill for modern software development. By following the principles and practices outlined in this guide, you can create APIs that are easy to use, scalable, secure, and maintainable.</p>
+                        
+                        <p>Remember these key takeaways:</p>
+                        <ul>
+                            <li>Design APIs with consistency, simplicity, and intuitiveness in mind</li>
+                            <li>Choose the appropriate API style (REST, GraphQL) based on your requirements</li>
+                            <li>Implement proper authentication, authorization, and rate limiting</li>
+                            <li>Document your API thoroughly using standards like OpenAPI</li>
+                            <li>Test and monitor your API to ensure reliability and performance</li>
+                        </ul>
+                        
+                        <div class="next-steps">
+                            <h3>Next Steps</h3>
+                            <p>Continue your learning with these related topics:</p>
+                            <div class="button-group">
+                                <a href="database-sharding.html" class="btn btn-primary">Learn Database Sharding</a>
+                                <a href="microservices.html" class="btn btn-secondary">Explore Microservices Architecture</a>
+                            </div>
+                        </div>
+                    </article>
+                </main>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>System Design Mastery</h2>
+                    <p>Learn. Design. Implement.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3>Quick Links</h3>
+                        <ul>
+                            <li><a href="../../index.html">Home</a></li>
+                            <li><a href="../fundamentals/index.html">Fundamentals</a></li>
+                            <li><a href="../examples/index.html">Examples</a></li>
+                            <li><a href="../implementation/index.html">Implementation</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Resources</h3>
+                        <ul>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Cheat Sheets</a></li>
+                            <li><a href="#">Interview Prep</a></li>
+                            <li><a href="#">Community</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Connect</h3>
+                        <ul>
+                            <li><a href="#">GitHub</a></li>
+                            <li><a href="#">Twitter</a></li>
+                            <li><a href="#">LinkedIn</a></li>
+                            <li><a href="#">Contact Us</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 System Design Mastery. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../js/main.js"></script>
+</body>
+</html>

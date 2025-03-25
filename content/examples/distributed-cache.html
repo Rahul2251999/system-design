@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Distributed Cache System Design | System Design Mastery</title>
+    <link rel="stylesheet" href="../../css/modern-styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="sub-header">
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <h1>System Design Mastery</h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="../../index.html">Home</a></li>
+                    <li><a href="../fundamentals/index.html">Fundamentals</a></li>
+                    <li><a href="../examples/index.html" class="active">Real-world Examples</a></li>
+                    <li><a href="../implementation/index.html">Implementation</a></li>
+                    <li><a href="../../index.html#about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <div class="container">
+            <h1>Distributed Cache System Design</h1>
+            <p>How to design a scalable, high-performance distributed caching system like Redis or Memcached</p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <div class="content-grid">
+                <aside class="sidebar">
+                    <h3>Example Systems</h3>
+                    <ul class="sidebar-links">
+                        <li><a href="netflix.html">Netflix</a></li>
+                        <li><a href="uber.html">Uber</a></li>
+                        <li><a href="amazon.html">Amazon</a></li>
+                        <li><a href="twitter.html">Twitter</a></li>
+                        <li><a href="url-shortener.html">URL Shortener</a></li>
+                        <li><a href="distributed-cache.html" class="active">Distributed Cache</a></li>
+                        <li><a href="payment-system.html">Payment System</a></li>
+                        <li><a href="chat-application.html">Chat Application</a></li>
+                    </ul>
+                </aside>
+                <main class="main-content">
+                    <article>
+                        <h2>Distributed Cache: Accelerating Application Performance</h2>
+                        <p>Distributed caching systems like Redis and Memcached are critical components in modern high-performance architectures. They store frequently accessed data in memory across multiple nodes, reducing database load and improving application response times. Let's explore how to design a scalable distributed caching system that can handle millions of operations per second with sub-millisecond latency.</p>
+                        
+                        <div class="info-box">
+                            <h3>Key System Design Challenges</h3>
+                            <p>A distributed cache system faces several unique challenges:</p>
+                            <ul>
+                                <li><strong>High Throughput:</strong> Handling millions of operations per second</li>
+                                <li><strong>Low Latency:</strong> Providing sub-millisecond response times</li>
+                                <li><strong>Data Distribution:</strong> Efficiently distributing data across multiple nodes</li>
+                                <li><strong>Consistency:</strong> Managing data consistency across distributed nodes</li>
+                                <li><strong>Fault Tolerance:</strong> Maintaining availability despite node failures</li>
+                                <li><strong>Scalability:</strong> Adding or removing nodes without disruption</li>
+                            </ul>
+                        </div>
+
+                        <div class="image-content-block">
+                            <div class="image-block">
+                                <img src="../../assets/images/distributed-cache.png" alt="Distributed Cache Architecture">
+                            </div>
+                            <div class="content-block">
+                                <h3>Distributed Cache Architecture Overview</h3>
+                                <p>A distributed cache system typically consists of these components:</p>
+                                <ol>
+                                    <li><strong>Client Library:</strong> Provides API for applications to interact with the cache</li>
+                                    <li><strong>Cache Nodes:</strong> Servers that store cached data in memory</li>
+                                    <li><strong>Partitioning Mechanism:</strong> Distributes data across nodes</li>
+                                    <li><strong>Replication System:</strong> Creates redundant copies for fault tolerance</li>
+                                    <li><strong>Cluster Management:</strong> Handles node discovery and health monitoring</li>
+                                </ol>
+                                <p>The diagram illustrates how these components interact to provide a distributed caching service.</p>
+                            </div>
+                        </div>
+
+                        <h3>Functional Requirements</h3>
+
+                        <div class="concept-card">
+                            <h4>Core Functionality</h4>
+                            <p>A distributed cache system should provide these basic operations:</p>
+                            <ul>
+                                <li><strong>Get:</strong> Retrieve a value by key</li>
+                                <li><strong>Set:</strong> Store a key-value pair</li>
+                                <li><strong>Delete:</strong> Remove a key-value pair</li>
+                                <li><strong>Update:</strong> Modify an existing value</li>
+                                <li><strong>Expiration:</strong> Automatically remove entries after a specified time</li>
+                                <li><strong>Atomic Operations:</strong> Support for operations like increment/decrement</li>
+                            </ul>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Advanced Features</h4>
+                            <p>Beyond basic operations, modern distributed caches often provide:</p>
+                            <ul>
+                                <li><strong>Data Structures:</strong> Support for lists, sets, sorted sets, hashes</li>
+                                <li><strong>Pub/Sub:</strong> Publish-subscribe messaging patterns</li>
+                                <li><strong>Transactions:</strong> Grouping operations in atomic transactions</li>
+                                <li><strong>Lua Scripting:</strong> Custom operations using embedded scripts</li>
+                                <li><strong>Persistence:</strong> Optional durability through snapshots or logs</li>
+                                <li><strong>Eviction Policies:</strong> Strategies for removing data when memory is full</li>
+                            </ul>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Non-Functional Requirements</h4>
+                            <p>The system should also meet these quality attributes:</p>
+                            <ul>
+                                <li><strong>High Performance:</strong> Sub-millisecond latency for most operations</li>
+                                <li><strong>Scalability:</strong> Linear performance scaling with additional nodes</li>
+                                <li><strong>Availability:</strong> Continued operation despite node failures</li>
+                                <li><strong>Reliability:</strong> Data should not be lost unexpectedly</li>
+                                <li><strong>Consistency:</strong> Clear consistency model for distributed operations</li>
+                                <li><strong>Observability:</strong> Comprehensive monitoring and metrics</li>
+                            </ul>
+                        </div>
+
+                        <h3>Data Partitioning</h3>
+
+                        <div class="concept-card">
+                            <h4>Partitioning Strategies</h4>
+                            <p>Distributing data across nodes requires a partitioning strategy:</p>
+                            <ul>
+                                <li><strong>Hash Partitioning:</strong> Apply a hash function to the key to determine the node</li>
+                                <li><strong>Range Partitioning:</strong> Divide key space into ranges assigned to different nodes</li>
+                                <li><strong>Consistent Hashing:</strong> Special hashing that minimizes redistribution when nodes change</li>
+                                <li><strong>Virtual Nodes:</strong> Each physical node handles multiple virtual partitions</li>
+                            </ul>
+                            <p>Consistent hashing with virtual nodes is the most common approach in modern distributed caches.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Consistent Hashing</h4>
+                            <p>Consistent hashing provides several advantages:</p>
+                            <ul>
+                                <li><strong>Minimal Redistribution:</strong> When nodes are added or removed, only a fraction of keys need to move</li>
+                                <li><strong>Balanced Distribution:</strong> Keys are distributed relatively evenly across nodes</li>
+                                <li><strong>Scalability:</strong> Nodes can be added or removed with minimal disruption</li>
+                                <li><strong>Implementation:</strong> Typically uses a hash ring with nodes and keys placed on the ring</li>
+                            </ul>
+                            <p>With consistent hashing, each key is assigned to the first node encountered when moving clockwise from the key's position on the hash ring.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Virtual Nodes</h4>
+                            <p>Virtual nodes improve consistent hashing:</p>
+                            <ul>
+                                <li><strong>Multiple Points:</strong> Each physical node is represented by multiple points on the hash ring</li>
+                                <li><strong>Better Distribution:</strong> Reduces variance in key distribution</li>
+                                <li><strong>Flexible Weighting:</strong> Nodes with more capacity can handle more virtual nodes</li>
+                                <li><strong>Smoother Rebalancing:</strong> More gradual redistribution when nodes change</li>
+                            </ul>
+                            <p>The number of virtual nodes per physical node is a tunable parameter, typically in the hundreds or thousands.</p>
+                        </div>
+
+                        <h3>Replication and Consistency</h3>
+
+                        <div class="concept-card">
+                            <h4>Replication Strategies</h4>
+                            <p>Replication provides redundancy for fault tolerance:</p>
+                            <ul>
+                                <li><strong>Master-Slave:</strong> One primary node with one or more replicas</li>
+                                <li><strong>Multi-Master:</strong> Multiple nodes can accept writes</li>
+                                <li><strong>Quorum-based:</strong> Operations succeed with agreement from a subset of nodes</li>
+                                <li><strong>Replication Factor:</strong> Number of copies of each data item</li>
+                            </ul>
+                            <p>The choice of replication strategy affects both availability and consistency.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Consistency Models</h4>
+                            <p>Distributed caches can implement various consistency models:</p>
+                            <ul>
+                                <li><strong>Strong Consistency:</strong> All reads reflect the most recent write</li>
+                                <li><strong>Eventual Consistency:</strong> Replicas converge over time</li>
+                                <li><strong>Read-your-writes Consistency:</strong> Clients see their own writes immediately</li>
+                                <li><strong>Session Consistency:</strong> Consistent within a client session</li>
+                                <li><strong>Monotonic Reads:</strong> Successive reads see increasingly newer versions</li>
+                            </ul>
+                            <p>Most distributed caches prioritize performance and availability over strong consistency.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Write Propagation</h4>
+                            <p>Changes must be propagated to replicas:</p>
+                            <ul>
+                                <li><strong>Synchronous:</strong> Wait for all (or a quorum of) replicas to acknowledge</li>
+                                <li><strong>Asynchronous:</strong> Return success after local write, propagate in background</li>
+                                <li><strong>Write-back:</strong> Batch updates to replicas for efficiency</li>
+                                <li><strong>Write-through:</strong> Update replicas immediately</li>
+                            </ul>
+                            <p>Asynchronous replication is common in distributed caches for performance reasons.</p>
+                        </div>
+
+                        <h3>Eviction Policies</h3>
+
+                        <div class="concept-card">
+                            <h4>Memory Management</h4>
+                            <p>When memory is limited, the cache must decide what to remove:</p>
+                            <ul>
+                                <li><strong>LRU (Least Recently Used):</strong> Evict items that haven't been accessed recently</li>
+                                <li><strong>LFU (Least Frequently Used):</strong> Evict items that are accessed least often</li>
+                                <li><strong>FIFO (First In First Out):</strong> Evict the oldest items first</li>
+                                <li><strong>TTL (Time To Live):</strong> Evict items that have expired</li>
+                                <li><strong>Random:</strong> Evict random items when memory is full</li>
+                            </ul>
+                            <p>LRU is the most common policy, often implemented with approximations for efficiency.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Approximated LRU</h4>
+                            <p>True LRU can be expensive to implement in a distributed system:</p>
+                            <ul>
+                                <li><strong>Sampling:</strong> Examine a random sample of items when eviction is needed</li>
+                                <li><strong>Multiple LRU Queues:</strong> Maintain items in different priority queues</li>
+                                <li><strong>Segmented LRU:</strong> Divide cache into protected and probationary segments</li>
+                                <li><strong>Clock Algorithm:</strong> Approximate LRU using a circular buffer</li>
+                            </ul>
+                            <p>These approximations trade perfect LRU ordering for implementation efficiency.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Eviction Tuning</h4>
+                            <p>Eviction policies can be tuned for specific workloads:</p>
+                            <ul>
+                                <li><strong>Memory Limits:</strong> Set maximum memory usage per node</li>
+                                <li><strong>Eviction Thresholds:</strong> Start eviction before memory is completely full</li>
+                                <li><strong>Item Size Awareness:</strong> Consider item size in eviction decisions</li>
+                                <li><strong>Multiple Policies:</strong> Different policies for different data types</li>
+                                <li><strong>No-Eviction Mode:</strong> Return errors when memory is full instead of evicting</li>
+                            </ul>
+                            <p>Proper tuning of eviction policies is crucial for cache efficiency.</p>
+                        </div>
+
+                        <h3>Client-Side Design</h3>
+
+                        <div class="concept-card">
+                            <h4>Client Library Features</h4>
+                            <p>The client library provides the interface to the cache:</p>
+                            <ul>
+                                <li><strong>Connection Pooling:</strong> Reuse connections for efficiency</li>
+                                <li><strong>Request Routing:</strong> Direct requests to the appropriate node</li>
+                                <li><strong>Consistent Hashing:</strong> Implement the same hashing algorithm as the server</li>
+                                <li><strong>Automatic Retries:</strong> Retry failed operations with backoff</li>
+                                <li><strong>Timeout Handling:</strong> Gracefully handle unresponsive nodes</li>
+                                <li><strong>Circuit Breaking:</strong> Stop sending requests to failing nodes</li>
+                            </ul>
+                            <p>A well-designed client library is essential for efficient and reliable cache access.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Client-Side Caching</h4>
+                            <p>Some systems implement an additional layer of caching in the client:</p>
+                            <ul>
+                                <li><strong>Near Cache:</strong> Keep a local copy of frequently accessed items</li>
+                                <li><strong>Write-Through:</strong> Update both local and remote cache on writes</li>
+                                <li><strong>Invalidation:</strong> Mechanism to invalidate local cache when remote data changes</li>
+                                <li><strong>Time-Based Expiration:</strong> Automatically expire local entries after a time</li>
+                                <li><strong>Size Limits:</strong> Constrain the size of the local cache</li>
+                            </ul>
+                            <p>Client-side caching can further reduce latency but adds complexity for consistency management.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Batching and Pipelining</h4>
+                            <p>Performance optimizations for multiple operations:</p>
+                            <ul>
+                                <li><strong>Batching:</strong> Combine multiple operations into a single network request</li>
+                                <li><strong>Pipelining:</strong> Send multiple requests without waiting for responses</li>
+                                <li><strong>Multi-Get:</strong> Specialized operation to retrieve multiple keys at once</li>
+                                <li><strong>Bulk Operations:</strong> Set or delete multiple items efficiently</li>
+                                <li><strong>Lua Scripts:</strong> Execute complex operations server-side to reduce round trips</li>
+                            </ul>
+                            <p>These techniques can significantly improve throughput, especially for small operations.</p>
+                        </div>
+
+                        <h3>Cluster Management</h3>
+
+                        <div class="concept-card">
+                            <h4>Node Discovery</h4>
+                            <p>Nodes need to discover and communicate with each other:</p>
+                            <ul>
+                                <li><strong>Gossip Protocol:</strong> Nodes exchange information about cluster state</li>
+                                <li><strong>Centralized Registry:</strong> External service tracks node membership</li>
+                                <li><strong>Configuration Service:</strong> Zookeeper or etcd for cluster coordination</li>
+                                <li><strong>Seed Nodes:</strong> Initial contact points for joining the cluster</li>
+                                <li><strong>Heartbeats:</strong> Regular signals to detect node failures</li>
+                            </ul>
+                            <p>Gossip protocols are common in distributed caches for their decentralized nature.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Failure Detection</h4>
+                            <p>The system must detect and handle node failures:</p>
+                            <ul>
+                                <li><strong>Timeout-based:</strong> Consider a node failed if it doesn't respond within a timeout</li>
+                                <li><strong>Phi Accrual:</strong> Adaptive failure detection based on historical patterns</li>
+                                <li><strong>Quorum-based:</strong> Multiple nodes must agree that a node has failed</li>
+                                <li><strong>Split Brain Prevention:</strong> Mechanisms to handle network partitions</li>
+                                <li><strong>Automatic Recovery:</strong> Procedures for rejoining the cluster after recovery</li>
+                            </ul>
+                            <p>Accurate failure detection is crucial to avoid unnecessary data redistribution.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Rebalancing</h4>
+                            <p>When nodes join or leave, data must be redistributed:</p>
+                            <ul>
+                                <li><strong>Incremental Rebalancing:</strong> Move data gradually to avoid performance impact</li>
+                                <li><strong>Background Transfer:</strong> Transfer data without blocking operations</li>
+                                <li><strong>Throttling:</strong> Limit the rate of data transfer</li>
+                                <li><strong>Parallel Transfers:</strong> Multiple nodes participate in rebalancing</li>
+                                <li><strong>Versioning:</strong> Track data versions during rebalancing</li>
+                            </ul>
+                            <p>Efficient rebalancing is essential for maintaining performance during cluster changes.</p>
+                        </div>
+
+                        <h3>Persistence and Recovery</h3>
+
+                        <div class="concept-card">
+                            <h4>Persistence Options</h4>
+                            <p>While primarily in-memory, many distributed caches offer persistence:</p>
+                            <ul>
+                                <li><strong>Snapshotting:</strong> Periodically write the entire dataset to disk</li>
+                                <li><strong>Append-Only File:</strong> Log all write operations for replay</li>
+                                <li><strong>Combination:</strong> Use both snapshots and logs for efficiency</li>
+                                <li><strong>No Persistence:</strong> Pure in-memory operation with no durability</li>
+                                <li><strong>Selective Persistence:</strong> Persist only certain data</li>
+                            </ul>
+                            <p>Persistence adds durability but impacts performance, so it's often optional.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Recovery Procedures</h4>
+                            <p>After a node failure, data must be recovered:</p>
+                            <ul>
+                                <li><strong>Replica Promotion:</strong> Promote a replica to primary</li>
+                                <li><strong>Data Transfer:</strong> Copy data from surviving nodes</li>
+                                <li><strong>Log Replay:</strong> Replay persisted operation logs</li>
+                                <li><strong>Snapshot Loading:</strong> Load the most recent snapshot</li>
+                                <li><strong>Incremental Recovery:</strong> Recover the most critical data first</li>
+                            </ul>
+                            <p>Recovery procedures should minimize downtime and data loss.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Backup Strategies</h4>
+                            <p>For disaster recovery, additional backup mechanisms may be needed:</p>
+                            <ul>
+                                <li><strong>Cross-Region Replication:</strong> Replicate data across geographic regions</li>
+                                <li><strong>Scheduled Backups:</strong> Regular backups to external storage</li>
+                                <li><strong>Point-in-Time Recovery:</strong> Ability to restore to a specific moment</li>
+                                <li><strong>Backup Verification:</strong> Regularly test backup integrity</li>
+                                <li><strong>Backup Automation:</strong> Automate backup procedures</li>
+                            </ul>
+                            <p>Comprehensive backup strategies protect against catastrophic failures.</p>
+                        </div>
+
+                        <h3>Monitoring and Observability</h3>
+
+                        <div class="concept-card">
+                            <h4>Key Metrics</h4>
+                            <p>Important metrics to monitor in a distributed cache:</p>
+                            <ul>
+                                <li><strong>Hit Rate:</strong> Percentage of requests that find data in the cache</li>
+                                <li><strong>Latency:</strong> Response time for operations</li>
+                                <li><strong>Throughput:</strong> Operations per second</li>
+                                <li><strong>Memory Usage:</strong> Current and peak memory consumption</li>
+                                <li><strong>Eviction Rate:</strong> Items evicted per second</li>
+                                <li><strong>Network Traffic:</strong> Bandwidth usage between nodes</li>
+                                <li><strong>CPU Usage:</strong> Processor utilization</li>
+                                <li><strong>Connection Count:</strong> Number of client connections</li>
+                            </ul>
+                            <p>These metrics help identify performance issues and capacity needs.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Alerting</h4>
+                            <p>Automated alerts should be configured for:</p>
+                            <ul>
+                                <li><strong>Node Failures:</strong> When a node becomes unavailable</li>
+                                <li><strong>High Latency:</strong> When response times exceed thresholds</li>
+                                <li><strong>Memory Pressure:</strong> When approaching memory limits</li>
+                                <li><strong>High Eviction Rate:</strong> When many items are being evicted</li>
+                                <li><strong>Replication Lag:</strong> When replicas fall behind</li>
+                                <li><strong>Connection Spikes:</strong> Sudden increases in client connections</li>
+                                <li><strong>Network Issues:</strong> Communication problems between nodes</li>
+                            </ul>
+                            <p>Proactive alerting helps address issues before they impact users.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Debugging Tools</h4>
+                            <p>Tools for troubleshooting distributed cache issues:</p>
+                            <ul>
+                                <li><strong>Command-line Interfaces:</strong> Direct interaction with cache nodes</li>
+                                <li><strong>Admin UIs:</strong> Graphical interfaces for monitoring and management</li>
+                                <li><strong>Slow Operation Logs:</strong> Records of operations that took too long</li>
+                                <li><strong>Key Distribution Analysis:</strong> Tools to examine data distribution</li>
+                                <li><strong>Traffic Simulation:</strong> Load testing tools to reproduce issues</li>
+                                <li><strong>Distributed Tracing:</strong> Track requests across nodes</li>
+                            </ul>
+                            <p>These tools help diagnose and resolve complex distributed system issues.</p>
+                        </div>
+
+                        <h3>Implementation Considerations</h3>
+                        <ol>
+                            <li><strong>Start with a clear understanding of access patterns</strong> to optimize for your specific use case</li>
+                            <li><strong>Choose the right consistency model</strong> based on application requirements</li>
+                            <li><strong>Implement proper partitioning</strong> with consistent hashing and virtual nodes</li>
+                            <li><strong>Design for failure</strong> with appropriate replication and recovery mechanisms</li>
+                            <li><strong>Tune eviction policies</strong> based on your data characteristics</li>
+                            <li><strong>Optimize client libraries</strong> for efficient connection management and request routing</li>
+                            <li><strong>Implement comprehensive monitoring</strong> to detect and diagnose issues</li>
+                            <li><strong>Plan for scaling</strong> from the beginning</li>
+                            <li><strong>Consider persistence needs</strong> and their performance impact</li>
+                            <li><strong>Test thoroughly</strong> under realistic load and failure scenarios</li>
+                        </ol>
+
+                        <div class="next-steps">
+                            <h3>Next Steps</h3>
+                            <p>Explore other system design examples or learn how to implement a distributed cache:</p>
+                            <div class="button-group">
+                                <a href="payment-system.html" class="btn btn-primary">Explore Payment System Design</a>
+                                <a href="../implementation/distributed-cache.html" class="btn btn-secondary">Learn Distributed Cache Implementation</a>
+                            </div>
+                        </div>
+                    </article>
+                </main>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>System Design Mastery</h2>
+                    <p>Learn. Design. Implement.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3>Quick Links</h3>
+                        <ul>
+                            <li><a href="../../index.html">Home</a></li>
+                            <li><a href="../fundamentals/index.html">Fundamentals</a></li>
+                            <li><a href="../examples/index.html">Examples</a></li>
+                            <li><a href="../implementation/index.html">Implementation</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Resources</h3>
+                        <ul>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Cheat Sheets</a></li>
+                            <li><a href="#">Interview Prep</a></li>
+                            <li><a href="#">Community</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Connect</h3>
+                        <ul>
+                            <li><a href="#">GitHub</a></li>
+                            <li><a href="#">Twitter</a></li>
+                            <li><a href="#">LinkedIn</a></li>
+                            <li><a href="#">Contact Us</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 System Design Mastery. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../js/main.js"></script>
+</body>
+</html>

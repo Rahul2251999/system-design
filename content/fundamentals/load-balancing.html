@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Load Balancing | System Design Mastery</title>
+    <link rel="stylesheet" href="../../css/modern-styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="sub-header">
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <h1>System Design Mastery</h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="../../index.html">Home</a></li>
+                    <li><a href="../fundamentals/index.html" class="active">Fundamentals</a></li>
+                    <li><a href="../examples/index.html">Real-world Examples</a></li>
+                    <li><a href="../implementation/index.html">Implementation</a></li>
+                    <li><a href="../../index.html#about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <div class="container">
+            <h1>Load Balancing</h1>
+            <p>Distributing network traffic efficiently across multiple servers to ensure high availability and reliability</p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <div class="content-grid">
+                <aside class="sidebar">
+                    <h3>Fundamentals Topics</h3>
+                    <ul class="sidebar-links">
+                        <li><a href="scalability.html">Scalability</a></li>
+                        <li><a href="reliability.html">Reliability</a></li>
+                        <li><a href="availability.html">Availability</a></li>
+                        <li><a href="performance.html">Performance</a></li>
+                        <li><a href="load-balancing.html" class="active">Load Balancing</a></li>
+                        <li><a href="caching.html">Caching</a></li>
+                        <li><a href="database-sharding.html">Database Sharding</a></li>
+                        <li><a href="cap-theorem.html">CAP Theorem</a></li>
+                        <li><a href="consistency-patterns.html">Consistency Patterns</a></li>
+                        <li><a href="microservices.html">Microservices Architecture</a></li>
+                    </ul>
+                </aside>
+                <main class="main-content">
+                    <article>
+                        <h2>What is Load Balancing?</h2>
+                        <p>Load balancing is the process of distributing network traffic across multiple servers to ensure no single server bears too much demand. By spreading the workload across multiple servers, load balancing improves application responsiveness and availability while preventing server overload.</p>
+                        
+                        <div class="info-box">
+                            <h3>Why Load Balancing Matters</h3>
+                            <p>Load balancing is a critical component in modern system design for several reasons:</p>
+                            <ul>
+                                <li>It enables horizontal scaling by allowing you to add more servers to your resource pool</li>
+                                <li>It improves reliability by ensuring no single server becomes a bottleneck</li>
+                                <li>It enhances availability by redirecting traffic away from failed servers</li>
+                                <li>It optimizes user experience by reducing response times</li>
+                                <li>It provides flexibility for maintenance by allowing servers to be added or removed without downtime</li>
+                            </ul>
+                        </div>
+
+                        <div class="image-content-block">
+                            <div class="image-block">
+                                <img src="../../assets/images/load-balancing.png" alt="Load Balancing Architecture">
+                            </div>
+                            <div class="content-block">
+                                <h3>How Load Balancing Works</h3>
+                                <p>In a load-balanced architecture:</p>
+                                <ol>
+                                    <li>Client requests are sent to the load balancer instead of directly to servers</li>
+                                    <li>The load balancer analyzes each request and forwards it to the appropriate server based on configured algorithms</li>
+                                    <li>The selected server processes the request and returns a response</li>
+                                    <li>The load balancer forwards the response back to the client</li>
+                                </ol>
+                                <p>This process is typically transparent to the client, which sees only a single endpoint (the load balancer's address).</p>
+                            </div>
+                        </div>
+
+                        <h3>Types of Load Balancers</h3>
+
+                        <div class="concept-card">
+                            <h4>Hardware vs. Software Load Balancers</h4>
+                            <p><strong>Hardware Load Balancers:</strong></p>
+                            <ul>
+                                <li>Purpose-built appliances (e.g., F5 BIG-IP, Citrix ADC)</li>
+                                <li>Typically offer high performance and reliability</li>
+                                <li>Often include specialized features like SSL acceleration</li>
+                                <li>Generally more expensive and less flexible than software solutions</li>
+                            </ul>
+                            <p><strong>Software Load Balancers:</strong></p>
+                            <ul>
+                                <li>Software applications running on standard servers (e.g., NGINX, HAProxy)</li>
+                                <li>More flexible and cost-effective</li>
+                                <li>Can be deployed in cloud environments</li>
+                                <li>Easier to integrate with automation and CI/CD pipelines</li>
+                            </ul>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Layer 4 vs. Layer 7 Load Balancers</h4>
+                            <p>Load balancers operate at different layers of the OSI model:</p>
+                            <p><strong>Layer 4 (Transport Layer) Load Balancers:</strong></p>
+                            <ul>
+                                <li>Make routing decisions based on IP address and TCP/UDP ports</li>
+                                <li>Cannot see the actual content of the packet (HTTP headers, cookies, etc.)</li>
+                                <li>Generally faster and require less processing power</li>
+                                <li>Limited ability to make content-based routing decisions</li>
+                            </ul>
+                            <p><strong>Layer 7 (Application Layer) Load Balancers:</strong></p>
+                            <ul>
+                                <li>Make routing decisions based on application-level data (HTTP headers, URLs, cookies)</li>
+                                <li>Can route requests based on content type, user location, or other application-specific criteria</li>
+                                <li>Support more advanced features like SSL termination and content caching</li>
+                                <li>Require more processing power but offer greater flexibility</li>
+                            </ul>
+                        </div>
+
+                        <h3>Load Balancing Algorithms</h3>
+                        <p>Load balancers use various algorithms to determine which server should receive each request:</p>
+
+                        <div class="concept-card">
+                            <h4>Round Robin</h4>
+                            <p>Requests are distributed sequentially to each server in the pool. After reaching the last server, the algorithm starts again from the first server.</p>
+                            <p><strong>Advantages:</strong></p>
+                            <ul>
+                                <li>Simple to implement and understand</li>
+                                <li>Works well when servers have similar capabilities</li>
+                                <li>Ensures all servers receive an equal number of requests</li>
+                            </ul>
+                            <p><strong>Disadvantages:</strong></p>
+                            <ul>
+                                <li>Doesn't account for server load or capacity differences</li>
+                                <li>Doesn't consider the complexity or duration of requests</li>
+                            </ul>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Least Connections</h4>
+                            <p>Requests are sent to the server with the fewest active connections, assuming that the server with fewer connections will have more available resources.</p>
+                            <p><strong>Advantages:</strong></p>
+                            <ul>
+                                <li>Adapts to varying connection durations</li>
+                                <li>Better handles situations where some connections are long-lived</li>
+                                <li>More efficient when server capacities are similar</li>
+                            </ul>
+                            <p><strong>Disadvantages:</strong></p>
+                            <ul>
+                                <li>Doesn't account for the actual load on each server</li>
+                                <li>Connection count may not accurately reflect server capacity</li>
+                            </ul>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Weighted Round Robin / Weighted Least Connections</h4>
+                            <p>Similar to their non-weighted counterparts, but servers are assigned weights based on their capacity. Servers with higher weights receive proportionally more requests.</p>
+                            <p><strong>Advantages:</strong></p>
+                            <ul>
+                                <li>Accounts for different server capacities</li>
+                                <li>Allows for gradual introduction of new servers</li>
+                                <li>Can be used for blue-green deployments</li>
+                            </ul>
+                            <p><strong>Disadvantages:</strong></p>
+                            <ul>
+                                <li>Requires manual weight assignment and maintenance</li>
+                                <li>Doesn't automatically adapt to changing server conditions</li>
+                            </ul>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>IP Hash</h4>
+                            <p>The client's IP address is used to determine which server receives the request. The same client will always be directed to the same server (as long as the server is available).</p>
+                            <p><strong>Advantages:</strong></p>
+                            <ul>
+                                <li>Provides session persistence without cookies</li>
+                                <li>Useful for applications that don't support shared sessions</li>
+                                <li>Reduces the need for session replication</li>
+                            </ul>
+                            <p><strong>Disadvantages:</strong></p>
+                            <ul>
+                                <li>Can lead to uneven distribution if many clients share the same IP (e.g., behind a corporate NAT)</li>
+                                <li>Session persistence is lost if a server goes down</li>
+                            </ul>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Least Response Time</h4>
+                            <p>Directs traffic to the server with the lowest combination of active connections and response time.</p>
+                            <p><strong>Advantages:</strong></p>
+                            <ul>
+                                <li>Considers both connection count and server performance</li>
+                                <li>Adapts to varying server capabilities</li>
+                                <li>Provides better user experience by selecting faster servers</li>
+                            </ul>
+                            <p><strong>Disadvantages:</strong></p>
+                            <ul>
+                                <li>More complex to implement</li>
+                                <li>Requires continuous monitoring of server response times</li>
+                            </ul>
+                        </div>
+
+                        <h3>Advanced Load Balancing Features</h3>
+
+                        <div class="concept-card">
+                            <h4>Health Checks</h4>
+                            <p>Load balancers regularly check the health of backend servers to ensure they're functioning correctly. If a server fails health checks, it's temporarily removed from the pool.</p>
+                            <p><strong>Types of health checks:</strong></p>
+                            <ul>
+                                <li><strong>TCP checks:</strong> Verify that the server is accepting connections</li>
+                                <li><strong>HTTP checks:</strong> Verify that the application is responding correctly</li>
+                                <li><strong>Custom checks:</strong> Verify specific application functionality</li>
+                            </ul>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Session Persistence (Sticky Sessions)</h4>
+                            <p>Ensures that a client's requests are always directed to the same server during a session. This is important for applications that store session state locally.</p>
+                            <p><strong>Implementation methods:</strong></p>
+                            <ul>
+                                <li><strong>Cookie-based:</strong> The load balancer sets a cookie identifying the server</li>
+                                <li><strong>IP-based:</strong> Using IP hash algorithm</li>
+                                <li><strong>Application-controlled:</strong> The application sets a cookie that the load balancer recognizes</li>
+                            </ul>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>SSL Termination</h4>
+                            <p>The load balancer handles SSL/TLS encryption and decryption, relieving backend servers from this CPU-intensive task.</p>
+                            <p><strong>Benefits:</strong></p>
+                            <ul>
+                                <li>Reduces computational load on backend servers</li>
+                                <li>Centralizes SSL certificate management</li>
+                                <li>Allows inspection of encrypted traffic for security purposes</li>
+                            </ul>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Content-Based Routing</h4>
+                            <p>Layer 7 load balancers can route requests based on content:</p>
+                            <ul>
+                                <li>Routing image requests to image servers</li>
+                                <li>Routing API requests to API servers</li>
+                                <li>Routing based on user location or device type</li>
+                                <li>A/B testing by routing a percentage of traffic to different application versions</li>
+                            </ul>
+                        </div>
+
+                        <h3>Load Balancing in Different Environments</h3>
+
+                        <div class="concept-card">
+                            <h4>Cloud Load Balancing</h4>
+                            <p>Major cloud providers offer managed load balancing services:</p>
+                            <ul>
+                                <li><strong>AWS:</strong> Elastic Load Balancing (ALB, NLB, CLB)</li>
+                                <li><strong>Google Cloud:</strong> Cloud Load Balancing</li>
+                                <li><strong>Azure:</strong> Azure Load Balancer, Application Gateway</li>
+                            </ul>
+                            <p>These services typically offer high availability, automatic scaling, and integration with other cloud services.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Global Server Load Balancing (GSLB)</h4>
+                            <p>GSLB distributes traffic across multiple data centers or regions:</p>
+                            <ul>
+                                <li>Routes users to the geographically closest data center</li>
+                                <li>Provides disaster recovery by redirecting traffic if a data center fails</li>
+                                <li>Often implemented using DNS-based techniques</li>
+                                <li>Can consider factors like data center load and health</li>
+                            </ul>
+                        </div>
+
+                        <h3>Real-World Load Balancing Examples</h3>
+                        
+                        <div class="example-box">
+                            <h4>Netflix</h4>
+                            <p>Netflix uses Elastic Load Balancing in AWS along with their own middle-tier load balancing service called Zuul:</p>
+                            <ul>
+                                <li>Handles millions of concurrent streaming sessions</li>
+                                <li>Uses multiple layers of load balancing for different services</li>
+                                <li>Implements sophisticated health checking and auto-scaling</li>
+                                <li>Provides regional failover for high availability</li>
+                            </ul>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>GitHub</h4>
+                            <p>GitHub uses a combination of HAProxy and NGINX for load balancing:</p>
+                            <ul>
+                                <li>HAProxy for TCP load balancing</li>
+                                <li>NGINX for HTTP load balancing and SSL termination</li>
+                                <li>Custom health checks to verify application functionality</li>
+                                <li>Geographic distribution for global performance</li>
+                            </ul>
+                        </div>
+
+                        <h3>Best Practices for Load Balancing</h3>
+                        <ol>
+                            <li><strong>Implement comprehensive health checks</strong> to quickly detect and respond to server failures</li>
+                            <li><strong>Use multiple load balancers</strong> to avoid a single point of failure</li>
+                            <li><strong>Choose the appropriate algorithm</strong> based on your application's characteristics</li>
+                            <li><strong>Consider session persistence requirements</strong> early in your design</li>
+                            <li><strong>Monitor load balancer performance</strong> and adjust configurations as needed</li>
+                            <li><strong>Plan for capacity</strong> to ensure load balancers can handle peak traffic</li>
+                            <li><strong>Implement proper security measures</strong> like WAF integration and DDoS protection</li>
+                            <li><strong>Test failover scenarios</strong> to ensure smooth operation during failures</li>
+                            <li><strong>Consider content-based routing</strong> for microservices architectures</li>
+                            <li><strong>Document load balancer configurations</strong> for operational clarity</li>
+                        </ol>
+
+                        <div class="next-steps">
+                            <h3>Next Steps</h3>
+                            <p>Now that you understand load balancing, explore related concepts that work together to create robust, high-performance systems:</p>
+                            <div class="button-group">
+                                <a href="caching.html" class="btn btn-primary">Learn About Caching</a>
+                                <a href="../implementation/load-balancer.html" class="btn btn-secondary">Explore Load Balancer Implementation</a>
+                            </div>
+                        </div>
+                    </article>
+                </main>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>System Design Mastery</h2>
+                    <p>Learn. Design. Implement.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3>Quick Links</h3>
+                        <ul>
+                            <li><a href="../../index.html">Home</a></li>
+                            <li><a href="../fundamentals/index.html">Fundamentals</a></li>
+                            <li><a href="../examples/index.html">Examples</a></li>
+                            <li><a href="../implementation/index.html">Implementation</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Resources</h3>
+                        <ul>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Cheat Sheets</a></li>
+                            <li><a href="#">Interview Prep</a></li>
+                            <li><a href="#">Community</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Connect</h3>
+                        <ul>
+                            <li><a href="#">GitHub</a></li>
+                            <li><a href="#">Twitter</a></li>
+                            <li><a href="#">LinkedIn</a></li>
+                            <li><a href="#">Contact Us</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 System Design Mastery. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../js/main.js"></script>
+</body>
+</html>

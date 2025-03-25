@@ -3,33 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Implementation: Load Balancing | System Design A-Z</title>
-    <meta name="description" content="Practical implementation guide for load balancing with code examples and best practices">
-    <link rel="stylesheet" href="../../css/normalize.css">
-    <link rel="stylesheet" href="../../css/styles.css">
-    <link rel="stylesheet" href="../../css/implementation.css">
-    <link rel="stylesheet" href="../../css/content-page.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Load Balancing Implementation | System Design Mastery</title>
+    <link rel="stylesheet" href="../../css/modern-styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header class="site-header">
+    <header class="sub-header">
         <div class="container">
-            <div class="logo">
-                <a href="../../index.html">
-                    <span class="logo-text">System Design <span class="highlight">A-Z</span></span>
-                </a>
-            </div>
-            <nav class="main-nav">
-                <button class="menu-toggle" aria-label="Toggle menu">
-                    <span class="hamburger"></span>
-                </button>
+            <nav class="navbar">
+                <div class="logo">
+                    <h1>System Design Mastery</h1>
+                </div>
                 <ul class="nav-links">
                     <li><a href="../../index.html">Home</a></li>
                     <li><a href="../fundamentals/index.html">Fundamentals</a></li>
-                    <li><a href="../examples/index.html">Real-World Examples</a></li>
+                    <li><a href="../examples/index.html">Real-world Examples</a></li>
                     <li><a href="../implementation/index.html" class="active">Implementation</a></li>
                     <li><a href="../../index.html#about">About</a></li>
                 </ul>
@@ -37,564 +27,589 @@
         </div>
     </header>
 
-    <main class="content-page">
+    <section class="page-header">
         <div class="container">
-            <div class="content-wrapper">
+            <h1>Load Balancing Implementation</h1>
+            <p>Practical guide to implementing load balancing for distributed systems</p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <div class="content-grid">
                 <aside class="sidebar">
-                    <div class="sidebar-content">
-                        <h3>Implementation Guides</h3>
-                        <ul class="sidebar-nav">
-                            <li><a href="microservices.html">Microservices Architecture</a></li>
-                            <li><a href="load-balancing.html" class="active">Load Balancing</a></li>
-                            <li><a href="caching-strategies.html">Caching Strategies</a></li>
-                            <li><a href="database-sharding.html">Database Sharding</a></li>
-                            <li><a href="api-gateway.html">API Gateway</a></li>
-                            <li><a href="message-queues.html">Message Queues</a></li>
-                            <li><a href="service-discovery.html">Service Discovery</a></li>
-                            <li><a href="authentication.html">Authentication & Authorization</a></li>
-                            <li><a href="monitoring.html">Monitoring & Logging</a></li>
-                            <li><a href="ci-cd.html">CI/CD Pipeline</a></li>
-                        </ul>
-                        <div class="sidebar-cta">
-                            <h4>See it in action</h4>
-                            <p>Check out real-world examples</p>
-                            <a href="../examples/index.html" class="btn btn-sm">View Examples</a>
-                        </div>
-                    </div>
+                    <h3>Implementation Guides</h3>
+                    <ul class="sidebar-links">
+                        <li><a href="index.html">Overview</a></li>
+                        <li><a href="api-design.html">API Design</a></li>
+                        <li><a href="database-sharding.html">Database Sharding</a></li>
+                        <li><a href="load-balancing.html" class="active">Load Balancing</a></li>
+                        <li><a href="caching-strategies.html">Caching Strategies</a></li>
+                        <li><a href="microservices.html">Microservices</a></li>
+                        <li><a href="distributed-systems.html">Distributed Systems</a></li>
+                        <li><a href="security-best-practices.html">Security Best Practices</a></li>
+                    </ul>
                 </aside>
-
-                <article class="main-content">
-                    <div class="content-header">
-                        <h1>Implementing Load Balancing</h1>
-                        <div class="content-meta">
-                            <span class="difficulty intermediate">Intermediate</span>
-                            <span class="reading-time">18 min read</span>
+                <main class="main-content">
+                    <article>
+                        <h2>Implementing Load Balancing for Scalable Systems</h2>
+                        <p>Load balancing is a critical component of modern distributed systems, enabling horizontal scaling by distributing traffic across multiple servers. This guide covers practical approaches to implementing load balancing in real-world systems, from simple software solutions to sophisticated hardware configurations.</p>
+                        
+                        <div class="info-box">
+                            <h3>What You'll Learn</h3>
+                            <ul>
+                                <li>Different load balancing algorithms and their use cases</li>
+                                <li>Implementing software-based load balancers</li>
+                                <li>Configuring popular load balancing solutions</li>
+                                <li>Health checks and failure detection</li>
+                                <li>Session persistence strategies</li>
+                                <li>Global server load balancing</li>
+                                <li>Load balancing in cloud environments</li>
+                            </ul>
                         </div>
-                    </div>
 
-                    <div class="content-body">
-                        <section class="content-section">
-                            <h2>Introduction to Load Balancing</h2>
-                            <p>Load balancing is a critical component in distributed systems that distributes incoming network traffic across multiple servers to ensure no single server becomes overwhelmed. This improves application responsiveness, availability, and scalability by preventing any single point of failure.</p>
-                            
-                            <p>In this implementation guide, we'll explore different load balancing techniques and implement them using various tools and technologies. We'll cover everything from simple software-based load balancers to more advanced cloud-native solutions.</p>
-                            
-                            <div class="image-container">
-                                <div class="placeholder-image">
-                                    <p>Load Balancing Architecture Diagram</p>
-                                </div>
-                                <div class="image-caption">Figure 1: High-level architecture of a load-balanced system.</div>
+                        <div class="image-content-block">
+                            <div class="image-block">
+                                <img src="../../assets/images/load-balancing.png" alt="Load Balancing Architecture">
                             </div>
-                        </section>
+                            <div class="content-block">
+                                <h3>Load Balancing Architecture</h3>
+                                <p>A typical load balancing architecture consists of:</p>
+                                <ol>
+                                    <li><strong>Client:</strong> The source of requests (users, applications, or services)</li>
+                                    <li><strong>Load Balancer:</strong> The component that distributes incoming traffic</li>
+                                    <li><strong>Backend Servers:</strong> Multiple identical instances handling requests</li>
+                                    <li><strong>Health Checks:</strong> Mechanisms to detect server availability</li>
+                                    <li><strong>Shared Storage/State:</strong> Optional component for maintaining consistency</li>
+                                </ol>
+                                <p>The diagram illustrates how these components interact to distribute traffic and ensure high availability.</p>
+                            </div>
+                        </div>
 
-                        <section class="content-section">
-                            <h2>Load Balancing Algorithms</h2>
-                            
-                            <p>Before diving into implementation, let's understand the common load balancing algorithms:</p>
-                            
-                            <div class="algorithm-cards">
-                                <div class="algorithm-card">
-                                    <h3>Round Robin</h3>
-                                    <p>Requests are distributed sequentially to each server in the pool. Simple to implement but doesn't account for server load or capacity.</p>
-                                    <div class="code-snippet">
-                                        <pre><code>servers = [server1, server2, server3]
-counter = 0
+                        <h3>Load Balancing Algorithms</h3>
 
-function getNextServer():
-    server = servers[counter % len(servers)]
-    counter += 1
-    return server</code></pre>
-                                    </div>
-                                </div>
-                                
-                                <div class="algorithm-card">
-                                    <h3>Weighted Round Robin</h3>
-                                    <p>Similar to Round Robin but assigns different weights to servers based on their capacity or performance.</p>
-                                    <div class="code-snippet">
-                                        <pre><code>servers = [
-    {server: server1, weight: 5},
-    {server: server2, weight: 3},
-    {server: server3, weight: 2}
+                        <div class="concept-card">
+                            <h4>Round Robin</h4>
+                            <p>The simplest load balancing algorithm that distributes requests sequentially to each server in rotation.</p>
+                            <ul>
+                                <li><strong>Implementation:</strong> Requests are assigned to servers in a circular order</li>
+                                <li><strong>Advantages:</strong> Simple to implement, fair distribution for similar servers</li>
+                                <li><strong>Disadvantages:</strong> Doesn't account for server load or capacity differences</li>
+                            </ul>
+                            <p>Example implementation in Python:</p>
+                            <pre><code>class RoundRobinLoadBalancer:
+    def __init__(self, servers):
+        self.servers = servers
+        self.current_index = 0
+    
+    def get_next_server(self):
+        if not self.servers:
+            return None
+        
+        server = self.servers[self.current_index]
+        self.current_index = (self.current_index + 1) % len(self.servers)
+        return server
+    
+    def add_server(self, server):
+        self.servers.append(server)
+    
+    def remove_server(self, server):
+        if server in self.servers:
+            self.servers.remove(server)
+            # Adjust index if needed
+            if self.current_index >= len(self.servers) and len(self.servers) > 0:
+                self.current_index = 0
+
+# Usage example
+servers = ["server1:8080", "server2:8080", "server3:8080"]
+load_balancer = RoundRobinLoadBalancer(servers)
+
+# Simulate 10 requests
+for i in range(10):
+    server = load_balancer.get_next_server()
+    print(f"Request {i+1} routed to {server}")</code></pre>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Weighted Round Robin</h4>
+                            <p>An extension of Round Robin that assigns different weights to servers based on their capacity.</p>
+                            <ul>
+                                <li><strong>Implementation:</strong> Servers with higher weights receive more requests</li>
+                                <li><strong>Advantages:</strong> Accounts for different server capacities</li>
+                                <li><strong>Disadvantages:</strong> Requires manual weight configuration</li>
+                            </ul>
+                            <p>Example implementation in Python:</p>
+                            <pre><code>class WeightedRoundRobinLoadBalancer:
+    def __init__(self, servers_with_weights):
+        # servers_with_weights is a list of tuples: [(server1, weight1), (server2, weight2), ...]
+        self.servers = servers_with_weights
+        self.current_index = 0
+        self.current_weight = 0
+        self.max_weight = max(weight for _, weight in servers_with_weights) if servers_with_weights else 0
+        self.gcd_weight = self._gcd_of_weights()
+    
+    def _gcd_of_weights(self):
+        # Calculate greatest common divisor of all weights
+        weights = [weight for _, weight in self.servers]
+        if not weights:
+            return 1
+        
+        result = weights[0]
+        for w in weights[1:]:
+            # Calculate GCD using Euclidean algorithm
+            a, b = result, w
+            while b:
+                a, b = b, a % b
+            result = a
+        
+        return result if result > 0 else 1
+    
+    def get_next_server(self):
+        if not self.servers:
+            return None
+        
+        while True:
+            self.current_index = (self.current_index + 1) % len(self.servers)
+            if self.current_index == 0:
+                self.current_weight = self.current_weight - self.gcd_weight
+                if self.current_weight <= 0:
+                    self.current_weight = self.max_weight
+                    if self.current_weight == 0:
+                        return None
+            
+            server, weight = self.servers[self.current_index]
+            if weight >= self.current_weight:
+                return server
+    
+    def add_server(self, server, weight):
+        self.servers.append((server, weight))
+        self.max_weight = max(self.max_weight, weight)
+        self.gcd_weight = self._gcd_of_weights()
+    
+    def remove_server(self, server):
+        self.servers = [(s, w) for s, w in self.servers if s != server]
+        if self.servers:
+            self.max_weight = max(weight for _, weight in self.servers)
+            self.gcd_weight = self._gcd_of_weights()
+        else:
+            self.max_weight = 0
+            self.gcd_weight = 1
+        
+        # Adjust index if needed
+        if self.current_index >= len(self.servers) and len(self.servers) > 0:
+            self.current_index = 0
+
+# Usage example
+servers_with_weights = [
+    ("server1:8080", 5),  # Higher capacity server
+    ("server2:8080", 3),  # Medium capacity server
+    ("server3:8080", 2)   # Lower capacity server
+]
+load_balancer = WeightedRoundRobinLoadBalancer(servers_with_weights)
+
+# Simulate 20 requests
+request_distribution = {}
+for i in range(20):
+    server = load_balancer.get_next_server()
+    print(f"Request {i+1} routed to {server}")
+    request_distribution[server] = request_distribution.get(server, 0) + 1
+
+print("\nRequest distribution:")
+for server, count in request_distribution.items():
+    print(f"{server}: {count} requests")</code></pre>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Least Connections</h4>
+                            <p>Routes traffic to the server with the fewest active connections.</p>
+                            <ul>
+                                <li><strong>Implementation:</strong> Tracks connection count for each server</li>
+                                <li><strong>Advantages:</strong> Better handles varying request processing times</li>
+                                <li><strong>Disadvantages:</strong> Requires connection tracking overhead</li>
+                            </ul>
+                            <p>Example implementation in Python:</p>
+                            <pre><code>class LeastConnectionsLoadBalancer:
+    def __init__(self, servers):
+        # Initialize with zero connections for each server
+        self.server_connections = {server: 0 for server in servers}
+    
+    def get_next_server(self):
+        if not self.server_connections:
+            return None
+        
+        # Find server with minimum connections
+        min_connections = float('inf')
+        selected_server = None
+        
+        for server, connections in self.server_connections.items():
+            if connections < min_connections:
+                min_connections = connections
+                selected_server = server
+        
+        # Increment connection count for selected server
+        self.server_connections[selected_server] += 1
+        return selected_server
+    
+    def release_connection(self, server):
+        # Call this when a request completes
+        if server in self.server_connections:
+            self.server_connections[server] = max(0, self.server_connections[server] - 1)
+    
+    def add_server(self, server):
+        self.server_connections[server] = 0
+    
+    def remove_server(self, server):
+        if server in self.server_connections:
+            del self.server_connections[server]
+
+# Usage example
+import random
+import time
+import threading
+
+servers = ["server1:8080", "server2:8080", "server3:8080"]
+load_balancer = LeastConnectionsLoadBalancer(servers)
+
+# Simulate concurrent requests with varying processing times
+def process_request(request_id):
+    server = load_balancer.get_next_server()
+    print(f"Request {request_id} routed to {server}")
+    
+    # Simulate processing time (1-5 seconds)
+    processing_time = random.uniform(1, 5)
+    time.sleep(processing_time)
+    
+    load_balancer.release_connection(server)
+    print(f"Request {request_id} completed on {server} after {processing_time:.2f}s")
+
+# Start 15 concurrent requests
+threads = []
+for i in range(15):
+    thread = threading.Thread(target=process_request, args=(i+1,))
+    threads.append(thread)
+    thread.start()
+    # Start a new request every 0.5 seconds
+    time.sleep(0.5)
+
+# Wait for all requests to complete
+for thread in threads:
+    thread.join()
+
+print("\nFinal connection counts:")
+for server, connections in load_balancer.server_connections.items():
+    print(f"{server}: {connections} active connections")</code></pre>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Least Response Time</h4>
+                            <p>Routes traffic to the server with the lowest response time.</p>
+                            <ul>
+                                <li><strong>Implementation:</strong> Monitors response times and selects fastest servers</li>
+                                <li><strong>Advantages:</strong> Optimizes for actual server performance</li>
+                                <li><strong>Disadvantages:</strong> Requires continuous monitoring</li>
+                            </ul>
+                            <p>Example implementation in Python:</p>
+                            <pre><code>import time
+import threading
+import requests
+from statistics import mean
+
+class LeastResponseTimeLoadBalancer:
+    def __init__(self, servers, health_check_interval=10):
+        self.servers = servers
+        self.response_times = {server: [] for server in servers}
+        self.avg_response_times = {server: float('inf') for server in servers}
+        self.health_check_interval = health_check_interval
+        self.lock = threading.Lock()
+        
+        # Start health check thread
+        self.running = True
+        self.health_check_thread = threading.Thread(target=self._health_check_loop)
+        self.health_check_thread.daemon = True
+        self.health_check_thread.start()
+    
+    def _health_check_loop(self):
+        while self.running:
+            self._update_response_times()
+            time.sleep(self.health_check_interval)
+    
+    def _update_response_times(self):
+        for server in list(self.servers):
+            try:
+                start_time = time.time()
+                response = requests.get(f"http://{server}/health", timeout=5)
+                end_time = time.time()
+                
+                if response.status_code == 200:
+                    response_time = end_time - start_time
+                    
+                    with self.lock:
+                        # Keep last 5 measurements
+                        self.response_times[server].append(response_time)
+                        if len(self.response_times[server]) > 5:
+                            self.response_times[server].pop(0)
+                        
+                        # Update average
+                        self.avg_response_times[server] = mean(self.response_times[server])
+                else:
+                    print(f"Server {server} returned non-200 status: {response.status_code}")
+            except Exception as e:
+                print(f"Error checking server {server}: {str(e)}")
+                # Mark server as slow if unreachable
+                with self.lock:
+                    self.avg_response_times[server] = float('inf')
+    
+    def get_next_server(self):
+        with self.lock:
+            if not self.servers:
+                return None
+            
+            # Find server with minimum average response time
+            min_response_time = float('inf')
+            selected_server = None
+            
+            for server in self.servers:
+                if self.avg_response_times[server] < min_response_time:
+                    min_response_time = self.avg_response_times[server]
+                    selected_server = server
+            
+            return selected_server
+    
+    def add_server(self, server):
+        with self.lock:
+            if server not in self.servers:
+                self.servers.append(server)
+                self.response_times[server] = []
+                self.avg_response_times[server] = float('inf')
+    
+    def remove_server(self, server):
+        with self.lock:
+            if server in self.servers:
+                self.servers.remove(server)
+                if server in self.response_times:
+                    del self.response_times[server]
+                if server in self.avg_response_times:
+                    del self.avg_response_times[server]
+    
+    def shutdown(self):
+        self.running = False
+        self.health_check_thread.join()
+
+# Note: This example requires actual HTTP servers to work properly
+# For demonstration, you would need to set up test servers with /health endpoints
+# Here's how you would use it:
+
+# servers = ["server1:8080", "server2:8080", "server3:8080"]
+# load_balancer = LeastResponseTimeLoadBalancer(servers)
+
+# try:
+#     for i in range(20):
+#         server = load_balancer.get_next_server()
+#         print(f"Request {i+1} routed to {server}")
+#         time.sleep(1)
+# finally:
+#     load_balancer.shutdown()</code></pre>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>IP Hash</h4>
+                            <p>Routes requests from the same client IP to the same server.</p>
+                            <ul>
+                                <li><strong>Implementation:</strong> Hashes client IP address to determine server</li>
+                                <li><strong>Advantages:</strong> Provides session persistence without cookies</li>
+                                <li><strong>Disadvantages:</strong> Uneven distribution if client IPs are not diverse</li>
+                            </ul>
+                            <p>Example implementation in Python:</p>
+                            <pre><code>import hashlib
+
+class IPHashLoadBalancer:
+    def __init__(self, servers):
+        self.servers = servers
+    
+    def get_server_for_ip(self, ip_address):
+        if not self.servers:
+            return None
+        
+        # Create a hash of the IP address
+        hash_obj = hashlib.md5(ip_address.encode())
+        hash_value = int(hash_obj.hexdigest(), 16)
+        
+        # Determine server index using modulo
+        server_index = hash_value % len(self.servers)
+        
+        return self.servers[server_index]
+    
+    def add_server(self, server):
+        self.servers.append(server)
+        # Note: Adding or removing servers will change the hash distribution
+        # and potentially route existing clients to different servers
+    
+    def remove_server(self, server):
+        if server in self.servers:
+            self.servers.remove(server)
+
+# Usage example
+servers = ["server1:8080", "server2:8080", "server3:8080", "server4:8080"]
+load_balancer = IPHashLoadBalancer(servers)
+
+# Simulate requests from different IP addresses
+client_ips = [
+    "192.168.1.1", "10.0.0.2", "172.16.0.5", "192.168.1.10",
+    "10.0.0.15", "172.16.0.20", "192.168.1.25", "10.0.0.30"
 ]
 
-function getNextServer():
-    // Implementation that respects weights</code></pre>
-                                    </div>
-                                </div>
-                                
-                                <div class="algorithm-card">
-                                    <h3>Least Connections</h3>
-                                    <p>Directs traffic to the server with the fewest active connections. Good for requests with varying processing times.</p>
-                                    <div class="code-snippet">
-                                        <pre><code>function getNextServer():
-    return servers.minBy(server => 
-        server.activeConnections)</code></pre>
-                                    </div>
-                                </div>
-                                
-                                <div class="algorithm-card">
-                                    <h3>Least Response Time</h3>
-                                    <p>Sends requests to the server with the lowest response time, which indicates the fastest server.</p>
-                                    <div class="code-snippet">
-                                        <pre><code>function getNextServer():
-    return servers.minBy(server => 
-        server.averageResponseTime)</code></pre>
-                                    </div>
-                                </div>
-                                
-                                <div class="algorithm-card">
-                                    <h3>IP Hash</h3>
-                                    <p>Uses the client's IP address to determine which server to send the request to. Ensures the same client always reaches the same server.</p>
-                                    <div class="code-snippet">
-                                        <pre><code>function getServerForClient(clientIP):
-    hash = hashFunction(clientIP)
-    serverIndex = hash % servers.length
-    return servers[serverIndex]</code></pre>
-                                    </div>
-                                </div>
-                                
-                                <div class="algorithm-card">
-                                    <h3>URL Hash</h3>
-                                    <p>Similar to IP Hash but uses the requested URL to determine the server. Useful for CDN and caching scenarios.</p>
-                                    <div class="code-snippet">
-                                        <pre><code>function getServerForRequest(requestURL):
-    hash = hashFunction(requestURL)
-    serverIndex = hash % servers.length
-    return servers[serverIndex]</code></pre>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
+# Track which server each client gets routed to
+client_server_mapping = {}
+for ip in client_ips:
+    server = load_balancer.get_server_for_ip(ip)
+    client_server_mapping[ip] = server
+    print(f"Client {ip} routed to {server}")
 
-                        <section class="content-section">
-                            <h2>Step 1: Setting Up a Basic Load Balancer with Nginx</h2>
-                            
-                            <p>Nginx is a popular web server that can also function as a load balancer. Let's set up a basic load balancer using Nginx:</p>
-                            
-                            <h3>Install Nginx</h3>
-                            <div class="code-block-container">
-                                <pre class="code-block bash">
-# Update package lists
-sudo apt update
+# Simulate multiple requests from the same clients
+print("\nSimulating repeat requests:")
+for ip in client_ips:
+    server = load_balancer.get_server_for_ip(ip)
+    print(f"Client {ip} routed to {server}")
+    # Verify consistency
+    assert server == client_server_mapping[ip], f"Inconsistent routing for {ip}"
 
-# Install Nginx
-sudo apt install -y nginx
+# Simulate adding a new server
+print("\nAdding a new server:")
+load_balancer.add_server("server5:8080")
+for ip in client_ips:
+    new_server = load_balancer.get_server_for_ip(ip)
+    old_server = client_server_mapping[ip]
+    print(f"Client {ip}: Old: {old_server}, New: {new_server}")
+    # Some clients will now be routed to different servers</code></pre>
+                        </div>
 
-# Check Nginx status
-sudo systemctl status nginx
-</pre>
-                                <div class="copy-button" title="Copy to clipboard">
-                                    <i class="fas fa-copy"></i>
-                                </div>
-                            </div>
-                            
-                            <h3>Configure Nginx as a Load Balancer</h3>
-                            <p>Create a new configuration file for your load balancer:</p>
-                            
-                            <div class="code-block-container">
-                                <pre class="code-block bash">
-sudo nano /etc/nginx/conf.d/load-balancer.conf
-</pre>
-                                <div class="copy-button" title="Copy to clipboard">
-                                    <i class="fas fa-copy"></i>
-                                </div>
-                            </div>
-                            
-                            <p>Add the following configuration:</p>
-                            
-                            <div class="code-block-container">
-                                <pre class="code-block nginx">
-# Define the group of servers to balance
-upstream backend_servers {
-    # Round Robin (default)
-    server 192.168.1.101:8080;
-    server 192.168.1.102:8080;
-    server 192.168.1.103:8080;
-    
-    # Uncomment for Least Connections method
-    # least_conn;
-    
-    # Uncomment for IP Hash method
-    # ip_hash;
-    
-    # Uncomment for Weighted Round Robin
-    # server 192.168.1.101:8080 weight=3;
-    # server 192.168.1.102:8080 weight=2;
-    # server 192.168.1.103:8080 weight=1;
+                        <h3>Implementing Software Load Balancers</h3>
+
+                        <div class="implementation-steps">
+                            <h4>NGINX Load Balancer</h4>
+                            <p>NGINX is a popular web server that can also function as a load balancer:</p>
+                            <ol>
+                                <li><strong>Install NGINX:</strong> Set up NGINX on your server</li>
+                                <li><strong>Configure upstream servers:</strong> Define your backend server pool</li>
+                                <li><strong>Set up load balancing:</strong> Configure the load balancing method</li>
+                                <li><strong>Configure health checks:</strong> Set up monitoring for backend servers</li>
+                                <li><strong>Enable SSL termination (optional):</strong> Handle HTTPS at the load balancer</li>
+                            </ol>
+                            <p>Example NGINX configuration:</p>
+                            <pre><code># /etc/nginx/nginx.conf
+
+user nginx;
+worker_processes auto;
+error_log /var/log/nginx/error.log warn;
+pid /var/run/nginx.pid;
+
+events {
+    worker_connections 1024;
 }
 
-# HTTP Server Configuration
-server {
-    listen 80;
-    server_name example.com;
-
-    location / {
-        proxy_pass http://backend_servers;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
+http {
+    include /etc/nginx/mime.types;
+    default_type application/octet-stream;
+    
+    log_format main '$remote_addr - $remote_user [$time_local] "$request" '
+                    '$status $body_bytes_sent "$http_referer" '
+                    '"$http_user_agent" "$http_x_forwarded_for"';
+    
+    access_log /var/log/nginx/access.log main;
+    
+    sendfile on;
+    keepalive_timeout 65;
+    
+    # Define upstream server pool
+    upstream backend_servers {
+        # Round Robin (default)
+        server backend1.example.com:8080;
+        server backend2.example.com:8080;
+        server backend3.example.com:8080;
+        
+        # Uncomment for Least Connections method
+        # least_conn;
+        
+        # Uncomment for IP Hash method
+        # ip_hash;
+        
+        # Uncomment for Weighted Round Robin
+        # server backend1.example.com:8080 weight=5;
+        # server backend2.example.com:8080 weight=3;
+        # server backend3.example.com:8080 weight=2;
         
         # Health checks
-        proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
+        # server backend4.example.com:8080 max_fails=3 fail_timeout=30s;
+    }
+    
+    server {
+        listen 80;
+        server_name loadbalancer.example.com;
         
-        # Timeouts
-        proxy_connect_timeout 5s;
-        proxy_send_timeout 10s;
-        proxy_read_timeout 10s;
+        location / {
+            proxy_pass http://backend_servers;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+            
+            # Timeout settings
+            proxy_connect_timeout 5s;
+            proxy_send_timeout 60s;
+            proxy_read_timeout 60s;
+            
+            # Buffering settings
+            proxy_buffering on;
+            proxy_buffer_size 8k;
+            proxy_buffers 8 8k;
+            
+            # WebSocket support (if needed)
+            # proxy_http_version 1.1;
+            # proxy_set_header Upgrade $http_upgrade;
+            # proxy_set_header Connection "upgrade";
+        }
+        
+        # Health check endpoint
+        location /health {
+            access_log off;
+            return 200 "healthy\n";
+        }
     }
     
-    # Health check endpoint
-    location /health {
-        access_log off;
-        return 200 "healthy\n";
+    # HTTPS configuration (optional)
+    server {
+        listen 443 ssl;
+        server_name loadbalancer.example.com;
+        
+        ssl_certificate /etc/nginx/ssl/cert.pem;
+        ssl_certificate_key /etc/nginx/ssl/key.pem;
+        ssl_protocols TLSv1.2 TLSv1.3;
+        ssl_ciphers HIGH:!aNULL:!MD5;
+        
+        location / {
+            proxy_pass http://backend_servers;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+        }
     }
-}
-</pre>
-                                <div class="copy-button" title="Copy to clipboard">
-                                    <i class="fas fa-copy"></i>
-                                </div>
-                            </div>
-                            
-                            <h3>Test and Reload Nginx</h3>
-                            
-                            <div class="code-block-container">
-                                <pre class="code-block bash">
-# Test the configuration
-sudo nginx -t
+}</code></pre>
+                        </div>
 
-# If the test is successful, reload Nginx
-sudo systemctl reload nginx
-</pre>
-                                <div class="copy-button" title="Copy to clipboard">
-                                    <i class="fas fa-copy"></i>
-                                </div>
-                            </div>
-                            
-                            <h3>Advanced Nginx Load Balancing Features</h3>
-                            
-                            <h4>Active Health Checks</h4>
-                            <p>Nginx Plus (commercial version) supports active health checks. For the open-source version, you can implement passive health checks:</p>
-                            
-                            <div class="code-block-container">
-                                <pre class="code-block nginx">
-upstream backend_servers {
-    server 192.168.1.101:8080 max_fails=3 fail_timeout=30s;
-    server 192.168.1.102:8080 max_fails=3 fail_timeout=30s;
-    server 192.168.1.103:8080 max_fails=3 fail_timeout=30s;
-}
-</pre>
-                                <div class="copy-button" title="Copy to clipboard">
-                                    <i class="fas fa-copy"></i>
-                                </div>
-                            </div>
-                            
-                            <h4>Session Persistence</h4>
-                            <p>To maintain session persistence using cookies:</p>
-                            
-                            <div class="code-block-container">
-                                <pre class="code-block nginx">
-upstream backend_servers {
-    server 192.168.1.101:8080;
-    server 192.168.1.102:8080;
-    server 192.168.1.103:8080;
-    sticky cookie srv_id expires=1h domain=.example.com path=/;
-}
-</pre>
-                                <div class="copy-button" title="Copy to clipboard">
-                                    <i class="fas fa-copy"></i>
-                                </div>
-                            </div>
-                            
-                            <div class="info-box">
-                                <h4>Note</h4>
-                                <p>The <code>sticky cookie</code> directive is only available in Nginx Plus. For the open-source version, you can use IP hash or other methods to achieve session persistence.</p>
-                            </div>
-                        </section>
+                        <div class="implementation-steps">
+                            <h4>HAProxy Load Balancer</h4>
+                            <p>HAProxy is a dedicated software load balancer with advanced features:</p>
+                            <ol>
+                                <li><strong>Install HAProxy:</strong> Set up HAProxy on your server</li>
+                                <li><strong>Configure frontend:</strong> Define how client connections are received</li>
+                                <li><strong>Configure backend:</strong> Define your server pool and balancing method</li>
+                                <li><strong>Set up health checks:</strong> Configure monitoring for backend servers</li>
+                                <li><strong>Enable statistics (optional):</strong> Set up the stats dashboard</li>
+                            </ol>
+                            <p>Example HAProxy configuration:</p>
+                            <pre><code># /etc/haproxy/haproxy.cfg
 
-                        <section class="content-section">
-                            <h2>Step 2: Implementing a Software Load Balancer in Node.js</h2>
-                            
-                            <p>Let's implement a simple load balancer in Node.js to understand the concepts better:</p>
-                            
-                            <div class="code-block-container">
-                                <pre class="code-block javascript">
-// load-balancer.js
-const http = require('http');
-const httpProxy = require('http-proxy');
-const url = require('url');
-
-// Create a proxy server instance
-const proxy = httpProxy.createProxyServer({});
-
-// Define backend servers
-const backends = [
-  { url: 'http://localhost:3001', weight: 1, active: true, connections: 0 },
-  { url: 'http://localhost:3002', weight: 1, active: true, connections: 0 },
-  { url: 'http://localhost:3003', weight: 1, active: true, connections: 0 }
-];
-
-// Track request count for round robin
-let requestCount = 0;
-
-// Load balancing algorithms
-const algorithms = {
-  // Round Robin algorithm
-  roundRobin: () => {
-    const activeBackends = backends.filter(backend => backend.active);
-    if (activeBackends.length === 0) return null;
-    
-    const backend = activeBackends[requestCount % activeBackends.length];
-    requestCount++;
-    return backend;
-  },
-  
-  // Weighted Round Robin algorithm
-  weightedRoundRobin: () => {
-    const activeBackends = backends.filter(backend => backend.active);
-    if (activeBackends.length === 0) return null;
-    
-    // Create an array with repeated backends based on their weights
-    const weightedBackends = [];
-    activeBackends.forEach(backend => {
-      for (let i = 0; i < backend.weight; i++) {
-        weightedBackends.push(backend);
-      }
-    });
-    
-    const backend = weightedBackends[requestCount % weightedBackends.length];
-    requestCount++;
-    return backend;
-  },
-  
-  // Least Connections algorithm
-  leastConnections: () => {
-    const activeBackends = backends.filter(backend => backend.active);
-    if (activeBackends.length === 0) return null;
-    
-    // Find the backend with the least active connections
-    return activeBackends.reduce((min, backend) => 
-      backend.connections < min.connections ? backend : min, activeBackends[0]);
-  },
-  
-  // IP Hash algorithm
-  ipHash: (ip) => {
-    const activeBackends = backends.filter(backend => backend.active);
-    if (activeBackends.length === 0) return null;
-    
-    // Simple hash function for the IP
-    const hash = ip.split('.').reduce((acc, octet) => acc + parseInt(octet), 0);
-    return activeBackends[hash % activeBackends.length];
-  }
-};
-
-// Select the algorithm to use
-const selectedAlgorithm = 'roundRobin'; // Change this to use different algorithms
-
-// Create the load balancer server
-const server = http.createServer((req, res) => {
-  // Get client IP
-  const clientIp = req.headers['x-forwarded-for'] || 
-                   req.connection.remoteAddress || 
-                   req.socket.remoteAddress || 
-                   req.connection.socket.remoteAddress;
-  
-  // Select backend based on the chosen algorithm
-  let backend;
-  if (selectedAlgorithm === 'ipHash') {
-    backend = algorithms.ipHash(clientIp);
-  } else if (selectedAlgorithm === 'weightedRoundRobin') {
-    backend = algorithms.weightedRoundRobin();
-  } else if (selectedAlgorithm === 'leastConnections') {
-    backend = algorithms.leastConnections();
-  } else {
-    backend = algorithms.roundRobin();
-  }
-  
-  if (!backend) {
-    res.writeHead(500);
-    res.end('No available backend servers');
-    return;
-  }
-  
-  // Increment connection count
-  backend.connections++;
-  
-  // Log the request
-  console.log(`${new Date().toISOString()} - ${clientIp} - ${req.method} ${req.url} - Routing to ${backend.url}`);
-  
-  // Proxy the request to the selected backend
-  proxy.web(req, res, { target: backend.url }, (err) => {
-    console.error(`Proxy error: ${err.message}`);
-    res.writeHead(500);
-    res.end('Proxy error');
-  });
-  
-  // Decrement connection count when the response is finished
-  res.on('finish', () => {
-    backend.connections--;
-  });
-});
-
-// Handle proxy errors
-proxy.on('error', (err, req, res) => {
-  console.error(`Proxy error: ${err.message}`);
-  if (!res.headersSent) {
-    res.writeHead(500);
-    res.end('Proxy error');
-  }
-});
-
-// Health check endpoint
-http.createServer((req, res) => {
-  if (req.url === '/health') {
-    const parsedUrl = url.parse(req.url, true);
-    
-    // Check if we need to change the status of a backend
-    if (parsedUrl.query.server && parsedUrl.query.status) {
-      const serverIndex = parseInt(parsedUrl.query.server);
-      const status = parsedUrl.query.status === 'up';
-      
-      if (backends[serverIndex]) {
-        backends[serverIndex].active = status;
-        console.log(`Server ${backends[serverIndex].url} status changed to ${status ? 'active' : 'inactive'}`);
-      }
-    }
-    
-    // Return the status of all backends
-    res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify(backends.map((backend, index) => ({
-      id: index,
-      url: backend.url,
-      active: backend.active,
-      connections: backend.connections
-    }))));
-  } else {
-    res.writeHead(404);
-    res.end();
-  }
-}).listen(8081, () => {
-  console.log('Health check server listening on port 8081');
-});
-
-// Start the load balancer
-const PORT = 8080;
-server.listen(PORT, () => {
-  console.log(`Load balancer running on port ${PORT}`);
-  console.log(`Using ${selectedAlgorithm} algorithm`);
-});
-</pre>
-                                <div class="copy-button" title="Copy to clipboard">
-                                    <i class="fas fa-copy"></i>
-                                </div>
-                            </div>
-                            
-                            <h3>Setting Up Backend Servers</h3>
-                            <p>Let's create simple backend servers to test our load balancer:</p>
-                            
-                            <div class="code-block-container">
-                                <pre class="code-block javascript">
-// backend-server.js
-const http = require('http');
-
-// Create a server with the provided port and ID
-function createServer(port, id) {
-  const server = http.createServer((req, res) => {
-    // Simulate random processing time
-    const processingTime = Math.floor(Math.random() * 200) + 50;
-    
-    setTimeout(() => {
-      res.writeHead(200, { 'Content-Type': 'text/plain' });
-      res.end(`Response from Server ${id} (port ${port})\n`);
-      console.log(`Server ${id} handled request to ${req.url} in ${processingTime}ms`);
-    }, processingTime);
-  });
-  
-  server.listen(port, () => {
-    console.log(`Backend server ${id} running on port ${port}`);
-  });
-}
-
-// Create three backend servers
-createServer(3001, 1);
-createServer(3002, 2);
-createServer(3003, 3);
-</pre>
-                                <div class="copy-button" title="Copy to clipboard">
-                                    <i class="fas fa-copy"></i>
-                                </div>
-                            </div>
-                            
-                            <h3>Running the Load Balancer</h3>
-                            
-                            <div class="code-block-container">
-                                <pre class="code-block bash">
-# Install dependencies
-npm install http-proxy
-
-# Start backend servers
-node backend-server.js
-
-# In a new terminal, start the load balancer
-node load-balancer.js
-
-# Test the load balancer
-curl http://localhost:8080/
-
-# Check the health status
-curl http://localhost:8081/health
-
-# Disable a server
-curl "http://localhost:8081/health?server=1&status=down"
-
-# Enable a server
-curl "http://localhost:8081/health?server=1&status=up"
-</pre>
-                                <div class="copy-button" title="Copy to clipboard">
-                                    <i class="fas fa-copy"></i>
-                                </div>
-                            </div>
-                        </section>
-
-                        <section class="content-section">
-                            <h2>Step 3: Implementing Load Balancing with HAProxy</h2>
-                            
-                            <p>HAProxy is a high-performance TCP/HTTP load balancer that's widely used in production environments. Let's set it up:</p>
-                            
-                            <h3>Install HAProxy</h3>
-                            
-                            <div class="code-block-container">
-                                <pre class="code-block bash">
-# Update package lists
-sudo apt update
-
-# Install HAProxy
-sudo apt install -y haproxy
-
-# Check HAProxy version
-haproxy -v
-</pre>
-                                <div class="copy-button" title="Copy to clipboard">
-                                    <i class="fas fa-copy"></i>
-                                </div>
-                            </div>
-                            
-                            <h3>Configure HAProxy</h3>
-                            <p>Edit the HAProxy configuration file:</p>
-                            
-                            <div class="code-block-container">
-                                <pre class="code-block bash">
-sudo nano /etc/haproxy/haproxy.cfg
-</pre>
-                                <div class="copy-button" title="Copy to clipboard">
-                                    <i class="fas fa-copy"></i>
-                                </div>
-                            </div>
-                            
-                            <p>Replace the content with the following configuration:</p>
-                            
-                            <div class="code-block-container">
-                                <pre class="code-block haproxy">
 global
     log /dev/log local0
     log /dev/log local1 notice
@@ -604,14 +619,14 @@ global
     user haproxy
     group haproxy
     daemon
-
+    
     # Default SSL material locations
     ca-base /etc/ssl/certs
     crt-base /etc/ssl/private
-
+    
     # Default ciphers to use on SSL-enabled listening sockets
-    ssl-default-bind-ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384
-    ssl-default-bind-options no-sslv3 no-tlsv10 no-tlsv11 no-tls-tickets
+    ssl-default-bind-ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:RSA+AESGCM:RSA+AES:!aNULL:!MD5:!DSS
+    ssl-default-bind-options no-sslv3
 
 defaults
     log global
@@ -634,395 +649,173 @@ frontend http_front
     bind *:80
     stats uri /haproxy?stats
     default_backend http_back
+    
+    # Add X-Forwarded-For header
+    option forwardfor
+    
+    # Define ACLs for routing
+    acl is_api path_beg /api
+    acl is_static path_end .jpg .gif .png .css .js
+    
+    # Use different backends based on ACLs
+    use_backend api_servers if is_api
+    use_backend static_servers if is_static
 
-# Backend configuration for HTTP servers
+# Frontend configuration for HTTPS
+frontend https_front
+    bind *:443 ssl crt /etc/haproxy/certs/example.com.pem
+    stats uri /haproxy?stats
+    default_backend http_back
+    
+    # Add X-Forwarded-For header
+    option forwardfor
+    
+    # Add X-Forwarded-Proto header
+    http-request set-header X-Forwarded-Proto https
+
+# Main backend servers
 backend http_back
     balance roundrobin
     option httpchk GET /health
     http-check expect status 200
-    server server1 192.168.1.101:8080 check
-    server server2 192.168.1.102:8080 check
-    server server3 192.168.1.103:8080 check
+    
+    # Round Robin (default)
+    server server1 backend1.example.com:8080 check
+    server server2 backend2.example.com:8080 check
+    server server3 backend3.example.com:8080 check
+    
+    # Sticky sessions using cookies
+    # cookie SERVERID insert indirect nocache
+    # server server1 backend1.example.com:8080 check cookie server1
+    # server server2 backend2.example.com:8080 check cookie server2
+    # server server3 backend3.example.com:8080 check cookie server3
+    
+    # Weighted Round Robin
+    # server server1 backend1.example.com:8080 check weight 5
+    # server server2 backend2.example.com:8080 check weight 3
+    # server server3 backend3.example.com:8080 check weight 2
 
-# Statistics configuration
+# API backend servers
+backend api_servers
+    balance leastconn
+    option httpchk GET /api/health
+    http-check expect status 200
+    
+    server api1 api1.example.com:8080 check
+    server api2 api2.example.com:8080 check
+    server api3 api3.example.com:8080 check
+
+# Static content backend servers
+backend static_servers
+    balance roundrobin
+    option httpchk GET /health
+    http-check expect status 200
+    
+    server static1 static1.example.com:8080 check
+    server static2 static2.example.com:8080 check
+
+# Statistics dashboard
 listen stats
     bind *:8404
     stats enable
     stats uri /
     stats refresh 10s
     stats admin if LOCALHOST
-</pre>
-                                <div class="copy-button" title="Copy to clipboard">
-                                    <i class="fas fa-copy"></i>
-                                </div>
-                            </div>
-                            
-                            <h3>Advanced HAProxy Configuration</h3>
-                            
-                            <h4>Different Load Balancing Algorithms</h4>
-                            
-                            <div class="code-block-container">
-                                <pre class="code-block haproxy">
-# Round Robin (default)
-backend http_back
-    balance roundrobin
-    server server1 192.168.1.101:8080 check
-    server server2 192.168.1.102:8080 check
-    server server3 192.168.1.103:8080 check
+    stats auth admin:adminpassword</code></pre>
+                        </div>
 
-# Least Connections
-backend http_back
-    balance leastconn
-    server server1 192.168.1.101:8080 check
-    server server2 192.168.1.102:8080 check
-    server server3 192.168.1.103:8080 check
-
-# Source IP Hash
-backend http_back
-    balance source
-    server server1 192.168.1.101:8080 check
-    server server2 192.168.1.102:8080 check
-    server server3 192.168.1.103:8080 check
-
-# URL Hash
-backend http_back
-    balance uri
-    server server1 192.168.1.101:8080 check
-    server server2 192.168.1.102:8080 check
-    server server3 192.168.1.103:8080 check
-
-# Weighted Round Robin
-backend http_back
-    balance roundrobin
-    server server1 192.168.1.101:8080 weight 3 check
-    server server2 192.168.1.102:8080 weight 2 check
-    server server3 192.168.1.103:8080 weight 1 check
-</pre>
-                                <div class="copy-button" title="Copy to clipboard">
-                                    <i class="fas fa-copy"></i>
-                                </div>
-                            </div>
-                            
-                            <h4>Session Persistence</h4>
-                            
-                            <div class="code-block-container">
-                                <pre class="code-block haproxy">
-# Cookie-based session persistence
-backend http_back
-    balance roundrobin
-    cookie SERVERID insert indirect nocache
-    server server1 192.168.1.101:8080 check cookie server1
-    server server2 192.168.1.102:8080 check cookie server2
-    server server3 192.168.1.103:8080 check cookie server3
-
-# Sticky sessions based on source IP
-backend http_back
-    balance source
-    hash-type consistent
-    server server1 192.168.1.101:8080 check
-    server server2 192.168.1.102:8080 check
-    server server3 192.168.1.103:8080 check
-</pre>
-                                <div class="copy-button" title="Copy to clipboard">
-                                    <i class="fas fa-copy"></i>
-                                </div>
-                            </div>
-                            
-                            <h4>SSL Termination</h4>
-                            
-                            <div class="code-block-container">
-                                <pre class="code-block haproxy">
-frontend https_front
-    bind *:443 ssl crt /etc/ssl/certs/example.com.pem
-    reqadd X-Forwarded-Proto:\ https
-    default_backend http_back
-</pre>
-                                <div class="copy-button" title="Copy to clipboard">
-                                    <i class="fas fa-copy"></i>
-                                </div>
-                            </div>
-                            
-                            <h3>Restart HAProxy</h3>
-                            
-                            <div class="code-block-container">
-                                <pre class="code-block bash">
-# Test the configuration
-sudo haproxy -c -f /etc/haproxy/haproxy.cfg
-
-# If the test is successful, restart HAProxy
-sudo systemctl restart haproxy
-
-# Check the status
-sudo systemctl status haproxy
-</pre>
-                                <div class="copy-button" title="Copy to clipboard">
-                                    <i class="fas fa-copy"></i>
-                                </div>
-                            </div>
-                        </section>
-
-                        <section class="content-section">
-                            <h2>Step 4: Cloud-Based Load Balancing</h2>
-                            
-                            <p>Most cloud providers offer managed load balancing services. Let's look at how to implement load balancing in AWS and Google Cloud.</p>
-                            
-                            <h3>AWS Elastic Load Balancing (ELB)</h3>
-                            
-                            <p>AWS offers three types of load balancers:</p>
-                            <ul>
-                                <li><strong>Application Load Balancer (ALB)</strong>: For HTTP/HTTPS traffic</li>
-                                <li><strong>Network Load Balancer (NLB)</strong>: For TCP/UDP traffic</li>
-                                <li><strong>Classic Load Balancer</strong>: Legacy option</li>
-                            </ul>
-                            
-                            <p>Let's set up an Application Load Balancer using the AWS CLI:</p>
-                            
-                            <div class="code-block-container">
-                                <pre class="code-block bash">
-# Create a security group for the load balancer
-aws ec2 create-security-group \
-    --group-name my-alb-sg \
-    --description "Security group for ALB" \
-    --vpc-id vpc-12345678
-
-# Add inbound rules to the security group
-aws ec2 authorize-security-group-ingress \
-    --group-id sg-12345678 \
-    --protocol tcp \
-    --port 80 \
-    --cidr 0.0.0.0/0
-
-# Create the Application Load Balancer
-aws elbv2 create-load-balancer \
-    --name my-application-lb \
-    --subnets subnet-12345678 subnet-87654321 \
-    --security-groups sg-12345678
-
-# Create a target group
-aws elbv2 create-target-group \
-    --name my-targets \
-    --protocol HTTP \
-    --port 80 \
-    --vpc-id vpc-12345678 \
-    --health-check-protocol HTTP \
-    --health-check-path /health \
-    --health-check-interval-seconds 30 \
-    --health-check-timeout-seconds 5 \
-    --healthy-threshold-count 2 \
-    --unhealthy-threshold-count 2
-
-# Register targets with the target group
-aws elbv2 register-targets \
-    --target-group-arn arn:aws:elasticloadbalancing:region:account-id:targetgroup/my-targets/12345678 \
-    --targets Id=i-12345678 Id=i-87654321 Id=i-55555555
-
-# Create a listener for the load balancer
-aws elbv2 create-listener \
-    --load-balancer-arn arn:aws:elasticloadbalancing:region:account-id:loadbalancer/app/my-application-lb/12345678 \
-    --protocol HTTP \
-    --port 80 \
-    --default-actions Type=forward,TargetGroupArn=arn:aws:elasticloadbalancing:region:account-id:targetgroup/my-targets/12345678
-</pre>
-                                <div class="copy-button" title="Copy to clipboard">
-                                    <i class="fas fa-copy"></i>
-                                </div>
-                            </div>
-                            
-                            <h3>Google Cloud Load Balancing</h3>
-                            
-                            <p>Google Cloud offers several load balancing options. Let's set up an HTTP(S) Load Balancer using the gcloud CLI:</p>
-                            
-                            <div class="code-block-container">
-                                <pre class="code-block bash">
-# Create an instance template
-gcloud compute instance-templates create web-server-template \
-    --region=us-central1 \
-    --network=default \
-    --subnet=default \
-    --tags=http-server \
-    --machine-type=e2-medium \
-    --image-family=debian-10 \
-    --image-project=debian-cloud \
-    --metadata=startup-script='#! /bin/bash
-      apt-get update
-      apt-get install -y apache2
-      echo "Hello from $(hostname)" > /var/www/html/index.html
-      systemctl enable apache2
-      systemctl start apache2'
-
-# Create a managed instance group
-gcloud compute instance-groups managed create web-server-group \
-    --region=us-central1 \
-    --template=web-server-template \
-    --size=3
-
-# Create a health check
-gcloud compute health-checks create http http-health-check \
-    --port=80 \
-    --request-path=/health \
-    --check-interval=30s \
-    --timeout=5s \
-    --healthy-threshold=2 \
-    --unhealthy-threshold=2
-
-# Create a backend service
-gcloud compute backend-services create web-backend-service \
-    --protocol=HTTP \
-    --port-name=http \
-    --health-checks=http-health-check \
-    --global
-
-# Add the instance group as a backend
-gcloud compute backend-services add-backend web-backend-service \
-    --instance-group=web-server-group \
-    --instance-group-region=us-central1 \
-    --global
-
-# Create a URL map
-gcloud compute url-maps create web-map \
-    --default-service=web-backend-service
-
-# Create a target HTTP proxy
-gcloud compute target-http-proxies create http-lb-proxy \
-    --url-map=web-map
-
-# Create a global forwarding rule
-gcloud compute forwarding-rules create http-content-rule \
-    --global \
-    --target-http-proxy=http-lb-proxy \
-    --ports=80
-</pre>
-                                <div class="copy-button" title="Copy to clipboard">
-                                    <i class="fas fa-copy"></i>
-                                </div>
-                            </div>
-                        </section>
-
-                        <section class="content-section">
-                            <h2>Step 5: Kubernetes Load Balancing</h2>
-                            
-                            <p>Kubernetes provides built-in load balancing capabilities through Services. Let's implement load balancing in a Kubernetes cluster:</p>
-                            
-                            <h3>Create a Deployment</h3>
-                            
-                            <div class="code-block-container">
-                                <pre class="code-block yaml">
-# web-deployment.yaml
+                        <div class="implementation-steps">
+                            <h4>Kubernetes Load Balancing</h4>
+                            <p>Kubernetes provides built-in load balancing for containerized applications:</p>
+                            <ol>
+                                <li><strong>Create a Deployment:</strong> Define your application containers</li>
+                                <li><strong>Create a Service:</strong> Expose your deployment with load balancing</li>
+                                <li><strong>Configure Ingress (optional):</strong> Set up advanced HTTP routing</li>
+                                <li><strong>Set up health checks:</strong> Define liveness and readiness probes</li>
+                                <li><strong>Configure horizontal scaling:</strong> Set up auto-scaling based on metrics</li>
+                            </ol>
+                            <p>Example Kubernetes configuration:</p>
+                            <pre><code># deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: web-app
   labels:
-    app: web
+    app: web-app
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: web
+      app: web-app
   template:
     metadata:
       labels:
-        app: web
+        app: web-app
     spec:
       containers:
       - name: web-app
         image: nginx:latest
         ports:
         - containerPort: 80
-        readinessProbe:
-          httpGet:
-            path: /
-            port: 80
-          initialDelaySeconds: 5
-          periodSeconds: 10
+        resources:
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+          requests:
+            cpu: "200m"
+            memory: "256Mi"
         livenessProbe:
           httpGet:
-            path: /
+            path: /health
             port: 80
-          initialDelaySeconds: 15
-          periodSeconds: 20
-</pre>
-                                <div class="copy-button" title="Copy to clipboard">
-                                    <i class="fas fa-copy"></i>
-                                </div>
-                            </div>
-                            
-                            <h3>Create a Service</h3>
-                            
-                            <div class="code-block-container">
-                                <pre class="code-block yaml">
-# web-service.yaml
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          timeoutSeconds: 2
+          successThreshold: 1
+          failureThreshold: 3
+
+---
+# service.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: web-service
+  name: web-app-service
 spec:
   selector:
-    app: web
+    app: web-app
   ports:
   - port: 80
     targetPort: 80
   type: LoadBalancer
-</pre>
-                                <div class="copy-button" title="Copy to clipboard">
-                                    <i class="fas fa-copy"></i>
-                                </div>
-                            </div>
-                            
-                            <h3>Apply the Configuration</h3>
-                            
-                            <div class="code-block-container">
-                                <pre class="code-block bash">
-# Apply the deployment
-kubectl apply -f web-deployment.yaml
 
-# Apply the service
-kubectl apply -f web-service.yaml
-
-# Check the deployment status
-kubectl get deployments
-
-# Check the service status
-kubectl get services
-
-# Get the external IP of the load balancer
-kubectl get service web-service
-</pre>
-                                <div class="copy-button" title="Copy to clipboard">
-                                    <i class="fas fa-copy"></i>
-                                </div>
-                            </div>
-                            
-                            <h3>Advanced Kubernetes Load Balancing</h3>
-                            
-                            <h4>Using Ingress for HTTP Routing</h4>
-                            
-                            <div class="code-block-container">
-                                <pre class="code-block yaml">
-# web-ingress.yaml
+---
+# ingress.yaml
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: web-ingress
+  name: web-app-ingress
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
 spec:
   rules:
   - host: example.com
     http:
       paths:
-      - path: /app1
+      - path: /
         pathType: Prefix
         backend:
           service:
-            name: app1-service
-            port:
-              number: 80
-      - path: /app2
-        pathType: Prefix
-        backend:
-          service:
-            name: app2-service
+            name: web-app-service
             port:
               number: 80
   - host: api.example.com
@@ -1035,175 +828,1075 @@ spec:
             name: api-service
             port:
               number: 80
-</pre>
-                                <div class="copy-button" title="Copy to clipboard">
-                                    <i class="fas fa-copy"></i>
-                                </div>
-                            </div>
-                            
-                            <h4>Session Affinity in Kubernetes</h4>
-                            
-                            <div class="code-block-container">
-                                <pre class="code-block yaml">
-# web-service-with-session-affinity.yaml
-apiVersion: v1
-kind: Service
+  tls:
+  - hosts:
+    - example.com
+    - api.example.com
+    secretName: example-tls-secret
+
+---
+# horizontal-pod-autoscaler.yaml
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
 metadata:
-  name: web-service
+  name: web-app-hpa
 spec:
-  selector:
-    app: web
-  ports:
-  - port: 80
-    targetPort: 80
-  sessionAffinity: ClientIP
-  sessionAffinityConfig:
-    clientIP:
-      timeoutSeconds: 10800  # 3 hours
-  type: LoadBalancer
-</pre>
-                                <div class="copy-button" title="Copy to clipboard">
-                                    <i class="fas fa-copy"></i>
-                                </div>
-                            </div>
-                        </section>
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: web-app
+  minReplicas: 3
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 80</code></pre>
+                        </div>
 
-                        <section class="content-section">
-                            <h2>Best Practices for Load Balancing</h2>
-                            
-                            <div class="best-practices">
-                                <div class="practice">
-                                    <h3>1. Health Checks</h3>
-                                    <p>Implement robust health checks to detect and remove unhealthy servers from the rotation.</p>
-                                </div>
-                                
-                                <div class="practice">
-                                    <h3>2. Session Persistence</h3>
-                                    <p>Use session persistence when necessary, but be aware of its impact on load distribution.</p>
-                                </div>
-                                
-                                <div class="practice">
-                                    <h3>3. SSL Termination</h3>
-                                    <p>Offload SSL termination to the load balancer to reduce the computational burden on backend servers.</p>
-                                </div>
-                                
-                                <div class="practice">
-                                    <h3>4. Connection Draining</h3>
-                                    <p>Implement connection draining to gracefully remove servers from the rotation.</p>
-                                </div>
-                                
-                                <div class="practice">
-                                    <h3>5. Monitoring and Logging</h3>
-                                    <p>Set up comprehensive monitoring and logging for your load balancer to detect issues early.</p>
-                                </div>
-                                
-                                <div class="practice">
-                                    <h3>6. Redundancy</h3>
-                                    <p>Deploy load balancers in a high-availability configuration to avoid a single point of failure.</p>
-                                </div>
-                                
-                                <div class="practice">
-                                    <h3>7. Proper Algorithm Selection</h3>
-                                    <p>Choose the appropriate load balancing algorithm based on your application's requirements.</p>
-                                </div>
-                                
-                                <div class="practice">
-                                    <h3>8. Security</h3>
-                                    <p>Secure your load balancer with proper firewall rules, access controls, and regular security updates.</p>
-                                </div>
-                            </div>
-                        </section>
+                        <h3>Health Checks and Failure Detection</h3>
 
-                        <section class="content-section">
-                            <h2>Common Challenges and Solutions</h2>
-                            
-                            <div class="challenges">
-                                <div class="challenge">
-                                    <h3>Challenge: Uneven Load Distribution</h3>
-                                    <p><strong>Problem:</strong> Some servers receive more traffic than others, leading to performance issues.</p>
-                                    <p><strong>Solution:</strong> Use more sophisticated load balancing algorithms like least connections or weighted round robin. Monitor server load and adjust weights dynamically.</p>
-                                </div>
-                                
-                                <div class="challenge">
-                                    <h3>Challenge: Session Management</h3>
-                                    <p><strong>Problem:</strong> Users are directed to different servers, causing session loss.</p>
-                                    <p><strong>Solution:</strong> Implement session persistence, use a shared session store (like Redis), or make your application stateless.</p>
-                                </div>
-                                
-                                <div class="challenge">
-                                    <h3>Challenge: SSL Certificate Management</h3>
-                                    <p><strong>Problem:</strong> Managing SSL certificates across multiple servers is complex.</p>
-                                    <p><strong>Solution:</strong> Use SSL termination at the load balancer level and implement automated certificate renewal.</p>
-                                </div>
-                                
-                                <div class="challenge">
-                                    <h3>Challenge: Load Balancer Failure</h3>
-                                    <p><strong>Problem:</strong> The load balancer itself becomes a single point of failure.</p>
-                                    <p><strong>Solution:</strong> Implement load balancer redundancy with failover capabilities.</p>
-                                </div>
-                                
-                                <div class="challenge">
-                                    <h3>Challenge: Slow Health Checks</h3>
-                                    <p><strong>Problem:</strong> Slow or inaccurate health checks lead to routing traffic to unhealthy servers.</p>
-                                    <p><strong>Solution:</strong> Implement more sophisticated health checks that test critical application functionality, not just server availability.</p>
-                                </div>
-                            </div>
-                        </section>
+                        <div class="concept-card">
+                            <h4>Implementing Health Checks</h4>
+                            <p>Health checks are crucial for detecting and removing unhealthy servers from the load balancer pool:</p>
+                            <ul>
+                                <li><strong>Active Health Checks:</strong> Load balancer periodically probes servers</li>
+                                <li><strong>Passive Health Checks:</strong> Load balancer monitors actual request failures</li>
+                                <li><strong>Custom Health Endpoints:</strong> Dedicated API endpoints for comprehensive checks</li>
+                            </ul>
+                            <p>Example of a custom health check endpoint in Node.js:</p>
+                            <pre><code>const express = require('express');
+const app = express();
+const port = process.env.PORT || 8080;
 
-                        <section class="content-section">
-                            <h2>Conclusion</h2>
-                            <p>Load balancing is a critical component of modern distributed systems, enabling high availability, scalability, and reliability. By distributing traffic across multiple servers, load balancers help prevent any single point of failure and ensure optimal resource utilization.</p>
-                            
-                            <p>In this guide, we've explored various load balancing implementations, from simple software-based solutions to cloud-native approaches. We've covered different load balancing algorithms, health checks, session persistence, and best practices for deploying load balancers in production environments.</p>
-                            
-                            <p>Remember that the choice of load balancing solution depends on your specific requirements, including traffic patterns, application architecture, and infrastructure constraints. Start with a simple solution and evolve as your needs grow.</p>
-                            
-                            <div class="next-steps">
-                                <h3>Next Steps</h3>
-                                <div class="next-links">
-                                    <a href="caching-strategies.html" class="next-link">
-                                        <span class="next-text">Next Implementation</span>
-                                        <span class="next-title">Caching Strategies</span>
-                                        <i class="fas fa-arrow-right"></i>
-                                    </a>
-                                </div>
+// Database connection
+const db = require('./database');
+
+// Redis connection
+const redis = require('./redis');
+
+// Track application state
+let isShuttingDown = false;
+
+// Simple health check
+app.get('/health', (req, res) => {
+    res.status(200).send('OK');
+});
+
+// Detailed health check
+app.get('/health/detailed', async (req, res) => {
+    if (isShuttingDown) {
+        return res.status(503).json({
+            status: 'shutting_down',
+            message: 'Server is shutting down'
+        });
+    }
+    
+    try {
+        // Check database connection
+        const dbStatus = await checkDatabaseConnection();
+        
+        // Check Redis connection
+        const redisStatus = await checkRedisConnection();
+        
+        // Check disk space
+        const diskStatus = await checkDiskSpace();
+        
+        // Check memory usage
+        const memoryStatus = checkMemoryUsage();
+        
+        // Overall status
+        const isHealthy = dbStatus.healthy && 
+                          redisStatus.healthy && 
+                          diskStatus.healthy && 
+                          memoryStatus.healthy;
+        
+        const statusCode = isHealthy ? 200 : 503;
+        
+        res.status(statusCode).json({
+            status: isHealthy ? 'healthy' : 'unhealthy',
+            timestamp: new Date().toISOString(),
+            version: process.env.APP_VERSION || '1.0.0',
+            uptime: process.uptime(),
+            checks: {
+                database: dbStatus,
+                redis: redisStatus,
+                disk: diskStatus,
+                memory: memoryStatus
+            }
+        });
+    } catch (error) {
+        console.error('Health check failed:', error);
+        res.status(500).json({
+            status: 'error',
+            message: 'Health check failed',
+            error: error.message
+        });
+    }
+});
+
+// Readiness check (for Kubernetes)
+app.get('/ready', (req, res) => {
+    if (isShuttingDown) {
+        return res.status(503).send('Not Ready');
+    }
+    res.status(200).send('Ready');
+});
+
+// Helper functions for health checks
+async function checkDatabaseConnection() {
+    try {
+        const startTime = Date.now();
+        await db.query('SELECT 1');
+        const latency = Date.now() - startTime;
+        
+        return {
+            healthy: true,
+            latency: `${latency}ms`
+        };
+    } catch (error) {
+        return {
+            healthy: false,
+            error: error.message
+        };
+    }
+}
+
+async function checkRedisConnection() {
+    try {
+        const startTime = Date.now();
+        await redis.ping();
+        const latency = Date.now() - startTime;
+        
+        return {
+            healthy: true,
+            latency: `${latency}ms`
+        };
+    } catch (error) {
+        return {
+            healthy: false,
+            error: error.message
+        };
+    }
+}
+
+async function checkDiskSpace() {
+    // This would use a system call or library to check disk space
+    // Simplified example:
+    return {
+        healthy: true,
+        usedPercentage: '65%',
+        freeSpace: '35GB'
+    };
+}
+
+function checkMemoryUsage() {
+    const memoryUsage = process.memoryUsage();
+    const usedHeapPercentage = (memoryUsage.heapUsed / memoryUsage.heapTotal * 100).toFixed(2);
+    
+    return {
+        healthy: usedHeapPercentage < 90, // Threshold example
+        heapUsed: `${Math.round(memoryUsage.heapUsed / 1024 / 1024)}MB`,
+        heapTotal: `${Math.round(memoryUsage.heapTotal / 1024 / 1024)}MB`,
+        usedPercentage: `${usedHeapPercentage}%`
+    };
+}
+
+// Graceful shutdown
+process.on('SIGTERM', () => {
+    console.log('SIGTERM received, shutting down gracefully');
+    isShuttingDown = true;
+    
+    // Stop accepting new connections
+    server.close(() => {
+        console.log('Server closed');
+        
+        // Close database connections
+        db.end().then(() => {
+            console.log('Database connections closed');
+            process.exit(0);
+        });
+    });
+});
+
+const server = app.listen(port, () => {
+    console.log(`Server listening on port ${port}`);
+});</code></pre>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Circuit Breaker Pattern</h4>
+                            <p>The circuit breaker pattern prevents cascading failures by temporarily disabling calls to failing services:</p>
+                            <ul>
+                                <li><strong>Closed State:</strong> Normal operation, requests pass through</li>
+                                <li><strong>Open State:</strong> Failing service is bypassed, requests fail fast</li>
+                                <li><strong>Half-Open State:</strong> Testing if service has recovered</li>
+                            </ul>
+                            <p>Example implementation in Node.js:</p>
+                            <pre><code>class CircuitBreaker {
+    constructor(serviceFunction, options = {}) {
+        this.serviceFunction = serviceFunction;
+        this.state = 'CLOSED';
+        this.failureThreshold = options.failureThreshold || 5;
+        this.resetTimeout = options.resetTimeout || 30000; // 30 seconds
+        this.failureCount = 0;
+        this.lastFailureTime = null;
+        this.fallbackFunction = options.fallback || null;
+        this.onStateChange = options.onStateChange || (() => {});
+    }
+    
+    async call(...args) {
+        if (this.state === 'OPEN') {
+            // Check if reset timeout has elapsed
+            if (Date.now() - this.lastFailureTime >= this.resetTimeout) {
+                this.setState('HALF-OPEN');
+            } else {
+                return this.handleFailure(new Error('Circuit is OPEN'), ...args);
+            }
+        }
+        
+        try {
+            const result = await this.serviceFunction(...args);
+            this.handleSuccess();
+            return result;
+        } catch (error) {
+            return this.handleFailure(error, ...args);
+        }
+    }
+    
+    handleSuccess() {
+        this.failureCount = 0;
+        if (this.state === 'HALF-OPEN') {
+            this.setState('CLOSED');
+        }
+    }
+    
+    handleFailure(error, ...args) {
+        this.failureCount++;
+        this.lastFailureTime = Date.now();
+        
+        if ((this.state === 'CLOSED' && this.failureCount >= this.failureThreshold) ||
+            this.state === 'HALF-OPEN') {
+            this.setState('OPEN');
+        }
+        
+        if (this.fallbackFunction) {
+            return this.fallbackFunction(error, ...args);
+        }
+        
+        throw error;
+    }
+    
+    setState(state) {
+        if (this.state !== state) {
+            this.state = state;
+            this.onStateChange(state);
+        }
+    }
+    
+    reset() {
+        this.failureCount = 0;
+        this.setState('CLOSED');
+    }
+}
+
+// Usage example
+const axios = require('axios');
+
+// Create a circuit breaker for an API call
+const apiCircuitBreaker = new CircuitBreaker(
+    // Service function
+    async (url) => {
+        const response = await axios.get(url);
+        return response.data;
+    },
+    // Options
+    {
+        failureThreshold: 3,
+        resetTimeout: 10000, // 10 seconds
+        fallback: (error, url) => {
+            console.log(`Using fallback for ${url}`);
+            return { error: true, message: 'Service unavailable', fallback: true };
+        },
+        onStateChange: (state) => {
+            console.log(`Circuit state changed to ${state}`);
+        }
+    }
+);
+
+// Example usage
+async function fetchData() {
+    try {
+        // This will go through the circuit breaker
+        const data = await apiCircuitBreaker.call('https://api.example.com/data');
+        console.log('Data:', data);
+    } catch (error) {
+        console.error('Error:', error.message);
+    }
+}
+
+// Simulate multiple calls
+async function simulateCalls() {
+    for (let i = 0; i < 10; i++) {
+        console.log(`Call ${i + 1}`);
+        await fetchData();
+        await new Promise(resolve => setTimeout(resolve, 1000));
+    }
+}
+
+simulateCalls();</code></pre>
+                        </div>
+
+                        <h3>Session Persistence Strategies</h3>
+
+                        <div class="concept-card">
+                            <h4>Cookie-Based Persistence</h4>
+                            <p>Uses cookies to route clients to the same server across multiple requests:</p>
+                            <ul>
+                                <li><strong>Implementation:</strong> Load balancer sets a cookie identifying the server</li>
+                                <li><strong>Advantages:</strong> Simple to implement, works across client IP changes</li>
+                                <li><strong>Disadvantages:</strong> Requires cookie support, adds overhead to requests</li>
+                            </ul>
+                            <p>Example NGINX configuration for cookie-based persistence:</p>
+                            <pre><code>http {
+    # ... other configurations ...
+    
+    upstream backend {
+        server backend1.example.com:8080;
+        server backend2.example.com:8080;
+        server backend3.example.com:8080;
+        
+        # Enable sticky sessions with cookies
+        sticky cookie srv_id expires=1h domain=.example.com path=/;
+    }
+    
+    server {
+        listen 80;
+        server_name www.example.com;
+        
+        location / {
+            proxy_pass http://backend;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+        }
+    }
+}</code></pre>
+                            <p>Example HAProxy configuration for cookie-based persistence:</p>
+                            <pre><code>backend web-backend
+    balance roundrobin
+    cookie SERVERID insert indirect nocache
+    option httpchk GET /health HTTP/1.1\r\nHost:\ www.example.com
+    
+    server web1 backend1.example.com:8080 check cookie server1
+    server web2 backend2.example.com:8080 check cookie server2
+    server web3 backend3.example.com:8080 check cookie server3</code></pre>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>IP-Based Persistence</h4>
+                            <p>Routes requests from the same client IP to the same server:</p>
+                            <ul>
+                                <li><strong>Implementation:</strong> Uses client IP hash to determine server</li>
+                                <li><strong>Advantages:</strong> No cookies required, works with any client</li>
+                                <li><strong>Disadvantages:</strong> Breaks if client IP changes (mobile networks, VPNs)</li>
+                            </ul>
+                            <p>Example NGINX configuration for IP-based persistence:</p>
+                            <pre><code>http {
+    # ... other configurations ...
+    
+    upstream backend {
+        ip_hash;
+        server backend1.example.com:8080;
+        server backend2.example.com:8080;
+        server backend3.example.com:8080;
+    }
+    
+    server {
+        listen 80;
+        server_name www.example.com;
+        
+        location / {
+            proxy_pass http://backend;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+        }
+    }
+}</code></pre>
+                            <p>Example HAProxy configuration for IP-based persistence:</p>
+                            <pre><code>backend web-backend
+    balance source
+    option httpchk GET /health HTTP/1.1\r\nHost:\ www.example.com
+    
+    server web1 backend1.example.com:8080 check
+    server web2 backend2.example.com:8080 check
+    server web3 backend3.example.com:8080 check</code></pre>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Application-Level Session Management</h4>
+                            <p>Stores session data externally, allowing any server to handle any request:</p>
+                            <ul>
+                                <li><strong>Implementation:</strong> Uses external storage like Redis or Memcached</li>
+                                <li><strong>Advantages:</strong> Most flexible, works with any load balancing strategy</li>
+                                <li><strong>Disadvantages:</strong> Requires application changes, adds latency for session retrieval</li>
+                            </ul>
+                            <p>Example implementation in Node.js with Redis:</p>
+                            <pre><code>const express = require('express');
+const session = require('express-session');
+const RedisStore = require('connect-redis').default;
+const { createClient } = require('redis');
+const app = express();
+
+// Initialize Redis client
+const redisClient = createClient({
+    url: 'redis://redis-server:6379'
+});
+
+redisClient.connect().catch(console.error);
+
+// Configure session middleware with Redis store
+app.use(session({
+    store: new RedisStore({ client: redisClient }),
+    secret: 'your-secret-key',
+    resave: false,
+    saveUninitialized: false,
+    cookie: { 
+        secure: process.env.NODE_ENV === 'production',
+        httpOnly: true,
+        maxAge: 1000 * 60 * 60 * 24 // 1 day
+    }
+}));
+
+// Example route that uses session
+app.get('/', (req, res) => {
+    // Initialize visit count if not exists
+    if (!req.session.visitCount) {
+        req.session.visitCount = 0;
+    }
+    
+    // Increment visit count
+    req.session.visitCount++;
+    
+    res.send(`
+        <h1>Welcome to our load-balanced app!</h1>
+        <p>You have visited this site ${req.session.visitCount} times.</p>
+        <p>Server ID: ${process.env.SERVER_ID || 'unknown'}</p>
+    `);
+});
+
+// Start server
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+    console.log(`Server listening on port ${port}`);
+});</code></pre>
+                        </div>
+
+                        <h3>Global Server Load Balancing</h3>
+
+                        <div class="implementation-steps">
+                            <h4>DNS-Based GSLB</h4>
+                            <p>Uses DNS to distribute traffic across multiple geographic locations:</p>
+                            <ol>
+                                <li><strong>Configure DNS providers:</strong> Set up multiple A records or use GeoDNS</li>
+                                <li><strong>Set up health checks:</strong> Monitor regional endpoints</li>
+                                <li><strong>Configure TTL:</strong> Set appropriate time-to-live values</li>
+                                <li><strong>Implement failover:</strong> Configure automatic failover between regions</li>
+                            </ol>
+                            <p>Example AWS Route 53 configuration:</p>
+                            <pre><code>// AWS Route 53 configuration using AWS CLI
+
+// Create health checks for each region
+aws route53 create-health-check \
+  --caller-reference us-east-1-$(date +%s) \
+  --health-check-config \
+  Type=HTTPS,FullyQualifiedDomainName=us-east-1.example.com,Port=443,ResourcePath=/health,RequestInterval=30,FailureThreshold=3
+
+aws route53 create-health-check \
+  --caller-reference eu-west-1-$(date +%s) \
+  --health-check-config \
+  Type=HTTPS,FullyQualifiedDomainName=eu-west-1.example.com,Port=443,ResourcePath=/health,RequestInterval=30,FailureThreshold=3
+
+aws route53 create-health-check \
+  --caller-reference ap-southeast-1-$(date +%s) \
+  --health-check-config \
+  Type=HTTPS,FullyQualifiedDomainName=ap-southeast-1.example.com,Port=443,ResourcePath=/health,RequestInterval=30,FailureThreshold=3
+
+// Create a geolocation routing policy
+aws route53 change-resource-record-sets \
+  --hosted-zone-id ZXXXXXXXXXXXXX \
+  --change-batch '{
+    "Changes": [
+      {
+        "Action": "CREATE",
+        "ResourceRecordSet": {
+          "Name": "example.com",
+          "Type": "A",
+          "SetIdentifier": "us-east-1",
+          "GeoLocation": {
+            "ContinentCode": "NA"
+          },
+          "TTL": 60,
+          "ResourceRecords": [
+            {
+              "Value": "203.0.113.1"
+            }
+          ],
+          "HealthCheckId": "abcdef12-3456-7890-abcd-ef1234567890"
+        }
+      },
+      {
+        "Action": "CREATE",
+        "ResourceRecordSet": {
+          "Name": "example.com",
+          "Type": "A",
+          "SetIdentifier": "eu-west-1",
+          "GeoLocation": {
+            "ContinentCode": "EU"
+          },
+          "TTL": 60,
+          "ResourceRecords": [
+            {
+              "Value": "203.0.113.2"
+            }
+          ],
+          "HealthCheckId": "abcdef12-3456-7890-abcd-ef1234567891"
+        }
+      },
+      {
+        "Action": "CREATE",
+        "ResourceRecordSet": {
+          "Name": "example.com",
+          "Type": "A",
+          "SetIdentifier": "ap-southeast-1",
+          "GeoLocation": {
+            "ContinentCode": "AS"
+          },
+          "TTL": 60,
+          "ResourceRecords": [
+            {
+              "Value": "203.0.113.3"
+            }
+          ],
+          "HealthCheckId": "abcdef12-3456-7890-abcd-ef1234567892"
+        }
+      },
+      {
+        "Action": "CREATE",
+        "ResourceRecordSet": {
+          "Name": "example.com",
+          "Type": "A",
+          "SetIdentifier": "default",
+          "GeoLocation": {
+            "CountryCode": "*"
+          },
+          "TTL": 60,
+          "ResourceRecords": [
+            {
+              "Value": "203.0.113.4"
+            }
+          ]
+        }
+      }
+    ]
+  }'</code></pre>
+                        </div>
+
+                        <div class="implementation-steps">
+                            <h4>Anycast Routing</h4>
+                            <p>Uses the same IP address in multiple locations, routing traffic to the nearest location:</p>
+                            <ol>
+                                <li><strong>Configure BGP:</strong> Set up Border Gateway Protocol for IP announcement</li>
+                                <li><strong>Deploy identical services:</strong> Set up identical services in each location</li>
+                                <li><strong>Announce IP prefixes:</strong> Announce the same IP prefix from multiple locations</li>
+                                <li><strong>Monitor routing:</strong> Ensure proper traffic distribution</li>
+                            </ol>
+                            <p>Example BGP configuration for Anycast (using BIRD routing daemon):</p>
+                            <pre><code># /etc/bird/bird.conf
+
+# Router ID (unique per router)
+router id 192.0.2.1;
+
+# Configure logging
+log syslog all;
+log "/var/log/bird.log" { debug, trace, info, remote, warning, error, auth, fatal, bug };
+
+# Define local AS number
+protocol device {
+    scan time 10;
+}
+
+protocol kernel {
+    persist;
+    scan time 20;
+    import all;
+    export all;
+}
+
+# Define the anycast prefix
+protocol static {
+    route 203.0.113.0/24 reject;
+}
+
+# BGP configuration for upstream provider 1
+protocol bgp upstream1 {
+    local as 65000;
+    neighbor 192.0.2.2 as 64496;
+    
+    import filter {
+        # Accept default route from upstream
+        if net = 0.0.0.0/0 then accept;
+        else reject;
+    };
+    
+    export filter {
+        # Announce our anycast prefix
+        if net = 203.0.113.0/24 then accept;
+        else reject;
+    };
+}
+
+# BGP configuration for upstream provider 2
+protocol bgp upstream2 {
+    local as 65000;
+    neighbor 192.0.2.3 as 64497;
+    
+    import filter {
+        # Accept default route from upstream
+        if net = 0.0.0.0/0 then accept;
+        else reject;
+    };
+    
+    export filter {
+        # Announce our anycast prefix
+        if net = 203.0.113.0/24 then accept;
+        else reject;
+    };
+}</code></pre>
+                        </div>
+
+                        <h3>Load Balancing in Cloud Environments</h3>
+
+                        <div class="implementation-steps">
+                            <h4>AWS Elastic Load Balancing</h4>
+                            <p>AWS offers several load balancing options:</p>
+                            <ol>
+                                <li><strong>Application Load Balancer (ALB):</strong> For HTTP/HTTPS traffic</li>
+                                <li><strong>Network Load Balancer (NLB):</strong> For TCP/UDP traffic</li>
+                                <li><strong>Classic Load Balancer:</strong> Legacy option for basic load balancing</li>
+                                <li><strong>Gateway Load Balancer:</strong> For third-party virtual appliances</li>
+                            </ol>
+                            <p>Example AWS CloudFormation template for ALB:</p>
+                            <pre><code>AWSTemplateFormatVersion: '2010-09-09'
+Description: 'Application Load Balancer with Auto Scaling Group'
+
+Resources:
+  # VPC and Networking resources omitted for brevity
+  
+  # Security Group for ALB
+  LoadBalancerSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Security group for load balancer
+      VpcId: !Ref VPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+          CidrIp: 0.0.0.0/0
+  
+  # Security Group for EC2 instances
+  InstanceSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Security group for web instances
+      VpcId: !Ref VPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          SourceSecurityGroupId: !Ref LoadBalancerSecurityGroup
+  
+  # Application Load Balancer
+  ApplicationLoadBalancer:
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Properties:
+      Name: web-app-alb
+      Scheme: internet-facing
+      LoadBalancerAttributes:
+        - Key: idle_timeout.timeout_seconds
+          Value: '60'
+        - Key: routing.http2.enabled
+          Value: 'true'
+      Subnets:
+        - !Ref PublicSubnet1
+        - !Ref PublicSubnet2
+      SecurityGroups:
+        - !Ref LoadBalancerSecurityGroup
+  
+  # Target Group
+  TargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      Name: web-app-target-group
+      Port: 80
+      Protocol: HTTP
+      VpcId: !Ref VPC
+      HealthCheckIntervalSeconds: 30
+      HealthCheckPath: /health
+      HealthCheckProtocol: HTTP
+      HealthCheckTimeoutSeconds: 5
+      HealthyThresholdCount: 2
+      UnhealthyThresholdCount: 3
+      TargetType: instance
+      TargetGroupAttributes:
+        - Key: deregistration_delay.timeout_seconds
+          Value: '20'
+  
+  # HTTP Listener
+  HttpListener:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      DefaultActions:
+        - Type: redirect
+          RedirectConfig:
+            Protocol: HTTPS
+            Port: '443'
+            Host: '#{host}'
+            Path: '/#{path}'
+            Query: '#{query}'
+            StatusCode: HTTP_301
+      LoadBalancerArn: !Ref ApplicationLoadBalancer
+      Port: 80
+      Protocol: HTTP
+  
+  # HTTPS Listener
+  HttpsListener:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      DefaultActions:
+        - Type: forward
+          TargetGroupArn: !Ref TargetGroup
+      LoadBalancerArn: !Ref ApplicationLoadBalancer
+      Port: 443
+      Protocol: HTTPS
+      Certificates:
+        - CertificateArn: !Ref CertificateArn
+      SslPolicy: ELBSecurityPolicy-TLS-1-2-2017-01
+  
+  # Launch Template
+  LaunchTemplate:
+    Type: AWS::EC2::LaunchTemplate
+    Properties:
+      LaunchTemplateName: web-app-launch-template
+      VersionDescription: Initial version
+      LaunchTemplateData:
+        ImageId: !Ref AMI
+        InstanceType: t3.micro
+        SecurityGroupIds:
+          - !Ref InstanceSecurityGroup
+        UserData:
+          Fn::Base64: !Sub |
+            #!/bin/bash -xe
+            yum update -y
+            yum install -y httpd
+            systemctl start httpd
+            systemctl enable httpd
+            echo '<html><body><h1>Hello from $(hostname -f)</h1></body></html>' > /var/www/html/index.html
+            echo 'OK' > /var/www/html/health
+  
+  # Auto Scaling Group
+  AutoScalingGroup:
+    Type: AWS::AutoScaling::AutoScalingGroup
+    Properties:
+      AutoScalingGroupName: web-app-asg
+      MinSize: 2
+      MaxSize: 10
+      DesiredCapacity: 2
+      HealthCheckType: ELB
+      HealthCheckGracePeriod: 300
+      LaunchTemplate:
+        LaunchTemplateId: !Ref LaunchTemplate
+        Version: !GetAtt LaunchTemplate.LatestVersionNumber
+      TargetGroupARNs:
+        - !Ref TargetGroup
+      VPCZoneIdentifier:
+        - !Ref PrivateSubnet1
+        - !Ref PrivateSubnet2
+      Tags:
+        - Key: Name
+          Value: web-app-instance
+          PropagateAtLaunch: true
+  
+  # Scaling Policy based on CPU
+  ScalingPolicy:
+    Type: AWS::AutoScaling::ScalingPolicy
+    Properties:
+      AutoScalingGroupName: !Ref AutoScalingGroup
+      PolicyType: TargetTrackingScaling
+      TargetTrackingConfiguration:
+        PredefinedMetricSpecification:
+          PredefinedMetricType: ASGAverageCPUUtilization
+        TargetValue: 70.0
+
+Outputs:
+  LoadBalancerDNSName:
+    Description: DNS name of the load balancer
+    Value: !GetAtt ApplicationLoadBalancer.DNSName
+  
+  TargetGroupArn:
+    Description: ARN of the target group
+    Value: !Ref TargetGroup</code></pre>
+                        </div>
+
+                        <div class="implementation-steps">
+                            <h4>Google Cloud Load Balancing</h4>
+                            <p>Google Cloud offers various load balancing options:</p>
+                            <ol>
+                                <li><strong>Global HTTP(S) Load Balancer:</strong> For global HTTP/HTTPS traffic</li>
+                                <li><strong>Regional Internal Load Balancer:</strong> For internal traffic</li>
+                                <li><strong>Network Load Balancer:</strong> For TCP/UDP traffic</li>
+                                <li><strong>SSL Proxy Load Balancer:</strong> For SSL traffic</li>
+                            </ol>
+                            <p>Example Terraform configuration for Google Cloud Load Balancer:</p>
+                            <pre><code>provider "google" {
+  project = "your-project-id"
+  region  = "us-central1"
+  zone    = "us-central1-a"
+}
+
+# Create a VPC network
+resource "google_compute_network" "vpc_network" {
+  name                    = "web-app-network"
+  auto_create_subnetworks = false
+}
+
+# Create a subnet
+resource "google_compute_subnetwork" "subnet" {
+  name          = "web-app-subnet"
+  ip_cidr_range = "10.0.0.0/24"
+  region        = "us-central1"
+  network       = google_compute_network.vpc_network.id
+}
+
+# Create a firewall rule to allow HTTP traffic
+resource "google_compute_firewall" "http_firewall" {
+  name    = "allow-http"
+  network = google_compute_network.vpc_network.id
+
+  allow {
+    protocol = "tcp"
+    ports    = ["80", "443"]
+  }
+
+  source_ranges = ["0.0.0.0/0"]
+  target_tags   = ["web"]
+}
+
+# Create an instance template
+resource "google_compute_instance_template" "web_template" {
+  name        = "web-app-template"
+  description = "Template for web application instances"
+
+  machine_type = "e2-medium"
+  tags         = ["web"]
+
+  disk {
+    source_image = "debian-cloud/debian-10"
+    auto_delete  = true
+    boot         = true
+  }
+
+  network_interface {
+    network    = google_compute_network.vpc_network.id
+    subnetwork = google_compute_subnetwork.subnet.id
+    access_config {
+      // Ephemeral IP
+    }
+  }
+
+  metadata_startup_script = <<-EOF
+    #!/bin/bash
+    apt-get update
+    apt-get install -y apache2
+    cat <<'EOT' > /var/www/html/index.html
+    <html>
+      <body>
+        <h1>Hello from Google Cloud!</h1>
+        <p>Server: $(hostname)</p>
+      </body>
+    </html>
+    EOT
+    cat <<'EOT' > /var/www/html/health
+    OK
+    EOT
+    systemctl enable apache2
+    systemctl start apache2
+  EOF
+}
+
+# Create a managed instance group
+resource "google_compute_region_instance_group_manager" "web_group" {
+  name               = "web-app-group"
+  base_instance_name = "web-app"
+  region             = "us-central1"
+  target_size        = 2
+
+  version {
+    instance_template = google_compute_instance_template.web_template.id
+  }
+
+  named_port {
+    name = "http"
+    port = 80
+  }
+
+  auto_healing_policies {
+    health_check      = google_compute_health_check.http_health_check.id
+    initial_delay_sec = 300
+  }
+}
+
+# Create a health check
+resource "google_compute_health_check" "http_health_check" {
+  name               = "http-health-check"
+  check_interval_sec = 5
+  timeout_sec        = 5
+  healthy_threshold  = 2
+  unhealthy_threshold = 2
+
+  http_health_check {
+    port         = 80
+    request_path = "/health"
+  }
+}
+
+# Create a backend service
+resource "google_compute_backend_service" "web_backend" {
+  name        = "web-app-backend"
+  port_name   = "http"
+  protocol    = "HTTP"
+  timeout_sec = 10
+  health_checks = [google_compute_health_check.http_health_check.id]
+
+  backend {
+    group = google_compute_region_instance_group_manager.web_group.instance_group
+  }
+}
+
+# Create a URL map
+resource "google_compute_url_map" "web_url_map" {
+  name            = "web-app-url-map"
+  default_service = google_compute_backend_service.web_backend.id
+}
+
+# Create an HTTP target proxy
+resource "google_compute_target_http_proxy" "http_proxy" {
+  name    = "web-app-http-proxy"
+  url_map = google_compute_url_map.web_url_map.id
+}
+
+# Create a global forwarding rule
+resource "google_compute_global_forwarding_rule" "http_forwarding_rule" {
+  name       = "web-app-http-rule"
+  target     = google_compute_target_http_proxy.http_proxy.id
+  port_range = "80"
+}
+
+# Create an autoscaler
+resource "google_compute_region_autoscaler" "web_autoscaler" {
+  name   = "web-app-autoscaler"
+  region = "us-central1"
+  target = google_compute_region_instance_group_manager.web_group.id
+
+  autoscaling_policy {
+    max_replicas    = 10
+    min_replicas    = 2
+    cooldown_period = 60
+
+    cpu_utilization {
+      target = 0.7
+    }
+  }
+}</code></pre>
+                        </div>
+
+                        <h3>Conclusion</h3>
+                        <p>Load balancing is a critical component of modern distributed systems, enabling horizontal scaling, high availability, and fault tolerance. By implementing the right load balancing strategy for your application, you can ensure optimal performance and reliability even under high traffic conditions.</p>
+                        
+                        <p>Remember these key takeaways:</p>
+                        <ul>
+                            <li>Choose the appropriate load balancing algorithm based on your application's needs</li>
+                            <li>Implement robust health checks to detect and handle server failures</li>
+                            <li>Consider session persistence requirements for stateful applications</li>
+                            <li>Use global load balancing for geographic distribution and disaster recovery</li>
+                            <li>Monitor your load balancers and backend servers for optimal performance</li>
+                        </ul>
+                        
+                        <div class="next-steps">
+                            <h3>Next Steps</h3>
+                            <p>Continue your learning with these related topics:</p>
+                            <div class="button-group">
+                                <a href="caching-strategies.html" class="btn btn-primary">Explore Caching Strategies</a>
+                                <a href="microservices.html" class="btn btn-secondary">Learn About Microservices</a>
                             </div>
-                        </section>
-                    </div>
-                </article>
+                        </div>
+                    </article>
+                </main>
             </div>
         </div>
-    </main>
+    </section>
 
-    <footer class="site-footer">
+    <footer class="footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-logo">
-                    <span class="logo-text">System Design <span class="highlight">A-Z</span></span>
+                    <h2>System Design Mastery</h2>
+                    <p>Learn. Design. Implement.</p>
                 </div>
                 <div class="footer-links">
-                    <div class="footer-nav">
-                        <h4>Navigation</h4>
+                    <div class="footer-column">
+                        <h3>Quick Links</h3>
                         <ul>
                             <li><a href="../../index.html">Home</a></li>
                             <li><a href="../fundamentals/index.html">Fundamentals</a></li>
-                            <li><a href="../examples/index.html">Real-World Examples</a></li>
+                            <li><a href="../examples/index.html">Examples</a></li>
                             <li><a href="../implementation/index.html">Implementation</a></li>
                         </ul>
                     </div>
-                    <div class="footer-resources">
-                        <h4>Resources</h4>
+                    <div class="footer-column">
+                        <h3>Resources</h3>
                         <ul>
-                            <li><a href="#">Glossary</a></li>
-                            <li><a href="#">Recommended Books</a></li>
-                            <li><a href="#">Tools & Resources</a></li>
-                            <li><a href="#">FAQ</a></li>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Cheat Sheets</a></li>
+                            <li><a href="#">Interview Prep</a></li>
+                            <li><a href="#">Community</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Connect</h3>
+                        <ul>
+                            <li><a href="#">GitHub</a></li>
+                            <li><a href="#">Twitter</a></li>
+                            <li><a href="#">LinkedIn</a></li>
+                            <li><a href="#">Contact Us</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 System Design A-Z. All images used are copyright-free.</p>
+                <p>&copy; 2025 System Design Mastery. All rights reserved.</p>
             </div>
         </div>
     </footer>

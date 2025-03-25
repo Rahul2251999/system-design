@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microservices Architecture | System Design Mastery</title>
+    <link rel="stylesheet" href="../../css/modern-styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="sub-header">
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <h1>System Design Mastery</h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="../../index.html">Home</a></li>
+                    <li><a href="../fundamentals/index.html" class="active">Fundamentals</a></li>
+                    <li><a href="../examples/index.html">Real-world Examples</a></li>
+                    <li><a href="../implementation/index.html">Implementation</a></li>
+                    <li><a href="../../index.html#about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <div class="container">
+            <h1>Microservices Architecture</h1>
+            <p>Building complex applications as a collection of small, independent services</p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <div class="content-grid">
+                <aside class="sidebar">
+                    <h3>Fundamentals Topics</h3>
+                    <ul class="sidebar-links">
+                        <li><a href="scalability.html">Scalability</a></li>
+                        <li><a href="reliability.html">Reliability</a></li>
+                        <li><a href="availability.html">Availability</a></li>
+                        <li><a href="performance.html">Performance</a></li>
+                        <li><a href="load-balancing.html">Load Balancing</a></li>
+                        <li><a href="caching.html">Caching</a></li>
+                        <li><a href="database-sharding.html">Database Sharding</a></li>
+                        <li><a href="cap-theorem.html">CAP Theorem</a></li>
+                        <li><a href="consistency-patterns.html">Consistency Patterns</a></li>
+                        <li><a href="microservices.html" class="active">Microservices Architecture</a></li>
+                    </ul>
+                </aside>
+                <main class="main-content">
+                    <article>
+                        <h2>What is Microservices Architecture?</h2>
+                        <p>Microservices architecture is an approach to developing a single application as a suite of small, independently deployable services, each running in its own process and communicating with lightweight mechanisms, often an HTTP API. These services are built around business capabilities and can be deployed independently by fully automated deployment machinery.</p>
+                        
+                        <div class="info-box">
+                            <h3>Why Microservices Matter</h3>
+                            <p>Microservices architecture has gained significant popularity because it addresses many challenges faced by large, complex applications:</p>
+                            <ul>
+                                <li>Enables faster development and deployment cycles</li>
+                                <li>Allows different services to scale independently based on demand</li>
+                                <li>Provides flexibility in choosing technologies for different services</li>
+                                <li>Improves fault isolation, limiting the impact of failures</li>
+                                <li>Facilitates organizational alignment with business domains</li>
+                                <li>Enables more effective team structures and ownership models</li>
+                            </ul>
+                        </div>
+
+                        <div class="image-content-block">
+                            <div class="image-block">
+                                <img src="../../assets/images/microservices-architecture.png" alt="Microservices Architecture Diagram">
+                            </div>
+                            <div class="content-block">
+                                <h3>Microservices vs. Monolithic Architecture</h3>
+                                <p><strong>Monolithic Architecture:</strong></p>
+                                <ul>
+                                    <li>Single, unified codebase</li>
+                                    <li>All components deployed together</li>
+                                    <li>Typically shares a single database</li>
+                                    <li>Simpler to develop initially</li>
+                                    <li>More challenging to scale and maintain as it grows</li>
+                                </ul>
+                                <p><strong>Microservices Architecture:</strong></p>
+                                <ul>
+                                    <li>Multiple independent services</li>
+                                    <li>Each service deployed separately</li>
+                                    <li>Each service typically has its own database</li>
+                                    <li>More complex initial setup</li>
+                                    <li>Easier to scale and maintain in the long run</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <h3>Key Characteristics of Microservices</h3>
+
+                        <div class="concept-card">
+                            <h4>Service Independence</h4>
+                            <p>Each microservice should be independently deployable and updatable:</p>
+                            <ul>
+                                <li>Services can be deployed without affecting other services</li>
+                                <li>Teams can release updates on their own schedules</li>
+                                <li>Services can be scaled independently based on demand</li>
+                                <li>Failures in one service should not cascade to others</li>
+                            </ul>
+                            <p>This independence enables teams to work more autonomously and reduces coordination overhead.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Domain-Driven Design</h4>
+                            <p>Microservices are typically organized around business domains:</p>
+                            <ul>
+                                <li>Services represent specific business capabilities</li>
+                                <li>Boundaries are defined by business domains, not technical layers</li>
+                                <li>Each service owns its domain model and business logic</li>
+                                <li>Services are designed using ubiquitous language from the domain</li>
+                            </ul>
+                            <p>This alignment with business domains improves communication between technical and business teams.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Decentralized Data Management</h4>
+                            <p>Each microservice manages its own data:</p>
+                            <ul>
+                                <li>Services have their own databases or schemas</li>
+                                <li>No direct access to another service's database</li>
+                                <li>Freedom to choose the most appropriate database technology for each service</li>
+                                <li>Data consistency maintained through service APIs, not database transactions</li>
+                            </ul>
+                            <p>This approach allows services to evolve independently but introduces challenges in maintaining data consistency.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>API-Based Communication</h4>
+                            <p>Services communicate through well-defined APIs:</p>
+                            <ul>
+                                <li>Typically REST or gRPC APIs</li>
+                                <li>Clear contracts between services</li>
+                                <li>Implementation details hidden behind the API</li>
+                                <li>API versioning to manage changes</li>
+                            </ul>
+                            <p>Well-designed APIs enable services to evolve independently while maintaining compatibility.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Polyglot Implementation</h4>
+                            <p>Different services can use different technologies:</p>
+                            <ul>
+                                <li>Freedom to choose the best programming language for each service</li>
+                                <li>Different database technologies based on service requirements</li>
+                                <li>Specialized frameworks for specific domains</li>
+                                <li>Technology decisions isolated to individual services</li>
+                            </ul>
+                            <p>This flexibility allows teams to optimize technology choices for their specific needs.</p>
+                        </div>
+
+                        <h3>Microservices Design Patterns</h3>
+
+                        <div class="concept-card">
+                            <h4>API Gateway Pattern</h4>
+                            <p>A single entry point for all client requests:</p>
+                            <ul>
+                                <li>Routes requests to appropriate microservices</li>
+                                <li>Handles cross-cutting concerns like authentication and rate limiting</li>
+                                <li>Can aggregate responses from multiple services</li>
+                                <li>Shields clients from the complexity of the microservices architecture</li>
+                            </ul>
+                            <p><strong>Examples:</strong> Amazon API Gateway, Kong, Netflix Zuul</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Service Discovery Pattern</h4>
+                            <p>Mechanism for services to find and communicate with each other:</p>
+                            <ul>
+                                <li>Services register themselves with a discovery service</li>
+                                <li>Clients query the discovery service to find service instances</li>
+                                <li>Handles dynamic IP addresses and service instances</li>
+                                <li>Enables automatic load balancing and failover</li>
+                            </ul>
+                            <p><strong>Examples:</strong> Consul, etcd, Eureka, Kubernetes Service Discovery</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Circuit Breaker Pattern</h4>
+                            <p>Prevents cascading failures when a service is unavailable:</p>
+                            <ul>
+                                <li>Monitors for failures in service calls</li>
+                                <li>"Trips" when failure threshold is reached</li>
+                                <li>Rejects requests to failing service for a period</li>
+                                <li>Periodically allows requests to check if service has recovered</li>
+                            </ul>
+                            <p><strong>Examples:</strong> Netflix Hystrix, Resilience4j, Istio Circuit Breaker</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Saga Pattern</h4>
+                            <p>Manages distributed transactions across multiple services:</p>
+                            <ul>
+                                <li>Sequence of local transactions</li>
+                                <li>Each transaction publishes an event to trigger the next step</li>
+                                <li>Compensating transactions to roll back changes if a step fails</li>
+                                <li>Maintains data consistency without distributed transactions</li>
+                            </ul>
+                            <p><strong>Implementations:</strong> Choreography-based (event-driven) or Orchestration-based (central coordinator)</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>CQRS (Command Query Responsibility Segregation)</h4>
+                            <p>Separates read and write operations:</p>
+                            <ul>
+                                <li>Commands (writes) handled by one model</li>
+                                <li>Queries (reads) handled by a separate model</li>
+                                <li>Read model can be optimized for query performance</li>
+                                <li>Often combined with Event Sourcing</li>
+                            </ul>
+                            <p>This pattern is particularly useful for complex domains with different read and write requirements.</p>
+                        </div>
+
+                        <h3>Microservices Infrastructure</h3>
+
+                        <div class="concept-card">
+                            <h4>Containerization</h4>
+                            <p>Packaging services with their dependencies:</p>
+                            <ul>
+                                <li>Docker containers provide consistent environments</li>
+                                <li>Isolation between services</li>
+                                <li>Efficient resource utilization</li>
+                                <li>Simplified deployment and scaling</li>
+                            </ul>
+                            <p>Containers have become the de facto standard for deploying microservices.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Container Orchestration</h4>
+                            <p>Managing the deployment and lifecycle of containers:</p>
+                            <ul>
+                                <li>Automated deployment and scaling</li>
+                                <li>Service discovery and load balancing</li>
+                                <li>Health monitoring and self-healing</li>
+                                <li>Resource allocation and scheduling</li>
+                            </ul>
+                            <p><strong>Examples:</strong> Kubernetes, Docker Swarm, Amazon ECS</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Service Mesh</h4>
+                            <p>Infrastructure layer for service-to-service communication:</p>
+                            <ul>
+                                <li>Handles network communication between services</li>
+                                <li>Provides features like traffic management, security, and observability</li>
+                                <li>Decouples application code from network functionality</li>
+                                <li>Implemented as proxies alongside each service instance</li>
+                            </ul>
+                            <p><strong>Examples:</strong> Istio, Linkerd, Consul Connect</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Continuous Integration/Continuous Deployment (CI/CD)</h4>
+                            <p>Automated pipelines for building, testing, and deploying services:</p>
+                            <ul>
+                                <li>Automated testing at multiple levels</li>
+                                <li>Consistent build and deployment processes</li>
+                                <li>Rapid feedback on changes</li>
+                                <li>Support for canary releases and blue-green deployments</li>
+                            </ul>
+                            <p>CI/CD is essential for realizing the benefits of independent service deployment.</p>
+                        </div>
+
+                        <h3>Challenges and Solutions</h3>
+
+                        <div class="concept-card">
+                            <h4>Distributed System Complexity</h4>
+                            <p><strong>Challenge:</strong> Microservices introduce the complexities of distributed systems.</p>
+                            <p><strong>Solutions:</strong></p>
+                            <ul>
+                                <li>Implement resilience patterns like circuit breakers and retries</li>
+                                <li>Use service mesh for network reliability</li>
+                                <li>Design for failure with graceful degradation</li>
+                                <li>Comprehensive monitoring and tracing</li>
+                            </ul>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Data Consistency</h4>
+                            <p><strong>Challenge:</strong> Maintaining data consistency across services without distributed transactions.</p>
+                            <p><strong>Solutions:</strong></p>
+                            <ul>
+                                <li>Implement the Saga pattern for distributed transactions</li>
+                                <li>Use eventual consistency where appropriate</li>
+                                <li>Design service boundaries to minimize cross-service transactions</li>
+                                <li>Implement compensating transactions for rollbacks</li>
+                            </ul>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Service Boundaries</h4>
+                            <p><strong>Challenge:</strong> Determining the right size and boundaries for services.</p>
+                            <p><strong>Solutions:</strong></p>
+                            <ul>
+                                <li>Use Domain-Driven Design to identify bounded contexts</li>
+                                <li>Consider team structure and ownership</li>
+                                <li>Start with larger services and refactor as needed</li>
+                                <li>Focus on business capabilities, not technical layers</li>
+                            </ul>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Operational Complexity</h4>
+                            <p><strong>Challenge:</strong> Managing and monitoring many independent services.</p>
+                            <p><strong>Solutions:</strong></p>
+                            <ul>
+                                <li>Implement centralized logging and monitoring</li>
+                                <li>Use distributed tracing to track requests across services</li>
+                                <li>Automate deployment and scaling with container orchestration</li>
+                                <li>Standardize operational practices across services</li>
+                            </ul>
+                        </div>
+
+                        <h3>Real-World Microservices Examples</h3>
+                        
+                        <div class="example-box">
+                            <h4>Netflix</h4>
+                            <p>Netflix was an early adopter of microservices and has built a comprehensive ecosystem:</p>
+                            <ul>
+                                <li>Hundreds of microservices handling different aspects of the platform</li>
+                                <li>Open-sourced many tools: Eureka (service discovery), Hystrix (circuit breaker), Zuul (API gateway)</li>
+                                <li>Extensive use of AWS for infrastructure</li>
+                                <li>Chaos Engineering practices to ensure resilience</li>
+                            </ul>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>Amazon</h4>
+                            <p>Amazon's transition to microservices enabled their massive scale:</p>
+                            <ul>
+                                <li>Thousands of microservices powering various aspects of the platform</li>
+                                <li>"Two-pizza team" rule for service ownership</li>
+                                <li>Service-oriented architecture that evolved into microservices</li>
+                                <li>AWS itself emerged from their internal service architecture</li>
+                            </ul>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>Uber</h4>
+                            <p>Uber migrated from a monolith to microservices to support rapid growth:</p>
+                            <ul>
+                                <li>Microservices for different domains: trips, payments, driver matching, etc.</li>
+                                <li>Domain-specific language (Thrift) for service definitions</li>
+                                <li>Custom service mesh (Ringpop) for resilient communication</li>
+                                <li>Sophisticated deployment and testing infrastructure</li>
+                            </ul>
+                        </div>
+
+                        <h3>When to Use Microservices</h3>
+
+                        <div class="concept-card">
+                            <h4>Good Candidates for Microservices</h4>
+                            <ul>
+                                <li>Large, complex applications with distinct business domains</li>
+                                <li>Systems requiring different scaling characteristics for different components</li>
+                                <li>Organizations with multiple teams working on the same application</li>
+                                <li>Applications needing frequent updates and independent deployment of components</li>
+                                <li>Systems with clear domain boundaries and limited cross-domain transactions</li>
+                            </ul>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>When to Avoid Microservices</h4>
+                            <ul>
+                                <li>Small applications with simple domains</li>
+                                <li>Teams without experience in distributed systems</li>
+                                <li>Applications with tight coupling between components</li>
+                                <li>Systems without a clear domain model</li>
+                                <li>Organizations without DevOps capabilities</li>
+                                <li>Projects with tight deadlines and limited resources</li>
+                            </ul>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Migration Strategies</h4>
+                            <p>Moving from a monolith to microservices:</p>
+                            <ul>
+                                <li><strong>Strangler Pattern:</strong> Gradually replace monolith functionality with microservices</li>
+                                <li><strong>Domain-First Approach:</strong> Identify bounded contexts before extracting services</li>
+                                <li><strong>API Layer:</strong> Add an API layer in front of the monolith as a first step</li>
+                                <li><strong>Database-Last:</strong> Decouple services before splitting the database</li>
+                                <li><strong>Incremental Migration:</strong> Start with new features as microservices</li>
+                            </ul>
+                        </div>
+
+                        <h3>Best Practices for Microservices</h3>
+                        <ol>
+                            <li><strong>Design around business domains</strong>, not technical functions</li>
+                            <li><strong>Embrace DevOps culture</strong> with automated testing and deployment</li>
+                            <li><strong>Implement resilience patterns</strong> like circuit breakers and retries</li>
+                            <li><strong>Use asynchronous communication</strong> where possible to reduce coupling</li>
+                            <li><strong>Implement comprehensive monitoring and tracing</strong> across services</li>
+                            <li><strong>Design for failure</strong> with graceful degradation</li>
+                            <li><strong>Maintain API compatibility</strong> with versioning and contracts</li>
+                            <li><strong>Start with a monolith</strong> for new applications and extract services as needed</li>
+                            <li><strong>Standardize infrastructure</strong> while allowing flexibility in implementation</li>
+                            <li><strong>Focus on team autonomy</strong> and clear service ownership</li>
+                        </ol>
+
+                        <div class="next-steps">
+                            <h3>Next Steps</h3>
+                            <p>Now that you understand microservices architecture, explore related concepts and implementation details:</p>
+                            <div class="button-group">
+                                <a href="../examples/microservices-example.html" class="btn btn-primary">See Real-world Microservices Example</a>
+                                <a href="../implementation/api-gateway.html" class="btn btn-secondary">Learn About API Gateway Implementation</a>
+                            </div>
+                        </div>
+                    </article>
+                </main>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>System Design Mastery</h2>
+                    <p>Learn. Design. Implement.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3>Quick Links</h3>
+                        <ul>
+                            <li><a href="../../index.html">Home</a></li>
+                            <li><a href="../fundamentals/index.html">Fundamentals</a></li>
+                            <li><a href="../examples/index.html">Examples</a></li>
+                            <li><a href="../implementation/index.html">Implementation</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Resources</h3>
+                        <ul>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Cheat Sheets</a></li>
+                            <li><a href="#">Interview Prep</a></li>
+                            <li><a href="#">Community</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Connect</h3>
+                        <ul>
+                            <li><a href="#">GitHub</a></li>
+                            <li><a href="#">Twitter</a></li>
+                            <li><a href="#">LinkedIn</a></li>
+                            <li><a href="#">Contact Us</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 System Design Mastery. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../js/main.js"></script>
+</body>
+</html>

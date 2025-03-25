@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAP Theorem | System Design Mastery</title>
+    <link rel="stylesheet" href="../../css/modern-styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="sub-header">
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <h1>System Design Mastery</h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="../../index.html">Home</a></li>
+                    <li><a href="../fundamentals/index.html" class="active">Fundamentals</a></li>
+                    <li><a href="../examples/index.html">Real-world Examples</a></li>
+                    <li><a href="../implementation/index.html">Implementation</a></li>
+                    <li><a href="../../index.html#about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <div class="container">
+            <h1>CAP Theorem</h1>
+            <p>Understanding the fundamental tradeoffs in distributed systems</p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <div class="content-grid">
+                <aside class="sidebar">
+                    <h3>Fundamentals Topics</h3>
+                    <ul class="sidebar-links">
+                        <li><a href="scalability.html">Scalability</a></li>
+                        <li><a href="reliability.html">Reliability</a></li>
+                        <li><a href="availability.html">Availability</a></li>
+                        <li><a href="performance.html">Performance</a></li>
+                        <li><a href="load-balancing.html">Load Balancing</a></li>
+                        <li><a href="caching.html">Caching</a></li>
+                        <li><a href="database-sharding.html">Database Sharding</a></li>
+                        <li><a href="cap-theorem.html" class="active">CAP Theorem</a></li>
+                        <li><a href="consistency-patterns.html">Consistency Patterns</a></li>
+                        <li><a href="microservices.html">Microservices Architecture</a></li>
+                    </ul>
+                </aside>
+                <main class="main-content">
+                    <article>
+                        <h2>What is the CAP Theorem?</h2>
+                        <p>The CAP Theorem, formulated by computer scientist Eric Brewer in 2000, states that a distributed data store cannot simultaneously provide more than two out of the following three guarantees:</p>
+                        
+                        <div class="concept-card">
+                            <h4>C - Consistency</h4>
+                            <p>Every read receives the most recent write or an error. In other words, all nodes see the same data at the same time. Once a write is acknowledged to the client, all subsequent reads should reflect that write, regardless of which node they connect to.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>A - Availability</h4>
+                            <p>Every request receives a non-error response, without guaranteeing that it contains the most recent write. The system remains operational and responds to client requests even if some nodes are down or experiencing issues.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>P - Partition Tolerance</h4>
+                            <p>The system continues to operate despite network partitions (communication breakdowns between nodes). When a network partition occurs, the system must decide whether to cancel the operation (decreasing availability) or proceed with the operation (risking inconsistency).</p>
+                        </div>
+                        
+                        <div class="info-box">
+                            <h3>Why the CAP Theorem Matters</h3>
+                            <p>The CAP Theorem is fundamental to distributed system design because it forces architects to make explicit choices about tradeoffs. In real-world distributed systems, network partitions are inevitable, making partition tolerance a necessity rather than an option. This effectively reduces the choice to consistency versus availability when a partition occurs.</p>
+                            <p>Understanding these tradeoffs helps system designers make appropriate decisions based on business requirements, user expectations, and the nature of the data being managed.</p>
+                        </div>
+
+                        <div class="image-content-block">
+                            <div class="image-block">
+                                <img src="../../assets/images/cap-theorem.png" alt="CAP Theorem Diagram">
+                            </div>
+                            <div class="content-block">
+                                <h3>The CAP Tradeoffs</h3>
+                                <p>Since partition tolerance is a necessity in distributed systems, the real choice is between:</p>
+                                <ul>
+                                    <li><strong>CP (Consistency + Partition Tolerance):</strong> The system will return an error or timeout if it cannot guarantee consistency during a partition.</li>
+                                    <li><strong>AP (Availability + Partition Tolerance):</strong> The system will return the most recent available version of the data, which might not be consistent across all nodes.</li>
+                                </ul>
+                                <p>The diagram illustrates how distributed systems must choose between these properties, with the understanding that only two can be fully achieved simultaneously.</p>
+                            </div>
+                        </div>
+
+                        <h3>CAP in Practice: System Types</h3>
+
+                        <div class="concept-card">
+                            <h4>CP Systems (Consistency + Partition Tolerance)</h4>
+                            <p>CP systems prioritize consistency over availability during a partition:</p>
+                            <ul>
+                                <li>When a partition occurs, the system may become unavailable for some operations</li>
+                                <li>Once the partition is resolved, the system ensures all nodes have consistent data</li>
+                                <li>Typically used for systems where data accuracy is critical</li>
+                            </ul>
+                            <p><strong>Examples:</strong></p>
+                            <ul>
+                                <li><strong>Google Cloud Spanner:</strong> Uses TrueTime API and the Paxos algorithm to maintain strong consistency across global deployments</li>
+                                <li><strong>Apache HBase:</strong> Provides strong consistency with a single master architecture</li>
+                                <li><strong>MongoDB (with majority write concern):</strong> Ensures consistency by requiring acknowledgment from a majority of replicas</li>
+                                <li><strong>Relational databases with synchronous replication:</strong> Ensure all replicas have the same data before confirming writes</li>
+                            </ul>
+                            <p><strong>Use cases:</strong> Financial systems, inventory management, booking systems, and other applications where data inconsistency could lead to serious problems.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>AP Systems (Availability + Partition Tolerance)</h4>
+                            <p>AP systems prioritize availability over consistency during a partition:</p>
+                            <ul>
+                                <li>When a partition occurs, the system continues to operate on both sides</li>
+                                <li>This may lead to temporary inconsistencies that are resolved later</li>
+                                <li>Typically used for systems where continuous operation is more important than perfect consistency</li>
+                            </ul>
+                            <p><strong>Examples:</strong></p>
+                            <ul>
+                                <li><strong>Amazon DynamoDB:</strong> Provides eventual consistency by default, with an option for strong consistency</li>
+                                <li><strong>Apache Cassandra:</strong> Designed for high availability with tunable consistency</li>
+                                <li><strong>CouchDB:</strong> Focuses on availability and partition tolerance with eventual consistency</li>
+                                <li><strong>DNS:</strong> Prioritizes availability with eventual consistency through propagation</li>
+                            </ul>
+                            <p><strong>Use cases:</strong> Content delivery, social media, recommendation systems, and other applications where temporary inconsistency is acceptable.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>CA Systems (Consistency + Availability)</h4>
+                            <p>CA systems provide both consistency and availability, but only in the absence of partitions:</p>
+                            <ul>
+                                <li>These systems cannot handle network partitions while maintaining both C and A</li>
+                                <li>In practice, they operate in a single location or with reliable network connections</li>
+                                <li>Not truly distributed in the sense of the CAP theorem</li>
+                            </ul>
+                            <p><strong>Examples:</strong></p>
+                            <ul>
+                                <li><strong>Traditional relational databases:</strong> Single-node databases like PostgreSQL or MySQL</li>
+                                <li><strong>Clustered databases:</strong> Within a single data center with reliable networking</li>
+                            </ul>
+                            <p><strong>Use cases:</strong> Systems that can operate within a single location or with extremely reliable network connections.</p>
+                            <p><strong>Note:</strong> In a truly distributed environment, CA systems don't exist because partitions are inevitable. When a partition occurs, a CA system must sacrifice either consistency or availability.</p>
+                        </div>
+
+                        <h3>Beyond CAP: Additional Considerations</h3>
+
+                        <div class="concept-card">
+                            <h4>Consistency Models</h4>
+                            <p>Consistency isn't binary but exists on a spectrum:</p>
+                            <ul>
+                                <li><strong>Strong consistency:</strong> All reads reflect the most recent write</li>
+                                <li><strong>Sequential consistency:</strong> All operations appear in the same order to all observers</li>
+                                <li><strong>Causal consistency:</strong> Related operations appear in the same order to all observers</li>
+                                <li><strong>Eventual consistency:</strong> Given enough time without updates, all replicas will converge</li>
+                            </ul>
+                            <p>These nuanced models allow system designers to make more precise tradeoffs than the binary choice suggested by CAP.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>PACELC Theorem</h4>
+                            <p>The PACELC theorem extends CAP by considering system behavior both during partitions and during normal operation:</p>
+                            <ul>
+                                <li><strong>P:</strong> If there is a partition (P), the system must choose between availability (A) and consistency (C)...</li>
+                                <li><strong>E:</strong> Else (E), when the system is operating normally, it must choose between latency (L) and consistency (C)</li>
+                            </ul>
+                            <p>This acknowledges that even when the network is functioning correctly, there's still a tradeoff between consistency and performance.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Latency Considerations</h4>
+                            <p>Strong consistency often comes with higher latency:</p>
+                            <ul>
+                                <li>Synchronous replication increases write latency</li>
+                                <li>Consensus algorithms require multiple network round-trips</li>
+                                <li>Distributed transactions can block other operations</li>
+                            </ul>
+                            <p>System designers must consider whether the latency impact of strong consistency is acceptable for their use case.</p>
+                        </div>
+
+                        <h3>Making CAP Decisions</h3>
+
+                        <div class="concept-card">
+                            <h4>Business Requirements Analysis</h4>
+                            <p>CAP decisions should be driven by business needs:</p>
+                            <ul>
+                                <li><strong>Data criticality:</strong> How important is it that all users see the same data?</li>
+                                <li><strong>Availability requirements:</strong> What is the acceptable downtime?</li>
+                                <li><strong>User experience:</strong> How would users be affected by inconsistency or unavailability?</li>
+                                <li><strong>Regulatory requirements:</strong> Are there legal or compliance requirements for data consistency?</li>
+                            </ul>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Hybrid Approaches</h4>
+                            <p>Many systems use hybrid approaches to balance CAP tradeoffs:</p>
+                            <ul>
+                                <li><strong>Tunable consistency:</strong> Allowing different consistency levels for different operations</li>
+                                <li><strong>Bounded staleness:</strong> Ensuring data is never more than X seconds out of date</li>
+                                <li><strong>Conflict resolution:</strong> Implementing mechanisms to resolve conflicts when they occur</li>
+                                <li><strong>Multi-model databases:</strong> Using different data models for different parts of the application</li>
+                            </ul>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Data Partitioning Strategies</h4>
+                            <p>Thoughtful data partitioning can minimize CAP tradeoffs:</p>
+                            <ul>
+                                <li><strong>Functional partitioning:</strong> Separating data by function or domain</li>
+                                <li><strong>Geographic partitioning:</strong> Keeping data close to users who need it</li>
+                                <li><strong>Read/write separation:</strong> Using different strategies for reads and writes</li>
+                            </ul>
+                        </div>
+
+                        <h3>Real-World CAP Examples</h3>
+                        
+                        <div class="example-box">
+                            <h4>Amazon's Shopping Cart</h4>
+                            <p>Amazon prioritizes availability for shopping carts:</p>
+                            <ul>
+                                <li>Users should always be able to add items to their cart</li>
+                                <li>Temporary inconsistency is acceptable (e.g., an item appearing in the cart slightly later)</li>
+                                <li>The business impact of cart unavailability (lost sales) outweighs the impact of temporary inconsistency</li>
+                            </ul>
+                            <p>This is an example of choosing AP over CP for a specific component.</p>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>Banking Transactions</h4>
+                            <p>Banks prioritize consistency for account balances:</p>
+                            <ul>
+                                <li>All nodes must agree on account balances to prevent issues like double-spending</li>
+                                <li>If consistency cannot be guaranteed during a partition, operations may be rejected</li>
+                                <li>The business impact of inconsistency (financial loss, regulatory issues) outweighs temporary unavailability</li>
+                            </ul>
+                            <p>This is an example of choosing CP over AP for financial data.</p>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>Google Spanner</h4>
+                            <p>Google Spanner attempts to provide both strong consistency and high availability:</p>
+                            <ul>
+                                <li>Uses TrueTime API with atomic clocks and GPS to minimize clock skew</li>
+                                <li>Implements the Paxos consensus algorithm for distributed agreement</li>
+                                <li>Carefully manages partitions to minimize their impact</li>
+                            </ul>
+                            <p>While it still must adhere to CAP during partitions, Spanner's design minimizes situations where the tradeoff becomes apparent.</p>
+                        </div>
+
+                        <h3>Best Practices for CAP Decision Making</h3>
+                        <ol>
+                            <li><strong>Understand your data</strong> and its consistency requirements</li>
+                            <li><strong>Segment your system</strong> and apply different CAP choices to different components</li>
+                            <li><strong>Consider the business impact</strong> of both inconsistency and unavailability</li>
+                            <li><strong>Design for partition recovery</strong> to minimize the duration of inconsistency</li>
+                            <li><strong>Implement monitoring</strong> to detect partitions and inconsistencies</li>
+                            <li><strong>Use compensation mechanisms</strong> to handle inconsistencies when they occur</li>
+                            <li><strong>Document CAP decisions</strong> and their rationale for future reference</li>
+                            <li><strong>Regularly review CAP choices</strong> as business requirements evolve</li>
+                            <li><strong>Test partition scenarios</strong> to understand system behavior</li>
+                            <li><strong>Consider the full spectrum of consistency models</strong>, not just the binary CAP choice</li>
+                        </ol>
+
+                        <div class="next-steps">
+                            <h3>Next Steps</h3>
+                            <p>Now that you understand the CAP Theorem, explore related concepts that will help you design robust distributed systems:</p>
+                            <div class="button-group">
+                                <a href="consistency-patterns.html" class="btn btn-primary">Learn About Consistency Patterns</a>
+                                <a href="database-sharding.html" class="btn btn-secondary">Explore Database Sharding</a>
+                            </div>
+                        </div>
+                    </article>
+                </main>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>System Design Mastery</h2>
+                    <p>Learn. Design. Implement.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3>Quick Links</h3>
+                        <ul>
+                            <li><a href="../../index.html">Home</a></li>
+                            <li><a href="../fundamentals/index.html">Fundamentals</a></li>
+                            <li><a href="../examples/index.html">Examples</a></li>
+                            <li><a href="../implementation/index.html">Implementation</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Resources</h3>
+                        <ul>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Cheat Sheets</a></li>
+                            <li><a href="#">Interview Prep</a></li>
+                            <li><a href="#">Community</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Connect</h3>
+                        <ul>
+                            <li><a href="#">GitHub</a></li>
+                            <li><a href="#">Twitter</a></li>
+                            <li><a href="#">LinkedIn</a></li>
+                            <li><a href="#">Contact Us</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 System Design Mastery. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../js/main.js"></script>
+</body>
+</html>

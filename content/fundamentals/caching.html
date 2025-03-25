@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caching | System Design Mastery</title>
+    <link rel="stylesheet" href="../../css/modern-styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="sub-header">
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <h1>System Design Mastery</h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="../../index.html">Home</a></li>
+                    <li><a href="../fundamentals/index.html" class="active">Fundamentals</a></li>
+                    <li><a href="../examples/index.html">Real-world Examples</a></li>
+                    <li><a href="../implementation/index.html">Implementation</a></li>
+                    <li><a href="../../index.html#about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <div class="container">
+            <h1>Caching</h1>
+            <p>Storing frequently accessed data in high-speed storage to improve performance and reduce load</p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <div class="content-grid">
+                <aside class="sidebar">
+                    <h3>Fundamentals Topics</h3>
+                    <ul class="sidebar-links">
+                        <li><a href="scalability.html">Scalability</a></li>
+                        <li><a href="reliability.html">Reliability</a></li>
+                        <li><a href="availability.html">Availability</a></li>
+                        <li><a href="performance.html">Performance</a></li>
+                        <li><a href="load-balancing.html">Load Balancing</a></li>
+                        <li><a href="caching.html" class="active">Caching</a></li>
+                        <li><a href="database-sharding.html">Database Sharding</a></li>
+                        <li><a href="cap-theorem.html">CAP Theorem</a></li>
+                        <li><a href="consistency-patterns.html">Consistency Patterns</a></li>
+                        <li><a href="microservices.html">Microservices Architecture</a></li>
+                    </ul>
+                </aside>
+                <main class="main-content">
+                    <article>
+                        <h2>What is Caching?</h2>
+                        <p>Caching is a technique that stores copies of frequently accessed data in a temporary storage location (the cache) to improve data retrieval performance. When data is requested, the system first checks if it exists in the cache; if it does, the data is served from the cache (a "cache hit"), avoiding the need to fetch it from the original, typically slower, source.</p>
+                        
+                        <div class="info-box">
+                            <h3>Why Caching Matters</h3>
+                            <p>Caching is a fundamental optimization technique in system design for several reasons:</p>
+                            <ul>
+                                <li>It dramatically reduces latency by serving data from faster storage</li>
+                                <li>It decreases load on backend systems like databases and APIs</li>
+                                <li>It improves scalability by handling more requests with the same resources</li>
+                                <li>It reduces costs by minimizing the need for expensive database operations</li>
+                                <li>It enhances user experience by providing faster response times</li>
+                            </ul>
+                        </div>
+
+                        <div class="image-content-block">
+                            <div class="image-block">
+                                <img src="../../assets/images/caching-system.png" alt="Caching System Architecture">
+                            </div>
+                            <div class="content-block">
+                                <h3>How Caching Works</h3>
+                                <p>The basic caching process follows these steps:</p>
+                                <ol>
+                                    <li>A client requests data from the system</li>
+                                    <li>The system checks if the requested data exists in the cache</li>
+                                    <li>If the data is in the cache (cache hit), it's returned directly to the client</li>
+                                    <li>If the data is not in the cache (cache miss), the system retrieves it from the original source, stores a copy in the cache, and then returns it to the client</li>
+                                    <li>Subsequent requests for the same data can be served from the cache until the cached data expires or is invalidated</li>
+                                </ol>
+                            </div>
+                        </div>
+
+                        <h3>Types of Caches</h3>
+
+                        <div class="concept-card">
+                            <h4>Application-Level Cache</h4>
+                            <p>Application-level caches store data within the application's memory space:</p>
+                            <ul>
+                                <li><strong>In-memory caches:</strong> Store data directly in the application's memory (e.g., using HashMaps)</li>
+                                <li><strong>Local caches:</strong> Dedicated caching libraries that run within the application process (e.g., Caffeine, Guava Cache)</li>
+                            </ul>
+                            <p><strong>Advantages:</strong></p>
+                            <ul>
+                                <li>Extremely low latency (nanoseconds to microseconds)</li>
+                                <li>No network overhead</li>
+                                <li>Simple to implement</li>
+                            </ul>
+                            <p><strong>Disadvantages:</strong></p>
+                            <ul>
+                                <li>Limited by application memory</li>
+                                <li>Not shared across multiple application instances</li>
+                                <li>Lost when the application restarts</li>
+                            </ul>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Distributed Cache</h4>
+                            <p>Distributed caches run as separate services that can be accessed by multiple application instances:</p>
+                            <ul>
+                                <li><strong>Redis:</strong> In-memory data structure store that can be used as a cache</li>
+                                <li><strong>Memcached:</strong> High-performance, distributed memory caching system</li>
+                                <li><strong>Hazelcast:</strong> In-memory data grid with distributed caching capabilities</li>
+                            </ul>
+                            <p><strong>Advantages:</strong></p>
+                            <ul>
+                                <li>Shared across multiple application instances</li>
+                                <li>Can scale independently of the application</li>
+                                <li>Persists when individual application instances restart</li>
+                            </ul>
+                            <p><strong>Disadvantages:</strong></p>
+                            <ul>
+                                <li>Higher latency due to network calls</li>
+                                <li>More complex to set up and maintain</li>
+                                <li>Requires additional infrastructure</li>
+                            </ul>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Database Cache</h4>
+                            <p>Database systems often include built-in caching mechanisms:</p>
+                            <ul>
+                                <li><strong>Buffer cache:</strong> Caches disk pages in memory</li>
+                                <li><strong>Query cache:</strong> Stores results of frequently executed queries</li>
+                                <li><strong>Materialized views:</strong> Pre-computed query results stored as tables</li>
+                            </ul>
+                            <p><strong>Advantages:</strong></p>
+                            <ul>
+                                <li>Transparent to the application</li>
+                                <li>Optimized for database workloads</li>
+                                <li>Managed by the database system</li>
+                            </ul>
+                            <p><strong>Disadvantages:</strong></p>
+                            <ul>
+                                <li>Limited to database operations</li>
+                                <li>Consumes database server resources</li>
+                                <li>Less control over caching behavior</li>
+                            </ul>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>CDN (Content Delivery Network)</h4>
+                            <p>CDNs cache static content at edge locations around the world:</p>
+                            <ul>
+                                <li><strong>Static content caching:</strong> Images, CSS, JavaScript, videos</li>
+                                <li><strong>Dynamic content caching:</strong> API responses, HTML pages</li>
+                                <li><strong>Edge computing:</strong> Running code at edge locations to generate or transform cached content</li>
+                            </ul>
+                            <p><strong>Advantages:</strong></p>
+                            <ul>
+                                <li>Reduces latency by serving content from locations closer to users</li>
+                                <li>Offloads traffic from origin servers</li>
+                                <li>Provides DDoS protection and security features</li>
+                            </ul>
+                            <p><strong>Disadvantages:</strong></p>
+                            <ul>
+                                <li>Additional cost</li>
+                                <li>Complexity in cache invalidation</li>
+                                <li>Limited control over edge locations</li>
+                            </ul>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Browser Cache</h4>
+                            <p>Web browsers cache resources locally on the user's device:</p>
+                            <ul>
+                                <li><strong>HTTP cache:</strong> Stores responses based on HTTP cache headers</li>
+                                <li><strong>Service workers:</strong> JavaScript that can intercept and cache network requests</li>
+                                <li><strong>Local Storage/IndexedDB:</strong> Browser storage mechanisms for web applications</li>
+                            </ul>
+                            <p><strong>Advantages:</strong></p>
+                            <ul>
+                                <li>Eliminates network requests entirely for cached resources</li>
+                                <li>Improves page load times for returning visitors</li>
+                                <li>Reduces bandwidth usage</li>
+                            </ul>
+                            <p><strong>Disadvantages:</strong></p>
+                            <ul>
+                                <li>Limited control over user's browser settings</li>
+                                <li>Varies across different browsers and devices</li>
+                                <li>Can lead to stale content if not managed properly</li>
+                            </ul>
+                        </div>
+
+                        <h3>Cache Eviction Policies</h3>
+                        <p>Cache eviction policies determine which items to remove when the cache reaches its capacity:</p>
+
+                        <div class="concept-card">
+                            <h4>Least Recently Used (LRU)</h4>
+                            <p>Removes the least recently accessed items first. This policy assumes that items that haven't been accessed recently are less likely to be accessed in the future.</p>
+                            <p><strong>Implementation:</strong> Typically uses a linked list to track access order, moving items to the front when accessed.</p>
+                            <p><strong>Use cases:</strong> General-purpose caching, browser caches, database buffer caches.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Least Frequently Used (LFU)</h4>
+                            <p>Removes items that are accessed least frequently. This policy keeps track of how many times each item has been accessed.</p>
+                            <p><strong>Implementation:</strong> Uses counters to track access frequency for each item.</p>
+                            <p><strong>Use cases:</strong> Situations where access frequency is more important than recency, such as content recommendation systems.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>First In, First Out (FIFO)</h4>
+                            <p>Removes the oldest items first, regardless of how frequently they've been accessed.</p>
+                            <p><strong>Implementation:</strong> Uses a queue data structure.</p>
+                            <p><strong>Use cases:</strong> Simple caches where implementation complexity is a concern, or where items have similar access patterns.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Time-To-Live (TTL)</h4>
+                            <p>Removes items that have been in the cache longer than a specified time period, regardless of access patterns.</p>
+                            <p><strong>Implementation:</strong> Associates a timestamp or expiration time with each cached item.</p>
+                            <p><strong>Use cases:</strong> Caching data that becomes stale after a certain period, such as user sessions or rapidly changing data.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Random Replacement</h4>
+                            <p>Randomly selects items to evict when the cache is full.</p>
+                            <p><strong>Implementation:</strong> Simple random selection algorithm.</p>
+                            <p><strong>Use cases:</strong> Situations where simplicity is valued over optimization, or where access patterns are unpredictable.</p>
+                        </div>
+
+                        <h3>Cache Consistency Patterns</h3>
+                        <p>Cache consistency refers to keeping cached data in sync with the source of truth:</p>
+
+                        <div class="concept-card">
+                            <h4>Cache-Aside (Lazy Loading)</h4>
+                            <p>The application is responsible for loading data into the cache and keeping it in sync:</p>
+                            <ol>
+                                <li>Application checks the cache for data</li>
+                                <li>If data is not found (cache miss), application reads from the database</li>
+                                <li>Application updates the cache with the retrieved data</li>
+                                <li>When data is updated, application invalidates or updates the cache</li>
+                            </ol>
+                            <p><strong>Advantages:</strong> Simple to implement, only caches what's actually needed.</p>
+                            <p><strong>Disadvantages:</strong> Initial cache misses, potential for stale data if updates bypass the cache.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Write-Through</h4>
+                            <p>Data is written to both the cache and the database in the same transaction:</p>
+                            <ol>
+                                <li>Application writes data to the cache</li>
+                                <li>Cache writes data to the database</li>
+                                <li>Write is considered complete only when both cache and database are updated</li>
+                            </ol>
+                            <p><strong>Advantages:</strong> Strong consistency, cache is always up-to-date.</p>
+                            <p><strong>Disadvantages:</strong> Higher write latency, caches data that might never be read.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Write-Behind (Write-Back)</h4>
+                            <p>Data is written to the cache first, then asynchronously written to the database:</p>
+                            <ol>
+                                <li>Application writes data to the cache</li>
+                                <li>Write is acknowledged immediately</li>
+                                <li>Cache asynchronously writes data to the database</li>
+                            </ol>
+                            <p><strong>Advantages:</strong> Lower write latency, can batch multiple writes together.</p>
+                            <p><strong>Disadvantages:</strong> Risk of data loss if cache fails before writing to database, more complex implementation.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Refresh-Ahead</h4>
+                            <p>The cache automatically refreshes items before they expire:</p>
+                            <ol>
+                                <li>Cache predicts which items will be needed based on access patterns</li>
+                                <li>Cache proactively refreshes these items before they expire</li>
+                                <li>Refreshed items replace the existing cached items</li>
+                            </ol>
+                            <p><strong>Advantages:</strong> Reduces cache misses, keeps cache fresh without impacting user requests.</p>
+                            <p><strong>Disadvantages:</strong> More complex to implement, may waste resources refreshing unused items.</p>
+                        </div>
+
+                        <h3>Cache Invalidation Strategies</h3>
+                        <p>Cache invalidation is the process of removing or updating cached data when the source data changes:</p>
+
+                        <div class="concept-card">
+                            <h4>Time-Based Invalidation</h4>
+                            <p>Cached items automatically expire after a set time period (TTL).</p>
+                            <p><strong>Advantages:</strong> Simple to implement, works well for data that changes predictably.</p>
+                            <p><strong>Disadvantages:</strong> Can lead to stale data or unnecessary cache misses if TTL is not set appropriately.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Event-Based Invalidation</h4>
+                            <p>The system explicitly invalidates or updates cached items when the underlying data changes.</p>
+                            <p><strong>Advantages:</strong> Ensures cache consistency, reduces stale data.</p>
+                            <p><strong>Disadvantages:</strong> More complex to implement, requires tracking all data changes.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Version-Based Invalidation</h4>
+                            <p>Each cached item is associated with a version number or hash that changes when the data changes.</p>
+                            <p><strong>Advantages:</strong> Simplifies cache invalidation logic, works well with CDNs.</p>
+                            <p><strong>Disadvantages:</strong> Requires maintaining version information, may increase storage requirements.</p>
+                        </div>
+
+                        <h3>Real-World Caching Examples</h3>
+                        
+                        <div class="example-box">
+                            <h4>Facebook's Memcached Infrastructure</h4>
+                            <p>Facebook has one of the largest Memcached deployments in the world:</p>
+                            <ul>
+                                <li>Trillions of items cached across thousands of servers</li>
+                                <li>Custom modifications to improve scalability and performance</li>
+                                <li>Regional pools to reduce latency</li>
+                                <li>Leases and stale values to handle thundering herds</li>
+                            </ul>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>Netflix's EVCache</h4>
+                            <p>Netflix built EVCache (Ephemeral Volatile Cache) on top of Memcached:</p>
+                            <ul>
+                                <li>Multi-regional replication for high availability</li>
+                                <li>Time-based auto-expiration of cached data</li>
+                                <li>Consistent hashing for key distribution</li>
+                                <li>Integration with their Hystrix fault tolerance library</li>
+                            </ul>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>Amazon's ElastiCache</h4>
+                            <p>AWS ElastiCache provides managed Redis and Memcached services:</p>
+                            <ul>
+                                <li>Automatic node replacement for high availability</li>
+                                <li>Multi-AZ replication for Redis</li>
+                                <li>Auto-scaling capabilities</li>
+                                <li>Integration with other AWS services</li>
+                            </ul>
+                        </div>
+
+                        <h3>Caching Challenges and Solutions</h3>
+
+                        <div class="concept-card">
+                            <h4>Cache Stampede (Thundering Herd)</h4>
+                            <p>When many requests simultaneously miss the cache and hit the backend system:</p>
+                            <p><strong>Solutions:</strong></p>
+                            <ul>
+                                <li><strong>Staggered expiration times:</strong> Add random jitter to TTLs</li>
+                                <li><strong>Lock or semaphore:</strong> Allow only one request to refresh the cache</li>
+                                <li><strong>Background refresh:</strong> Update cache before expiration</li>
+                                <li><strong>Cache warming:</strong> Pre-populate cache before heavy traffic</li>
+                            </ul>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Cache Penetration</h4>
+                            <p>When requests for non-existent data bypass the cache and hit the backend:</p>
+                            <p><strong>Solutions:</strong></p>
+                            <ul>
+                                <li><strong>Negative caching:</strong> Cache "not found" results</li>
+                                <li><strong>Bloom filters:</strong> Probabilistic data structure to check if data exists</li>
+                                <li><strong>Input validation:</strong> Reject invalid requests before checking cache</li>
+                            </ul>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Cache Avalanche</h4>
+                            <p>When a large number of cached items expire simultaneously:</p>
+                            <p><strong>Solutions:</strong></p>
+                            <ul>
+                                <li><strong>Staggered expiration times:</strong> Avoid setting the same TTL for many items</li>
+                                <li><strong>Circuit breaker:</strong> Protect backend systems from overload</li>
+                                <li><strong>Graceful degradation:</strong> Return stale data or simplified responses during high load</li>
+                            </ul>
+                        </div>
+
+                        <h3>Best Practices for Caching</h3>
+                        <ol>
+                            <li><strong>Cache data that is read frequently but updated infrequently</strong></li>
+                            <li><strong>Set appropriate TTLs</strong> based on data volatility and consistency requirements</li>
+                            <li><strong>Implement proper cache invalidation</strong> to maintain data consistency</li>
+                            <li><strong>Use cache keys that are deterministic and unique</strong></li>
+                            <li><strong>Monitor cache hit rates</strong> and adjust caching strategy accordingly</li>
+                            <li><strong>Consider memory usage</strong> and eviction policies</li>
+                            <li><strong>Plan for cache failures</strong> with fallback mechanisms</li>
+                            <li><strong>Cache at multiple levels</strong> for different types of data</li>
+                            <li><strong>Be mindful of cache stampedes</strong> and implement mitigation strategies</li>
+                            <li><strong>Document caching decisions</strong> for future maintenance</li>
+                        </ol>
+
+                        <div class="next-steps">
+                            <h3>Next Steps</h3>
+                            <p>Now that you understand caching, explore related concepts that work together to create robust, high-performance systems:</p>
+                            <div class="button-group">
+                                <a href="database-sharding.html" class="btn btn-primary">Learn About Database Sharding</a>
+                                <a href="../implementation/caching.html" class="btn btn-secondary">Explore Caching Implementation</a>
+                            </div>
+                        </div>
+                    </article>
+                </main>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>System Design Mastery</h2>
+                    <p>Learn. Design. Implement.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3>Quick Links</h3>
+                        <ul>
+                            <li><a href="../../index.html">Home</a></li>
+                            <li><a href="../fundamentals/index.html">Fundamentals</a></li>
+                            <li><a href="../examples/index.html">Examples</a></li>
+                            <li><a href="../implementation/index.html">Implementation</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Resources</h3>
+                        <ul>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Cheat Sheets</a></li>
+                            <li><a href="#">Interview Prep</a></li>
+                            <li><a href="#">Community</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Connect</h3>
+                        <ul>
+                            <li><a href="#">GitHub</a></li>
+                            <li><a href="#">Twitter</a></li>
+                            <li><a href="#">LinkedIn</a></li>
+                            <li><a href="#">Contact Us</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 System Design Mastery. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../js/main.js"></script>
+</body>
+</html>

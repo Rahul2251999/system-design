@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortener System Design | System Design Mastery</title>
+    <link rel="stylesheet" href="../../css/modern-styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="sub-header">
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <h1>System Design Mastery</h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="../../index.html">Home</a></li>
+                    <li><a href="../fundamentals/index.html">Fundamentals</a></li>
+                    <li><a href="../examples/index.html" class="active">Real-world Examples</a></li>
+                    <li><a href="../implementation/index.html">Implementation</a></li>
+                    <li><a href="../../index.html#about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <div class="container">
+            <h1>URL Shortener System Design</h1>
+            <p>How to design a scalable URL shortening service like bit.ly or TinyURL</p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <div class="content-grid">
+                <aside class="sidebar">
+                    <h3>Example Systems</h3>
+                    <ul class="sidebar-links">
+                        <li><a href="netflix.html">Netflix</a></li>
+                        <li><a href="uber.html">Uber</a></li>
+                        <li><a href="amazon.html">Amazon</a></li>
+                        <li><a href="twitter.html">Twitter</a></li>
+                        <li><a href="url-shortener.html" class="active">URL Shortener</a></li>
+                        <li><a href="distributed-cache.html">Distributed Cache</a></li>
+                        <li><a href="payment-system.html">Payment System</a></li>
+                        <li><a href="chat-application.html">Chat Application</a></li>
+                    </ul>
+                </aside>
+                <main class="main-content">
+                    <article>
+                        <h2>URL Shortener: A Practical System Design Example</h2>
+                        <p>URL shorteners like bit.ly, TinyURL, and goo.gl convert long URLs into shorter, more manageable links. These services have become essential tools for sharing links on platforms with character limitations, tracking click analytics, and making URLs more user-friendly. Let's explore how to design a scalable URL shortening service from the ground up.</p>
+                        
+                        <div class="info-box">
+                            <h3>Key System Design Challenges</h3>
+                            <p>A URL shortener service faces several interesting challenges:</p>
+                            <ul>
+                                <li><strong>URL Mapping:</strong> Creating a unique, short identifier for each long URL</li>
+                                <li><strong>High Availability:</strong> Ensuring the service is always accessible</li>
+                                <li><strong>Low Latency:</strong> Redirecting users quickly when they access a short URL</li>
+                                <li><strong>Scalability:</strong> Handling billions of URLs and redirects</li>
+                                <li><strong>Analytics:</strong> Tracking click-through rates and other metrics</li>
+                                <li><strong>Security:</strong> Preventing abuse and malicious URL shortening</li>
+                            </ul>
+                        </div>
+
+                        <div class="image-content-block">
+                            <div class="image-block">
+                                <img src="../../assets/images/url-shortener.png" alt="URL Shortener Architecture">
+                            </div>
+                            <div class="content-block">
+                                <h3>URL Shortener Architecture Overview</h3>
+                                <p>A URL shortener system typically consists of these components:</p>
+                                <ol>
+                                    <li><strong>API Layer:</strong> Handles URL creation and redirection requests</li>
+                                    <li><strong>URL Generation Service:</strong> Creates unique short codes</li>
+                                    <li><strong>Database:</strong> Stores mappings between short and long URLs</li>
+                                    <li><strong>Cache:</strong> Improves redirection performance</li>
+                                    <li><strong>Analytics Service:</strong> Tracks usage statistics</li>
+                                </ol>
+                                <p>The diagram illustrates how these components interact to provide URL shortening and redirection services.</p>
+                            </div>
+                        </div>
+
+                        <h3>Functional Requirements</h3>
+
+                        <div class="concept-card">
+                            <h4>Core Functionality</h4>
+                            <p>A URL shortener service should provide these basic features:</p>
+                            <ul>
+                                <li><strong>URL Shortening:</strong> Convert a long URL to a short URL</li>
+                                <li><strong>URL Redirection:</strong> Redirect users from the short URL to the original long URL</li>
+                                <li><strong>Custom Short URLs:</strong> Allow users to create custom short URLs (optional)</li>
+                                <li><strong>Expiration:</strong> Set expiration dates for URLs (optional)</li>
+                                <li><strong>User Accounts:</strong> Allow users to manage their shortened URLs (optional)</li>
+                            </ul>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Non-Functional Requirements</h4>
+                            <p>The system should also meet these quality attributes:</p>
+                            <ul>
+                                <li><strong>High Availability:</strong> The service should be available 24/7</li>
+                                <li><strong>Low Latency:</strong> Redirects should happen in milliseconds</li>
+                                <li><strong>Scalability:</strong> Should handle billions of URLs and redirects</li>
+                                <li><strong>Security:</strong> Prevent abuse and malicious URL shortening</li>
+                                <li><strong>Reliability:</strong> Once created, short URLs should always work until expiration</li>
+                            </ul>
+                        </div>
+
+                        <h3>System API Design</h3>
+
+                        <div class="concept-card">
+                            <h4>URL Shortening API</h4>
+                            <p>The API for creating short URLs might look like:</p>
+                            <pre><code>POST /api/shorten
+Content-Type: application/json
+
+{
+  "longUrl": "https://example.com/very/long/url/that/needs/shortening",
+  "customAlias": "myCustomCode",  // Optional
+  "expiresAt": "2023-12-31"       // Optional
+}
+
+Response:
+{
+  "shortUrl": "https://short.url/abc123",
+  "longUrl": "https://example.com/very/long/url/that/needs/shortening",
+  "createdAt": "2023-01-01T12:00:00Z",
+  "expiresAt": "2023-12-31T23:59:59Z"
+}</code></pre>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>URL Redirection API</h4>
+                            <p>The redirection endpoint would be simple:</p>
+                            <pre><code>GET /{shortCode}
+
+Response: HTTP 302 Redirect to the original long URL</code></pre>
+                            <p>For example, a request to <code>https://short.url/abc123</code> would redirect to the original long URL.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Analytics API</h4>
+                            <p>An optional API for retrieving analytics might look like:</p>
+                            <pre><code>GET /api/analytics/{shortCode}
+
+Response:
+{
+  "shortUrl": "https://short.url/abc123",
+  "longUrl": "https://example.com/very/long/url/that/needs/shortening",
+  "totalClicks": 1024,
+  "clicksByCountry": {
+    "US": 512,
+    "UK": 256,
+    "Other": 256
+  },
+  "clicksByTime": {
+    "2023-01-01": 100,
+    "2023-01-02": 200,
+    // ...
+  }
+}</code></pre>
+                        </div>
+
+                        <h3>URL Shortening Algorithms</h3>
+
+                        <div class="concept-card">
+                            <h4>Approach 1: Counter-based Encoding</h4>
+                            <p>One approach is to use an auto-incrementing counter:</p>
+                            <ol>
+                                <li>Maintain a global counter that increments for each new URL</li>
+                                <li>Convert the counter value to a base-62 representation (using [0-9, a-z, A-Z])</li>
+                                <li>Use this encoded value as the short URL code</li>
+                            </ol>
+                            <p><strong>Example:</strong> Counter value 1000000 converts to "4c92" in base-62</p>
+                            <p><strong>Pros:</strong> Simple implementation, guaranteed unique codes</p>
+                            <p><strong>Cons:</strong> Requires centralized counter, potential bottleneck</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Approach 2: Hash-based Encoding</h4>
+                            <p>Another approach is to hash the original URL:</p>
+                            <ol>
+                                <li>Generate a hash of the long URL (e.g., MD5, SHA-256)</li>
+                                <li>Take the first few characters of the hash (or encode it in base-62)</li>
+                                <li>Check for collisions and handle them if necessary</li>
+                            </ol>
+                            <p><strong>Example:</strong> MD5("https://example.com") → "c96f7d15140e4502bd5140e4502bd5c3" → Take first 6-8 characters</p>
+                            <p><strong>Pros:</strong> No centralized counter needed, can be distributed</p>
+                            <p><strong>Cons:</strong> Potential for collisions, requiring collision handling</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Approach 3: Base-62 Encoding with Random Generation</h4>
+                            <p>A third approach is to generate random strings:</p>
+                            <ol>
+                                <li>Generate a random string of 6-8 characters from [0-9, a-z, A-Z]</li>
+                                <li>Check if it already exists in the database</li>
+                                <li>If it exists, generate a new random string</li>
+                            </ol>
+                            <p><strong>Example:</strong> Random generation → "xY3Zp9"</p>
+                            <p><strong>Pros:</strong> Simple implementation, no centralized counter</p>
+                            <p><strong>Cons:</strong> Potential for collisions (though unlikely with sufficient length)</p>
+                        </div>
+
+                        <h3>Database Design</h3>
+
+                        <div class="concept-card">
+                            <h4>Schema Design</h4>
+                            <p>A simple database schema might look like:</p>
+                            <pre><code>Table: urls
+- id: bigint (primary key)
+- short_code: varchar(10) (indexed, unique)
+- long_url: text
+- user_id: bigint (optional, for user accounts)
+- created_at: timestamp
+- expires_at: timestamp (optional)
+- is_custom: boolean
+
+Table: clicks
+- id: bigint (primary key)
+- url_id: bigint (foreign key to urls.id)
+- clicked_at: timestamp
+- user_agent: text (optional)
+- ip_address: varchar(45) (optional)
+- referrer: text (optional)
+- country: varchar(2) (optional)</code></pre>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Database Choice</h4>
+                            <p>Several database options could work for a URL shortener:</p>
+                            <ul>
+                                <li><strong>Relational Database (MySQL, PostgreSQL):</strong> Good for structured data and transactions</li>
+                                <li><strong>NoSQL Database (DynamoDB, Cassandra):</strong> Good for high write throughput and horizontal scaling</li>
+                                <li><strong>Key-Value Store (Redis):</strong> Excellent for fast lookups and caching</li>
+                            </ul>
+                            <p>Many URL shorteners use a combination: a relational database for persistent storage and a key-value store for caching.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Indexing Strategy</h4>
+                            <p>Proper indexing is crucial for performance:</p>
+                            <ul>
+                                <li><strong>Primary Index:</strong> On the short_code column for fast lookups during redirection</li>
+                                <li><strong>Secondary Index:</strong> On the long_url column if you want to check for duplicates</li>
+                                <li><strong>Composite Index:</strong> On user_id and created_at for efficiently retrieving a user's URLs</li>
+                            </ul>
+                            <p>The most critical query to optimize is the lookup of long URLs by short code, as this happens on every redirection.</p>
+                        </div>
+
+                        <h3>Caching Strategy</h3>
+
+                        <div class="concept-card">
+                            <h4>Cache Design</h4>
+                            <p>Caching is essential for a URL shortener's performance:</p>
+                            <ul>
+                                <li><strong>Cache Layer:</strong> In-memory cache like Redis or Memcached</li>
+                                <li><strong>Cache Key:</strong> The short URL code</li>
+                                <li><strong>Cache Value:</strong> The corresponding long URL</li>
+                                <li><strong>TTL (Time-to-Live):</strong> Set based on URL expiration or default value</li>
+                            </ul>
+                            <p>When a redirection request comes in, the system first checks the cache before querying the database.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Cache Policies</h4>
+                            <p>Several caching policies could be implemented:</p>
+                            <ul>
+                                <li><strong>LRU (Least Recently Used):</strong> Evict URLs that haven't been accessed recently</li>
+                                <li><strong>LFU (Least Frequently Used):</strong> Evict URLs that are accessed least frequently</li>
+                                <li><strong>Write-Through:</strong> Update both cache and database when creating new URLs</li>
+                                <li><strong>Lazy Loading:</strong> Load URLs into cache only when they're first requested</li>
+                            </ul>
+                            <p>The choice depends on access patterns and resource constraints.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Cache Distribution</h4>
+                            <p>For a distributed system, the cache can be organized in several ways:</p>
+                            <ul>
+                                <li><strong>Global Cache:</strong> Single cache shared by all application servers</li>
+                                <li><strong>Distributed Cache:</strong> Cache sharded across multiple nodes</li>
+                                <li><strong>Local Cache + Global Cache:</strong> Two-level caching for better performance</li>
+                            </ul>
+                            <p>A distributed cache like Redis Cluster can provide both high availability and scalability.</p>
+                        </div>
+
+                        <h3>System Scaling</h3>
+
+                        <div class="concept-card">
+                            <h4>Load Balancing</h4>
+                            <p>Load balancers distribute traffic across multiple servers:</p>
+                            <ul>
+                                <li><strong>Application Load Balancers:</strong> Route HTTP requests to application servers</li>
+                                <li><strong>Database Load Balancers:</strong> Distribute database queries</li>
+                                <li><strong>Algorithms:</strong> Round-robin, least connections, or consistent hashing</li>
+                            </ul>
+                            <p>Load balancing is essential for horizontal scaling and high availability.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Database Scaling</h4>
+                            <p>As the system grows, the database needs to scale:</p>
+                            <ul>
+                                <li><strong>Vertical Scaling:</strong> Upgrading to more powerful database servers</li>
+                                <li><strong>Read Replicas:</strong> Adding read-only copies for handling read queries</li>
+                                <li><strong>Sharding:</strong> Partitioning data across multiple database servers</li>
+                                <li><strong>NoSQL Migration:</strong> Moving to a horizontally scalable NoSQL database</li>
+                            </ul>
+                            <p>A common approach is to start with a relational database and add read replicas, then shard if necessary.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Analytics Scaling</h4>
+                            <p>Analytics data can grow rapidly and require special handling:</p>
+                            <ul>
+                                <li><strong>Separate Database:</strong> Store analytics data in a separate database</li>
+                                <li><strong>Data Warehousing:</strong> Use specialized analytics databases</li>
+                                <li><strong>Batch Processing:</strong> Process analytics data in batches</li>
+                                <li><strong>Stream Processing:</strong> Process analytics events in real-time</li>
+                            </ul>
+                            <p>For high-volume URL shorteners, analytics data is often processed asynchronously to avoid impacting the core service.</p>
+                        </div>
+
+                        <h3>Security Considerations</h3>
+
+                        <div class="concept-card">
+                            <h4>Preventing Abuse</h4>
+                            <p>URL shorteners can be abused in various ways:</p>
+                            <ul>
+                                <li><strong>Rate Limiting:</strong> Limit the number of URLs a user can create</li>
+                                <li><strong>CAPTCHA:</strong> Prevent automated abuse</li>
+                                <li><strong>URL Scanning:</strong> Check URLs against malware and phishing databases</li>
+                                <li><strong>Domain Blacklisting:</strong> Block known malicious domains</li>
+                            </ul>
+                            <p>These measures help prevent the service from being used for spam, phishing, or malware distribution.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Privacy Considerations</h4>
+                            <p>URL shorteners raise privacy concerns:</p>
+                            <ul>
+                                <li><strong>Data Retention:</strong> Define clear policies for how long data is kept</li>
+                                <li><strong>Anonymous Usage:</strong> Allow usage without requiring personal information</li>
+                                <li><strong>Transparency:</strong> Be clear about what data is collected</li>
+                                <li><strong>Encryption:</strong> Encrypt sensitive data in transit and at rest</li>
+                            </ul>
+                            <p>Privacy considerations are especially important if the service tracks click analytics.</p>
+                        </div>
+
+                        <h3>Implementation Considerations</h3>
+                        <ol>
+                            <li><strong>Start simple</strong> with a monolithic application and relational database</li>
+                            <li><strong>Add caching early</strong> to improve redirection performance</li>
+                            <li><strong>Implement analytics as a separate service</strong> to avoid impacting core functionality</li>
+                            <li><strong>Use a CDN</strong> for global distribution and reduced latency</li>
+                            <li><strong>Plan for database scaling</strong> from the beginning</li>
+                            <li><strong>Implement security measures</strong> to prevent abuse</li>
+                            <li><strong>Set up monitoring and alerting</strong> for key metrics</li>
+                            <li><strong>Consider using a distributed ID generation system</strong> like Twitter's Snowflake for high-scale deployments</li>
+                            <li><strong>Implement proper error handling</strong> for expired or non-existent URLs</li>
+                            <li><strong>Design for graceful degradation</strong> during partial system failures</li>
+                        </ol>
+
+                        <div class="next-steps">
+                            <h3>Next Steps</h3>
+                            <p>Explore other system design examples or learn how to implement a URL shortener:</p>
+                            <div class="button-group">
+                                <a href="distributed-cache.html" class="btn btn-primary">Explore Distributed Cache Design</a>
+                                <a href="../implementation/url-shortener.html" class="btn btn-secondary">Learn URL Shortener Implementation</a>
+                            </div>
+                        </div>
+                    </article>
+                </main>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>System Design Mastery</h2>
+                    <p>Learn. Design. Implement.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3>Quick Links</h3>
+                        <ul>
+                            <li><a href="../../index.html">Home</a></li>
+                            <li><a href="../fundamentals/index.html">Fundamentals</a></li>
+                            <li><a href="../examples/index.html">Examples</a></li>
+                            <li><a href="../implementation/index.html">Implementation</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Resources</h3>
+                        <ul>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Cheat Sheets</a></li>
+                            <li><a href="#">Interview Prep</a></li>
+                            <li><a href="#">Community</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Connect</h3>
+                        <ul>
+                            <li><a href="#">GitHub</a></li>
+                            <li><a href="#">Twitter</a></li>
+                            <li><a href="#">LinkedIn</a></li>
+                            <li><a href="#">Contact Us</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 System Design Mastery. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../js/main.js"></script>
+</body>
+</html>

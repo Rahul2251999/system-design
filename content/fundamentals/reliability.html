@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reliability | System Design Mastery</title>
+    <link rel="stylesheet" href="../../css/modern-styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="sub-header">
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <h1>System Design Mastery</h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="../../index.html">Home</a></li>
+                    <li><a href="../fundamentals/index.html" class="active">Fundamentals</a></li>
+                    <li><a href="../examples/index.html">Real-world Examples</a></li>
+                    <li><a href="../implementation/index.html">Implementation</a></li>
+                    <li><a href="../../index.html#about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <div class="container">
+            <h1>Reliability</h1>
+            <p>Building systems that continue to work correctly even when things go wrong</p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <div class="content-grid">
+                <aside class="sidebar">
+                    <h3>Fundamentals Topics</h3>
+                    <ul class="sidebar-links">
+                        <li><a href="scalability.html">Scalability</a></li>
+                        <li><a href="reliability.html" class="active">Reliability</a></li>
+                        <li><a href="availability.html">Availability</a></li>
+                        <li><a href="performance.html">Performance</a></li>
+                        <li><a href="load-balancing.html">Load Balancing</a></li>
+                        <li><a href="caching.html">Caching</a></li>
+                        <li><a href="database-sharding.html">Database Sharding</a></li>
+                        <li><a href="cap-theorem.html">CAP Theorem</a></li>
+                        <li><a href="consistency-patterns.html">Consistency Patterns</a></li>
+                        <li><a href="microservices.html">Microservices Architecture</a></li>
+                    </ul>
+                </aside>
+                <main class="main-content">
+                    <article>
+                        <h2>What is Reliability?</h2>
+                        <p>Reliability refers to a system's ability to continue functioning correctly even when faced with adversity. In the context of system design, reliability means the system performs its intended functions correctly, consistently, and predictably over time, even when components fail or external conditions change.</p>
+                        
+                        <div class="info-box">
+                            <h3>Why Reliability Matters</h3>
+                            <p>In today's digital landscape, users expect services to be available and functioning correctly at all times. System failures can lead to lost revenue, damaged reputation, and in critical systems, even safety risks. Building reliability into your system design is not just a technical consideration but a business imperative.</p>
+                        </div>
+
+                        <h3>Key Aspects of Reliability</h3>
+
+                        <div class="concept-card">
+                            <h4>Fault Tolerance</h4>
+                            <p>Fault tolerance is the ability of a system to continue operating properly even when one or more of its components fail. This is achieved through redundancy and careful system design.</p>
+                            <p><strong>Key strategies:</strong></p>
+                            <ul>
+                                <li><strong>Redundancy:</strong> Having backup components that can take over when primary components fail</li>
+                                <li><strong>Isolation:</strong> Ensuring that failures in one part of the system don't cascade to other parts</li>
+                                <li><strong>Graceful degradation:</strong> Maintaining core functionality even when some components are unavailable</li>
+                            </ul>
+                        </div>
+
+                        <div class="image-content-block">
+                            <div class="image-block">
+                                <img src="../../assets/images/fault-tolerance.png" alt="Fault Tolerance Diagram">
+                            </div>
+                            <div class="content-block">
+                                <h4>Hardware Redundancy</h4>
+                                <p>Hardware redundancy involves duplicating critical components to ensure continued operation when hardware failures occur. Common approaches include:</p>
+                                <ul>
+                                    <li><strong>Active-Passive:</strong> A standby server takes over when the primary server fails</li>
+                                    <li><strong>Active-Active:</strong> Multiple servers handle requests simultaneously, with load balancing</li>
+                                    <li><strong>N+1 Redundancy:</strong> Having one more component than necessary for normal operation</li>
+                                    <li><strong>RAID (Redundant Array of Independent Disks):</strong> Using multiple disks to protect against data loss</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Software Reliability</h4>
+                            <p>Software reliability focuses on designing applications that can handle unexpected inputs, states, and failures gracefully. Techniques include:</p>
+                            <ul>
+                                <li><strong>Defensive programming:</strong> Anticipating and handling potential errors</li>
+                                <li><strong>Input validation:</strong> Ensuring that inputs meet expected formats and ranges</li>
+                                <li><strong>Exception handling:</strong> Properly catching and responding to exceptions</li>
+                                <li><strong>Retry mechanisms:</strong> Automatically retrying failed operations with backoff strategies</li>
+                                <li><strong>Circuit breakers:</strong> Preventing cascading failures by temporarily disabling problematic services</li>
+                            </ul>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Data Reliability</h4>
+                            <p>Data reliability ensures that data remains accurate, consistent, and accessible. Strategies include:</p>
+                            <ul>
+                                <li><strong>Data replication:</strong> Maintaining multiple copies of data across different locations</li>
+                                <li><strong>Backup and recovery:</strong> Regular backups and tested recovery procedures</li>
+                                <li><strong>Data validation:</strong> Ensuring data integrity through checksums and validation rules</li>
+                                <li><strong>Consistency models:</strong> Choosing appropriate consistency guarantees for your use case</li>
+                            </ul>
+                        </div>
+
+                        <h3>Reliability Engineering Practices</h3>
+
+                        <div class="concept-card">
+                            <h4>Chaos Engineering</h4>
+                            <p>Chaos engineering involves deliberately introducing failures into your system to test its resilience. Made famous by Netflix's Chaos Monkey, this approach helps identify weaknesses before they cause real outages.</p>
+                            <p><strong>Key principles:</strong></p>
+                            <ul>
+                                <li>Start by defining your system's "steady state" (normal behavior)</li>
+                                <li>Hypothesize that this steady state will continue during disruptions</li>
+                                <li>Introduce real-world events like server failures, network issues, etc.</li>
+                                <li>Look for differences between the control group and experimental group</li>
+                                <li>Fix issues and repeat</li>
+                            </ul>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Monitoring and Alerting</h4>
+                            <p>Comprehensive monitoring is essential for maintaining reliability. This includes:</p>
+                            <ul>
+                                <li><strong>Health checks:</strong> Regular verification that components are functioning correctly</li>
+                                <li><strong>Performance metrics:</strong> Tracking response times, error rates, and resource utilization</li>
+                                <li><strong>Log aggregation:</strong> Centralizing logs for analysis and troubleshooting</li>
+                                <li><strong>Alerting:</strong> Notifying operators when issues are detected</li>
+                                <li><strong>Dashboards:</strong> Visualizing system health and performance</li>
+                            </ul>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Incident Response</h4>
+                            <p>Even with the best reliability practices, incidents will occur. Effective incident response includes:</p>
+                            <ul>
+                                <li><strong>Clear roles and responsibilities:</strong> Knowing who does what during an incident</li>
+                                <li><strong>Communication channels:</strong> Established ways to coordinate during incidents</li>
+                                <li><strong>Runbooks:</strong> Documented procedures for common issues</li>
+                                <li><strong>Post-mortems:</strong> Learning from incidents to prevent recurrence</li>
+                            </ul>
+                        </div>
+
+                        <h3>Measuring Reliability</h3>
+
+                        <div class="concept-card">
+                            <h4>Service Level Objectives (SLOs)</h4>
+                            <p>SLOs define the target level of reliability for a service, typically expressed as a percentage over a time period. For example, "The API will respond successfully to 99.9% of requests over a 30-day period."</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Service Level Indicators (SLIs)</h4>
+                            <p>SLIs are the actual measurements of service performance that correspond to SLOs. Common SLIs include:</p>
+                            <ul>
+                                <li>Availability (percentage of time the service is operational)</li>
+                                <li>Error rate (percentage of failed requests)</li>
+                                <li>Latency (time to respond to requests)</li>
+                                <li>Throughput (number of requests handled per second)</li>
+                            </ul>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Service Level Agreements (SLAs)</h4>
+                            <p>SLAs are contracts that specify the consequences of not meeting SLOs. They often include financial penalties or credits for service disruptions.</p>
+                        </div>
+
+                        <h3>Real-World Reliability Examples</h3>
+                        
+                        <div class="example-box">
+                            <h4>Amazon S3</h4>
+                            <p>Amazon S3 is designed for 99.999999999% (11 nines) durability of objects over a given year. This is achieved through:</p>
+                            <ul>
+                                <li>Storing multiple copies of data across different availability zones</li>
+                                <li>Automatic healing of any detected data corruption</li>
+                                <li>Versioning to protect against accidental deletions</li>
+                            </ul>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>Google's Spanner Database</h4>
+                            <p>Google Spanner provides global consistency and high availability through:</p>
+                            <ul>
+                                <li>TrueTime API, which uses atomic clocks and GPS to synchronize time across data centers</li>
+                                <li>Paxos algorithm for distributed consensus</li>
+                                <li>Automatic sharding and replication of data</li>
+                            </ul>
+                        </div>
+
+                        <h3>Best Practices for Building Reliable Systems</h3>
+                        <ol>
+                            <li><strong>Design for failure</strong> - Assume components will fail and design accordingly</li>
+                            <li><strong>Implement redundancy</strong> at multiple levels (hardware, software, data)</li>
+                            <li><strong>Use circuit breakers</strong> to prevent cascading failures</li>
+                            <li><strong>Implement retries with backoff</strong> for transient failures</li>
+                            <li><strong>Set up comprehensive monitoring</strong> with alerting</li>
+                            <li><strong>Practice chaos engineering</strong> to identify weaknesses</li>
+                            <li><strong>Document incident response procedures</strong> and conduct regular drills</li>
+                            <li><strong>Perform regular backups</strong> and test recovery procedures</li>
+                            <li><strong>Implement gradual rollouts</strong> with canary deployments</li>
+                            <li><strong>Conduct post-mortems</strong> after incidents to learn and improve</li>
+                        </ol>
+
+                        <div class="next-steps">
+                            <h3>Next Steps</h3>
+                            <p>Now that you understand reliability, explore related concepts that work together to create robust systems:</p>
+                            <div class="button-group">
+                                <a href="availability.html" class="btn btn-primary">Learn About Availability</a>
+                                <a href="cap-theorem.html" class="btn btn-secondary">Explore the CAP Theorem</a>
+                            </div>
+                        </div>
+                    </article>
+                </main>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>System Design Mastery</h2>
+                    <p>Learn. Design. Implement.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3>Quick Links</h3>
+                        <ul>
+                            <li><a href="../../index.html">Home</a></li>
+                            <li><a href="../fundamentals/index.html">Fundamentals</a></li>
+                            <li><a href="../examples/index.html">Examples</a></li>
+                            <li><a href="../implementation/index.html">Implementation</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Resources</h3>
+                        <ul>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Cheat Sheets</a></li>
+                            <li><a href="#">Interview Prep</a></li>
+                            <li><a href="#">Community</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Connect</h3>
+                        <ul>
+                            <li><a href="#">GitHub</a></li>
+                            <li><a href="#">Twitter</a></li>
+                            <li><a href="#">LinkedIn</a></li>
+                            <li><a href="#">Contact Us</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 System Design Mastery. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../js/main.js"></script>
+</body>
+</html>

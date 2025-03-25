@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment System Design | System Design Mastery</title>
+    <link rel="stylesheet" href="../../css/modern-styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="sub-header">
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <h1>System Design Mastery</h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="../../index.html">Home</a></li>
+                    <li><a href="../fundamentals/index.html">Fundamentals</a></li>
+                    <li><a href="../examples/index.html" class="active">Real-world Examples</a></li>
+                    <li><a href="../implementation/index.html">Implementation</a></li>
+                    <li><a href="../../index.html#about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <div class="container">
+            <h1>Payment System Design</h1>
+            <p>How to design a secure, reliable, and scalable payment processing system</p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <div class="content-grid">
+                <aside class="sidebar">
+                    <h3>Example Systems</h3>
+                    <ul class="sidebar-links">
+                        <li><a href="netflix.html">Netflix</a></li>
+                        <li><a href="uber.html">Uber</a></li>
+                        <li><a href="amazon.html">Amazon</a></li>
+                        <li><a href="twitter.html">Twitter</a></li>
+                        <li><a href="url-shortener.html">URL Shortener</a></li>
+                        <li><a href="distributed-cache.html">Distributed Cache</a></li>
+                        <li><a href="payment-system.html" class="active">Payment System</a></li>
+                        <li><a href="chat-application.html">Chat Application</a></li>
+                    </ul>
+                </aside>
+                <main class="main-content">
+                    <article>
+                        <h2>Payment System: Designing for Security, Reliability, and Scale</h2>
+                        <p>Payment systems are the backbone of e-commerce and financial services, processing transactions worth trillions of dollars annually. These systems must handle sensitive financial data with impeccable security while maintaining high availability and throughput. Let's explore how to design a robust payment processing system that can handle millions of transactions securely and reliably.</p>
+                        
+                        <div class="info-box">
+                            <h3>Key System Design Challenges</h3>
+                            <p>A payment system faces several critical challenges:</p>
+                            <ul>
+                                <li><strong>Security:</strong> Protecting sensitive financial data and preventing fraud</li>
+                                <li><strong>Reliability:</strong> Ensuring transactions are processed correctly every time</li>
+                                <li><strong>Availability:</strong> Maintaining 24/7 operation with minimal downtime</li>
+                                <li><strong>Consistency:</strong> Guaranteeing that money is neither created nor destroyed</li>
+                                <li><strong>Compliance:</strong> Meeting regulatory requirements across jurisdictions</li>
+                                <li><strong>Scalability:</strong> Handling transaction spikes during peak periods</li>
+                            </ul>
+                        </div>
+
+                        <div class="image-content-block">
+                            <div class="image-block">
+                                <img src="../../assets/images/payment-system.png" alt="Payment System Architecture">
+                            </div>
+                            <div class="content-block">
+                                <h3>Payment System Architecture Overview</h3>
+                                <p>A payment processing system typically consists of these components:</p>
+                                <ol>
+                                    <li><strong>Payment Gateway:</strong> Interface between merchants and the payment system</li>
+                                    <li><strong>Payment Processor:</strong> Handles transaction routing and processing</li>
+                                    <li><strong>Fraud Detection System:</strong> Identifies and prevents fraudulent transactions</li>
+                                    <li><strong>Account Management:</strong> Manages user accounts and balances</li>
+                                    <li><strong>Ledger System:</strong> Records all financial transactions</li>
+                                    <li><strong>Settlement System:</strong> Handles the actual movement of funds</li>
+                                </ol>
+                                <p>The diagram illustrates how these components interact to process payments securely and reliably.</p>
+                            </div>
+                        </div>
+
+                        <h3>Payment Flow and Transaction Processing</h3>
+
+                        <div class="concept-card">
+                            <h4>Basic Payment Flow</h4>
+                            <p>A typical payment transaction follows these steps:</p>
+                            <ol>
+                                <li><strong>Initiation:</strong> Customer initiates payment on merchant platform</li>
+                                <li><strong>Authorization:</strong> Payment system verifies the payment method and available funds</li>
+                                <li><strong>Authentication:</strong> Customer confirms identity (e.g., 3D Secure)</li>
+                                <li><strong>Processing:</strong> Payment processor routes the transaction to appropriate networks</li>
+                                <li><strong>Verification:</strong> Issuing bank verifies and approves the transaction</li>
+                                <li><strong>Capture:</strong> Funds are reserved for the transaction</li>
+                                <li><strong>Settlement:</strong> Actual transfer of funds occurs (often in batch)</li>
+                                <li><strong>Reconciliation:</strong> Transactions are matched and verified</li>
+                            </ol>
+                            <p>This flow may vary depending on the payment method and regional requirements.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Transaction States</h4>
+                            <p>Payments go through multiple states during processing:</p>
+                            <ul>
+                                <li><strong>Created:</strong> Transaction has been initiated but not processed</li>
+                                <li><strong>Pending:</strong> Transaction is being processed</li>
+                                <li><strong>Authorized:</strong> Payment method has been verified and funds reserved</li>
+                                <li><strong>Captured:</strong> Funds have been captured for settlement</li>
+                                <li><strong>Settled:</strong> Funds have been transferred</li>
+                                <li><strong>Failed:</strong> Transaction could not be completed</li>
+                                <li><strong>Refunded:</strong> Transaction has been reversed</li>
+                                <li><strong>Disputed:</strong> Transaction is under dispute (chargeback)</li>
+                            </ul>
+                            <p>Proper state management is crucial for transaction integrity and recovery.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Idempotency</h4>
+                            <p>Idempotency is critical in payment systems to prevent duplicate transactions:</p>
+                            <ul>
+                                <li><strong>Idempotency Keys:</strong> Unique identifiers for each transaction attempt</li>
+                                <li><strong>Request Deduplication:</strong> Detecting and handling duplicate requests</li>
+                                <li><strong>Retry Mechanisms:</strong> Safely retrying failed operations</li>
+                                <li><strong>Exactly-Once Semantics:</strong> Ensuring operations are performed exactly once</li>
+                                <li><strong>Idempotent APIs:</strong> Designing APIs to handle repeated calls safely</li>
+                            </ul>
+                            <p>Without idempotency, network issues could lead to double-charging customers or double-crediting merchants.</p>
+                        </div>
+
+                        <h3>Data Model and Storage</h3>
+
+                        <div class="concept-card">
+                            <h4>Core Entities</h4>
+                            <p>A payment system's data model typically includes these entities:</p>
+                            <ul>
+                                <li><strong>Users/Customers:</strong> Individuals or businesses making or receiving payments</li>
+                                <li><strong>Accounts:</strong> Financial accounts associated with users</li>
+                                <li><strong>Payment Methods:</strong> Credit cards, bank accounts, digital wallets, etc.</li>
+                                <li><strong>Transactions:</strong> Individual payment operations</li>
+                                <li><strong>Ledger Entries:</strong> Accounting records of debits and credits</li>
+                                <li><strong>Merchants:</strong> Businesses accepting payments</li>
+                                <li><strong>Payouts:</strong> Transfers to merchants or users</li>
+                            </ul>
+                            <p>The relationships between these entities must be carefully modeled to maintain financial integrity.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Database Considerations</h4>
+                            <p>Payment systems have specific database requirements:</p>
+                            <ul>
+                                <li><strong>ACID Compliance:</strong> Transactions must be atomic, consistent, isolated, and durable</li>
+                                <li><strong>Relational Databases:</strong> Often used for financial transactions (PostgreSQL, MySQL)</li>
+                                <li><strong>Sharding Strategy:</strong> Typically sharded by user or merchant ID</li>
+                                <li><strong>Read Replicas:</strong> For reporting and analytics without affecting transaction processing</li>
+                                <li><strong>Data Encryption:</strong> Encryption at rest for sensitive financial data</li>
+                                <li><strong>Audit Logging:</strong> Comprehensive logging of all database operations</li>
+                            </ul>
+                            <p>Financial data integrity is paramount, so strong consistency is usually prioritized over availability.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Ledger System</h4>
+                            <p>The ledger is the system of record for all financial transactions:</p>
+                            <ul>
+                                <li><strong>Double-Entry Bookkeeping:</strong> Every transaction affects at least two accounts</li>
+                                <li><strong>Immutable Records:</strong> Transactions are never deleted or modified</li>
+                                <li><strong>Balance Tracking:</strong> Maintaining current balances for all accounts</li>
+                                <li><strong>Reconciliation:</strong> Processes to verify ledger integrity</li>
+                                <li><strong>Audit Trail:</strong> Complete history of all financial activities</li>
+                            </ul>
+                            <p>The ledger system ensures that money is properly accounted for and neither created nor destroyed.</p>
+                        </div>
+
+                        <h3>Security and Fraud Prevention</h3>
+
+                        <div class="concept-card">
+                            <h4>Data Security</h4>
+                            <p>Protecting sensitive payment data is critical:</p>
+                            <ul>
+                                <li><strong>PCI DSS Compliance:</strong> Standards for handling card data</li>
+                                <li><strong>Tokenization:</strong> Replacing sensitive data with non-sensitive tokens</li>
+                                <li><strong>End-to-End Encryption:</strong> Encrypting data throughout its lifecycle</li>
+                                <li><strong>Key Management:</strong> Secure storage and rotation of encryption keys</li>
+                                <li><strong>Data Minimization:</strong> Collecting and storing only necessary information</li>
+                                <li><strong>Secure Deletion:</strong> Properly removing data when no longer needed</li>
+                            </ul>
+                            <p>Payment systems should minimize direct handling of sensitive data like credit card numbers.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Fraud Detection</h4>
+                            <p>Preventing fraudulent transactions requires multiple approaches:</p>
+                            <ul>
+                                <li><strong>Rule-Based Systems:</strong> Predefined rules to flag suspicious activity</li>
+                                <li><strong>Machine Learning Models:</strong> Algorithms to detect unusual patterns</li>
+                                <li><strong>Behavioral Analysis:</strong> Comparing current behavior to historical patterns</li>
+                                <li><strong>Velocity Checks:</strong> Monitoring transaction frequency and amounts</li>
+                                <li><strong>Device Fingerprinting:</strong> Identifying devices used for transactions</li>
+                                <li><strong>Geolocation Analysis:</strong> Checking transaction locations</li>
+                                <li><strong>Network Analysis:</strong> Identifying connections between accounts</li>
+                            </ul>
+                            <p>Effective fraud detection balances security with user experience, minimizing false positives.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Authentication and Authorization</h4>
+                            <p>Verifying user identity and permissions:</p>
+                            <ul>
+                                <li><strong>Multi-Factor Authentication:</strong> Requiring multiple verification methods</li>
+                                <li><strong>3D Secure:</strong> Additional authentication layer for card payments</li>
+                                <li><strong>Biometric Authentication:</strong> Fingerprint, face recognition, etc.</li>
+                                <li><strong>Risk-Based Authentication:</strong> Varying security levels based on risk assessment</li>
+                                <li><strong>OAuth and OpenID Connect:</strong> Standards for authorization and authentication</li>
+                                <li><strong>Role-Based Access Control:</strong> Limiting system access based on user roles</li>
+                            </ul>
+                            <p>Strong authentication is essential for preventing unauthorized access to payment functionality.</p>
+                        </div>
+
+                        <h3>Reliability and Fault Tolerance</h3>
+
+                        <div class="concept-card">
+                            <h4>High Availability Architecture</h4>
+                            <p>Payment systems require exceptional availability:</p>
+                            <ul>
+                                <li><strong>Multi-Region Deployment:</strong> Operating across multiple geographic regions</li>
+                                <li><strong>Active-Active Configuration:</strong> Multiple active instances handling traffic</li>
+                                <li><strong>Load Balancing:</strong> Distributing traffic across instances</li>
+                                <li><strong>Automatic Failover:</strong> Redirecting traffic when instances fail</li>
+                                <li><strong>No Single Point of Failure:</strong> Redundancy for all critical components</li>
+                                <li><strong>Disaster Recovery:</strong> Procedures for recovering from catastrophic failures</li>
+                            </ul>
+                            <p>Payment systems often target 99.999% availability (five nines), allowing just minutes of downtime per year.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Consistency and Durability</h4>
+                            <p>Ensuring transaction integrity under all conditions:</p>
+                            <ul>
+                                <li><strong>Distributed Transactions:</strong> Coordinating operations across multiple services</li>
+                                <li><strong>Two-Phase Commit:</strong> Protocol for ensuring transaction atomicity</li>
+                                <li><strong>Saga Pattern:</strong> Managing long-running transactions with compensating actions</li>
+                                <li><strong>Write-Ahead Logging:</strong> Recording intentions before executing operations</li>
+                                <li><strong>Synchronous Replication:</strong> Ensuring data is replicated before confirming transactions</li>
+                                <li><strong>Quorum-Based Consistency:</strong> Requiring agreement from multiple nodes</li>
+                            </ul>
+                            <p>Financial systems typically prioritize consistency over availability in the CAP theorem trade-off.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Resilience Patterns</h4>
+                            <p>Techniques for building resilient payment systems:</p>
+                            <ul>
+                                <li><strong>Circuit Breakers:</strong> Preventing cascading failures by failing fast</li>
+                                <li><strong>Bulkheads:</strong> Isolating components to contain failures</li>
+                                <li><strong>Timeouts:</strong> Setting appropriate timeouts for all operations</li>
+                                <li><strong>Retry with Exponential Backoff:</strong> Intelligently retrying failed operations</li>
+                                <li><strong>Rate Limiting:</strong> Protecting services from overload</li>
+                                <li><strong>Graceful Degradation:</strong> Maintaining core functionality during partial failures</li>
+                            </ul>
+                            <p>These patterns help maintain system stability even when components fail.</p>
+                        </div>
+
+                        <h3>Scalability and Performance</h3>
+
+                        <div class="concept-card">
+                            <h4>Horizontal Scaling</h4>
+                            <p>Scaling to handle increasing transaction volumes:</p>
+                            <ul>
+                                <li><strong>Stateless Services:</strong> Designing services without server-side state</li>
+                                <li><strong>Database Sharding:</strong> Partitioning data across multiple database instances</li>
+                                <li><strong>Microservices Architecture:</strong> Breaking the system into independent services</li>
+                                <li><strong>Auto-scaling:</strong> Automatically adjusting capacity based on load</li>
+                                <li><strong>Caching:</strong> Reducing database load for read-heavy operations</li>
+                                <li><strong>Asynchronous Processing:</strong> Handling non-critical operations asynchronously</li>
+                            </ul>
+                            <p>Horizontal scaling allows the system to handle growing transaction volumes by adding more instances.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Performance Optimization</h4>
+                            <p>Techniques for minimizing transaction latency:</p>
+                            <ul>
+                                <li><strong>Connection Pooling:</strong> Reusing database connections</li>
+                                <li><strong>Optimized Queries:</strong> Efficient database access patterns</li>
+                                <li><strong>Indexing Strategy:</strong> Proper indexes for common queries</li>
+                                <li><strong>Batching:</strong> Grouping operations for efficiency</li>
+                                <li><strong>Caching:</strong> Storing frequently accessed data in memory</li>
+                                <li><strong>Content Delivery Networks:</strong> Distributing static content globally</li>
+                            </ul>
+                            <p>Low latency is crucial for a good user experience in payment processing.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Handling Peak Loads</h4>
+                            <p>Strategies for managing transaction spikes:</p>
+                            <ul>
+                                <li><strong>Capacity Planning:</strong> Estimating and preparing for peak loads</li>
+                                <li><strong>Load Testing:</strong> Verifying system performance under stress</li>
+                                <li><strong>Queue-Based Processing:</strong> Buffering requests during traffic spikes</li>
+                                <li><strong>Throttling:</strong> Limiting request rates from specific clients</li>
+                                <li><strong>Graceful Degradation:</strong> Prioritizing critical functionality during overload</li>
+                                <li><strong>Regional Isolation:</strong> Containing issues to specific regions</li>
+                            </ul>
+                            <p>Payment systems often experience significant traffic spikes during sales events or holidays.</p>
+                        </div>
+
+                        <h3>Compliance and Regulatory Considerations</h3>
+
+                        <div class="concept-card">
+                            <h4>Regulatory Requirements</h4>
+                            <p>Payment systems must comply with various regulations:</p>
+                            <ul>
+                                <li><strong>PCI DSS:</strong> Payment Card Industry Data Security Standard</li>
+                                <li><strong>GDPR:</strong> General Data Protection Regulation (EU)</li>
+                                <li><strong>AML:</strong> Anti-Money Laundering regulations</li>
+                                <li><strong>KYC:</strong> Know Your Customer requirements</li>
+                                <li><strong>SOX:</strong> Sarbanes-Oxley Act for financial reporting</li>
+                                <li><strong>Local Payment Regulations:</strong> Country-specific requirements</li>
+                            </ul>
+                            <p>Compliance requirements vary by region and must be built into the system architecture.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Audit and Reporting</h4>
+                            <p>Maintaining comprehensive records for compliance:</p>
+                            <ul>
+                                <li><strong>Audit Logging:</strong> Recording all system activities</li>
+                                <li><strong>Immutable Audit Trail:</strong> Preventing modification of audit records</li>
+                                <li><strong>Reporting Infrastructure:</strong> Generating required regulatory reports</li>
+                                <li><strong>Data Retention:</strong> Storing records for required periods</li>
+                                <li><strong>Access Controls:</strong> Limiting access to sensitive information</li>
+                                <li><strong>Change Management:</strong> Tracking and approving system changes</li>
+                            </ul>
+                            <p>Comprehensive audit trails are essential for regulatory compliance and dispute resolution.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Privacy and Data Protection</h4>
+                            <p>Safeguarding user data in compliance with regulations:</p>
+                            <ul>
+                                <li><strong>Data Minimization:</strong> Collecting only necessary information</li>
+                                <li><strong>Purpose Limitation:</strong> Using data only for specified purposes</li>
+                                <li><strong>Data Encryption:</strong> Protecting data in transit and at rest</li>
+                                <li><strong>Access Controls:</strong> Restricting data access to authorized personnel</li>
+                                <li><strong>Data Subject Rights:</strong> Supporting rights like access and deletion</li>
+                                <li><strong>Breach Notification:</strong> Procedures for handling data breaches</li>
+                            </ul>
+                            <p>Privacy considerations must be integrated into the system design from the beginning.</p>
+                        </div>
+
+                        <h3>Integration with External Systems</h3>
+
+                        <div class="concept-card">
+                            <h4>Payment Networks</h4>
+                            <p>Connecting with card networks and banking systems:</p>
+                            <ul>
+                                <li><strong>Card Networks:</strong> Visa, Mastercard, American Express, etc.</li>
+                                <li><strong>ACH (Automated Clearing House):</strong> For bank transfers</li>
+                                <li><strong>SWIFT:</strong> For international wire transfers</li>
+                                <li><strong>Real-Time Payment Systems:</strong> Faster Payments, SEPA Instant, etc.</li>
+                                <li><strong>Alternative Payment Methods:</strong> Digital wallets, buy-now-pay-later, etc.</li>
+                                <li><strong>Cryptocurrency Networks:</strong> Bitcoin, Ethereum, etc.</li>
+                            </ul>
+                            <p>Each payment network has its own protocols, formats, and requirements.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>API Design</h4>
+                            <p>Designing APIs for merchants and partners:</p>
+                            <ul>
+                                <li><strong>RESTful APIs:</strong> Standard interfaces for payment operations</li>
+                                <li><strong>Webhooks:</strong> Asynchronous notifications for payment events</li>
+                                <li><strong>SDK Integration:</strong> Libraries for common programming languages</li>
+                                <li><strong>API Versioning:</strong> Supporting multiple API versions</li>
+                                <li><strong>Rate Limiting:</strong> Preventing API abuse</li>
+                                <li><strong>Documentation:</strong> Comprehensive guides and reference materials</li>
+                            </ul>
+                            <p>Well-designed APIs make it easy for merchants to integrate with the payment system.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Integration Patterns</h4>
+                            <p>Approaches for connecting with external systems:</p>
+                            <ul>
+                                <li><strong>Adapters:</strong> Converting between different protocols and formats</li>
+                                <li><strong>Message Queues:</strong> Decoupling systems with asynchronous communication</li>
+                                <li><strong>API Gateways:</strong> Managing external API access</li>
+                                <li><strong>Circuit Breakers:</strong> Handling external system failures</li>
+                                <li><strong>Retry Mechanisms:</strong> Recovering from temporary failures</li>
+                                <li><strong>Idempotency:</strong> Ensuring safe retries with external systems</li>
+                            </ul>
+                            <p>Robust integration patterns are essential for reliable communication with external systems.</p>
+                        </div>
+
+                        <h3>Monitoring and Observability</h3>
+
+                        <div class="concept-card">
+                            <h4>Key Metrics</h4>
+                            <p>Critical metrics to monitor in a payment system:</p>
+                            <ul>
+                                <li><strong>Transaction Volume:</strong> Number of transactions processed</li>
+                                <li><strong>Transaction Value:</strong> Total monetary value processed</li>
+                                <li><strong>Success Rate:</strong> Percentage of successful transactions</li>
+                                <li><strong>Latency:</strong> Time to process transactions</li>
+                                <li><strong>Error Rate:</strong> Percentage of failed transactions</li>
+                                <li><strong>Fraud Rate:</strong> Percentage of fraudulent transactions</li>
+                                <li><strong>System Availability:</strong> Uptime percentage</li>
+                                <li><strong>Resource Utilization:</strong> CPU, memory, disk, network usage</li>
+                            </ul>
+                            <p>These metrics help identify issues and ensure the system is operating correctly.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Alerting and Incident Response</h4>
+                            <p>Responding to issues promptly:</p>
+                            <ul>
+                                <li><strong>Alert Thresholds:</strong> Defining when to trigger alerts</li>
+                                <li><strong>Paging Systems:</strong> Notifying on-call personnel</li>
+                                <li><strong>Incident Classification:</strong> Categorizing issues by severity</li>
+                                <li><strong>Runbooks:</strong> Documented procedures for handling common issues</li>
+                                <li><strong>Post-Mortem Analysis:</strong> Learning from incidents</li>
+                                <li><strong>Continuous Improvement:</strong> Updating systems based on incidents</li>
+                            </ul>
+                            <p>Quick detection and response to issues is critical for maintaining payment system reliability.</p>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Logging and Tracing</h4>
+                            <p>Tracking system behavior for troubleshooting:</p>
+                            <ul>
+                                <li><strong>Structured Logging:</strong> Machine-parseable log formats</li>
+                                <li><strong>Distributed Tracing:</strong> Following requests across services</li>
+                                <li><strong>Correlation IDs:</strong> Linking related events across the system</li>
+                                <li><strong>Log Aggregation:</strong> Centralizing logs for analysis</li>
+                                <li><strong>Log Retention:</strong> Storing logs for compliance and troubleshooting</li>
+                                <li><strong>Log Security:</strong> Protecting sensitive information in logs</li>
+                            </ul>
+                            <p>Comprehensive logging and tracing are essential for diagnosing issues in complex distributed systems.</p>
+                        </div>
+
+                        <h3>Implementation Considerations</h3>
+                        <ol>
+                            <li><strong>Start with a clear understanding of regulatory requirements</strong> in your target markets</li>
+                            <li><strong>Design for security and compliance</strong> from the beginning</li>
+                            <li><strong>Implement strong consistency</strong> for financial transactions</li>
+                            <li><strong>Build comprehensive fraud detection</strong> capabilities</li>
+                            <li><strong>Ensure idempotency</strong> for all payment operations</li>
+                            <li><strong>Design for high availability</strong> with no single points of failure</li>
+                            <li><strong>Implement thorough monitoring and alerting</strong></li>
+                            <li><strong>Plan for disaster recovery</strong> and business continuity</li>
+                            <li><strong>Create detailed documentation</strong> for merchants and partners</li>
+                            <li><strong>Test extensively</strong> under realistic conditions</li>
+                        </ol>
+
+                        <div class="next-steps">
+                            <h3>Next Steps</h3>
+                            <p>Explore other system design examples or learn how to implement a payment system:</p>
+                            <div class="button-group">
+                                <a href="chat-application.html" class="btn btn-primary">Explore Chat Application Design</a>
+                                <a href="../implementation/payment-system.html" class="btn btn-secondary">Learn Payment System Implementation</a>
+                            </div>
+                        </div>
+                    </article>
+                </main>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>System Design Mastery</h2>
+                    <p>Learn. Design. Implement.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3>Quick Links</h3>
+                        <ul>
+                            <li><a href="../../index.html">Home</a></li>
+                            <li><a href="../fundamentals/index.html">Fundamentals</a></li>
+                            <li><a href="../examples/index.html">Examples</a></li>
+                            <li><a href="../implementation/index.html">Implementation</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Resources</h3>
+                        <ul>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Cheat Sheets</a></li>
+                            <li><a href="#">Interview Prep</a></li>
+                            <li><a href="#">Community</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Connect</h3>
+                        <ul>
+                            <li><a href="#">GitHub</a></li>
+                            <li><a href="#">Twitter</a></li>
+                            <li><a href="#">LinkedIn</a></li>
+                            <li><a href="#">Contact Us</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 System Design Mastery. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../js/main.js"></script>
+</body>
+</html>
