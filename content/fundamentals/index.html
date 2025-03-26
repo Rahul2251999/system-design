@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>System Design Fundamentals | System Design Mastery</title>
-    <link rel="stylesheet" href="../../css/modern-styles.css">
+    <link rel="stylesheet" href="../../css/modern-redesign.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header class="sub-header">
+    <header class="site-header">
         <div class="container">
             <nav class="navbar">
                 <div class="logo">
@@ -23,163 +23,158 @@
                     <li><a href="../implementation/index.html">Implementation</a></li>
                     <li><a href="../../index.html#about">About</a></li>
                 </ul>
+                <button class="menu-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
             </nav>
         </div>
     </header>
 
-    <section class="page-header">
+    <section class="hero section-gradient">
         <div class="container">
-            <h1>System Design Fundamentals</h1>
-            <p>Master the core concepts and principles of designing scalable, reliable, and efficient systems</p>
+            <div class="hero-content">
+                <div class="hero-text animate-fade-in">
+                    <h1>System Design Fundamentals</h1>
+                    <h2>Master the Core Concepts</h2>
+                    <p>Learn the essential principles and building blocks that form the foundation of all system designs. From scalability to reliability, these concepts are crucial for designing robust systems.</p>
+                </div>
+            </div>
         </div>
     </section>
 
-    <section class="content-section">
+    <section class="section">
         <div class="container">
-            <div class="content-grid">
-                <aside class="sidebar">
-                    <h3>Fundamentals Topics</h3>
-                    <ul class="sidebar-links">
-                        <li><a href="scalability.html">Scalability</a></li>
-                        <li><a href="reliability.html">Reliability</a></li>
-                        <li><a href="availability.html">Availability</a></li>
-                        <li><a href="performance.html">Performance</a></li>
-                        <li><a href="load-balancing.html">Load Balancing</a></li>
-                        <li><a href="caching.html">Caching</a></li>
-                        <li><a href="database-sharding.html">Database Sharding</a></li>
-                        <li><a href="cap-theorem.html">CAP Theorem</a></li>
-                        <li><a href="consistency-patterns.html">Consistency Patterns</a></li>
-                        <li><a href="microservices.html">Microservices Architecture</a></li>
-                    </ul>
-                </aside>
-                <main class="main-content">
-                    <article>
-                        <h2>Introduction to System Design Fundamentals</h2>
-                        <p>System design is the process of defining the architecture, components, modules, interfaces, and data for a system to satisfy specified requirements. It's a critical skill for software engineers, especially as applications grow in scale and complexity.</p>
-                        
-                        <p>In this section, we'll explore the fundamental concepts that form the foundation of effective system design. These concepts are essential for building systems that can handle millions of users, process vast amounts of data, and maintain high availability even in the face of failures.</p>
+            <h2 class="section-title">Core Concepts</h2>
+            <p class="section-subtitle">The building blocks of system design</p>
+            
+            <div class="bento-grid">
+                <div class="bento-item bento-item-md animate-fade-in">
+                    <h3>Introduction to System Design</h3>
+                    <p>Get started with the fundamental concepts and principles of system design. Learn why system design matters and how it impacts software development.</p>
+                    <a href="introduction.html" class="btn btn-primary btn-sm">Learn More</a>
+                </div>
+                
+                <div class="bento-item bento-item-md animate-fade-in delay-100">
+                    <h3>Client-Server Model</h3>
+                    <p>Understand the foundational client-server architecture that powers most modern applications and services.</p>
+                    <a href="client-server-model.html" class="btn btn-primary btn-sm">Learn More</a>
+                </div>
+                
+                <div class="bento-item bento-item-md animate-fade-in delay-200">
+                    <h3>Network Basics</h3>
+                    <p>Explore the fundamental networking concepts that underpin distributed systems, including protocols, APIs, and communication patterns.</p>
+                    <a href="network-basics.html" class="btn btn-primary btn-sm">Learn More</a>
+                </div>
+                
+                <div class="bento-item bento-item-md animate-fade-in delay-300">
+                    <h3>Scalability</h3>
+                    <p>Learn how to design systems that can handle growing workloads by adding resources. Explore horizontal and vertical scaling strategies.</p>
+                    <a href="scalability.html" class="btn btn-primary btn-sm">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                        <div class="info-box">
-                            <h3>Why System Design Matters</h3>
-                            <p>As applications grow in complexity and user base, designing them with scalability, performance, and availability in mind becomes crucial. A well-designed system is not only reliable and scalable but also easy to maintain and evolve as requirements change.</p>
-                        </div>
+    <section class="section section-dark">
+        <div class="container">
+            <h2 class="section-title">Advanced Concepts</h2>
+            <p class="section-subtitle">Taking your system design skills to the next level</p>
+            
+            <div class="bento-grid">
+                <div class="bento-item bento-item-md animate-fade-in">
+                    <h3>Load Balancing</h3>
+                    <p>Discover how load balancers distribute network traffic across multiple servers to ensure reliability, performance, and availability.</p>
+                    <a href="load-balancing.html" class="btn btn-accent btn-sm">Learn More</a>
+                </div>
+                
+                <div class="bento-item bento-item-md animate-fade-in delay-100">
+                    <h3>Caching</h3>
+                    <p>Learn how to implement caching strategies to reduce latency and database load. Explore different caching patterns and eviction policies.</p>
+                    <a href="caching.html" class="btn btn-accent btn-sm">Learn More</a>
+                </div>
+                
+                <div class="bento-item bento-item-md animate-fade-in delay-200">
+                    <h3>Database Sharding</h3>
+                    <p>Master the techniques for horizontally partitioning data across multiple database instances to improve performance and scalability.</p>
+                    <a href="database-sharding.html" class="btn btn-accent btn-sm">Learn More</a>
+                </div>
+                
+                <div class="bento-item bento-item-md animate-fade-in delay-300">
+                    <h3>Consistency Patterns</h3>
+                    <p>Understand different consistency models and patterns that help maintain data integrity in distributed systems.</p>
+                    <a href="consistency-patterns.html" class="btn btn-accent btn-sm">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                        <h3>Key System Design Concepts</h3>
-                        
-                        <div class="concept-card">
-                            <h4>Scalability</h4>
-                            <p>Scalability refers to a system's ability to handle growing amounts of work by adding resources to the system. There are two main approaches to scaling:</p>
-                            <ul>
-                                <li><strong>Vertical Scaling (Scaling Up)</strong>: Adding more power to existing machines</li>
-                                <li><strong>Horizontal Scaling (Scaling Out)</strong>: Adding more machines to your pool of resources</li>
-                            </ul>
-                            <a href="scalability.html" class="btn btn-secondary">Learn More About Scalability</a>
-                        </div>
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">System Properties</h2>
+            <p class="section-subtitle">Essential characteristics of well-designed systems</p>
+            
+            <div class="bento-grid">
+                <div class="bento-item bento-item-md animate-fade-in">
+                    <h3>Reliability</h3>
+                    <p>Learn how to build systems that continue to work correctly even when things go wrong. Explore fault tolerance and redundancy strategies.</p>
+                    <a href="reliability.html" class="btn btn-primary btn-sm">Learn More</a>
+                </div>
+                
+                <div class="bento-item bento-item-md animate-fade-in delay-100">
+                    <h3>Availability</h3>
+                    <p>Understand how to design systems that remain operational and accessible even during failures or maintenance.</p>
+                    <a href="availability.html" class="btn btn-primary btn-sm">Learn More</a>
+                </div>
+                
+                <div class="bento-item bento-item-md animate-fade-in delay-200">
+                    <h3>Performance</h3>
+                    <p>Discover techniques to optimize system performance, reduce latency, and improve throughput for better user experience.</p>
+                    <a href="performance.html" class="btn btn-primary btn-sm">Learn More</a>
+                </div>
+                
+                <div class="bento-item bento-item-md animate-fade-in delay-300">
+                    <h3>CAP Theorem</h3>
+                    <p>Explore the fundamental trade-offs between Consistency, Availability, and Partition tolerance in distributed systems.</p>
+                    <a href="cap-theorem.html" class="btn btn-primary btn-sm">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                        <div class="concept-card">
-                            <h4>Reliability</h4>
-                            <p>Reliability is the probability that a system will perform its intended function under specified conditions for a specified period. A reliable system continues to work correctly even when things go wrong.</p>
-                            <p>Key aspects of reliability include:</p>
-                            <ul>
-                                <li>Fault tolerance</li>
-                                <li>Redundancy</li>
-                                <li>Error handling</li>
-                                <li>Monitoring and alerting</li>
-                            </ul>
-                            <a href="reliability.html" class="btn btn-secondary">Learn More About Reliability</a>
-                        </div>
-
-                        <div class="concept-card">
-                            <h4>Availability</h4>
-                            <p>Availability measures the percentage of time that a system is operational and accessible for use. It's often expressed as a percentage (e.g., 99.99% uptime).</p>
-                            <p>Strategies to improve availability include:</p>
-                            <ul>
-                                <li>Eliminating single points of failure</li>
-                                <li>Implementing redundancy</li>
-                                <li>Designing for graceful degradation</li>
-                                <li>Implementing proper monitoring and quick recovery</li>
-                            </ul>
-                            <a href="availability.html" class="btn btn-secondary">Learn More About Availability</a>
-                        </div>
-
-                        <div class="concept-card">
-                            <h4>Performance</h4>
-                            <p>Performance refers to how quickly a system performs an action or processes data. Key performance metrics include:</p>
-                            <ul>
-                                <li><strong>Latency</strong>: The time it takes to complete a single operation</li>
-                                <li><strong>Throughput</strong>: The number of operations a system can handle in a given time period</li>
-                                <li><strong>Response Time</strong>: The time between a request and the beginning of a response</li>
-                            </ul>
-                            <a href="performance.html" class="btn btn-secondary">Learn More About Performance</a>
-                        </div>
-
-                        <h3>Building Blocks of System Design</h3>
-                        <p>Modern distributed systems are built using several key components and techniques:</p>
-
-                        <div class="image-content-block">
-                            <div class="image-block">
-                                <img src="../../assets/images/load-balancing.png" alt="Load Balancing Diagram">
-                            </div>
-                            <div class="content-block">
-                                <h4>Load Balancing</h4>
-                                <p>Load balancers distribute incoming network traffic across multiple servers to ensure no single server bears too much demand. This improves responsiveness and availability of applications.</p>
-                                <p>Common load balancing algorithms include:</p>
-                                <ul>
-                                    <li>Round Robin</li>
-                                    <li>Least Connections</li>
-                                    <li>IP Hash</li>
-                                    <li>Weighted Round Robin</li>
-                                </ul>
-                                <a href="load-balancing.html" class="btn btn-secondary">Learn More About Load Balancing</a>
-                            </div>
-                        </div>
-
-                        <div class="image-content-block reverse">
-                            <div class="image-block">
-                                <img src="../../assets/images/caching-system.png" alt="Caching Diagram">
-                            </div>
-                            <div class="content-block">
-                                <h4>Caching</h4>
-                                <p>Caching improves performance by storing copies of frequently accessed data in a location that's faster to access than the original storage location.</p>
-                                <p>Common caching strategies include:</p>
-                                <ul>
-                                    <li>Cache-Aside (Lazy Loading)</li>
-                                    <li>Write-Through</li>
-                                    <li>Write-Back (Write-Behind)</li>
-                                    <li>Write-Around</li>
-                                </ul>
-                                <a href="caching.html" class="btn btn-secondary">Learn More About Caching</a>
-                            </div>
-                        </div>
-
-                        <div class="image-content-block">
-                            <div class="image-block">
-                                <img src="../../assets/images/database-sharding.png" alt="Database Sharding Diagram">
-                            </div>
-                            <div class="content-block">
-                                <h4>Database Sharding</h4>
-                                <p>Database sharding is a technique for horizontal scaling of databases, where data is split across multiple database instances (shards) to improve performance and manageability.</p>
-                                <p>Common sharding strategies include:</p>
-                                <ul>
-                                    <li>Key-Based Sharding</li>
-                                    <li>Range-Based Sharding</li>
-                                    <li>Directory-Based Sharding</li>
-                                    <li>Vertical Sharding</li>
-                                </ul>
-                                <a href="database-sharding.html" class="btn btn-secondary">Learn More About Database Sharding</a>
-                            </div>
-                        </div>
-
-                        <div class="next-steps">
-                            <h3>Next Steps</h3>
-                            <p>Now that you have an overview of the fundamental concepts in system design, dive deeper into each topic to gain a comprehensive understanding:</p>
-                            <div class="button-group">
-                                <a href="scalability.html" class="btn btn-primary">Start with Scalability</a>
-                                <a href="../examples/index.html" class="btn btn-secondary">Explore Real-world Examples</a>
-                            </div>
-                        </div>
-                    </article>
-                </main>
+    <section class="section section-gradient">
+        <div class="container">
+            <h2 class="section-title">Learning Path</h2>
+            <p class="section-subtitle">Recommended sequence for mastering fundamentals</p>
+            
+            <div class="bento-grid">
+                <div class="bento-item bento-item-lg animate-fade-in">
+                    <h3>Step 1: Core Concepts</h3>
+                    <p>Begin with the introduction to system design, client-server model, and network basics to build a solid foundation.</p>
+                    <div class="card-footer">
+                        <span class="card-tag">Beginner</span>
+                        <a href="introduction.html" class="card-link">Start Here <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+                    </div>
+                </div>
+                
+                <div class="bento-item bento-item-lg animate-fade-in delay-200">
+                    <h3>Step 2: Scaling and Performance</h3>
+                    <p>Move on to scalability, load balancing, and caching to understand how to handle growing workloads and improve performance.</p>
+                    <div class="card-footer">
+                        <span class="card-tag">Intermediate</span>
+                        <a href="scalability.html" class="card-link">Continue Learning <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+                    </div>
+                </div>
+                
+                <div class="bento-item bento-item-lg animate-fade-in delay-400">
+                    <h3>Step 3: Advanced Topics</h3>
+                    <p>Finally, explore database sharding, consistency patterns, and the CAP theorem to master the more complex aspects of system design.</p>
+                    <div class="card-footer">
+                        <span class="card-tag">Advanced</span>
+                        <a href="database-sharding.html" class="card-link">Advanced Learning <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -227,6 +222,50 @@
         </div>
     </footer>
 
-    <script src="../../js/main.js"></script>
+    <script>
+        // Add scrolled class to header on scroll
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.site-header');
+            if (window.scrollY > 10) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+        
+        // Mobile menu toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        
+        menuToggle.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+        });
+        
+        // Add animation classes when elements come into view
+        const animateElements = document.querySelectorAll('.animate-fade-in, .animate-slide-left, .animate-slide-right');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0) translateX(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        animateElements.forEach(element => {
+            element.style.opacity = '0';
+            if (element.classList.contains('animate-slide-left')) {
+                element.style.transform = 'translateX(-50px)';
+            } else if (element.classList.contains('animate-slide-right')) {
+                element.style.transform = 'translateX(50px)';
+            } else {
+                element.style.transform = 'translateY(20px)';
+            }
+            element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(element);
+        });
+    </script>
 </body>
 </html>

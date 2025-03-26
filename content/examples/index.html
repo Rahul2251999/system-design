@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Real-world Examples | System Design Mastery</title>
-    <link rel="stylesheet" href="../../css/modern-styles.css">
+    <link rel="stylesheet" href="../../css/modern-redesign.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header class="sub-header">
+    <header class="site-header">
         <div class="container">
             <nav class="navbar">
                 <div class="logo">
@@ -23,158 +23,226 @@
                     <li><a href="../implementation/index.html">Implementation</a></li>
                     <li><a href="../../index.html#about">About</a></li>
                 </ul>
+                <button class="menu-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
             </nav>
         </div>
     </header>
 
-    <section class="page-header">
+    <section class="hero section-gradient">
         <div class="container">
-            <h1>Real-world System Design Examples</h1>
-            <p>Learn from the architecture of successful tech companies and popular applications</p>
+            <div class="hero-content">
+                <div class="hero-text animate-fade-in">
+                    <h1>Real-world Examples</h1>
+                    <h2>Learn from Industry Leaders</h2>
+                    <p>Explore how tech giants designed their systems to handle massive scale. Analyze real-world architectures and understand the design decisions that power the applications you use every day.</p>
+                </div>
+            </div>
         </div>
     </section>
 
-    <section class="content-section">
+    <section class="section">
         <div class="container">
-            <div class="content-grid">
-                <aside class="sidebar">
-                    <h3>Example Systems</h3>
-                    <ul class="sidebar-links">
-                        <li><a href="netflix.html">Netflix</a></li>
-                        <li><a href="uber.html">Uber</a></li>
-                        <li><a href="amazon.html">Amazon</a></li>
-                        <li><a href="twitter.html">Twitter</a></li>
-                        <li><a href="instagram.html">Instagram</a></li>
-                        <li><a href="url-shortener.html">URL Shortener</a></li>
-                        <li><a href="chat-system.html">Chat System</a></li>
-                        <li><a href="payment-system.html">Payment System</a></li>
-                    </ul>
-                </aside>
-                <main class="main-content">
-                    <article>
-                        <h2>Learning from Real-world System Designs</h2>
-                        <p>Understanding how successful companies have designed their systems to handle millions or billions of users provides invaluable insights for your own system design journey. In this section, we explore the architecture, design decisions, and scaling strategies of some of the world's most popular applications and services.</p>
-                        
-                        <div class="info-box">
-                            <h3>Why Study Real-world Examples?</h3>
-                            <p>Real-world examples bridge the gap between theoretical concepts and practical implementation. They show how companies have addressed specific challenges, made trade-offs, and evolved their systems over time to meet growing demands. By studying these examples, you'll gain insights that can be applied to your own projects, regardless of scale.</p>
+            <h2 class="section-title">Popular Platforms</h2>
+            <p class="section-subtitle">Discover how industry leaders designed their systems</p>
+            
+            <div class="card-grid">
+                <div class="modern-card animate-fade-in">
+                    <div class="card-image">
+                        <img src="../../assets/images/url-shortener.png" alt="URL Shortener System Design">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">URL Shortener</h3>
+                        <p class="card-text">Learn how services like bit.ly and TinyURL handle billions of redirects while maintaining low latency and high availability.</p>
+                        <div class="card-footer">
+                            <span class="card-tag">Beginner</span>
+                            <a href="url-shortener.html" class="card-link">Read Case Study <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
                         </div>
+                    </div>
+                </div>
+                
+                <div class="modern-card animate-fade-in delay-100">
+                    <div class="card-image">
+                        <img src="../../assets/images/load-balancing.png" alt="Uber System Design">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Uber</h3>
+                        <p class="card-text">Explore how Uber handles real-time location tracking, driver-rider matching, and surge pricing at global scale.</p>
+                        <div class="card-footer">
+                            <span class="card-tag">Intermediate</span>
+                            <a href="uber.html" class="card-link">Read Case Study <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modern-card animate-fade-in delay-200">
+                    <div class="card-image">
+                        <img src="../../assets/images/database-sharding.png" alt="Twitter System Design">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Twitter</h3>
+                        <p class="card-text">Understand how Twitter's architecture handles millions of tweets, real-time updates, and the complex social graph.</p>
+                        <div class="card-footer">
+                            <span class="card-tag">Intermediate</span>
+                            <a href="twitter.html" class="card-link">Read Case Study <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modern-card animate-fade-in delay-300">
+                    <div class="card-image">
+                        <img src="../../assets/images/caching-system.png" alt="Amazon System Design">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Amazon</h3>
+                        <p class="card-text">Dive into Amazon's complex e-commerce architecture, including product catalog, recommendation engine, and order processing.</p>
+                        <div class="card-footer">
+                            <span class="card-tag">Advanced</span>
+                            <a href="amazon.html" class="card-link">Read Case Study <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                        <h3>Featured System Designs</h3>
-                        
-                        <div class="example-card">
-                            <div class="example-image">
-                                <img src="../../assets/images/netflix-architecture.png" alt="Netflix Architecture">
-                            </div>
-                            <div class="example-content">
-                                <h4>Netflix</h4>
-                                <p>Netflix serves over 200 million subscribers worldwide, streaming billions of hours of content each month. Their architecture showcases:</p>
-                                <ul>
-                                    <li>Microservices architecture with over 700 services</li>
-                                    <li>Global content delivery network (CDN)</li>
-                                    <li>Sophisticated recommendation algorithms</li>
-                                    <li>Chaos engineering for reliability testing</li>
-                                </ul>
-                                <a href="netflix.html" class="btn btn-secondary">Explore Netflix's Architecture</a>
-                            </div>
+    <section class="section section-dark">
+        <div class="container">
+            <h2 class="section-title">Streaming & Media</h2>
+            <p class="section-subtitle">Content delivery at massive scale</p>
+            
+            <div class="card-grid">
+                <div class="modern-card animate-fade-in">
+                    <div class="card-image">
+                        <img src="../../assets/images/caching-system.png" alt="Netflix System Design">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Netflix</h3>
+                        <p class="card-text">Learn how Netflix delivers high-quality video content to millions of users simultaneously across the globe.</p>
+                        <div class="card-footer">
+                            <span class="card-tag">Advanced</span>
+                            <a href="netflix.html" class="card-link">Read Case Study <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
                         </div>
+                    </div>
+                </div>
+                
+                <div class="modern-card animate-fade-in delay-100">
+                    <div class="card-image">
+                        <img src="../../assets/images/database-sharding.png" alt="Instagram System Design">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Instagram</h3>
+                        <p class="card-text">Explore how Instagram handles photo storage, feed generation, and real-time interactions for billions of users.</p>
+                        <div class="card-footer">
+                            <span class="card-tag">Intermediate</span>
+                            <a href="instagram.html" class="card-link">Read Case Study <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modern-card animate-fade-in delay-200">
+                    <div class="card-image">
+                        <img src="../../assets/images/load-balancing.png" alt="Google Search System Design">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Google Search</h3>
+                        <p class="card-text">Understand the architecture behind Google's search engine, including indexing, ranking, and serving results in milliseconds.</p>
+                        <div class="card-footer">
+                            <span class="card-tag">Advanced</span>
+                            <a href="google-search.html" class="card-link">Read Case Study <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                        <div class="example-card">
-                            <div class="example-image">
-                                <img src="../../assets/images/uber-architecture.png" alt="Uber Architecture">
-                            </div>
-                            <div class="example-content">
-                                <h4>Uber</h4>
-                                <p>Uber's platform handles millions of rides daily across 10,000+ cities. Their system design highlights:</p>
-                                <ul>
-                                    <li>Geospatial indexing for efficient driver-rider matching</li>
-                                    <li>Real-time data processing for dynamic pricing</li>
-                                    <li>Distributed systems for high availability</li>
-                                    <li>Sophisticated fraud detection mechanisms</li>
-                                </ul>
-                                <a href="uber.html" class="btn btn-secondary">Explore Uber's Architecture</a>
-                            </div>
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Communication & Infrastructure</h2>
+            <p class="section-subtitle">Building blocks for modern applications</p>
+            
+            <div class="card-grid">
+                <div class="modern-card animate-fade-in">
+                    <div class="card-image">
+                        <img src="../../assets/images/url-shortener.png" alt="Chat Application System Design">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Chat Application</h3>
+                        <p class="card-text">Discover how messaging platforms like WhatsApp handle message delivery, online status, and end-to-end encryption.</p>
+                        <div class="card-footer">
+                            <span class="card-tag">Intermediate</span>
+                            <a href="chat-application.html" class="card-link">Read Case Study <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
                         </div>
+                    </div>
+                </div>
+                
+                <div class="modern-card animate-fade-in delay-100">
+                    <div class="card-image">
+                        <img src="../../assets/images/caching-system.png" alt="Payment System Design">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Payment System</h3>
+                        <p class="card-text">Learn how payment processors like PayPal handle transactions, security, and fraud detection at scale.</p>
+                        <div class="card-footer">
+                            <span class="card-tag">Advanced</span>
+                            <a href="payment-system.html" class="card-link">Read Case Study <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modern-card animate-fade-in delay-200">
+                    <div class="card-image">
+                        <img src="../../assets/images/database-sharding.png" alt="Distributed Cache System Design">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Distributed Cache</h3>
+                        <p class="card-text">Explore the architecture of distributed caching systems like Redis and Memcached that power modern applications.</p>
+                        <div class="card-footer">
+                            <span class="card-tag">Advanced</span>
+                            <a href="distributed-cache.html" class="card-link">Read Case Study <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                        <div class="example-card">
-                            <div class="example-image">
-                                <img src="../../assets/images/amazon-architecture.png" alt="Amazon Architecture">
-                            </div>
-                            <div class="example-content">
-                                <h4>Amazon</h4>
-                                <p>Amazon's e-commerce platform processes millions of transactions daily. Their system design features:</p>
-                                <ul>
-                                    <li>Service-oriented architecture</li>
-                                    <li>Two-pizza team organizational structure</li>
-                                    <li>Sophisticated inventory management systems</li>
-                                    <li>Highly optimized recommendation engines</li>
-                                </ul>
-                                <a href="amazon.html" class="btn btn-secondary">Explore Amazon's Architecture</a>
-                            </div>
-                        </div>
-
-                        <div class="example-card">
-                            <div class="example-image">
-                                <img src="../../assets/images/url-shortener.png" alt="URL Shortener Architecture">
-                            </div>
-                            <div class="example-content">
-                                <h4>URL Shortener</h4>
-                                <p>URL shorteners like bit.ly handle billions of redirects. Their design demonstrates:</p>
-                                <ul>
-                                    <li>Efficient encoding algorithms</li>
-                                    <li>High-performance caching strategies</li>
-                                    <li>Analytics and tracking capabilities</li>
-                                    <li>Scalable database design</li>
-                                </ul>
-                                <a href="url-shortener.html" class="btn btn-secondary">Explore URL Shortener Architecture</a>
-                            </div>
-                        </div>
-
-                        <h3>Key Takeaways from Real-world Systems</h3>
-                        
-                        <div class="concept-card">
-                            <h4>Microservices Architecture</h4>
-                            <p>Many large-scale systems have moved from monolithic to microservices architecture, allowing teams to develop, deploy, and scale services independently. This approach enables:</p>
-                            <ul>
-                                <li>Independent scaling of components based on demand</li>
-                                <li>Technology diversity where appropriate</li>
-                                <li>Faster development cycles</li>
-                                <li>Better fault isolation</li>
-                            </ul>
-                        </div>
-
-                        <div class="concept-card">
-                            <h4>Data Management at Scale</h4>
-                            <p>Real-world systems employ sophisticated data management strategies:</p>
-                            <ul>
-                                <li>Polyglot persistence (using different database types for different needs)</li>
-                                <li>Data sharding and partitioning</li>
-                                <li>Read replicas for query performance</li>
-                                <li>Caching at multiple levels</li>
-                            </ul>
-                        </div>
-
-                        <div class="concept-card">
-                            <h4>Resilience Engineering</h4>
-                            <p>Large-scale systems are designed to be resilient against failures:</p>
-                            <ul>
-                                <li>Circuit breakers to prevent cascading failures</li>
-                                <li>Bulkheads to isolate components</li>
-                                <li>Chaos engineering to test failure scenarios</li>
-                                <li>Graceful degradation when subsystems fail</li>
-                            </ul>
-                        </div>
-
-                        <div class="next-steps">
-                            <h3>Next Steps</h3>
-                            <p>Explore our detailed case studies of real-world system designs to understand how theoretical concepts are applied in practice:</p>
-                            <div class="button-group">
-                                <a href="netflix.html" class="btn btn-primary">Start with Netflix</a>
-                                <a href="../implementation/index.html" class="btn btn-secondary">Explore Implementation Details</a>
-                            </div>
-                        </div>
-                    </article>
-                </main>
+    <section class="section section-gradient">
+        <div class="container">
+            <h2 class="section-title">Learning Path</h2>
+            <p class="section-subtitle">Recommended sequence for studying real-world examples</p>
+            
+            <div class="bento-grid">
+                <div class="bento-item bento-item-lg animate-fade-in">
+                    <h3>Step 1: Start with Simple Systems</h3>
+                    <p>Begin with the URL Shortener case study to understand how even seemingly simple services require thoughtful system design.</p>
+                    <div class="card-footer">
+                        <span class="card-tag">Beginner</span>
+                        <a href="url-shortener.html" class="card-link">Start Here <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+                    </div>
+                </div>
+                
+                <div class="bento-item bento-item-lg animate-fade-in delay-200">
+                    <h3>Step 2: Explore Social Platforms</h3>
+                    <p>Move on to Twitter and Instagram to understand how social networks handle complex data relationships and real-time updates.</p>
+                    <div class="card-footer">
+                        <span class="card-tag">Intermediate</span>
+                        <a href="twitter.html" class="card-link">Continue Learning <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+                    </div>
+                </div>
+                
+                <div class="bento-item bento-item-lg animate-fade-in delay-400">
+                    <h3>Step 3: Tackle Complex Systems</h3>
+                    <p>Finally, dive into Amazon, Netflix, and Google Search to master the design of highly complex, globally distributed systems.</p>
+                    <div class="card-footer">
+                        <span class="card-tag">Advanced</span>
+                        <a href="amazon.html" class="card-link">Advanced Learning <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -222,6 +290,50 @@
         </div>
     </footer>
 
-    <script src="../../js/main.js"></script>
+    <script>
+        // Add scrolled class to header on scroll
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.site-header');
+            if (window.scrollY > 10) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+        
+        // Mobile menu toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        
+        menuToggle.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+        });
+        
+        // Add animation classes when elements come into view
+        const animateElements = document.querySelectorAll('.animate-fade-in, .animate-slide-left, .animate-slide-right');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0) translateX(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        animateElements.forEach(element => {
+            element.style.opacity = '0';
+            if (element.classList.contains('animate-slide-left')) {
+                element.style.transform = 'translateX(-50px)';
+            } else if (element.classList.contains('animate-slide-right')) {
+                element.style.transform = 'translateX(50px)';
+            } else {
+                element.style.transform = 'translateY(20px)';
+            }
+            element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(element);
+        });
+    </script>
 </body>
 </html>

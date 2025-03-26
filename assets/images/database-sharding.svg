@@ -1,115 +1,99 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
-  <!-- Database Sharding Diagram -->
-  
-  <!-- Background Grid -->
-  <defs>
-    <pattern id="smallGrid" width="10" height="10" patternUnits="userSpaceOnUse">
-      <path d="M 10 0 L 0 0 0 10" fill="none" stroke="#4361ee" stroke-width="0.5" opacity="0.2"/>
-    </pattern>
-    <pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse">
-      <rect width="50" height="50" fill="url(#smallGrid)"/>
-      <path d="M 50 0 L 0 0 0 50" fill="none" stroke="#4361ee" stroke-width="1" opacity="0.2"/>
-    </pattern>
-  </defs>
-  
-  <rect width="100%" height="100%" fill="#f9fafb"/>
-  <rect width="100%" height="100%" fill="url(#grid)" opacity="0.6"/>
-  
-  <!-- Title -->
-  <text x="400" y="40" font-family="Inter, sans-serif" font-size="24" text-anchor="middle" fill="#2b2d42" font-weight="bold">Database Sharding Strategies</text>
-  
-  <!-- Original Database -->
-  <rect x="300" y="80" width="200" height="80" rx="5" ry="5" fill="#4cc9f0" stroke="#4361ee" stroke-width="2"/>
-  <text x="400" y="125" font-family="Inter, sans-serif" font-size="16" text-anchor="middle" fill="#ffffff" font-weight="bold">Original Database</text>
-  
-  <!-- Arrows -->
-  <line x1="400" y1="160" x2="400" y2="190" stroke="#2b2d42" stroke-width="2"/>
-  <polygon points="400,190 395,180 405,180" fill="#2b2d42"/>
-  
-  <!-- Sharding Types -->
-  <text x="400" y="220" font-family="Inter, sans-serif" font-size="18" text-anchor="middle" fill="#2b2d42" font-weight="bold">Sharding Strategies</text>
-  
-  <!-- Key Based Sharding -->
-  <rect x="50" y="250" width="160" height="60" rx="5" ry="5" fill="#f72585" stroke="#ef476f" stroke-width="2"/>
-  <text x="130" y="285" font-family="Inter, sans-serif" font-size="14" text-anchor="middle" fill="#ffffff" font-weight="bold">Key Based Sharding</text>
-  
-  <!-- Range Based Sharding -->
-  <rect x="230" y="250" width="160" height="60" rx="5" ry="5" fill="#f72585" stroke="#ef476f" stroke-width="2"/>
-  <text x="310" y="285" font-family="Inter, sans-serif" font-size="14" text-anchor="middle" fill="#ffffff" font-weight="bold">Range Based Sharding</text>
-  
-  <!-- Vertical Sharding -->
-  <rect x="410" y="250" width="160" height="60" rx="5" ry="5" fill="#f72585" stroke="#ef476f" stroke-width="2"/>
-  <text x="490" y="285" font-family="Inter, sans-serif" font-size="14" text-anchor="middle" fill="#ffffff" font-weight="bold">Vertical Sharding</text>
-  
-  <!-- Directory Based Sharding -->
-  <rect x="590" y="250" width="160" height="60" rx="5" ry="5" fill="#f72585" stroke="#ef476f" stroke-width="2"/>
-  <text x="670" y="285" font-family="Inter, sans-serif" font-size="14" text-anchor="middle" fill="#ffffff" font-weight="bold">Directory Based</text>
-  
-  <!-- Arrows to Shards -->
-  <line x1="130" y1="310" x2="130" y2="340" stroke="#2b2d42" stroke-width="2"/>
-  <polygon points="130,340 125,330 135,330" fill="#2b2d42"/>
-  
-  <line x1="310" y1="310" x2="310" y2="340" stroke="#2b2d42" stroke-width="2"/>
-  <polygon points="310,340 305,330 315,330" fill="#2b2d42"/>
-  
-  <line x1="490" y1="310" x2="490" y2="340" stroke="#2b2d42" stroke-width="2"/>
-  <polygon points="490,340 485,330 495,330" fill="#2b2d42"/>
-  
-  <line x1="670" y1="310" x2="670" y2="340" stroke="#2b2d42" stroke-width="2"/>
-  <polygon points="670,340 665,330 675,330" fill="#2b2d42"/>
-  
-  <!-- Key Based Sharding Example -->
-  <rect x="50" y="350" width="160" height="200" rx="5" ry="5" fill="#eef2ff" stroke="#4361ee" stroke-width="2"/>
-  
-  <rect x="70" y="370" width="120" height="40" rx="3" ry="3" fill="#06d6a0" stroke="#059669" stroke-width="1"/>
-  <text x="130" y="395" font-family="Inter, sans-serif" font-size="12" text-anchor="middle" fill="#ffffff">Shard 1 (Hash % 3 = 0)</text>
-  
-  <rect x="70" y="430" width="120" height="40" rx="3" ry="3" fill="#06d6a0" stroke="#059669" stroke-width="1"/>
-  <text x="130" y="455" font-family="Inter, sans-serif" font-size="12" text-anchor="middle" fill="#ffffff">Shard 2 (Hash % 3 = 1)</text>
-  
-  <rect x="70" y="490" width="120" height="40" rx="3" ry="3" fill="#06d6a0" stroke="#059669" stroke-width="1"/>
-  <text x="130" y="515" font-family="Inter, sans-serif" font-size="12" text-anchor="middle" fill="#ffffff">Shard 3 (Hash % 3 = 2)</text>
-  
-  <!-- Range Based Sharding Example -->
-  <rect x="230" y="350" width="160" height="200" rx="5" ry="5" fill="#eef2ff" stroke="#4361ee" stroke-width="2"/>
-  
-  <rect x="250" y="370" width="120" height="40" rx="3" ry="3" fill="#06d6a0" stroke="#059669" stroke-width="1"/>
-  <text x="310" y="395" font-family="Inter, sans-serif" font-size="12" text-anchor="middle" fill="#ffffff">Shard 1 (A-G)</text>
-  
-  <rect x="250" y="430" width="120" height="40" rx="3" ry="3" fill="#06d6a0" stroke="#059669" stroke-width="1"/>
-  <text x="310" y="455" font-family="Inter, sans-serif" font-size="12" text-anchor="middle" fill="#ffffff">Shard 2 (H-P)</text>
-  
-  <rect x="250" y="490" width="120" height="40" rx="3" ry="3" fill="#06d6a0" stroke="#059669" stroke-width="1"/>
-  <text x="310" y="515" font-family="Inter, sans-serif" font-size="12" text-anchor="middle" fill="#ffffff">Shard 3 (Q-Z)</text>
-  
-  <!-- Vertical Sharding Example -->
-  <rect x="410" y="350" width="160" height="200" rx="5" ry="5" fill="#eef2ff" stroke="#4361ee" stroke-width="2"/>
-  
-  <rect x="430" y="370" width="120" height="40" rx="3" ry="3" fill="#06d6a0" stroke="#059669" stroke-width="1"/>
-  <text x="490" y="395" font-family="Inter, sans-serif" font-size="12" text-anchor="middle" fill="#ffffff">Shard 1 (User Profiles)</text>
-  
-  <rect x="430" y="430" width="120" height="40" rx="3" ry="3" fill="#06d6a0" stroke="#059669" stroke-width="1"/>
-  <text x="490" y="455" font-family="Inter, sans-serif" font-size="12" text-anchor="middle" fill="#ffffff">Shard 2 (Orders)</text>
-  
-  <rect x="430" y="490" width="120" height="40" rx="3" ry="3" fill="#06d6a0" stroke="#059669" stroke-width="1"/>
-  <text x="490" y="515" font-family="Inter, sans-serif" font-size="12" text-anchor="middle" fill="#ffffff">Shard 3 (Products)</text>
-  
-  <!-- Directory Based Sharding Example -->
-  <rect x="590" y="350" width="160" height="200" rx="5" ry="5" fill="#eef2ff" stroke="#4361ee" stroke-width="2"/>
-  
-  <rect x="610" y="370" width="120" height="40" rx="3" ry="3" fill="#ffd166" stroke="#e6bc5c" stroke-width="1"/>
-  <text x="670" y="395" font-family="Inter, sans-serif" font-size="12" text-anchor="middle" fill="#2b2d42">Lookup Service</text>
-  
-  <rect x="610" y="430" width="120" height="40" rx="3" ry="3" fill="#06d6a0" stroke="#059669" stroke-width="1"/>
-  <text x="670" y="455" font-family="Inter, sans-serif" font-size="12" text-anchor="middle" fill="#ffffff">Shard 1</text>
-  
-  <rect x="610" y="490" width="120" height="40" rx="3" ry="3" fill="#06d6a0" stroke="#059669" stroke-width="1"/>
-  <text x="670" y="515" font-family="Inter, sans-serif" font-size="12" text-anchor="middle" fill="#ffffff">Shard 2</text>
-  
-  <!-- Connecting lines for Directory Based -->
-  <line x1="670" y1="410" x2="670" y2="430" stroke="#2b2d42" stroke-width="1" stroke-dasharray="5,5"/>
-  <line x1="670" y1="410" x2="630" y2="430" stroke="#2b2d42" stroke-width="1" stroke-dasharray="5,5"/>
-  <line x1="670" y1="410" x2="710" y2="430" stroke="#2b2d42" stroke-width="1" stroke-dasharray="5,5"/>
-  <line x1="670" y1="470" x2="670" y2="490" stroke="#2b2d42" stroke-width="1" stroke-dasharray="5,5"/>
+<svg width="400px" height="400px" viewBox="0 0 400 400" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Database Sharding</title>
+    <defs>
+        <linearGradient x1="0%" y1="0%" x2="100%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#4ECDC4" offset="0%"></stop>
+            <stop stop-color="#2D3047" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Database-Sharding" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect id="Background" fill="#F7F9FC" x="0" y="0" width="400" height="400"></rect>
+        
+        <!-- Application Server -->
+        <g id="App-Server" transform="translate(150, 50)">
+            <rect id="Server-Body" fill="url(#linearGradient-1)" x="0" y="0" width="100" height="80" rx="10"></rect>
+            <text id="Server-Text" font-family="Arial" font-weight="bold" font-size="12" fill="#FFFFFF" x="15" y="30">Application</text>
+            <text id="Server-Text-2" font-family="Arial" font-weight="bold" font-size="12" fill="#FFFFFF" x="25" y="50">Server</text>
+            <rect id="Server-Light-1" fill="#FF6B6B" x="80" y="15" width="10" height="10" rx="5"></rect>
+            <rect id="Server-Light-2" fill="#4ECDC4" x="80" y="35" width="10" height="10" rx="5"></rect>
+            <rect id="Server-Light-3" fill="#FBBF24" x="80" y="55" width="10" height="10" rx="5"></rect>
+        </g>
+        
+        <!-- Shard Router -->
+        <g id="Shard-Router" transform="translate(150, 170)">
+            <polygon id="Router-Body" fill="#2D3047" points="0,0 100,0 80,40 20,40"></polygon>
+            <text id="Router-Text" font-family="Arial" font-weight="bold" font-size="12" fill="#FFFFFF" x="15" y="25">Shard Router</text>
+        </g>
+        
+        <!-- Database Shards -->
+        <g id="Shard-1" transform="translate(50, 250)">
+            <path d="M0,10 C0,4.5 11.2,0 25,0 C38.8,0 50,4.5 50,10 L50,40 C50,45.5 38.8,50 25,50 C11.2,50 0,45.5 0,40 L0,10 Z" id="Shard-1-Body" fill="#2D3047"></path>
+            <path d="M0,10 C0,15.5 11.2,20 25,20 C38.8,20 50,15.5 50,10 C50,4.5 38.8,0 25,0 C11.2,0 0,4.5 0,10 Z" id="Shard-1-Top" fill="#4A4D6C"></path>
+            <text id="Shard-1-Text" font-family="Arial" font-weight="bold" font-size="10" fill="#FFFFFF" x="10" y="35">Shard 1</text>
+            <text id="Shard-1-Key" font-family="Arial" font-size="8" fill="#4ECDC4" x="5" y="65">A-G</text>
+        </g>
+        
+        <g id="Shard-2" transform="translate(125, 250)">
+            <path d="M0,10 C0,4.5 11.2,0 25,0 C38.8,0 50,4.5 50,10 L50,40 C50,45.5 38.8,50 25,50 C11.2,50 0,45.5 0,40 L0,10 Z" id="Shard-2-Body" fill="#2D3047"></path>
+            <path d="M0,10 C0,15.5 11.2,20 25,20 C38.8,20 50,15.5 50,10 C50,4.5 38.8,0 25,0 C11.2,0 0,4.5 0,10 Z" id="Shard-2-Top" fill="#4A4D6C"></path>
+            <text id="Shard-2-Text" font-family="Arial" font-weight="bold" font-size="10" fill="#FFFFFF" x="10" y="35">Shard 2</text>
+            <text id="Shard-2-Key" font-family="Arial" font-size="8" fill="#4ECDC4" x="5" y="65">H-N</text>
+        </g>
+        
+        <g id="Shard-3" transform="translate(200, 250)">
+            <path d="M0,10 C0,4.5 11.2,0 25,0 C38.8,0 50,4.5 50,10 L50,40 C50,45.5 38.8,50 25,50 C11.2,50 0,45.5 0,40 L0,10 Z" id="Shard-3-Body" fill="#2D3047"></path>
+            <path d="M0,10 C0,15.5 11.2,20 25,20 C38.8,20 50,15.5 50,10 C50,4.5 38.8,0 25,0 C11.2,0 0,4.5 0,10 Z" id="Shard-3-Top" fill="#4A4D6C"></path>
+            <text id="Shard-3-Text" font-family="Arial" font-weight="bold" font-size="10" fill="#FFFFFF" x="10" y="35">Shard 3</text>
+            <text id="Shard-3-Key" font-family="Arial" font-size="8" fill="#4ECDC4" x="5" y="65">O-T</text>
+        </g>
+        
+        <g id="Shard-4" transform="translate(275, 250)">
+            <path d="M0,10 C0,4.5 11.2,0 25,0 C38.8,0 50,4.5 50,10 L50,40 C50,45.5 38.8,50 25,50 C11.2,50 0,45.5 0,40 L0,10 Z" id="Shard-4-Body" fill="#2D3047"></path>
+            <path d="M0,10 C0,15.5 11.2,20 25,20 C38.8,20 50,15.5 50,10 C50,4.5 38.8,0 25,0 C11.2,0 0,4.5 0,10 Z" id="Shard-4-Top" fill="#4A4D6C"></path>
+            <text id="Shard-4-Text" font-family="Arial" font-weight="bold" font-size="10" fill="#FFFFFF" x="10" y="35">Shard 4</text>
+            <text id="Shard-4-Key" font-family="Arial" font-size="8" fill="#4ECDC4" x="5" y="65">U-Z</text>
+        </g>
+        
+        <!-- Connection Lines -->
+        <path d="M200,130 L200,170" id="Server-Router" stroke="#4ECDC4" stroke-width="2" stroke-linecap="round"></path>
+        
+        <path d="M170,210 C130,220 100,230 75,250" id="Router-Shard-1" stroke="#4ECDC4" stroke-width="2" stroke-linecap="round"></path>
+        <path d="M180,210 C160,220 150,230 150,250" id="Router-Shard-2" stroke="#4ECDC4" stroke-width="2" stroke-linecap="round"></path>
+        <path d="M220,210 C240,220 250,230 225,250" id="Router-Shard-3" stroke="#4ECDC4" stroke-width="2" stroke-linecap="round"></path>
+        <path d="M230,210 C270,220 300,230 300,250" id="Router-Shard-4" stroke="#4ECDC4" stroke-width="2" stroke-linecap="round"></path>
+        
+        <!-- Data Records -->
+        <g id="Data-Records" transform="translate(125, 320)">
+            <rect id="Records-Box" fill="#FFFFFF" x="0" y="0" width="150" height="60" rx="5" stroke="#2D3047" stroke-width="2"></rect>
+            <text id="Records-Title" font-family="Arial" font-weight="bold" font-size="12" fill="#2D3047" x="30" y="20">Sharding Keys</text>
+            <text id="Records-Text-1" font-family="Arial" font-size="10" fill="#4ECDC4" x="10" y="40">user_id: "john123" → Shard 2</text>
+            <text id="Records-Text-2" font-family="Arial" font-size="10" fill="#FF6B6B" x="10" y="55">user_id: "alice456" → Shard 1</text>
+        </g>
+        
+        <!-- Data Flow Animation -->
+        <circle id="Data-Packet-1" fill="#4ECDC4" cx="200" cy="150" r="5">
+            <animate attributeName="cy" from="130" to="170" dur="2s" repeatCount="indefinite" />
+        </circle>
+        
+        <circle id="Data-Packet-2" fill="#4ECDC4" cx="150" cy="220" r="5">
+            <animate attributeName="cx" from="170" to="75" dur="3s" repeatCount="indefinite" />
+            <animate attributeName="cy" from="210" to="250" dur="3s" repeatCount="indefinite" />
+        </circle>
+        
+        <circle id="Data-Packet-3" fill="#FF6B6B" cx="180" cy="220" r="5">
+            <animate attributeName="cx" from="180" to="150" dur="3s" repeatCount="indefinite" />
+            <animate attributeName="cy" from="210" to="250" dur="3s" repeatCount="indefinite" />
+        </circle>
+        
+        <circle id="Data-Packet-4" fill="#4ECDC4" cx="220" cy="220" r="5">
+            <animate attributeName="cx" from="220" to="225" dur="3s" repeatCount="indefinite" />
+            <animate attributeName="cy" from="210" to="250" dur="3s" repeatCount="indefinite" />
+        </circle>
+        
+        <circle id="Data-Packet-5" fill="#FF6B6B" cx="230" cy="220" r="5">
+            <animate attributeName="cx" from="230" to="300" dur="3s" repeatCount="indefinite" />
+            <animate attributeName="cy" from="210" to="250" dur="3s" repeatCount="indefinite" />
+        </circle>
+    </g>
 </svg>

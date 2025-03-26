@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Implementation | System Design Mastery</title>
-    <link rel="stylesheet" href="../../css/modern-styles.css">
+    <link rel="stylesheet" href="../../css/modern-redesign.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header class="sub-header">
+    <header class="site-header">
         <div class="container">
             <nav class="navbar">
                 <div class="logo">
@@ -23,149 +23,241 @@
                     <li><a href="../implementation/index.html" class="active">Implementation</a></li>
                     <li><a href="../../index.html#about">About</a></li>
                 </ul>
+                <button class="menu-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
             </nav>
         </div>
     </header>
 
-    <section class="page-header">
+    <section class="hero section-gradient">
         <div class="container">
-            <h1>Implementation Guides</h1>
-            <p>Practical guides for implementing key system design components and patterns</p>
+            <div class="hero-content">
+                <div class="hero-text animate-fade-in">
+                    <h1>Implementation Guides</h1>
+                    <h2>From Theory to Practice</h2>
+                    <p>Dive into practical implementation details of system design components. Learn how to build scalable, reliable, and high-performance systems with hands-on code examples and step-by-step tutorials.</p>
+                </div>
+            </div>
         </div>
     </section>
 
-    <section class="content-section">
+    <section class="section">
         <div class="container">
-            <div class="content-grid">
-                <aside class="sidebar">
-                    <h3>Implementation Topics</h3>
-                    <ul class="sidebar-links">
-                        <li><a href="api-design.html">API Design</a></li>
-                        <li><a href="load-balancer.html">Load Balancer</a></li>
-                        <li><a href="caching-implementation.html">Caching Systems</a></li>
-                        <li><a href="database-sharding.html">Database Sharding</a></li>
-                        <li><a href="message-queues.html">Message Queues</a></li>
-                        <li><a href="microservices.html">Microservices</a></li>
-                        <li><a href="rate-limiting.html">Rate Limiting</a></li>
-                        <li><a href="consistent-hashing.html">Consistent Hashing</a></li>
-                    </ul>
-                </aside>
-                <main class="main-content">
-                    <article>
-                        <h2>From Theory to Practice: Implementing System Design Components</h2>
-                        <p>Understanding theoretical concepts is important, but the real value comes from knowing how to implement these concepts in practice. This section provides detailed, hands-on guides for implementing key components of scalable, reliable systems.</p>
-                        
-                        <div class="info-box">
-                            <h3>Why Implementation Matters</h3>
-                            <p>Even the most elegant system design is only as good as its implementation. These guides bridge the gap between theoretical knowledge and practical application, helping you build real-world systems that embody best practices in scalability, reliability, and performance.</p>
-                        </div>
+            <h2 class="section-title">Core Components</h2>
+            <p class="section-subtitle">Building blocks for scalable systems</p>
+            
+            <div class="bento-grid">
+                <div class="bento-item bento-item-md animate-fade-in">
+                    <h3>Load Balancer Implementation</h3>
+                    <p>Learn how to implement a simple load balancer using different algorithms like round-robin, least connections, and consistent hashing.</p>
+                    <a href="load-balancer.html" class="btn btn-primary btn-sm">View Guide</a>
+                </div>
+                
+                <div class="bento-item bento-item-md animate-fade-in delay-100">
+                    <h3>Caching Layer</h3>
+                    <p>Implement caching strategies using Redis and Memcached. Learn about cache invalidation, eviction policies, and distributed caching.</p>
+                    <a href="caching-layer.html" class="btn btn-primary btn-sm">View Guide</a>
+                </div>
+                
+                <div class="bento-item bento-item-md animate-fade-in delay-200">
+                    <h3>Database Sharding</h3>
+                    <p>Step-by-step guide to implementing horizontal database sharding for improved performance and scalability.</p>
+                    <a href="database-sharding.html" class="btn btn-primary btn-sm">View Guide</a>
+                </div>
+                
+                <div class="bento-item bento-item-md animate-fade-in delay-300">
+                    <h3>API Gateway</h3>
+                    <p>Build an API gateway that handles authentication, rate limiting, request routing, and response caching.</p>
+                    <a href="api-gateway.html" class="btn btn-primary btn-sm">View Guide</a>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                        <h3>Featured Implementation Guides</h3>
-                        
-                        <div class="implementation-card">
-                            <div class="implementation-icon">
-                                <img src="../../assets/icons/api.svg" alt="API Design Icon">
-                            </div>
-                            <div class="implementation-content">
-                                <h4>API Design</h4>
-                                <p>Learn how to design and implement robust, scalable APIs that serve as the foundation for your distributed systems.</p>
-                                <ul>
-                                    <li>RESTful API design principles</li>
-                                    <li>GraphQL implementation</li>
-                                    <li>API versioning strategies</li>
-                                    <li>Authentication and authorization</li>
-                                    <li>Rate limiting and throttling</li>
-                                </ul>
-                                <a href="api-design.html" class="btn btn-secondary">Explore API Design</a>
-                            </div>
+    <section class="section section-dark">
+        <div class="container">
+            <h2 class="section-title">Distributed Systems</h2>
+            <p class="section-subtitle">Building resilient and scalable architectures</p>
+            
+            <div class="card-grid">
+                <div class="modern-card animate-fade-in">
+                    <div class="card-image">
+                        <img src="../../assets/images/url-shortener.png" alt="Microservices Architecture">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Microservices Architecture</h3>
+                        <p class="card-text">Implement a microservices-based application with service discovery, API gateway, and inter-service communication.</p>
+                        <div class="card-footer">
+                            <span class="card-tag">Advanced</span>
+                            <a href="microservices.html" class="card-link">View Guide <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
                         </div>
+                    </div>
+                </div>
+                
+                <div class="modern-card animate-fade-in delay-100">
+                    <div class="card-image">
+                        <img src="../../assets/images/load-balancing.png" alt="Message Queue Implementation">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Message Queue</h3>
+                        <p class="card-text">Build a robust message queue system for asynchronous processing and decoupling services.</p>
+                        <div class="card-footer">
+                            <span class="card-tag">Intermediate</span>
+                            <a href="message-queue.html" class="card-link">View Guide <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modern-card animate-fade-in delay-200">
+                    <div class="card-image">
+                        <img src="../../assets/images/database-sharding.png" alt="Distributed File System">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Distributed File System</h3>
+                        <p class="card-text">Implement a simple distributed file system with replication, fault tolerance, and consistency.</p>
+                        <div class="card-footer">
+                            <span class="card-tag">Advanced</span>
+                            <a href="distributed-file-system.html" class="card-link">View Guide <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modern-card animate-fade-in delay-300">
+                    <div class="card-image">
+                        <img src="../../assets/images/caching-system.png" alt="Service Discovery">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Service Discovery</h3>
+                        <p class="card-text">Build a service discovery mechanism that allows services to find and communicate with each other dynamically.</p>
+                        <div class="card-footer">
+                            <span class="card-tag">Intermediate</span>
+                            <a href="service-discovery.html" class="card-link">View Guide <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                        <div class="implementation-card">
-                            <div class="implementation-icon">
-                                <img src="../../assets/icons/load-balancer.svg" alt="Load Balancer Icon">
-                            </div>
-                            <div class="implementation-content">
-                                <h4>Load Balancer Implementation</h4>
-                                <p>Discover how to implement different load balancing strategies to distribute traffic efficiently across your services.</p>
-                                <ul>
-                                    <li>Software vs. hardware load balancers</li>
-                                    <li>Implementing round-robin load balancing</li>
-                                    <li>Least connections algorithm</li>
-                                    <li>Health checks and failure detection</li>
-                                    <li>Session persistence strategies</li>
-                                </ul>
-                                <a href="load-balancer.html" class="btn btn-secondary">Explore Load Balancer Implementation</a>
-                            </div>
-                        </div>
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Reliability & Performance</h2>
+            <p class="section-subtitle">Building robust and efficient systems</p>
+            
+            <div class="bento-grid">
+                <div class="bento-item bento-item-md animate-fade-in">
+                    <h3>Circuit Breaker Pattern</h3>
+                    <p>Implement the circuit breaker pattern to prevent cascading failures in distributed systems.</p>
+                    <a href="circuit-breaker.html" class="btn btn-primary btn-sm">View Guide</a>
+                </div>
+                
+                <div class="bento-item bento-item-md animate-fade-in delay-100">
+                    <h3>Rate Limiting</h3>
+                    <p>Build a rate limiter to protect your services from excessive use and potential denial of service attacks.</p>
+                    <a href="rate-limiting.html" class="btn btn-primary btn-sm">View Guide</a>
+                </div>
+                
+                <div class="bento-item bento-item-md animate-fade-in delay-200">
+                    <h3>Distributed Tracing</h3>
+                    <p>Implement distributed tracing to monitor and troubleshoot requests as they flow through your microservices architecture.</p>
+                    <a href="distributed-tracing.html" class="btn btn-primary btn-sm">View Guide</a>
+                </div>
+                
+                <div class="bento-item bento-item-md animate-fade-in delay-300">
+                    <h3>Data Replication</h3>
+                    <p>Learn how to implement data replication strategies for improved availability and fault tolerance.</p>
+                    <a href="data-replication.html" class="btn btn-primary btn-sm">View Guide</a>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                        <div class="implementation-card">
-                            <div class="implementation-icon">
-                                <img src="../../assets/icons/cache.svg" alt="Caching Icon">
-                            </div>
-                            <div class="implementation-content">
-                                <h4>Caching Systems</h4>
-                                <p>Learn how to implement effective caching strategies to improve performance and reduce database load.</p>
-                                <ul>
-                                    <li>Implementing Redis for distributed caching</li>
-                                    <li>Cache invalidation strategies</li>
-                                    <li>Write-through and write-back caching</li>
-                                    <li>Cache eviction policies</li>
-                                    <li>Multi-level caching architecture</li>
-                                </ul>
-                                <a href="caching-implementation.html" class="btn btn-secondary">Explore Caching Implementation</a>
-                            </div>
+    <section class="section section-gradient">
+        <div class="container">
+            <h2 class="section-title">Implementation Projects</h2>
+            <p class="section-subtitle">End-to-end system design implementations</p>
+            
+            <div class="card-grid">
+                <div class="modern-card animate-fade-in">
+                    <div class="card-image">
+                        <img src="../../assets/images/url-shortener.png" alt="URL Shortener Implementation">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">URL Shortener</h3>
+                        <p class="card-text">Build a complete URL shortening service with load balancing, caching, and database sharding.</p>
+                        <div class="card-footer">
+                            <span class="card-tag">Beginner</span>
+                            <a href="url-shortener-implementation.html" class="card-link">Start Project <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
                         </div>
+                    </div>
+                </div>
+                
+                <div class="modern-card animate-fade-in delay-100">
+                    <div class="card-image">
+                        <img src="../../assets/images/load-balancing.png" alt="Chat Application Implementation">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Chat Application</h3>
+                        <p class="card-text">Implement a real-time chat application with WebSockets, message persistence, and user presence tracking.</p>
+                        <div class="card-footer">
+                            <span class="card-tag">Intermediate</span>
+                            <a href="chat-app-implementation.html" class="card-link">Start Project <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modern-card animate-fade-in delay-200">
+                    <div class="card-image">
+                        <img src="../../assets/images/database-sharding.png" alt="E-commerce Platform Implementation">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">E-commerce Platform</h3>
+                        <p class="card-text">Build a scalable e-commerce platform with product catalog, shopping cart, and order processing services.</p>
+                        <div class="card-footer">
+                            <span class="card-tag">Advanced</span>
+                            <a href="ecommerce-implementation.html" class="card-link">Start Project <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                        <div class="implementation-card">
-                            <div class="implementation-icon">
-                                <img src="../../assets/icons/database.svg" alt="Database Icon">
-                            </div>
-                            <div class="implementation-content">
-                                <h4>Database Sharding</h4>
-                                <p>Discover practical approaches to implementing database sharding for horizontal scalability.</p>
-                                <ul>
-                                    <li>Implementing key-based sharding</li>
-                                    <li>Range-based sharding strategies</li>
-                                    <li>Shard management and rebalancing</li>
-                                    <li>Handling cross-shard transactions</li>
-                                    <li>Sharding with different database technologies</li>
-                                </ul>
-                                <a href="database-sharding.html" class="btn btn-secondary">Explore Database Sharding Implementation</a>
-                            </div>
-                        </div>
-
-                        <h3>Implementation Best Practices</h3>
-                        
-                        <div class="concept-card">
-                            <h4>Start Simple, Scale Later</h4>
-                            <p>Begin with the simplest implementation that meets your current needs, then scale as demand grows. Premature optimization can lead to unnecessary complexity.</p>
-                        </div>
-
-                        <div class="concept-card">
-                            <h4>Measure Everything</h4>
-                            <p>Implement comprehensive monitoring and metrics from the start. You can't improve what you don't measure, and metrics will guide your scaling decisions.</p>
-                        </div>
-
-                        <div class="concept-card">
-                            <h4>Design for Failure</h4>
-                            <p>Assume components will fail and design your implementations with resilience in mind. Use circuit breakers, retries with backoff, and graceful degradation.</p>
-                        </div>
-
-                        <div class="concept-card">
-                            <h4>Automate Deployments</h4>
-                            <p>Implement CI/CD pipelines to automate testing and deployment. This reduces human error and enables faster iteration.</p>
-                        </div>
-
-                        <div class="next-steps">
-                            <h3>Next Steps</h3>
-                            <p>Ready to start implementing? Choose a component to begin with:</p>
-                            <div class="button-group">
-                                <a href="api-design.html" class="btn btn-primary">Start with API Design</a>
-                                <a href="load-balancer.html" class="btn btn-secondary">Implement a Load Balancer</a>
-                            </div>
-                        </div>
-                    </article>
-                </main>
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Learning Path</h2>
+            <p class="section-subtitle">Recommended sequence for implementation learning</p>
+            
+            <div class="bento-grid">
+                <div class="bento-item bento-item-lg animate-fade-in">
+                    <h3>Step 1: Core Components</h3>
+                    <p>Start by implementing fundamental components like load balancers, caching layers, and API gateways to understand the building blocks of scalable systems.</p>
+                    <div class="card-footer">
+                        <span class="card-tag">Beginner</span>
+                        <a href="load-balancer.html" class="card-link">Start Here <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+                    </div>
+                </div>
+                
+                <div class="bento-item bento-item-lg animate-fade-in delay-200">
+                    <h3>Step 2: Reliability Patterns</h3>
+                    <p>Move on to implementing reliability patterns like circuit breakers, rate limiters, and data replication to build robust systems that can handle failures gracefully.</p>
+                    <div class="card-footer">
+                        <span class="card-tag">Intermediate</span>
+                        <a href="circuit-breaker.html" class="card-link">Continue Learning <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+                    </div>
+                </div>
+                
+                <div class="bento-item bento-item-lg animate-fade-in delay-400">
+                    <h3>Step 3: End-to-End Projects</h3>
+                    <p>Finally, tackle complete implementation projects that combine multiple components and patterns into cohesive, scalable systems.</p>
+                    <div class="card-footer">
+                        <span class="card-tag">Advanced</span>
+                        <a href="url-shortener-implementation.html" class="card-link">Advanced Learning <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -213,6 +305,50 @@
         </div>
     </footer>
 
-    <script src="../../js/main.js"></script>
+    <script>
+        // Add scrolled class to header on scroll
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.site-header');
+            if (window.scrollY > 10) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+        
+        // Mobile menu toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        
+        menuToggle.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+        });
+        
+        // Add animation classes when elements come into view
+        const animateElements = document.querySelectorAll('.animate-fade-in, .animate-slide-left, .animate-slide-right');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0) translateX(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        animateElements.forEach(element => {
+            element.style.opacity = '0';
+            if (element.classList.contains('animate-slide-left')) {
+                element.style.transform = 'translateX(-50px)';
+            } else if (element.classList.contains('animate-slide-right')) {
+                element.style.transform = 'translateX(50px)';
+            } else {
+                element.style.transform = 'translateY(20px)';
+            }
+            element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(element);
+        });
+    </script>
 </body>
 </html>

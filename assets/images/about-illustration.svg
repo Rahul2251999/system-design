@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="400px" height="400px" viewBox="0 0 400 400" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>About Illustration</title>
+    <defs>
+        <linearGradient x1="0%" y1="0%" x2="100%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#4ECDC4" offset="0%"></stop>
+            <stop stop-color="#2D3047" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="About-Illustration" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect id="Background" fill="#F7F9FC" x="0" y="0" width="400" height="400"></rect>
+        
+        <!-- Learning Path -->
+        <g id="Learning-Path" transform="translate(50, 50)">
+            <path d="M0,0 C50,50 100,0 150,50 C200,100 250,50 300,100" id="Path" stroke="#4ECDC4" stroke-width="4" stroke-linecap="round"></path>
+            
+            <!-- Milestone 1 -->
+            <g id="Milestone-1" transform="translate(0, 0)">
+                <circle id="Milestone-1-Bg" fill="#2D3047" cx="0" cy="0" r="15"></circle>
+                <text id="Milestone-1-Text" font-family="Arial" font-weight="bold" font-size="12" fill="#FFFFFF" x="-5" y="4">1</text>
+                <text id="Milestone-1-Label" font-family="Arial" font-size="12" fill="#2D3047" x="-20" y="-20">Basics</text>
+            </g>
+            
+            <!-- Milestone 2 -->
+            <g id="Milestone-2" transform="translate(150, 50)">
+                <circle id="Milestone-2-Bg" fill="#2D3047" cx="0" cy="0" r="15"></circle>
+                <text id="Milestone-2-Text" font-family="Arial" font-weight="bold" font-size="12" fill="#FFFFFF" x="-5" y="4">2</text>
+                <text id="Milestone-2-Label" font-family="Arial" font-size="12" fill="#2D3047" x="-30" y="-20">Intermediate</text>
+            </g>
+            
+            <!-- Milestone 3 -->
+            <g id="Milestone-3" transform="translate(300, 100)">
+                <circle id="Milestone-3-Bg" fill="#2D3047" cx="0" cy="0" r="15"></circle>
+                <text id="Milestone-3-Text" font-family="Arial" font-weight="bold" font-size="12" fill="#FFFFFF" x="-5" y="4">3</text>
+                <text id="Milestone-3-Label" font-family="Arial" font-size="12" fill="#2D3047" x="-25" y="-20">Advanced</text>
+            </g>
+        </g>
+        
+        <!-- Knowledge Building Blocks -->
+        <g id="Knowledge-Blocks" transform="translate(50, 200)">
+            <!-- Block 1 -->
+            <g id="Block-1" transform="translate(0, 0)">
+                <rect id="Block-1-Bg" fill="#4ECDC4" x="0" y="0" width="60" height="60" rx="5"></rect>
+                <text id="Block-1-Text" font-family="Arial" font-weight="bold" font-size="10" fill="#FFFFFF" x="12" y="35">Core</text>
+            </g>
+            
+            <!-- Block 2 -->
+            <g id="Block-2" transform="translate(70, -20)">
+                <rect id="Block-2-Bg" fill="#4ECDC4" x="0" y="0" width="60" height="60" rx="5"></rect>
+                <text id="Block-2-Text" font-family="Arial" font-weight="bold" font-size="10" fill="#FFFFFF" x="15" y="35">DB</text>
+            </g>
+            
+            <!-- Block 3 -->
+            <g id="Block-3" transform="translate(140, -40)">
+                <rect id="Block-3-Bg" fill="#4ECDC4" x="0" y="0" width="60" height="60" rx="5"></rect>
+                <text id="Block-3-Text" font-family="Arial" font-weight="bold" font-size="10" fill="#FFFFFF" x="15" y="35">API</text>
+            </g>
+            
+            <!-- Block 4 -->
+            <g id="Block-4" transform="translate(210, -20)">
+                <rect id="Block-4-Bg" fill="#4ECDC4" x="0" y="0" width="60" height="60" rx="5"></rect>
+                <text id="Block-4-Text" font-family="Arial" font-weight="bold" font-size="10" fill="#FFFFFF" x="5" y="35">Cache</text>
+            </g>
+            
+            <!-- Block 5 -->
+            <g id="Block-5" transform="translate(280, 0)">
+                <rect id="Block-5-Bg" fill="#4ECDC4" x="0" y="0" width="60" height="60" rx="5"></rect>
+                <text id="Block-5-Text" font-family="Arial" font-weight="bold" font-size="10" fill="#FFFFFF" x="15" y="35">LB</text>
+            </g>
+            
+            <!-- Foundation -->
+            <rect id="Foundation" fill="#2D3047" x="0" y="70" width="340" height="20" rx="5"></rect>
+            <text id="Foundation-Text" font-family="Arial" font-weight="bold" font-size="12" fill="#FFFFFF" x="100" y="85">SYSTEM DESIGN PRINCIPLES</text>
+        </g>
+        
+        <!-- People Learning -->
+        <g id="People" transform="translate(100, 300)">
+            <!-- Person 1 -->
+            <g id="Person-1" transform="translate(0, 0)">
+                <circle id="Person-1-Head" fill="#2D3047" cx="0" cy="0" r="10"></circle>
+                <path d="M-10,15 C-10,25 10,25 10,15" id="Person-1-Body" stroke="#2D3047" stroke-width="2"></path>
+                <line x1="-5" y1="30" x2="-5" y2="50" id="Person-1-Leg-1" stroke="#2D3047" stroke-width="2"></line>
+                <line x1="5" y1="30" x2="5" y2="50" id="Person-1-Leg-2" stroke="#2D3047" stroke-width="2"></line>
+                <line x1="-10" y1="20" x2="-20" y2="30" id="Person-1-Arm-1" stroke="#2D3047" stroke-width="2"></line>
+                <line x1="10" y1="20" x2="20" y2="30" id="Person-1-Arm-2" stroke="#2D3047" stroke-width="2"></line>
+            </g>
+            
+            <!-- Person 2 -->
+            <g id="Person-2" transform="translate(50, 0)">
+                <circle id="Person-2-Head" fill="#4ECDC4" cx="0" cy="0" r="10"></circle>
+                <path d="M-10,15 C-10,25 10,25 10,15" id="Person-2-Body" stroke="#4ECDC4" stroke-width="2"></path>
+                <line x1="-5" y1="30" x2="-5" y2="50" id="Person-2-Leg-1" stroke="#4ECDC4" stroke-width="2"></line>
+                <line x1="5" y1="30" x2="5" y2="50" id="Person-2-Leg-2" stroke="#4ECDC4" stroke-width="2"></line>
+                <line x1="-10" y1="20" x2="-20" y2="30" id="Person-2-Arm-1" stroke="#4ECDC4" stroke-width="2"></line>
+                <line x1="10" y1="20" x2="20" y2="10" id="Person-2-Arm-2" stroke="#4ECDC4" stroke-width="2"></line>
+            </g>
+            
+            <!-- Person 3 -->
+            <g id="Person-3" transform="translate(100, 0)">
+                <circle id="Person-3-Head" fill="#FF6B6B" cx="0" cy="0" r="10"></circle>
+                <path d="M-10,15 C-10,25 10,25 10,15" id="Person-3-Body" stroke="#FF6B6B" stroke-width="2"></path>
+                <line x1="-5" y1="30" x2="-5" y2="50" id="Person-3-Leg-1" stroke="#FF6B6B" stroke-width="2"></line>
+                <line x1="5" y1="30" x2="5" y2="50" id="Person-3-Leg-2" stroke="#FF6B6B" stroke-width="2"></line>
+                <line x1="-10" y1="20" x2="-20" y2="10" id="Person-3-Arm-1" stroke="#FF6B6B" stroke-width="2"></line>
+                <line x1="10" y1="20" x2="20" y2="30" id="Person-3-Arm-2" stroke="#FF6B6B" stroke-width="2"></line>
+            </g>
+            
+            <!-- Person 4 -->
+            <g id="Person-4" transform="translate(150, 0)">
+                <circle id="Person-4-Head" fill="#FBBF24" cx="0" cy="0" r="10"></circle>
+                <path d="M-10,15 C-10,25 10,25 10,15" id="Person-4-Body" stroke="#FBBF24" stroke-width="2"></path>
+                <line x1="-5" y1="30" x2="-5" y2="50" id="Person-4-Leg-1" stroke="#FBBF24" stroke-width="2"></line>
+                <line x1="5" y1="30" x2="5" y2="50" id="Person-4-Leg-2" stroke="#FBBF24" stroke-width="2"></line>
+                <line x1="-10" y1="20" x2="-20" y2="30" id="Person-4-Arm-1" stroke="#FBBF24" stroke-width="2"></line>
+                <line x1="10" y1="20" x2="20" y2="30" id="Person-4-Arm-2" stroke="#FBBF24" stroke-width="2"></line>
+            </g>
+            
+            <!-- Thought Bubbles -->
+            <path d="M-10,-20 C-20,-30 -30,-20 -20,-10" id="Thought-1" stroke="#2D3047" stroke-width="1" stroke-linecap="round"></path>
+            <path d="M40,-20 C30,-30 20,-20 30,-10" id="Thought-2" stroke="#4ECDC4" stroke-width="1" stroke-linecap="round"></path>
+            <path d="M90,-20 C80,-30 70,-20 80,-10" id="Thought-3" stroke="#FF6B6B" stroke-width="1" stroke-linecap="round"></path>
+            <path d="M140,-20 C130,-30 120,-20 130,-10" id="Thought-4" stroke="#FBBF24" stroke-width="1" stroke-linecap="round"></path>
+        </g>
+        
+        <!-- Decorative Elements -->
+        <circle id="Decoration-1" fill="#4ECDC4" opacity="0.2" cx="350" cy="50" r="30"></circle>
+        <circle id="Decoration-2" fill="#FF6B6B" opacity="0.2" cx="50" cy="350" r="20"></circle>
+        <circle id="Decoration-3" fill="#2D3047" opacity="0.2" cx="350" cy="350" r="25"></circle>
+    </g>
+</svg>
